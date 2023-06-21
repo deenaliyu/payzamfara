@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .sectionA {
+      color: black
+    }
+
+    @media(max-width: 767px) {
+      .sectionA {
+        color: white
+      }
+    }
+  </style>
+</head>
+
+<body class="md:h-[100vh] bg-[url('./assets/img/slider.png')]">
+
+  <div class="absolute w-full h-full -z-10 md:bg-[#ffffff85]"></div>
+
+  <header class="flex justify-between md:px-10 px-4 bg-white py-3" id="theHeader">
+
+
+
+  </header>
+
+  <section class="text-center sectionA mt-10 md:mt-20">
+    <h1 class="text-3xl fontBold pt-20">Pay your tax today! Let's build Zamfara  together</h1>
+    <!-- <h1 class="text-xl mt-2">Let's build Akwa Ibom together</h1> -->
+
+    <div class="flex justify-center">
+      <p class="mt-3 md:w-[50%] w-[80%] text-lg">Tax payment in Zamfara has been made an easy, convenient, and secure way to pay all taxes or bills owed to 
+        the Zamfara state government.
+        </p>
+    </div>
+
+  </section>
+
+  <section class="flex justify-center mt-10 px-3 pb-5 pt-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pb-5">
+
+
+      <div class="landing_cards text-center">
+        <div class="flex justify-center items-center flex-col h-full">
+          <div class="py-3">
+            <iconify-icon icon="fa-solid:money-check-alt"></iconify-icon>
+            <p class="cardText">Generate Invoice</p>
+          </div>
+          <a href="generateinvoice.html" class="button w-full">Generate Invoice</a>
+        </div>
+      </div>
+
+      <div class="landing_cards text-center">
+        <div class="flex justify-center items-center flex-col h-full">
+          <div class="py-3">
+            <iconify-icon icon="mdi:invoice-check"></iconify-icon>
+            <p class="cardText">Verify Invoice</p>
+          </div>
+          <a href="verifyinvoice.html?page=verify" class="button w-full">Verify Invoice</a>
+        </div>
+
+      </div>
+
+      <div class="landing_cards text-center activo">
+        <div class="flex justify-center items-center flex-col h-full">
+          <div class="py-3">
+            <iconify-icon icon="fluent:payment-24-filled"></iconify-icon>
+            <p class="cardText">Pay Now</p>
+          </div>
+          <a href="verifyinvoice.html?page=paynow" class="button w-full">Pay Now</a>
+        </div>
+
+      </div>
+
+      <div class="landing_cards text-center">
+        <div class="flex justify-center items-center flex-col h-full">
+          <div class="py-3">
+            <iconify-icon icon="dashicons:welcome-write-blog"></iconify-icon>
+            <p class="cardText">Continue Payment</p>
+          </div>
+          <a href="verifyinvoice.html?page=continue" class="button w-full">Continue Payment</a>
+        </div>
+
+      </div>
+
+      <div class="landing_cards text-center">
+        <div class="flex justify-center items-center flex-col h-full">
+          <div class="py-3">
+            <iconify-icon icon="material-symbols:file-present"></iconify-icon>
+            <p class="cardText">Self Assessment</p>
+          </div>
+          <a href="filetax.html" class="button w-full">File Tax</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="md:fixed bottom-0 md:mt-5 w-full" id="footer">
+
+
+  </section>
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/landing.js"></script>
+  <script src="assets/js/landingcms.js"></script>
+</body>
+
+</html>

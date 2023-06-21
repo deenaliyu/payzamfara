@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="hidden md:block w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 pt-[100px] h-full">
+        <div>
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div class="active"></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Primary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Secondary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Generate Reference</h1>
+            </div>
+          </div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-white overflow-y-scroll">
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a href="eservices.html" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 ">
+
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl mt-5">Tax Clearance Certificate Request</h1>
+            <h1 class="mb-3 mt-3">Primary Information</h1>
+
+            <div class="form-group mb-4">
+              <label for="">Select your category</label>
+              <select name="" class="form-select w-6/12" id="">
+                <option selected disabled>Select--</option>
+              </select>
+            </div>
+            <div class="form-group mb-4">
+              <label for="">Title*</label>
+              <div class="flex gap-3">
+                <div class="form-group">
+                  <input type="radio" name="title" class="form-check-input" id="mr">
+                  <label for="mr">Mr</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" name="title" class="form-check-input" id="mrs">
+                  <label for="mrs">Mrs</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" name="title" class="form-check-input" id="miss">
+                  <label for="miss">Miss</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" name="title" class="form-check-input" id="others">
+                  <label for="others">Others</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">First name*</label>
+                <input type="text" class="form-control taxReqInput" data-name="first_name" required
+                  placeholder="Enter your first name">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Surname*</label>
+                <input type="text" class="form-control taxReqInput" data-name="surname" required
+                  placeholder="Enter your last name">
+              </div>
+
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Middle name</label>
+                <input type="text" class="form-control taxReqInput" data-name="middle_name"
+                  placeholder="Enter your middle name">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Date of Birth*</label>
+                <input type="date" class="form-control taxReqInput" data-name="date_of_birth" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Gender*</label>
+                <select name="" class="form-select taxReqInput" data-name="gender" required>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Marital Status*</label>
+                <select name="" class="form-select taxReqInput" data-name="merital_status" required>
+                  <option selected disabled>Select--</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">TIN*</label>
+                <input type="text" class="form-control taxReqInput" data-name="tin" required placeholder="">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Bank Verification No. (BVN)*</label>
+                <input type="text" class="form-control taxReqInput" data-name="bvn" required>
+              </div>
+            </div>
+
+            <hr class="mb-3">
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">State*</label>
+                <select name="" id="states" class="form-select taxReqInput" data-name="state" required>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">LGA*</label>
+                <select name="" class="form-select taxReqInput" data-name="local_area" required>
+                  <option selected disabled>Select--</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Ward*</label>
+                <input type="text" class="form-control taxReqInput" data-name="ward" required placeholder="">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">City/Town/Area*</label>
+                <input type="text" class="form-control taxReqInput" data-name="city" required placeholder="">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Steet Name*</label>
+                <input type="text" class="form-control taxReqInput" data-name="street_name" required placeholder="">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">House No*</label>
+                <input type="text" class="form-control taxReqInput" data-name="house_no" required placeholder="">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">National ID No*</label>
+                <input type="text" class="form-control taxReqInput" data-name="national_id_no" required placeholder="">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Phone number*</label>
+                <input type="text" class="form-control taxReqInput" data-name="phone" required placeholder="234">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Nationality*</label>
+                <input type="text" class="form-control taxReqInput" data-name="natioality" required
+                  placeholder="Nigerian">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Tax Station Name*</label>
+                <input type="text" class="form-control taxReqInput" data-name="tax_station_name" required
+                  placeholder="">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Employment Type*</label>
+                <select name="" class="form-select taxReqInput" data-name="employment_type" required id="">
+                  <option value="" disabled selected>Select--</option>
+                </select>
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Occupation*</label>
+                <input type="text" class="form-control taxReqInput" data-name="occupation" required placeholder="">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Profession*</label>
+                <input type="text" class="form-control taxReqInput" data-name="profession" required placeholder="">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Mothers Maiden Name*</label>
+                <input type="text" class="form-control taxReqInput" data-name="mother_maiden_name" required
+                  placeholder="">
+              </div>
+            </div>
+
+            <hr class="mb-4">
+
+            <h1 class="text-xl fontBold mb-4">Income And Tax Paid for the Last Three Years</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2023" class="form-control taxReqInput" data-name="first_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control taxReqInput" data-name="first_income">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2022" class="form-control taxReqInput" data-name="second_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control taxReqInput" data-name="second_income">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2021" class="form-control taxReqInput" data-name="third_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control taxReqInput" data-name="third_income">
+              </div>
+            </div>
+
+            <div class="form-group md:w-6/12 w-full mb-4">
+              <label for="">Tax Paid</label>
+              <input type="text" class="form-control taxReqInput" data-name="tax_paid">
+            </div>
+
+            <hr class="mb-4">
+
+            <h1 class="text-xl fontBold">Tax Representative </h1>
+
+            <p class="text-sm text-[#555555] mb-4">I certify that the Taxpayer referred above has met all requirements
+              necessary for the processing of
+              his/her Electronic Tax Clearance Certificate (e-TCC)</p>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Authorized Coy Rep. (e.g. Accountant)</label>
+                <input type="text" class="form-control taxReqInput" data-name="cop_rep_authorization">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Authorised by (e.g.Head Tax Station)</label>
+                <input type="text" class="form-control taxReqInput" data-name="head_tax_station_authorization">
+              </div>
+            </div>
+
+            <button class="button w-full mb-20" type="button" onclick="nextPrev(1)">Continue</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a onclick="nextPrev(-1)" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl">Tax Clearance Certificate Request</h1>
+            <h1 class="mb-3 mt-3">Secondary Information</h1>
+
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Email Address*</label>
+                <input type="email" class="form-control taxReqInput" data-name="emai_address" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">State of Origin*</label>
+                <select name="" class="form-select taxReqInput" data-name="state_of_origin" required>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Comapny Name*</label>
+                <input type="text" class="form-control taxReqInput" data-name="company_name" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Comapny Branch*</label>
+                <input type="text" class="form-control taxReqInput" data-name="company_branch" required>
+              </div>
+
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="">Comapny Address*</label>
+              <input type="text" class="form-control taxReqInput" data-name="company_address" required>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Web Address*</label>
+                <input type="text" class="form-control taxReqInput" data-name="web_address" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Official Position*</label>
+                <input type="text" class="form-control taxReqInput" data-name="official_position" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">International passport No*</label>
+                <input type="text" class="form-control taxReqInput" data-name="international_passport_no" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Alien Registration No*</label>
+                <input type="text" class="form-control taxReqInput" data-name="alien_negistration_no" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">If Married State Spouse's Name</label>
+                <input type="text" class="form-control taxReqInput" data-name="sponsor_name">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Spouse's Occupation</label>
+                <input type="text" class="form-control taxReqInput" data-name="sponsor_occupation">
+              </div>
+            </div>
+
+            <div class="form-group  md:w-6/12 w-full">
+              <label for="">Spouse's Business or Employment Address</label>
+              <input type="text" class="form-control taxReqInput" data-name="sponsor_business">
+            </div>
+
+
+            <hr class="mb-4">
+
+            <h1 class="text-lg fontBold">Names and addresses of previous Employers</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">From</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_from_1" placeholder="2021">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">To</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_to_1" placeholder="2022">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">From</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_from_2" placeholder="">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">To</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_to_2" placeholder="">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">From</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_from_3" placeholder="">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">To</label>
+                <input type="text" class="form-control taxReqInput" data-name="employment_to_3" placeholder="">
+              </div>
+            </div>
+
+            <hr class="mb-3">
+            <h1 class="text-xl fontBold">Document Upload</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12">
+                <label for="">Audit Report *</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size:
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Signature and Date*</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, jpeg, jpg)Max size:
+                  10mb</small>
+                <input type="file" class="form-control taxReqInput2" accept=".pdf,.png,.jpg,.jpeg" data-name="date_1"
+                  required placeholder="">
+              </div>
+              <div class="form-group  md:w-6/12">
+                <label for="">Evidence of tax payment *</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size:
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Passport*</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, jpeg, jpg)Max size:
+                  10mb</small>
+                <input type="file" class="form-control taxReqInput2" accept=".pdf,.png,.jpg,.jpeg"
+                  data-name="signature_1" required placeholder="">
+              </div>
+            </div>
+
+            <!-- <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Signature and Date*</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size:
+                  10mb</small>
+                <input type="file" class="form-control taxReqInput" data-name="signature_2" required placeholder="">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Passport*</label>
+                <small class="block text-gray-500 mb-1">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size:
+                  10mb</small>
+                <input type="file" class="form-control taxReqInput" data-name="date_2" required placeholder="">
+              </div>
+            </div> -->
+
+            <div id="msg_box" class="mt-5"></div>
+            <div id="msg_box2"></div>
+            <button class="button w-full mb-20 mt-5" type="button" id="tinRequestBtn">Submit</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 px-10">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+
+        <div class="flex justify-center h-full">
+
+          <div action="" class="w-[70%] mt-10">
+            <h1 class="fontBold text-2xl">Tax Clearance Certificate Request</h1>
+            <h1 class="mb-3 mt-3">Generate Reference</h1>
+
+            <h1 class="text-2xl" id="refNumber">323232</h1>
+
+            <p>Please Save your reference number after submitting your application to help track its progress. The
+              reference number will be used to identify and track your application throughout the review process. You
+              can generate the reference number by clicking on the button below.
+              Thank you for submitting your application, and we look forward to processing it.
+              Best regards.</p>
+
+            <div class="mt-5 gap-4">
+              <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
+                number</button> -->
+              <a href="eservices.html" class="outline-btn">Go Back</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div class="modal fade" id="refNumberModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="text-md">TIN reference</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+              </button>
+            </div>
+            <div class="modal-body px-5">
+
+              <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
+              <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
+              <p class="text-center text-[#555555]">Kindly check back later to know your application
+                status.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/tabHandler.js"></script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
+  <script src="assets/js/taxclearance.js"></script>
+</body>
+
+</html>

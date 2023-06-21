@@ -1,0 +1,1 @@
+[26-Apr-2020 06:31:00 America/New_York] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/steazhex/downloads.steamledge.com/ncrypt-download/config.php on line 9

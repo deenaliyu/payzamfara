@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme">
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Invoice</h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-5">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+
+              <a href="../generateinvoice.html" class="button">
+                <iconify-icon icon="ic:baseline-plus"></iconify-icon> Generate Invoice</a>
+
+              <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
+                class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
+
+              <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="h-[70px] w-[70px] rounded-circle" />
+              </div>
+            </div>
+
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper">
+
+          <div class="container-xxl flex-grow-1 container-p-y taxes">
+            <div class="card px-4">
+
+              <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-4" id="pills-tab" role="tablist">
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    All Invoice
+                  </button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+                    Open Invoice
+                  </button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="pills-basic-tab" data-bs-toggle="pill" data-bs-target="#pills-basic"
+                    type="button" role="tab" aria-controls="pills-basic" aria-selected="false">
+                    Paid Invoice
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="table-responsive">
+                    <table class="table theTable invoiceeTable dataTable">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                        <th class="fontBold text-sm text-gray-500">Description</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
+                        <th class="fontBold text-sm text-gray-500">Amount paid</th>
+                        <th class="fontBold text-sm text-gray-500">Balance yet to be paid</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice date</th>
+                        <th class="fontBold text-sm text-gray-500">Due date</th>
+                        <th class="fontBold text-sm text-gray-500">status</th>
+                        <th></th>
+                      </thead>
+                      <tbody id="showInvoice">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="flex justify-center items-center mt-4" id="loader">
+                    <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                  <div class="table-responsive">
+                    <table class="table theTable invoiceeTable dataTable">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                        <th class="fontBold text-sm text-gray-500">Description</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
+                        <th class="fontBold text-sm text-gray-500">Amount paid</th>
+                        <th class="fontBold text-sm text-gray-500">Balance yet to be paid</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice date</th>
+                        <th class="fontBold text-sm text-gray-500">Due date</th>
+                        <th class="fontBold text-sm text-gray-500">status</th>
+                        <th></th>
+                      </thead>
+                      <tbody id="showInvoice2">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="flex justify-center items-center mt-4" id="loader">
+                    <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-basic" role="tabpanel" aria-labelledby="pills-basic-tab">
+                  <div class="table-responsive">
+                    <table class="table theTable invoiceeTable dataTable">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                        <th class="fontBold text-sm text-gray-500">Description</th>
+                        <th class="fontBold text-sm text-gray-500">Amount</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice date</th>
+                        <th class="fontBold text-sm text-gray-500">Due date</th>
+                        <th class="fontBold text-sm text-gray-500">status</th>
+                      </thead>
+                      <tbody id="showInvoice3">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="flex justify-center items-center mt-4" id="loader">
+                    <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
+
+          </section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+  <div class="modal fade" id="generateInvModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body relative">
+          <div class="flex justify-center">
+            <form class=" sm:w-10/12 p-3 relative h-[50vh] overflow-y-auto">
+              <h1 class="text-2xl font-bold mb-6 text-center">Generate Invoice</h1>
+
+              <div id="formShower">
+
+              </div>
+              <div class="form-group">
+                <select name="" id="getMDAs" class="form-select">
+                  <option disabled selected>--- Select MDA ---</option>
+                </select>
+              </div>
+
+              <p class="text-3xl fontBold mt-10">List of Payable Taxes</p>
+              <p class="text-gray-600">Select those applicable</p>
+
+              <div class="mt-6" id="listOfpayable">
+
+              </div>
+
+
+            </form>
+          </div>
+          <button class="button w-full mt-6" id="generateInvoice">Generate Invoice</button>
+          <div id="msg_box" class="w-full">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="notiModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notifications</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body relative">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your TIN has been verified</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is successful</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your complaint has been answered</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is successful</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is due</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Layout wrapper -->
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
+  <!-- endbuild -->
+  <script src="../assets/js/invoicess.js"></script>
+  <script>
+    let theAtivo = document.querySelector(`.dae`)
+    theAtivo.parentElement.classList.add("active")
+  </script>
+  <!-- Vendors JS -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <!-- Main JS -->
+
+  <script src="./assets/js/main.js"></script>
+
+  <!-- Page JS -->
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

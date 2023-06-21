@@ -1,0 +1,1 @@
+$("#STATE").html(STATES)

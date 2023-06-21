@@ -1,0 +1,375 @@
+@font-face {
+  font-family: DM_Sans;
+  src: url("../fonts/DM_Sans/DMSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: DM_SansBold;
+  src: url("../fonts/DM_Sans/DMSans-Bold.ttf");
+}
+
+/* ::-webkit-scrollbar {
+  display: none
+} */
+
+:root {
+  --primaryCol: #005826;
+  --orange: #F7931e;
+  --lightBlue: #25B0E9;
+  --shadowedBlue: rgba(28, 123, 175, 0.78);
+  --fade-gray: #657482;
+}
+
+.crisp-client .cc-tlyw .cc-qfnu {
+  background-color: #005826 !important;
+}
+
+
+body {
+  background-size: cover;
+  color: #000;
+  font-family: DM_Sans;
+  width: 100vw !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+}
+
+.fontBold {
+  font-family: DM_SansBold;
+}
+
+header {
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px !important; */
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.headerBeginner {
+  margin-top: 70px;
+}
+
+.text-container {
+  width: 250px;
+
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+
+.textPrimary {
+  color: var(--primaryCol);
+}
+
+.bgPrimary {
+  background: var(--primaryCol);
+}
+
+.table-sm tbody tr td {
+  font-size: 14px;
+  color: #222234;
+}
+.button {
+  background: var(--primaryCol) !important;
+  color: #fff !important;
+  border: 2px solid var(--primaryCol);
+  border-radius: 100px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.invoice {
+  box-shadow: none !important;
+  border: 1px solid #f0efef;
+}
+
+.outline-btn {
+  background: #fff !important;
+  color: var(--primaryCol) !important;
+  border: 2px solid var(--primaryCol);
+  border-radius: 100px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+/* .btn-outline {
+  background: transparent !important;
+  color: var(--primaryCol) !important;
+  background: #fff;
+  border: 2px solid #D7D7D7;
+  border-radius: 100px;
+  padding: 8px 20px;
+  text-align: center;
+} */
+
+/* LANDING 
+ */
+.landing_cards {
+  background: #00000093;
+  color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  height: fit-content;
+  /* width: 200px; */
+  /* height: 150px; */
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.landing_cards:hover {
+  transform: scale(1.01);
+}
+
+.landing_cards iconify-icon {
+  font-size: 30px;
+  /* margin-top: 30px; */
+  color: #fff;
+}
+
+.landing_cards .cardText {
+  margin-top: 10px;
+  /* margin-bottom: 30px; */
+}
+
+.landing_cards .button {
+  padding: 5px 20px;
+  font-size: 14px;
+  margin-top: 10px;
+  display: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.landing_cards.activo {
+  transform: scale(1.02);
+  margin-top: -10px;
+}
+
+.landing_cards.activo .button {
+  display: block;
+
+}
+
+/* landingFooter 
+ */
+
+footer .theNav iconify-icon {
+  font-size: 25px;
+}
+
+a:hover {
+  color: var(--primaryCol);
+}
+
+.signin .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #005826;
+  background-color: transparent;
+  border-bottom: 2px solid #005826;
+  border-radius: 0%;
+  font-size: 14px;
+}
+
+.signin .nav {
+  border-bottom: 1px solid #D7D7D7;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* HHEADER 
+ */
+
+.hamburger {
+  display: none;
+}
+
+
+.hamburger .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--primaryCol);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile_nav {
+  position: fixed;
+  left: -100%;
+  top: 4rem;
+  flex-direction: column;
+  background-color: #fff;
+  width: 80%;
+  height: 100vh;
+  z-index: 999;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+  box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+}
+
+.mobile_nav.active {
+  left: 0;
+}
+
+/* FORMS
+ */
+
+label {
+  color: #344054;
+  margin-bottom: 5px;
+}
+
+.form-control, .form-select {
+  border: 1px solid #D0D5DD;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #667085;
+}
+
+@media(min-width: 767px) {
+  .form-group {
+    width: 100%;
+  }
+}
+
+
+/* ACCORDIONS
+ */
+
+.accordion-button:not(.collapsed) {
+  background: #fff;
+  color: #000;
+}
+
+/* GENEREATE INVOICE
+ */
+
+.theRounder {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid var(--primaryCol);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theRounder div {
+  width: 10px;
+  height: 10px;
+  background: #D7D7D7;
+  border-radius: 999px;
+}
+
+.theRounder div.active {
+  background: var(--primaryCol);
+}
+
+.reg a.disabled {
+
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* INVOICE DESIGN
+ */
+
+.invoicetop {
+  border: 5px solid var(--primaryCol);
+}
+
+/* MAKE PAYMENT */
+.payCards {
+  background: #FFFFFF;
+  border: 1px solid #D7D7D7;
+  box-shadow: 1.71429px 1.71429px 1.71429px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 20px 30px;
+  width: 130px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.payCards:hover {
+  transform: scale(1.02);
+}
+
+.payCards.active {
+  border: 2px solid #005826;
+}
+
+.payCards iconify-icon {
+  font-size: 30px;
+}
+
+.payCards p {
+  margin-top: 10px;
+}
+
+.tab_steps {
+  display: none;
+}
+
+.tab_steps.active {
+  display: block;
+}
+
+.disabled {
+
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+.selectedcat {
+  border: 2px solid var(--primaryCol);
+}
+
+.cardi {
+  cursor: pointer;
+}
+
+/* ESERVIES CARDS  */
+.eCards {
+  background: #FFFFFF;
+  border: 1px solid #D7D7D7;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 20px;
+  width: 150px;
+}
+
+.eCards iconify-icon {
+  font-size: 35px;
+}
+
+.eCards p {
+  margin-top: 20px;
+  text-align: center;
+}

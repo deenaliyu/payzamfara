@@ -1,0 +1,25 @@
+# Specifies files to intentionally ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+# git ignore
+.github/
+node_modules/
+coverage/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# dev files
+.eslintrc.js
+.gitignore
+.npmignore
+babel.config.js
+jest.config.mjs
+set-version.sh
+tsconfig.json
+webpack.config.js
+
+# source code files
+src/
+test/

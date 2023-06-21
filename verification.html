@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+</head>
+
+<body class="">
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="reg formTabs headerBeginner">
+    <div class="row">
+      <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
+        <div class="pl-6 pt-3">
+          <img src="./assets/img/reg5.png" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 col-12 h-[88vh] bg-[url('./assets/img/slide4.png')] bg-no-repeat bg-center p-0">
+        <div class="w-full h-[88vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
+          <div class="px-40 pt-[50px]">
+            <div class="flex justify-center">
+              <iconify-icon icon="material-symbols:check-circle" class="text-[#00AF52]" width="42"
+                height="42"></iconify-icon>
+            </div>
+            <p class="text-center text-xl mb-2">Congratulations!</p>
+            <p class="text-sm text-gray-600 text-center"> Your account has been successfully created.
+              To complete the verification process, please choose your preferred
+              method of verification.</p>
+
+            <div class="mt-4 flex items-center justify-center gap-3" id="theMsg">
+              <button id="sendEmail" class="button flex items-center gap-2">
+                <iconify-icon class="text-xl" icon="simple-line-icons:envolope"></iconify-icon>
+                Email verification</button>
+
+              <button id="sendSMS" class="outline-btn flex items-center gap-2">
+                <iconify-icon class="text-xl" icon="material-symbols:phone-android-outline-rounded"></iconify-icon>
+                Phone verification</button>
+            </div>
+            <div id="msg_boxx" class="w-full">
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script>
+
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/verification.js"></script>
+</body>
+
+</html>

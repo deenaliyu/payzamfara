@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+
+</head>
+
+<body>
+  <header>
+    <div class="flex gap-2 items-center p-3 border-b">
+      <img src="./assets/img/logo.png" class="w-[50px]" alt="">
+      <p class="text-md fontBold">Primeguage IBS</p>
+    </div>
+
+  </header>
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="w-3/12 md:block hidden bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="flex px-1 h-full">
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp1.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp3.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp4.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp5.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp5.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/corp5.png" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-center overflow-y-scroll md:px-10 px-4">
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="history.go(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 w-8/12">
+
+          <h1 class="fontBold text-lg">Register</h1>
+          <p class="mt-2 mb-4">Company Information</p>
+
+          <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+            <div class="form-group md:w-6/12">
+              <label for="">Tax Category*</label>
+              <select class=" form-select enumInput" data-name="tax_category" required>
+                <option value="Formal">Formal</option>
+                <option value="Informal">Informal</option>
+                <option value="Presumptive tax">Presumptive tax</option>
+              </select>
+            </div>
+
+            <div class="form-group md:w-6/12">
+              <label for="">Name of Organization*</label>
+              <input type=" text" class="form-control w-full enumInput" data-name="name"
+                placeholder="Enter Organization name" required>
+            </div>
+
+          </div>
+
+          <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+            <div class="form-group md:w-6/12">
+              <label for="">Industry*</label>
+              <select class="form-select enumInput" data-name="industry" required>
+                <option value="">Select</option>
+                <option value="Fishing">Fishing</option>
+              </select>
+            </div>
+
+            <div class="form-group md:w-6/12">
+              <label for="">Number of Staff*</label>
+              <select class="form-select enumInput" data-name="staff_quota" required>
+                <option value="0-20">0-20</option>
+                <option value="21-50">21-50</option>
+                <option value="51-100">51-100</option>
+                <option value="101-250">101-250</option>
+                <option value="250 and above">250 and above</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+            <div class="form-group md:w-6/12">
+              <label for="">TIN (Optional)</label>
+              <input type="text" class="form-control w-full enumInput" data-name="tin">
+            </div>
+
+            <div class="form-group md:w-6/12">
+              <label for="">Email*</label>
+              <input type="email" class="form-control w-full enumInput" data-name="email" required>
+            </div>
+
+          </div>
+
+
+          <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+            <div class="form-group md:w-6/12">
+              <label for="">State*</label>
+              <select class="form-select enumInput" data-name="state" required>
+                <option value="Akwa Ibom">Akwa Ibom</option>
+              </select>
+            </div>
+
+            <div class="form-group md:w-6/12">
+              <label for="">LGA*</label>
+              <select class="form-select enumInput" data-name="lga" required>
+                <option value="Abak">Abak</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+            <div class="form-group md:w-6/12">
+              <label for="">Address*</label>
+              <input type="text" class="form-control enumInput" data-name="address" placeholder="Enter address here"
+                required>
+            </div>
+
+            <div class="form-group md:w-6/12">
+              <label for="">Area*</label>
+              <select class="form-select enumInput" data-name="area" required>
+                <option value="Select---">Select---</option>
+              </select>
+            </div>
+
+          </div>
+
+          <button class="button w-full mb-4" onclick="continueReg()" type="button">Continue</button>
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 w-8/12">
+
+          <h1 class="fontBold text-lg">Company Representative</h1>
+          <p class="mt-2 mb-4">Please enter company representative details</p>
+
+          <form action="" class="mt-4 w-8/12">
+
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">First Name*</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="first_name" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Surname*</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="last_name" required>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Email*</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="email" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Phone number*</label>
+                <input type="tel" class="form-control w-full enumInput2" data-name="phone" required>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">ID Type*</label>
+                <select class="form-select enumInput2" data-name="id_type" required>
+                  <option value="">Select ---</option>
+                  <option value="1">BVN</option>
+                  <option value="2">NIN</option>
+
+                </select>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">ID Number*</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="id_number"
+                  placeholder="Input ID number" required>
+              </div>
+
+            </div>
+
+
+
+            <div class="form-group mb-3 ">
+
+              <label for="">Position*</label>
+              <select class="form-select enumInput2" data-name="position" required>
+                <option value="1">CEO</option>
+                <option value="2">Director</option>
+                <option value="3">MD</option>
+                <option value="4">Board Chairman</option>
+                <option value="5">Other please specify</option>
+
+              </select>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">State*</label>
+                <select class="form-select enumInput2" data-name="state" required>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">LGA*</label>
+                <select class="form-select enumInput2" data-name="lga" required>
+                  <option value="Abak">Abak</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="form-group mb-3 ">
+
+              <label for="">Address*</label>
+              <input type="text" class="form-control enumInput2" data-name="address" placeholder="Enter address here"
+                required>
+
+            </div>
+
+            <button class="button w-full mb-4" onclick="continueReg2()" type="button">Continue</button>
+
+          </form>
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 w-8/12">
+
+          <h1 class="fontBold text-lg">Bio</h1>
+          <p class="mt-2 mb-4">Compnany representative Biometric Information</p>
+
+          <div class="form-group mb-3">
+            <label for="">Upload Profile picture*</label>
+            <img src="./assets/img/profilecompany.png" alt="">
+          </div>
+
+          <div class="form-group mb-3 mt-5">
+            <label for="">Capture Biometrics</label>
+            <img src="./assets/img/biometrics.png" alt="">
+          </div>
+
+
+
+          <button class="button w-full mb-4" onclick="previewPage()" type="button">Preview</button>
+
+        </form>
+
+      </section>
+
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-between mt-4">
+          <button class="outline-btn" onclick="nextPrev(-3)">Edit Profile</button>
+
+          <button class="button flex items-center gap-3">
+            <iconify-icon icon="uit:print"></iconify-icon>
+            <span> Print</span>
+          </button>
+        </div>
+
+        <div class="border rounded-md p-3 mt-4">
+          <p>Biometrics Information</p>
+
+          <img src="./assets/img/profilecompany.png" alt="">
+
+          <img src="./assets/img/bio2.png" class="mt-3" alt="">
+
+          <p class="mt-3">Company Information</p>
+
+          <form action="" class="mt-4 w-8/12">
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Tax Category</label>
+                <input class="form-control enumPrev1" data-name="tax_category" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Name of Organization</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="name" readonly>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Industry</label>
+                <input class="form-control enumPrev1" data-name="industry" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Number of Staff</label>
+                <input class="form-control enumPrev1" data-name="staff_quota" readonly>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">TIN (Optional)</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="tin" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Email</label>
+                <input type="email" class="form-control w-full enumPrev1" data-name="email" readonly>
+              </div>
+
+            </div>
+
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">State</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="state" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">LGA</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="lga" readonly>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Address</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="address" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Area</label>
+                <input type="text" class="form-control w-full enumPrev1" data-name="area" readonly>
+              </div>
+
+            </div>
+
+            <p>Company Representative</p>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">First Name</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="first_name" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Surname</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="last_name" readonly>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Email</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="email" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Phone number</label>
+                <input type="tel" class="form-control w-full enumPrev2" data-name="phone" readonly>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">ID Type</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="id_type" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">ID Number</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="id_number" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group mb-3 ">
+
+              <label for="">Position</label>
+              <input type="text" class="form-control w-full enumPrev2" data-name="position" readonly>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">State</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="state" readonly>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">LGA</label>
+                <input type="text" class="form-control w-full enumPrev2" data-name="lga" readonly>
+              </div>
+
+            </div>
+
+            <div class="form-group mb-3 ">
+
+              <label for="">Address</label>
+              <input type="text" class="form-control w-full enumPrev2" data-name="address" readonly>
+
+            </div>
+
+
+            <p>Account Credentials</p>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Payer ID</label>
+                <input type="text" class="form-control w-full" value="AKWI-3430" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Password</label>
+                <input type="text" class="form-control w-full" id="password" readonly>
+              </div>
+
+            </div>
+
+
+
+          </form>
+        </div>
+
+        <button class="button w-8/12 mt-3 mb-4" onclick="registerUser()">Verify</button>
+        <div id="msg_box"></div>
+
+
+      </section>
+
+      <section class="formTabs pb-5" id="payment">
+
+
+        <div class="mt-5">
+          <h1 class="text-lg fontBold text-center">Congratulations</h1>
+
+          <p class="text-center mt-5">To complete the user registration process, kindly choose your preferred
+            method of
+            verification</p>
+
+
+          <div class="flex justify-around mt-5">
+            <button class="button flex items-center gap-3" onclick="nextPrev(1)">
+              <iconify-icon icon="iconamoon:email"></iconify-icon>
+              <span>Email Verification</span>
+            </button>
+
+            <button class="outline-btn flex items-center gap-3" onclick="nextPrev(1)">
+              <iconify-icon icon="quill:phone"></iconify-icon>
+              <span>Phone Verification</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="formTabs pb-5" id="receipt">
+
+        <h1 class="text-lg fontBold text-center mt-20">OTP Verification</h1>
+        <p class="text-center">We Have Sent A One Time Password To
+          You</p>
+
+
+        <div class="form-group flex justify-center mt-5">
+          <input type="text" class="form-control w-4/12" placeholder="Enter OTP">
+        </div>
+
+        <div class="flex justify-center mt-5">
+          <button class="button" onclick="nextPrev(1)">Verify</button>
+        </div>
+
+        <div class="mt-5">
+          <p class="text-center">Didn't get OTP ? <span class="textPrimary">Resend</span></p>
+        </div>
+
+        <p onclick="nextPrev(-1)" class="mt-5 textPrimary text-center cursor-pointer">Choose a new verification
+          method
+        </p>
+      </section>
+
+      <section class="formTabs pb-5" id="receipt">
+
+        <div class="flex justify-center mt-20">
+          <img src="./assets/img/succes.png" alt="">
+        </div>
+
+        <div class="flex justify-center mt-10">
+          <a href="index.html" class="button">Go to Dashboard</a>
+        </div>
+
+      </section>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/tabHandler.js"></script>
+  <script src="assets/js/enumerationcorp.js"></script>
+</body>
+
+</html>

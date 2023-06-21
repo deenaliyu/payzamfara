@@ -1,0 +1,16 @@
+@media(max-width: 767px) {
+  .theForm {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .theLogo {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .maintenancePage .container {
+    max-width: 900px;
+  }
+}

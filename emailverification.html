@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrimeGuage</title>
+
+    <!-- FAVION ICON -->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+    <style>
+        .wrapper {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            justify-items: space-between;
+        }
+
+        .wrapper input.field {
+            width: 50px;
+            height: 50px;
+            line-height: 75px;
+            font-size: 32px;
+            border: none;
+            background-color: #D9D9D9;
+            border-radius: 5px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #093030;
+            margin-bottom: 25px;
+        }
+
+        .wrapper input.field:focus {
+            outline: none;
+        }
+
+        button.disabled {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body class="headerBeginner">
+    <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+    <section class="">
+        <div class="row">
+            <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
+                <div class="pl-6 pt-3">
+                    <img src="./assets/img/reg4.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-9 col-12 h-[88vh] bg-[url('./assets/img/slide4.png')] bg-no-repeat bg-center p-0">
+                <div class="w-full h-[88vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
+                    <!-- <section class="absolute w-full h-[20vh] items-center flex justify-center z-10"
+                        id="preloader">
+                        <div>
+                            <p class="text-center textPrimary text-lg">Verifying Account</p>
+                            <div class="flex justify-center items-center mt-4">
+                                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                            </div>
+                        </div>
+
+                    </section> -->
+                    <div class="md:px-40 pt-[100px]">
+                        <p class="text-base text-gray-600 text-center mt-4" id="thetext">-</p>
+
+                        <div class="flex justify-center">
+                            <a href="signin.html" class="button mt-4 w-full">Login</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="assets/js/aos-master/dist/aos.js"></script>
+    <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script>
+
+    </script>
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/emailVerify.js"></script>
+</body>
+
+</html>

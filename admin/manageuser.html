@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="./assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="./assets/js/config.js"></script>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme"></aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar navi container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Users</h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-5">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex ">
+                <span class="input-group-text rounded-full" id="basic-addon-search31"><i
+                    class="bx bx-search"></i></span>
+                <input type="text" class="form-control rounded-full" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+              <a href="createuser.html" class="button">Create new User</a>
+
+
+
+              <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
+              </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
+            </div>
+
+          </div>
+
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper">
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <section class="w-12/12 main_section">
+              <div class="p-2">
+                <div class="w-full">
+                  <a type="button" style='color: #005826; font-weight: 500;' onclick="history.back()">Back to User
+                    list</a>
+                  <h1 class="fontBold text-xl mb-4">Manage users</h1>
+
+                  <div class="card card-body" id="accessLevelview">
+
+                  </div>
+
+                  <section class="card-body card mt-4">
+
+
+                    <form action="">
+                      <div class="row md:w-[800px]">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label text-[16px]">Name of User <span
+                              class="text-[red]">*</span></label>
+                          <input required type="text" class="form-control userInputs" data-name="fullname"
+                            placeholder="Enter Full Name.." />
+                        </div>
+                      </div>
+                      <div class="row md:w-[800px]">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label text-[16px]">Email Address <span
+                              class="text-[red]">*</span></label>
+                          <input required type="email" class="form-control userInputs" data-name="email"
+                            placeholder="Email address" />
+                        </div>
+                      </div>
+                      <div class="row md:w-[800px]">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label text-[16px]">Phone Number <span
+                              class="text-[red]">*</span></label>
+                          <input required type="number" class="form-control userInputs" data-name="phone"
+                            placeholder="Phone Number" />
+                        </div>
+                      </div>
+                      <div class="row md:w-[800px]">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label text-[16px]">Password <span
+                              class="text-[red]">*</span></label>
+                          <div class=" input-group">
+                            <input required type="password" class="form-control passInput userInputs"
+                              data-name="password" id="basic-default-password12" placeholder="Create password for user">
+
+                            <span id="opPas" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mt-3 md:w-[800px]">
+                        <p class="text-[#555555]">Access Level</p>
+                        <div class="grid grid-cols-4 gap-3 mt-3 flex-wrap">
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="material-symbols:dashboard"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Dashboard</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="dashboard_access" value="0"
+                                  id="flacces">
+                                <label class="form-check-label text-[#005826]" for="flacces">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="dashboard_access" type="radio" value="1"
+                                  id="vlaccess">
+                                <label class="form-check-label text-[#005826]" for="vlaccess">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="uil:analytics"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Analytics</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="mt-3">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="analytics_access" value="0"
+                                    id="flacces2">
+                                  <label class="form-check-label text-[#005826]" for="flacces2">Full Access</label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" name="analytics_access" type="radio" value="1"
+                                    id="vlaccess2">
+                                  <label class="form-check-label text-[#005826]" for="vlaccess2">View only</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="mdi:building"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">MDAs</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="mda_access" value="0" id="flacces3">
+                                <label class="form-check-label text-[#005826]" for="flacces3">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="mda_access" type="radio" value="1" id="vlaccess3">
+                                <label class="form-check-label text-[#005826]" for="vlaccess3">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="mdi:report-bell-curve-cumulative"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Reports</p>
+                            </div>
+
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reports_access" value="0"
+                                  id="flacces4">
+                                <label class="form-check-label text-[#005826]" for="flacces4">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="reports_access" type="radio" value="1"
+                                  id="vlaccess4">
+                                <label class="form-check-label text-[#005826]" for="vlaccess4">View only</label>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="mdi:account-payment-outline"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Tax Payer</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tax_payer_access" value="0"
+                                  id="flacces5">
+                                <label class="form-check-label text-[#005826]" for="flacces5">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="tax_payer_access" type="radio" value="1"
+                                  id="vlaccess5">
+                                <label class="form-check-label text-[#005826]" for="vlaccess5">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="mdi:user-group"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Users</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="users_access" value="0"
+                                  id="flacces6">
+                                <label class="form-check-label text-[#005826]" for="flacces6">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="users_access" type="radio" value="1"
+                                  id="vlaccess6">
+                                <label class="form-check-label text-[#005826]" for="vlaccess6">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="material-symbols:upload-file-rounded"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">CMS</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cms_access" value="0" id="flacces7">
+                                <label class="form-check-label text-[#005826]" for="flacces7">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="cms_access" type="radio" value="1" id="vlaccess7">
+                                <label class="form-check-label text-[#005826]" for="vlaccess7">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="">
+                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
+                              <iconify-icon icon="teenyicons:headset-solid"
+                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
+                              <p class="text-[#005826] text-[16px]">Support</p>
+                            </div>
+                            <div class="mt-3">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="support" value="0" id="flacces8">
+                                <label class="form-check-label text-[#005826]" for="flacces8">Full Access</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" name="support" type="radio" value="1" id="vlaccess8">
+                                <label class="form-check-label text-[#005826]" for="vlaccess8">View only</label>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="flex justify-center mt-4">
+                        <button id="createUser" class="btn btn-primary rounded-xl mt-2 w-4/12">Edit
+                          User</button>
+                      </div>
+
+
+                      <div id="msg_box"></div>
+                    </form>
+
+                  </section>
+
+
+                </div>
+            </section>
+          </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/nav.js"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="./assets/js/manageusers.js"></script>
+  <script src="./assets/js/main.js"></script>
+</body>
+
+</html>

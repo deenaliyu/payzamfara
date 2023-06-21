@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+  <style>
+    .formTabs {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="">
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+  <section class="reg formTabs firstForm headerBeginner">
+    <div class="row">
+      <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
+        <div class="pl-6 pt-3">
+          <img src="./assets/img/reg1.png" alt="">
+        </div>
+      </div>
+      <div class="col-md-9 col-12 h-[88vh] bg-[url('./assets/img/slide2.png')] bg-no-repeat bg-center p-0">
+        <div class="w-full h-[88vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
+          <div class="flex justify-center pt-[40px]">
+            <div class="">
+              <h4 class="text-[#101828] text-[30px] text-center">Register</h4>
+              <p class="text-[#101828] text-[20px] text-center">Select your category</p>
+              <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
+                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi " data-name="individual">
+                  <div class="flex justify-center pt-2">
+                    <img src="./assets/img/icons/signup_personal.png.png" class="text-center" alt="">
+                  </div>
+                  <p class="text-[14px] text-center">Individual</p>
+                  <p class="text-[12px] text-center pt-2">These are individuals who are required to
+                    pay taxes on their personal income, such as salary, freelance work, rental
+                    income, etc.</p>
+                </div>
+                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="corporate">
+                  <div class="flex justify-center pt-2">
+                    <img src="./assets/img/icons/signup_sole_sig.png.png" class="text-center" alt="">
+                  </div>
+                  <p class="text-[14px] text-center">Corporate</p>
+                  <p class="text-[12px] text-center pt-2">These are businesses, including corporations
+                    and limited liability companies, that are required to pay taxes on their
+                    profits.</p>
+                </div>
+              </div>
+              <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
+                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="state">
+                  <div class="flex justify-center pt-2">
+                    <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
+                  </div>
+                  <p class="text-[14px] text-center">State Agency</p>
+                  <p class="text-[12px] text-center pt-2">These are government agencies and
+                    departments at the state level that are responsible for paying taxes on their
+                    operations.</p>
+                </div>
+                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="federal">
+                  <div class="flex justify-center pt-2">
+                    <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
+                  </div>
+                  <p class="text-[14px] text-center">Federal Agency</p>
+                  <p class="text-[12px] text-center pt-2">These are government agencies and
+                    departments at the federal level that are responsible for paying taxes on their
+                    operations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end md:pr-20">
+            <button class="button flex items-center gap-x-2  disabled bb">Proceed <iconify-icon
+                icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script>
+
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/register.js"></script>
+</body>
+
+</html>

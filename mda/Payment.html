@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+</head>
+
+<style>
+  .modal-content {
+    background-color: white;
+    margin: 2vh auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70vh;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
+<body>
+
+
+  <!-- modal -->
+  <div id="myModal" class="modal mt-[20vh] ">
+    <div class="modal-content  bg-black">
+      <span class="close flex align-items-end justify-content-end">&times;</span>
+      <div class="text-2.2vh text-white">
+        After collecting all cash payments, it is mandatory to deposit
+        the funds to the government account through a bank deposit or transfer.
+        This is necessary for proper accounting and to comply with financial regulations.
+      </div>
+    </div>
+  </div>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme">
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl h-[15vh] align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">
+                Payment
+              </h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-2">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31" />
+              </div>
+            </div>
+
+
+            <a href="./cashpayment.html" class="md:text-[2.2vh] text-[2vh] hover:text-white" onclick=>
+              <button class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[40vh]">
+                Cash Payment
+              </button>
+            </a>
+
+
+            <!-- <div class="mt-4 flex flex-row gap-2">
+            <div class="">
+              <img
+                src="./assets/img/avatars/1.png"
+                alt
+                class="md:w-[7vh] w-10 h-auto rounded-circle"
+              />
+            </div>
+
+            <div class="md:mt-[2vh] text-black text-[2vh] md:text-[2.3vh]">
+              Ministry of Agriculture
+            </div>
+          </div> -->
+
+            <a class="mt-4 flex flex-row gap-2" href="./profile.html">
+              <div class="">
+                <img src="./assets/img/avatars/1.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle" />
+              </div>
+
+              <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]" id="mdName">
+                Ministry of Agriculture
+              </div>
+            </a>
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <div class="px-4 pt-4 pt-3 bg-white border-t-2 border-grey-500 h-[100vh]  px-4">
+          <div class=" flex justify-content-between ">
+            <p>Payment</p>
+
+            <a href="#" class="text-black hover:text-[#005826]">
+              <p class="flex flex-row gap-1 " id="MyBTN">
+                Cash Deposit
+                <iconify-icon icon="gg:danger"></iconify-icon>
+              </p>
+            </a>
+          </div>
+
+          <div class="card border-2 mt-2">
+            <div class=" md:flex md:flex-row justify-content-around px-4 md:my-4 my-4 md:ml-0 mx-[4vh]">
+              <a class="" href="./cashpayment.html">
+                <button
+                  class="text-center border-1 border-[#005826] md:my-0 my-2 py-2 lg:px-[20vh] px-[15vh]  rounded-3xl bg-[transparent] hover:bg-[#005826] text-[#005826] hover:text-white">
+                  Cash Payment
+                </button>
+              </a>
+
+
+
+
+              <a class="" href="./generateinvoice.html">
+
+                <button
+                  class="text-center border-1 border-[#005826] md:my-0 my-2 py-2 lg:px-[20vh] px-[14vh] rounded-3xl bg-[transparent] hover:bg-[#005826] text-[#005826] hover:text-white">
+
+                  Generate Invoice
+
+                </button>
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <div class="px-4 border-1 rounded-2xl mt-4">
+            <p class="text-[2.6vh] pt-[5vh] font-semibbold text-black">Payment History</p>
+            <div class="border-t-2 mx-2 pt-3  px-2">
+
+              <div class="table-responsive">
+                <table class="table table-striped" id="dataTable">
+                  <thead>
+                    <tr class="text-center text-[2.2vh]">
+                      <th>S/N</th>
+                      <th>Date of payment</th>
+                      <th>Payer Name</th>
+                      <th>Payment for</th>
+                      <th>Amount paid</th>
+                      <th>Paid by</th>
+                      <th>Payment method</th>
+                      <th>Status</th>
+
+                    </tr>
+                  </thead>
+                  <tbody id="showPayment">
+
+                  </tbody>
+                  <!-- <tbody class="table-border-bottom-0" id="showUsers">
+                <tr class="text-[2vh] text-center">
+                  <td>1</td>
+                  <td>12/22/2091</td>
+                  <td>Mior otunba</td>
+                  <td>Tractor</td>
+                  <td>20000</td>
+                  <td>mior otunba</td>
+                  <td>paystack</td>
+                  <td><div class="bg-[#ECFDF3] rounded-2xl py-1 px-3">
+                    <p class="text-[#027A48]">Paid</p>
+                  </div></td>
+                  <td>
+                    <button class="button py-1 px-3">
+                      <a href="#" class="hover:text-white"
+                        >view</a
+                      >
+                    </button>
+                  </td>
+                </tr>
+                <tr class="text-[2vh] text-center">
+                  <td>1</td>
+                  <td>12/22/2091</td>
+                  <td>Mior otunba</td>
+                  <td>Tractor</td>
+                  <td>20000</td>
+                  <td>mior otunba</td>
+                  <td>paystack</td>
+                  <td><div class="bg-[#ECFDF3] rounded-2xl py-1 px-3">
+                    <p class="text-[#027A48]">Paid</p>
+                  </div></td>
+                  <td>
+                    <button class="button py-1 px-3">
+                      <a href="#" class="hover:text-white"
+                        >view</a
+                      >
+                    </button>
+                  </td>
+                </tr>
+              </tbody> -->
+                </table>
+              </div>
+              <div class="flex justify-center items-center mt-4" id="loader">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                loading...
+              </div>
+            </div>
+          </div>
+
+          <!-- Content wrapper -->
+
+
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <div class="modal fade" id="generateInvModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+            </button>
+          </div>
+          <div class="modal-body relative">
+            <div class="flex justify-center">
+              <form class=" sm:w-10/12 p-3 relative h-[50vh] overflow-y-auto">
+                <h1 class="text-2xl font-bold mb-6 text-center">Generate Invoice</h1>
+
+                <div id="formShower">
+
+                </div>
+                <div class="form-group">
+                  <select name="" id="getMDAs" class="form-select">
+                    <option disabled selected>--- Select MDA ---</option>
+                  </select>
+                </div>
+
+                <p class="text-3xl fontBold mt-10">List of Payable Taxes</p>
+                <p class="text-gray-600">Select those applicable</p>
+
+                <div class="mt-6" id="listOfpayable">
+
+                </div>
+
+
+              </form>
+            </div>
+            <button class="button w-full mt-6" id="generateInvoice">Generate Invoice</button>
+            <div id="msg_box" class="w-full">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="notiModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Notifications</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+            </button>
+          </div>
+          <div class="modal-body relative">
+            <div class="flex justify-between">
+              <p class="text-[16px]">Your TIN has been verified</p>
+              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+            </div>
+            <hr class="text-[#D7D7D7] my-3">
+            <div class="flex justify-between">
+              <p class="text-[16px]">Your payment is successful</p>
+              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+            </div>
+            <hr class="text-[#D7D7D7] my-3">
+            <div class="flex justify-between">
+              <p class="text-[16px]">Your complaint has been answered</p>
+              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+            </div>
+            <hr class="text-[#D7D7D7] my-3">
+            <div class="flex justify-between">
+              <p class="text-[16px]">Your payment is successful</p>
+              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+            </div>
+            <hr class="text-[#D7D7D7] my-3">
+            <div class="flex justify-between">
+              <p class="text-[16px]">Your payment is due</p>
+              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / Layout wrapper -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="./assets/vendor/libs/popper/popper.js"></script>
+    <script src="./assets/vendor/js/bootstrap.js"></script>
+    <script src="./assets/js/jquery.datatables.min.js"></script>
+    <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+    <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="./assets/js/nav.js"></script>
+    <script src="./assets/vendor/js/menu.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="./assets/js/session.js"></script> -->
+    <!-- endbuild -->
+    <script src="../assets/js/invoicess.js"></script>
+    <script src="./assets/js/payments.js"></script>
+    <script>
+      let theAtivo = document.querySelector(`.dae`)
+      theAtivo.parentElement.classList.add("active")
+    </script>
+    <!-- Vendors JS -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <!-- Main JS -->
+
+    <script src="./assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+    <script>
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("MyBTN");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal
+      btn.onmouseenter = function () {
+        modal.style.display = "block";
+      };
+
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+</body>
+
+</html>

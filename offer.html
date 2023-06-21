@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+</head>
+
+<body>
+
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader">
+
+
+  </header>
+
+  <section class="h-[20vh] bg-[url('./assets/img/offer.png')] relative headerBeginner">
+    <div class="absolute w-full h-full" style="background: #00000060;"></div>
+
+    <div class="flex justify-center items-center h-full">
+      <h1 class="fontBold text-center text-white text-3xl z-10 relative">What We Offer</h1>
+    </div>
+
+  </section>
+
+  <section class="breadcrumb border-b border-gray-200 px-10 py-3 bg-white">
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="text-[#555555]">Home</a>
+      <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl text-[#555555]"></iconify-icon>
+      <p class="textPrimary">What we offer</p>
+    </div>
+  </section>
+
+  <section class="mt-3 px-10">
+
+    <h1 class="text-4xl text-center text-[#101828] mb-2">Services that makes the process easier</h1>
+    <div class="flex justify-center">
+      <img src="./assets/img/lineorange.png" class="w-[30%]" alt="">
+    </div>
+    <p class="text-center mt-4">Getting information for filing your taxes just got easier</p>
+
+
+    <div class="flex justify-center mt-10">
+
+      <div class="grid grid-cols-3 gap-4" id="showServices">
+
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="mt-10 h-[80vh] bg-[url('./assets/img/servicebg.png')] relative">
+    <div class="absolute w-full h-full" style="background: #0000007b;"></div>
+
+    <div class="px-20 pt-10 z-10 relative">
+      <h1 class="text-5xl fontBold text-white w-[70%] mt-10">Efficient and transparent processes</h1>
+      <p class="mt-6 text-white w-[65%]">Tax payment in Zamfara has been made an easy, convenient, and secure way to pay all taxes or bills owed to 
+        the Zamfara state government.</p>
+
+      <button class="button flex items-center gap-3 rounded-lg mt-10">
+        <span>What we do</span>
+        <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl"></iconify-icon>
+      </button>
+    </div>
+
+  </section>
+
+  <section class="px-20 mt-10">
+    <div class="grid grid-cols-3 gap-4">
+
+      <div class="border border-gray-100 rounded-lg text-center p-3">
+        <h1 class="text-xl">Pay Tax</h1>
+
+        <p class="text-[#555555] text-sm mt-3">Make payments of<br>
+          All kinds of Tax HERE</p>
+        <div class="flex justify-center mt-3">
+          <button class="button flex items-center gap-3 rounded-lg">Learn more</button>
+        </div>
+      </div>
+
+      <div class="border border-gray-100 rounded-lg text-center p-3">
+        <iconify-icon icon="mdi:address-marker-outline" class="text-3xl textPrimary"></iconify-icon>
+
+        <p class="text-xl mt-3">Our Address</p>
+        <p class="mt-3 text-[#555555] text-sm">No. 37 Kwame Nkurumah<br>
+          Crescent, Asokoro, Abuja.</p>
+      </div>
+
+      <div class="border border-gray-100 rounded-lg text-center p-3">
+        <iconify-icon icon="mdi:address-marker-outline" class="text-3xl textPrimary"></iconify-icon>
+
+        <p class="text-xl mt-3">Contact Us</p>
+        <p class="mt-3 text-[#555555] text-sm">Email: info@primeguage.com<br>
+          Phone No: 070-774-634-8243</p>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <section class="w-full mt-20" id="footer">
+
+  </section>
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    let theServices = [
+      {
+        icon: "mdi:person-check-outline",
+        name: "Self service",
+        content: "Sign in or register to pay bills or taxes as an Individual, corporate, state agency or federal agency."
+      },
+      {
+        icon: "la:money-check-alt",
+        name: "Pay taxes & services",
+        content: "You can pay for taxes, services or bills such as PAYE, Land use charge Vehicle registration, Withholding tax, Business premises, Capital gain tax, Waste management, etc"
+      },
+      {
+        icon: "loan-icon",
+        name: "Multiple payment channels",
+        content: "Enjoy a faster and easier way to pay taxes or bills. Payments can be made against an invoice at any bank branch or online payments with debits cards (POS, Verve, Visa, or MasterCard)"
+      },
+      {
+        icon: "financial-statement-icon",
+        name: "Payment transaction methods",
+        content: "View your tax information and payment history over a period of time."
+      }, {
+        icon: "ri:todo-line",
+        name: "Learn more",
+        content: "We are here to help you understand how to pay your bills or taxes with ease."
+      },
+      {
+        icon: "ant-design:transaction-outlined",
+        name: "Track transactions",
+        content: "Easy access to your payment history and receipt. View, share and download your receipts with ease."
+      },
+      {
+        icon: "online-secure-payment-icon",
+        name: "Safe & secure",
+        content: "Payments are routed through the most secured channels, ensuring safe and secure transactions."
+      },
+      {
+        icon: "boy-services-support-icon",
+        name: "24/7 Support",
+        content: "We are always available to assist and ensure that your tax payment and all payments to the government is seamless."
+      }
+    ]
+
+    theServices.forEach(service => {
+      $("#showServices").append(`
+        <div class="text-center">
+          <div class="flex justify-center">
+            <div class='rounded-full bgPrimary w-[50px] h-[50px] flex justify-center items-center'>
+             <iconify-icon icon="${service.icon}" class="text-white text-xl"></iconify-icon> 
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <p>${service.name}</p>
+            <div class="flex justify-center">
+              <img src="./assets/img/lineorange.png" class="w-[50%] mt-1" />
+            </div>
+
+            <div class="flex justify-center">
+              <p class="text-sm text-[#555555] mt-2 w-[80%]">${service.content}</p>
+            </div>
+            
+          </div>
+
+        </div>
+      `)
+
+    })
+  </script>
+  <script src="assets/js/landing.js"></script>
+  <script src="assets/js/landingcms.js"></script>
+</body>
+
+</html>

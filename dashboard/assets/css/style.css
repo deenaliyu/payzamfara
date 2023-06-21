@@ -1,0 +1,397 @@
+.button {
+  background: #005826 !important;
+  color: #fff !important;
+  border: 2px solid var(--primaryCol);
+  border-radius: 100px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+
+.message-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.crisp-client .cc-tlyw .cc-qfnu {
+  background-color: #005826 !important;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.send-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #3366ff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #1952cc;
+}
+
+.send-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(51, 102, 255, 0.5);
+}
+
+/* Container for the conversation */
+.conversation-container {
+
+  margin: 20px auto;
+
+}
+
+/* Individual message */
+.message {
+  padding: 10px;
+  /* border-bottom: 1px solid #ccc; */
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin-bottom: 10px;
+}
+
+/* Sender's message */
+.message.sent {
+  background-color: #dcf8c6;
+}
+
+/* Receiver's message */
+.message.received {
+  background-color: #fff;
+}
+
+/* Message content */
+.message .content {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Timestamp */
+.message .timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+
+
+
+.bgPrimary {
+  background-color: #005826;
+}
+
+.btn-prime {
+  color: #fff;
+  background-color: #005826;
+  border-color: #005826;
+  box-shadow: 0 0.125rem 0.25rem 0 #005826;
+  border-radius: 100px !important;
+}
+
+.btn-prime:hover {
+  color: #fff;
+  background-color: #005826;
+  border-color: #005826;
+  transform: translateY(-1px);
+  border-radius: 100px !important;
+}
+
+.theShadCard {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: white;
+
+}
+
+
+.theChart {
+  max-width: 100%;
+}
+
+.invTable tbody tr td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.invTable2 tbody tr td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 12px !important;
+}
+
+.tooltip-arrow,
+.red-tooltip+.tooltip>.tooltip-inner {
+  max-width: 236px !important;
+  height: 76px;
+  font-size: 12px;
+  padding: 10px 15px 10px 20px;
+  background: #FFFFFF;
+  color: rgba(0, 0, 0, .7);
+  border: 1px solid #737373;
+  text-align: left;
+}
+
+.menu .app-brand.demo {
+  height: fit-content !important;
+}
+
+.swal2-container {
+  background: rgba(17, 17, 18, 1.4) !important;
+  z-index: 1086 !important;
+}
+
+.bg-menu-theme {
+  background-color: #E0CEC4 !important;
+  color: #697a8d;
+}
+
+.bg-menu-theme .menu-link, .bg-menu-theme .menu-horizontal-prev, .bg-menu-theme .menu-horizontal-next {
+  color: #005826;
+}
+
+.menu-vertical .menu-inner>.menu-item {
+  margin: 8px 0;
+}
+
+.layout-navbar.navbar-detached {
+  width: calc(100% - (1.625rem * 2));
+  margin: 0.75rem auto 0;
+  border-radius: 0.375rem;
+  padding: 3rem 1.5rem;
+}
+
+.navbar-detached {
+  box-shadow: none !important;
+  ;
+}
+
+.btn.btn-prime {
+  color: #fff;
+  background-color: #005826 !important;
+  border-color: #005826;
+  box-shadow: 0 0.125rem 0.25rem 0 #005826;
+  border-radius: 100px !important;
+}
+
+.btn.btn-prime:hover {
+  color: #fff;
+  background-color: #005826;
+  border-color: #005826;
+  transform: translateY(-1px);
+  border-radius: 100px !important;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.btn-prime-outline {
+  color: #005826 !important;
+  background-color: #fff !important;
+  border: 1px solid #005826;
+  border-radius: 100px !important;
+  padding: 7px 20px;
+}
+
+.btn-prime-outline:hover {
+  color: #005826;
+  background-color: #fff;
+  border-color: #005826;
+  transform: translateY(-1px);
+  border-radius: 100px !important;
+}
+
+.post .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+  background-color: #f5f5f9 !important;
+  color: #1E1E1E !important;
+  box-shadow: none;
+}
+
+.post .nav-pills .nav-link {
+  background-color: #f5f5f9 !important;
+  color: #8E8E8E;
+}
+
+.post .nav-align-top>.tab-content, .nav-align-right>.tab-content, .nav-align-bottom>.tab-content, .nav-align-left>.tab-content {
+  flex-shrink: 1;
+  border: 0 solid #d9dee3;
+  box-shadow: none;
+  background-clip: padding-box;
+  background: none;
+}
+
+.billing .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+  background-color: #fff !important;
+  color: #1E1E1E !important;
+  box-shadow: none;
+  border-bottom: 2px solid #005826;
+  border-radius: 0px;
+}
+
+.billing .nav-pills .nav-link {
+  background-color: #fff !important;
+  color: #8E8E8E;
+}
+
+.billing .nav-align-top>.tab-content, .nav-align-right>.tab-content, .nav-align-bottom>.tab-content, .nav-align-left>.tab-content {
+  flex-shrink: 1;
+  border: 0 solid #d9dee3;
+  box-shadow: none;
+  background-clip: padding-box;
+  background: none;
+}
+
+ul {
+  text-decoration: none !important;
+}
+
+.stretched-link {
+  text-decoration: none;
+  color: #005826 !important;
+}
+
+.lol {
+  clip-path: polygon(4% 1%, 100% 0%, 100% 75%, 11% 75%, 0 100%, 4% 70%, 4% 70%);
+  border-radius: 10px 10px 10px;
+}
+
+.table> :not(caption)>*>* {
+  padding: 0.625rem 0.7rem !important;
+}
+
+.invoiceTable tr td {
+  font-size: 14px;
+}
+
+.menu .app-brand.demo {
+  height: fit-content !important;
+}
+
+.dashCards {
+  padding: 10px;
+}
+
+.dashCards .icoCont {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashCards .icoCont iconify-icon {
+  font-size: 24px;
+}
+
+.dashCards .headder {
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.dashCards .zanumbers {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.cardTCrd {
+  padding: 10px;
+}
+
+.cardTCrd .icoContt {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardTCrd .icoContt iconify-icon {
+  font-size: 24px;
+}
+
+.swal2-container {
+  background: rgba(17, 17, 18, 1.4) !important;
+  z-index: 1086 !important;
+}
+
+.theCard {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 10px;
+}
+
+.theCard .rightCrd {
+  border-radius: 80px 10px 10px 80px;
+}
+
+.decis {
+  color: #666a6c;
+  margin-bottom: 20px;
+  font-weight: 200;
+}
+
+.mainText {
+  font-family: LatoBold;
+}
+
+.dashCards {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px !important;
+  border-radius: 10px;
+
+}
+
+.taxes .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #005826;
+  background-color: none;
+  border-bottom: 2px solid #005826;
+  border-radius: 0%;
+  font-size: 14px;
+}
+
+.taxes .nav {
+  border-bottom: 1px solid #D7D7D7;
+  font-size: 14px;
+}
+
+.taxes .nav-pills .nav-link, .nav-pills .show>.nav-link {
+  color: #005826;
+  background-color: none;
+  border-radius: 0%;
+  font-size: 14px;
+}
+
+a:hover {
+  color: #005826;
+}
+
+
+.taxes .nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+  background-color: #fff;
+  color: black;
+  box-shadow: none !important;
+  border-radius: 0%;
+}
+
+.service .cardoo {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+/* .crisp-client .cc-1m7s .cc-qvio {
+  background-color: #1972F5 !important;
+} */

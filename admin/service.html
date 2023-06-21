@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+   <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="https://cdn.tiny.cloud/1/a2nnryhuz1r1qtqf4ap5nkr1msakmeqobebopr1d2o3nfx1h/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="./assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="./assets/js/config.js"></script>
+<style>
+  a .disabled,
+a [disabled],
+fieldset[disabled] a {
+    cursor: not-allowed;
+}
+</style>
+</head>
+
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme"></aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar navi container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">E-services</h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-5">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex ">
+                <span class="input-group-text rounded-full" id="basic-addon-search31"><i
+                    class="bx bx-search"></i></span>
+                <input type="text" class="form-control rounded-full" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+
+
+
+              <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
+              </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
+            </div>
+
+          </div>
+
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper">
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <section class="w-12/12 main_section">
+              <div class="p-2">
+                <div class="w-full">
+
+                  <ul class="nav nav-pills mb-3 md:gap-[26px] gap-6" role="tablist">
+
+                    <li class="nav-item flex align-items-center">
+                      <button class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#taxfiling">
+                        Tax Filing
+                      </button>
+                    </li>
+
+                    <li class="nav-item flex align-items-center">
+                      <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#tinrequests">
+                        TIN Requests
+                      </button>
+                    </li>
+
+                    <li class="nav-item flex align-items-center">
+                      <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                        data-bs-target="#taxclrance">
+                        Tax Clearance certificate
+                      </button>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content p-0">
+                    <div class="tab-pane fade active show" id="taxfiling" role="tabpanel">
+
+                      <div class="card card-body">
+                        <div class="table-responsive p-2">
+                          <table class="table invoiceTable" id="dataTable">
+                            <thead>
+                              <tr class="text-center">
+                                <th>Date sent</th>
+                                <th>Next due date</th>
+                                <th>Reference number</th>
+                                <th>Category</th>
+                                <th>Tax filled</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0" id="showThem">
+          
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="tinrequests" role="tabpanel">
+
+                      <div class="card card-body">
+                        <div class="table-responsive p-2">
+                          <table class="table invoiceTable" id="dataTable2">
+                            <thead>
+                              <tr class="text-center">
+                                <th>Date sent</th>
+                                <th>Reference number</th>
+                                <!-- <th>Category</th> -->
+                                <th>Status</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0" id="showTin">
+          
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="flex justify-center items-center mt-4" id="loader2">
+                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="taxclrance" role="tabpanel">
+
+                      <div class="card card-body">
+                        <div class="table-responsive p-2">
+                          <table class="table invoiceTable" id="dataTable3">
+                            <thead>
+                              <tr class="text-center">
+                                <th>Date sent</th>
+                                <th>Reference number</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                <th>TCC</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0" id="showcert">
+          
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="flex justify-center items-center mt-4" id="loader3">
+                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                </div>
+            </section>
+          </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/service.js"></script>
+  <script>
+    let theAtivo = document.querySelector(".mdol")
+    theAtivo.parentElement.classList.add("active")
+  </script>
+</body>
+
+</html>

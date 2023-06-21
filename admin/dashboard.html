@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+
+  <style>
+    .collapse {
+      visibility: visible !important;
+    }
+
+    .theChart {
+      max-width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body class="taxpayer">
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme">
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-5 ms-auto">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+
+              <div class="avatar avatar-online flex gap-x-2 items-center">
+                <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+                <p class="adminName">-</p>
+              </div>
+            </div>
+
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper">
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <section class="w-12/12 main_section">
+              <div class="p-2">
+                <div class="w-full">
+                  <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
+
+                    <div class="dashCards card w-full flex-col space-y-2  ">
+                      <div class="flex items-center  justify-start">
+                        <div class="icoCont bg-[#1c315c1f] mr-auto">
+                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                        </div>
+                        <p class=" text-gray-500 text-xs impMetrics ">TOTAL MONTHLY REVENUE</p>
+                      </div>
+
+
+                      <div class="form-group w-1/2 ml-auto">
+                        <select class="form-select " required name="" id="">
+                          <option value="January">January</option>
+                          <option value="February">February</option>
+                          <option value="March">March</option>
+                          <option value="April">April</option>
+                        </select>
+                      </div>
+
+                      <p class="zanumbers text-end">
+                        &#8358;<span id="total_amount_invoiced">-</span>
+                      </p>
+                    </div>
+
+                    <div class="dashCards card w-full flex-col space-y-2  ">
+                      <div class="flex items-center  justify-start">
+                        <div class="icoCont bg-[#1c315c1f] mr-auto">
+                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                        </div>
+                        <p class=" text-gray-500 text-xs impMetrics ">TOTAL ANUAL REVENUE</p>
+                      </div>
+
+
+                      <div class="form-group w-1/2 ml-auto">
+                        <select class="form-select " required name="" id="">
+                          <option value="2023">2023</option>
+                        </select>
+                      </div>
+
+                      <p class="zanumbers text-end">
+                        &#8358; <span id="total_amount_invoiced2">-</span>
+                      </p>
+                    </div>
+
+                    <div class="dashCards card w-full flex-col space-y-2  ">
+                      <div class="flex items-center  justify-start">
+                        <div class="icoCont bg-[#f890301f] mr-auto">
+                          <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
+                        </div>
+                        <p class="text-gray-500 text-xs impMetrics">EXPECTED MONTHLY REVENUE</p>
+                      </div>
+
+
+                      <div class="form-group w-1/2 ml-auto">
+                        <select class="form-select " required name="" id="">
+                          <option value="January">January</option>
+                          <option value="February">February</option>
+                          <option value="March">March</option>
+                          <option value="April">April</option>
+                        </select>
+                      </div>
+
+                      <p class="zanumbers text-end">
+                        &#8358;<span id="due_amount">-</span>
+                      </p>
+                    </div>
+
+                    <div class="dashCards card w-full flex-col space-y-2  ">
+                      <div class="flex items-center  justify-start">
+                        <div class="icoCont bg-[#1c315c1f] mr-auto">
+                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                        </div>
+                        <p class=" text-gray-500 text-xs impMetrics">REGISTERED TAX PAYER</p>
+                      </div>
+
+                      <p class="zanumbers text-end">
+                        <span id="reg_taxP">-</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-end mt-4">
+                    <button class="flex justify-end items-center text-[#E85039]" data-bs-toggle="collapse"
+                      data-bs-target="#viewMore">
+                      <span class="">View More</span>
+                      <iconify-icon width="30" height="30" icon="material-symbols:arrow-drop-down"></iconify-icon>
+
+                    </button>
+                  </div>
+
+
+
+                  <section class="collapse" id="viewMore">
+                    <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class="text-gray-500 text-xs text-end ">
+                            TOTAL NUMBER OF INVOICE
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end" id="total_invoices">-</p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end">
+                            TOTAL AMOUNT INVOICED
+                          </p>
+                        </div>
+
+                        <p class="zanumbers text-end">
+                          &#8358;<span id="total_amount_invoiced3">-</span>
+                        </p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D32121]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL NUMBER OF INVOICE DUE
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end">
+                          <span id="due_amoun">100</span>
+                        </p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL NUMBER OF INVOICE PAID
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end">
+                          <span id="total_amoun">200</span>
+                        </p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D32121]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL AMOUNT OF INVOICE DUE
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end">
+                          &#8358;<span id="due_amount2">-</span>
+                        </p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL AMOUNT OF INVOICE PAID
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end">
+                          &#8358;<span id="total_amountP">-</span>
+                        </p>
+                      </div>
+                      <!-- THIRD ROW -->
+
+
+
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#1c315c1f] mr-auto">
+                            <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL NUMBER OF MDA
+                          </p>
+                        </div>
+
+
+
+                        <p class="zanumbers text-end">
+                          <span id="totalMDAs"></span>
+                        </p>
+                      </div>
+
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#1c315c1f] mr-auto">
+                            <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                          </div>
+                          <p class=" text-gray-500 text-xs text-end ">
+                            TOTAL NUMBER OF REVENUE HEADS
+                          </p>
+                        </div>
+
+
+
+                        <p class="zanumbers text-end">
+                          <span id="totalrevs">80</span>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+
+
+                  <div class="row mt-4 gap-y-6">
+                    <div class="col-md-6">
+                      <div class="card h-full">
+                        <div class="border-1 p-2 flex">
+                          <h2 class="mr-auto">Tax Performance</h2>
+                          <div class="flex space-x-2">
+                            <button class=" text-[10px]  button-3">
+                              1 D
+                            </button>
+
+                            <button class=" text-[10px]  button-3">
+                              1 W
+                            </button>
+                            <button class=" text-[10px]  button-3">
+                              1 M
+                            </button>
+                          </div>
+                        </div>
+
+
+                        <div class="p-4 h-full flex justify-center items-center">
+                          <div>
+                            <div class="flex text-[#039855] items-center">
+                              <iconify-icon icon="mdi:arrow-up-thin" class="text-xl"></iconify-icon>
+                              <p class="text-xl">(+38.92%)</p>
+                            </div>
+                            <img src="./assets/img/taxperformance.png" alt="">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 md:mt-0">
+                      <div class="card">
+                        <div id="gauge-graph" class="theChart"></div>
+
+                        <p class="text-center -mt-20 mb-2 text-black">% of number of invoices paid on time</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-4 gap-y-6">
+                    <div class="col-md-6">
+                      <div class="card ">
+                        <div class="border-1 p-2 flex">
+                          <h2 class="mr-auto text-md text-bold">INVOICE GRAPH</h2>
+                        </div>
+
+                        <div id="report-bar-chart" class="theChart"></div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6  md:mt-0">
+
+                      <div class="card ">
+                        <div class="border-1 p-2 flex">
+                          <h2 class="mr-auto text-md text-bold">REVENUE GENERATED BY MDA</h2>
+
+                        </div>
+                        <div id="donut-chart-widget" class="theChart"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </section>
+          </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+
+  <div class="modal fade" id="notiModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Notifications</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body relative">
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your TIN has been verified</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+              clear
+            </button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3" />
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is successful</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+              clear
+            </button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3" />
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your complaint has been answered</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+              clear
+            </button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3" />
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is successful</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+              clear
+            </button>
+          </div>
+          <hr class="text-[#D7D7D7] my-3" />
+          <div class="flex justify-between">
+            <p class="text-[16px]">Your payment is due</p>
+            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+              clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
+  <script src="assets/js/adminDash.js"></script>
+  <script>
+    let theAtivo = document.querySelector(`.dass`);
+    theAtivo.parentElement.classList.add("active");
+  </script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+
+  <!-- Main JS -->
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/dashboard.js"></script>
+  <!-- <script src="../assets/js/invoicess.js"></script> -->
+  <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
+
+  <!-- Page JS -->
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

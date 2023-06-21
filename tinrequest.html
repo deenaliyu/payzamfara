@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="hidden md:block w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 pt-[100px] h-full">
+        <div>
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div class="active"></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Primary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Secondary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Generate Reference</h1>
+            </div>
+          </div>
+
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-white overflow-y-scroll">
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a href="eservices.html" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl">TIN Request</h1>
+            <h1 class="mb-3 mt-3">Primary Information</h1>
+
+            <div class="form-group mb-4">
+              <label for="">Title*</label>
+              <div class="flex gap-3">
+                <div class="form-group">
+                  <input type="radio" class="" name="title" id="mr">
+                  <label for="mr">Mr</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" class="" name="title" id="mrs">
+                  <label for="mrs">Mrs</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" class="" name="title" id="miss">
+                  <label for="miss">Miss</label>
+                </div>
+                <div class="form-group">
+                  <input type="radio" class="" name="title" id="others">
+                  <label for="others">Others</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">First name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="first_name" required
+                  placeholder="Enter your first name">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Surname*</label>
+                <input type="text" class="form-control tinReqInput" data-name="surname" required
+                  placeholder="Enter your last name">
+              </div>
+
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Middle name</label>
+                <input type="text" class="form-control tinReqInput" data-name="middle_name" required
+                  placeholder="Enter your middle name">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Nationaly*</label>
+                <input type="text" class="form-control tinReqInput" data-name="natioality" required
+                  placeholder="Nationality">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Phone number 1 *</label>
+                <input type="tel" class="form-control tinReqInput" data-name="phone_number_1" required
+                  placeholder="234">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Phone number 2 *</label>
+                <input type="tel" class="form-control tinReqInput" data-name="phone_number_2" required
+                  placeholder="234">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">State of Origin*</label>
+                <select name="" id="states" class="form-select tinReqInput" data-name="state_of_origin" required>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Marital Status*</label>
+                <select name="" class="form-select tinReqInput" data-name="marital_status" required>
+                  <option value="Single">Single</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Date of birth*</label>
+                <input type="date" class="form-control tinReqInput" data-name="birthday" required placeholder="234">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Occupation*</label>
+                <input type="text" class="form-control tinReqInput" data-name="occupation" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Gender*</label>
+                <select name="" class="form-select tinReqInput" data-name="gender" required>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Email*</label>
+                <input type="text" class="form-control tinReqInput" data-name="email" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Mothers Maiden Name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="mother_maiden_name" required>
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Mothers Name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="mother_name" required>
+              </div>
+            </div>
+
+            <hr class="mb-2">
+
+            <h1 class="text-xl fontBold mb-3">Identification Card</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Type of Identification*</label>
+                <select name="" class="form-select tinReqInput" data-name="id_card" required>
+                  <option selected disabled>Select--</option>
+                  <option value="International Passport">International Passport</option>
+                  <option value="National ID Card">National ID Card</option>
+                </select>
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">ID Number*</label>
+                <input type="text" class="form-control tinReqInput" data-name="id_number" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Issuance Date*</label>
+                <input type="date" class="form-control tinReqInput" data-name="date_issue" required>
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Expiry Date*</label>
+                <input type="date" class="form-control tinReqInput" data-name="expiring_date" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Place of Issuance*</label>
+                <input type="text" class="form-control tinReqInput" data-name="place_of_issue" required>
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">ID Issuing Authority*</label>
+                <input type="text" class="form-control tinReqInput" data-name="id_issuing_authority" required>
+              </div>
+            </div>
+
+            <hr class="mb-2">
+
+            <h1 class="text-xl fontBold mb-3">Tax Assessment/Payment Details</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Last Assessment Date</label>
+                <input type="date" class="form-control tinReqInput" data-name="last_assessment_date">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Last Assessment Amount</label>
+                <input type="text" class="form-control tinReqInput" data-name="last_assessment_amount">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Last Payment Date</label>
+                <input type="date" class="form-control tinReqInput" data-name="last_payment_date">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Last Payment Amount</label>
+                <input type="text" class="form-control tinReqInput" data-name="last_payment_amount">
+              </div>
+            </div>
+
+            <div class="form-group md:w-6/12 w-full mb-4">
+              <label for="">Tax Type</label>
+              <select name="" class="form-select tinReqInput" data-name="tax_type">
+                <option selected disabled>Select Tax Type</option>
+                <!-- <option value="Female">Female</option> -->
+              </select>
+            </div>
+
+            <hr class="mb-2">
+
+            <h1 class="text-xl fontBold mb-3">Total Income for the Past Three Years</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2023" class="form-control tinReqInput" data-name="first_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control tinReqInput" data-name="first_income">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2022" class="form-control tinReqInput" data-name="second_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control tinReqInput" data-name="second_income">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Year</label>
+                <input type="text" placeholder="2021" class="form-control tinReqInput" data-name="third_year">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Income</label>
+                <input type="text" class="form-control tinReqInput" data-name="third_income">
+              </div>
+            </div>
+
+
+
+            <button class="button w-full mb-20" type="button" onclick="nextPrev(1)">Continue</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a onclick="nextPrev(-1)" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl">TIN Request</h1>
+            <h1 class="mb-3 mt-3">Secondary Information</h1>
+
+            <h1 class="mb-3 mt-3">Tax Representative Details</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="name" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">TIN*</label>
+                <input type="text" class="form-control tinReqInput" data-name="tin" required>
+              </div>
+
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Reg.Type</label>
+                <input type="text" class="form-control tinReqInput" data-name="retyp" required placeholder="TaxAgent">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Reason*</label>
+                <input type="text" class="form-control tinReqInput" data-name="reason" required>
+              </div>
+            </div>
+
+            <hr class="mb-3">
+            <h1 class="mb-3 mt-3">Representative Details</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">State*</label>
+                <select name="" id="states" class="form-select tinReqInput" data-name="state" required>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">LGA*</label>
+                <select name="" id="states" class="form-select tinReqInput" data-name="local_gvt" required>
+                  <option selected disabled>Select--</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Ward*</label>
+                <input type="date" class="form-control tinReqInput" data-name="ward" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">City/Town/Area*</label>
+                <input type="text" class="form-control tinReqInput" data-name="city" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Street Name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="street_name" required>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">House No.*</label>
+                <input type="text" class="form-control tinReqInput" data-name="house_no" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Phone number 1*</label>
+                <input type="text" class="form-control tinReqInput" data-name="phone_number_1" required
+                  placeholder="234">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Phone number 2*</label>
+                <input type="text" class="form-control tinReqInput" data-name="phone_number_2" required>
+              </div>
+
+            </div>
+
+            <div class="form-group  md:w-6/12 w-full mb-4">
+              <label for="">Email*</label>
+              <input type="email" class="form-control tinReqInput" data-name="email" required>
+            </div>
+            <hr class="mb-3">
+
+            <h1 class="mb-3 mt-3 fontBold text-xl">Source of Income</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Source of Income*</label>
+                <select name="" class="form-select tinReqInput" data-name="source_of_income" required>
+                  <option value="Employee">Employee</option>
+                  <!-- <option value="Female">Female</option> -->
+                </select>
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Employer Name*</label>
+                <input type="text" class="form-control tinReqInput" data-name="employer_name" required>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Employer TIN</label>
+                <input type="text" class="form-control tinReqInput" data-name="employer_tin">
+              </div>
+
+              <div class="form-group  md:w-6/12 w-full">
+                <label for="">Start Date Of Employment</label>
+                <input type="date" class="form-control tinReqInput" data-name="start_date_of_employment">
+              </div>
+            </div>
+
+            <hr class="mb-3">
+            <h1 class="mb-3 mt-3 fontBold text-xl">Dependent/Children/Spouse</h1>
+            <p class="text-sm text-[#555555] mb-4">fill this section only if you have a dependant or spouse</p>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Dep/Child SurName</label>
+                <input type="text" class="form-control tinReqInput" data-name="dep_child_first_name"
+                  placeholder="Enter surname">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Dep/Child SurName</label>
+                <input type="text" class="form-control tinReqInput" data-name="dep_child_surname"
+                  placeholder="Enter first name">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Middle Name</label>
+                <input type="text" class="form-control tinReqInput" data-name="dep_child_middle_name"
+                  placeholder="Enter middle name">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">State of Origin*</label>
+                <select name="" class="form-select tinReqInput" data-name="dep_child_state" id="">
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Date of Birth</label>
+                <input type="date" class="form-control tinReqInput" data-name="dep_child_birthday"
+                  placeholder="Enter middle name">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">TIN</label>
+                <input type="text" class="form-control tinReqInput" data-name="dep_child_tin">
+              </div>
+            </div>
+
+            <div class="form-group md:w-6/12 w-full">
+              <label for="">Relationship Type</label>
+              <select name="" class="form-select tinReqInput" data-name="dep_child_relationship_type" id="">
+                <option disabled selected>Select--</option>
+              </select>
+            </div>
+
+            <!-- <table class="table mt-3 shadow-md rounded-lg">
+              <thead>
+                <tr>
+                  <td class="text-sm text-[#555555]">Dep/Child SurName</td>
+                  <td class="text-sm text-[#555555]">First Name</td>
+                  <td class="text-sm text-[#555555]">Middle Name</td>
+                  <td class="text-sm text-[#555555]">State of Origin</td>
+                  <td class="text-sm text-[#555555]">DOB</td>
+                  <td class="text-sm text-[#555555]">TIN</td>
+                  <td class="text-sm text-[#555555]">Relationship Type</td>
+                </tr>
+              </thead>
+              <tbody class="bg-gray-100">
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table> -->
+
+            <hr class="mb-4">
+            <h1 class="mb-3 mt-3 fontBold text-xl">Spouse</h1>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Spouse Surname</label>
+                <input type="text" class="form-control tinReqInput" data-name="sponser_surname"
+                  placeholder="Enter surname">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Spouse First Name</label>
+                <input type="text" class="form-control tinReqInput" data-name="sponser_first_name"
+                  placeholder="Enter first name">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 mb-4">
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Middle Name</label>
+                <input type="text" class="form-control tinReqInput" data-name="sponser_middle_name"
+                  placeholder="Enter Middle">
+              </div>
+
+              <div class="form-group md:w-6/12 w-full">
+                <label for="">Start Date</label>
+                <input type="date" class="form-control tinReqInput" data-name="sponser_middle_name">
+              </div>
+            </div>
+
+            <div class="form-group md:w-6/12 w-full mb-4">
+              <label for="">TIN</label>
+              <input type="text" class="form-control tinReqInput" data-name="sponser_tin">
+            </div>
+
+            <div class="form-group">
+              <input type="checkbox" class="form-check-input" id="agree">
+              <label for="agree">fill this section only if you have a dependant or spouse</label>
+            </div>
+
+
+            <button class="button w-full mt-5" onclick="nextPrev(1)" type="button">Continue</button>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a onclick="nextPrev(-1)" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl">TIN Request</h1>
+            <h1 class="mb-3 mt-3">File Uploads</h1>
+
+            <div class="form-group  w-full mb-3">
+              <label class="">Self-assessment form upload *</label>
+              <input class="form-control mt-1 tinReqInput2" data-name="form_assessment_upload" accept=".pdf,.png,.jpg,.jpeg" required
+                type="file" />
+            </div>
+            <div class="form-group w-full mb-3">
+              <label class="">Income tax form *</label>
+              <input class="form-control mt-1 tinReqInput2" data-name="tax_income_upload" accept=".pdf,.png,.jpg,.jpeg" required
+                type="file" />
+            </div>
+
+            <div class="form-group w-full mb-3">
+              <label class="">FORM H1 *</label>
+              <input class="form-control mt-1 tinReqInput2" data-name="form_upload_4" accept=".pdf,.png,.jpg,.jpeg" required
+                type="file" />
+            </div>
+
+            <div class="form-group w-full mb-3">
+              <label class="">Schedule of Tax Deductions*</label>
+              <input class="form-control mt-1 tinReqInput2" data-name="form_upload_5" accept=".pdf,.png,.jpg,.jpeg" required
+                type="file" />
+            </div>
+
+
+            <button class="button w-full mt-5" id="tinRequestBtn" type="button">Submit</button>
+
+            <div id="msg_box"></div>
+            <div id="msg_box2"></div>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a href="eservices.html" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <div action="" class="w-[70%] mt-10">
+            <h1 class="fontBold text-2xl">TIN Request</h1>
+            <h1 class="mb-3 mt-3">Generate Reference</h1>
+
+            <h1 class="text-2xl" id="refNumber">323232</h1>
+
+            <p>Please Save your reference number after submitting your application to help track its progress. The
+              reference number will be used to identify and track your application throughout the review process. You
+              can generate the reference number by clicking on the button below.
+              Thank you for submitting your application, and we look forward to processing it.
+              Best regards,</p>
+
+            <div class="mt-5 gap-4">
+              <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
+                number</button> -->
+              <a href="eservices.html" class="outline-btn">Go Back</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div class="modal fade" id="refNumberModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="text-md">TIN reference</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+              </button>
+            </div>
+            <div class="modal-body px-5">
+
+              <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
+              <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
+              <p class="text-center text-[#555555]">Kindly check back later to know your application
+                status.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/tabHandler.js"></script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
+  <script src="assets/js/tinrequest.js"></script>
+</body>
+
+</html>

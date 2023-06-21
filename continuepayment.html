@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 items-center h-full">
+        <div>
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div class="active"></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Generate Invoice</h1>
+              <p class="text-[#555555]">Download your invoice or make payment</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Make Payment</h1>
+              <p class="text-[#555555]">Choose a payment method and pay</p>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="w-9/12 bg-[url('./assets/img/slideimg.png')] bg-center overflow-y-scroll">
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-center py-[100px] h-full">
+
+          <form action="" class="w-[60%]">
+            <h1 class="fontBold text-2xl">Continue Payment</h1>
+            <h1 class="mb-3 mt-3">Invoice Number</h1>
+
+            <div class="form-group mb-4">
+              <label for="">Input your invoice number*</label>
+              <input type="text" class="form-control" value="2632">
+            </div>
+
+            <button class="button w-full" type="button" onclick="nextPrev(1)">Continue</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="pt-10 px-10">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div id="makePayment">
+
+
+
+        </div>
+
+
+
+      </section>
+
+
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/payment.js"></script>
+  <script src="assets/js/generateinvoice.js"></script>
+  <script src="assets/js/landingcms.js"></script>
+</body>
+
+</html>

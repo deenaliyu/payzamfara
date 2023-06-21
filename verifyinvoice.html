@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="w-3/12 md:block hidden bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="flex px-1 h-full">
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/verside1.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/verside2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/verside3.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/verside3.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/verside4.png" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-[url('./assets/img/slideimg.png')] bg-center overflow-y-scroll">
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[90%]">
+            <h1 class="fontBold text-2xl" id="title">Verify Invoice</h1>
+            <h1 class="mb-3 mt-3">Invoice Number</h1>
+
+            <div class="form-group mb-4">
+              <label for="">Input your invoice number*</label>
+              <input type="text" class="form-control" id="invoice_number">
+            </div>
+
+            <div class="verifiyer text-center mb-3"></div>
+
+            <button class="button w-full" type="button" id="verifyInvoice">Verify</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[90%]" id="verInvv">
+            <!-- COMING FROM JS INVOICE.JS -->
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-10 pt-3 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="invoiceContainer flex justify-center">
+
+          <div class="invoice bg-white md:w-[70%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
+            <!-- COMING FROM JS invoice.js -->
+          </div>
+
+
+        </div>
+
+        <div class="flex justify-center px-4">
+          <div>
+            <div class="mt-4">
+              <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
+            </div>
+            <div class="flex justify-between flex-wrap mt-4 gap-3">
+              <div class="flex gap-3 items-center">
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Download Invoice</span>
+                </button>
+
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Invoice</span>
+                </button>
+              </div>
+
+              <button class="button flex gap-3 items-center px-10" onclick="nextPrev(1)">
+                <span>Proceed</span>
+                <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="formTabs pb-5" id="payment">
+        <div class="pt-10 px-10">
+          <button class="flex items-center gap-2" onclick="nextPrev(-2)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div id="makePayment">
+
+          <!-- PAYMENT DESIGN COMING FROM PAYMENT.js -->
+        </div>
+
+      </section>
+
+      <section class="formTabs pb-5" id="receipt">
+
+        <div class="invoiceContainer flex justify-center pr-10 mt-20">
+
+          <div class="invoice bg-white w-[70%] shadow-md" id="receiptCard">
+            <!-- RECEIPT FROM JS -->
+          </div>
+
+
+        </div>
+
+        <div class="flex justify-center pr-10">
+          <div class="w-[70%]">
+            <!-- <div class="mt-4">
+              <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
+            </div> -->
+            <div class="flex justify-between flex-wrap mt-4">
+
+              <div class="flex gap-3 items-center">
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('receiptCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Download Receipt</span>
+                </button>
+
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('receiptCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Receipt</span>
+                </button>
+              </div>
+
+              <a href="index.html" class="button flex gap-3 items-center px-10">
+                <span>Return to home page</span>
+                <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+
+      </section>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/payment.js"></script>
+  <script src="assets/js/tabHandler.js"></script>
+  <script src="assets/js/invoice.js"></script>
+  <script src="assets/js/verifyInvoice.js"></script>
+  <script src="assets/js/landingcms.js"></script>
+</body>
+
+</html>

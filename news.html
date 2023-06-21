@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+</head>
+
+<body>
+
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader">
+
+
+  </header>
+
+  <section class="h-[20vh] bg-[url('./assets/img/news.png')] relative headerBeginner">
+    <div class="absolute w-full h-full" style="background: #00000060;"></div>
+
+    <div class="flex justify-center items-center h-full">
+      <h1 class="fontBold text-center text-white text-3xl z-10 relative">News</h1>
+    </div>
+
+  </section>
+
+  <section class="breadcrumb border-b border-gray-200 px-10 py-3 bg-white">
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="text-[#555555]">Home</a>
+      <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl text-[#555555]"></iconify-icon>
+      <p class="textPrimary">News</p>
+    </div>
+  </section>
+
+
+  <section class="mt-3 px-10">
+    <h1 class="text-4xl text-center text-[#101828] mb-2">Stay Updated</h1>
+    <div class="flex justify-center">
+      <img src="./assets/img/line.png" class="w-[10%]" alt="">
+    </div>
+
+    <section class="newsContainer mt-10 row justify-content-center">
+
+      <div class="flex justify-center items-center mt-4">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+      </div>
+
+    </section>
+
+
+
+
+  </section>
+
+  <div class="modal fade" id="newsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">News</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div id="thenewsCont">
+
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <section class="w-full mt-20" id="footer">
+
+  </section>
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+
+  <script src="assets/js/landing.js"></script>
+  <script src="assets/js/landingcms.js"></script>
+</body>
+
+</html>

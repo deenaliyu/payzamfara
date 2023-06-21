@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader">
+
+
+  </header>
+
+  <section class="h-[20vh] bg-[url('./assets/img/eservices.png')] relative headerBeginner">
+    <div class="absolute w-full h-full" style="background: #00000060;"></div>
+
+    <div class="flex justify-center items-center h-full">
+      <h1 class="fontBold text-center text-white text-3xl z-10 relative">E-Services</h1>
+    </div>
+
+  </section>
+
+  <section class="breadcrumb border-b border-gray-200 px-10 py-3 bg-white">
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="text-[#555555]">Home</a>
+      <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl text-[#555555]"></iconify-icon>
+      <a class="textPrimary" href="eservices.html">E-Services</a>
+      <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl text-[#555555]"></iconify-icon>
+      <p class="textPrimary">Tax Filing</p>
+    </div>
+  </section>
+
+
+  <section class="mt-3 px-10">
+    <section class="formTabs">
+      <h1 class="text-4xl text-center text-[#101828] mb-2">Tax Filing</h1>
+      <p class="text-center">Follow the steps below</p>
+
+      <div class="flex justify-center mt-10">
+        <ul class="list-decimal md:w-[60%] w-full">
+          <li class="text-[#555555] mb-2">Download the Self-assessment form that applies to the tax you're filing.</li>
+          <li class="text-[#555555] mb-2"> Fill it appropriately.</li>
+          <li class="text-[#555555] mb-2">Then proceed to upload it alongside other required documents.</li>
+          <li class="text-[#555555] mb-2">Generate a reference number which you can use to check if your invoice has
+            generated If your invoice has
+            been generated,</li>
+          <li class="text-[#555555] mb-2">If your invoice has been generated, you can go to the homepage and click on
+            “Pay Now” to pay. </li>
+        </ul>
+      </div>
+
+      <h1 class="text-2xl fontBold text-center mt-4">Taxes that need to be filed </h1>
+
+      <div class="flex justify-center">
+        <table class="md:w-[60%] w-full mt-4 table">
+          <thead>
+            <tr>
+              <td class="text-[#555555] text-center">S/N</td>
+              <td class="text-[#555555] text-center">Description</td>
+              <td class="text-[#555555] text-center">Frequency</td>
+              <td class="text-[#555555] text-center"></td>
+            </tr>
+          </thead>
+          <tbody class="text-center text-[#101828]">
+            <tr>
+              <td>1</td>
+              <td>Pay As You Earn Tax (PAYE)</td>
+              <td>Monthly</td>
+              <td>
+                <button>
+                  <iconify-icon icon="material-symbols:download" class="text-2xl"></iconify-icon>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Withholding Tax (WHT)</td>
+              <td>Monthly</td>
+              <td>
+                <button>
+                  <iconify-icon icon="material-symbols:download" class="text-2xl"></iconify-icon>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Company Income Tax (CIT)</td>
+              <td>Annually</td>
+              <td>
+                <button>
+                  <iconify-icon icon="material-symbols:download" class="text-2xl"></iconify-icon>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Education Tax</td>
+              <td>Annually</td>
+              <td>
+                <button>
+                  <iconify-icon icon="material-symbols:download" class="text-2xl"></iconify-icon>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Development levy</td>
+              <td>One-off</td>
+              <td>
+                <button>
+                  <iconify-icon icon="material-symbols:download" class="text-2xl"></iconify-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="flex justify-center mt-4">
+        <button class="button w-[60%]" onclick="nextPrev(1)">Proceed</button>
+      </div>
+    </section>
+
+    <section class="mt-10 formTabs">
+      <div class="flex justify-center mt-10">
+
+        <form action="" class="md:w-[60%] w-full">
+          <h1 class="text-lg fontBold mb-4">Tax Filing</h1>
+
+          <div class="flex items-center gap-3 mb-4">
+            <div class="form-group md:w-6/12 w-full">
+              <label for="">select your category*</label>
+              <select class="form-select taxFInput" data-name="category" required id="selectAccType">
+                <option value="1">Coporate</option>
+                <option value="2" selected>Individual</option>
+                <option value="3">Federal Agency</option>
+                <option value="4">State Agency</option>
+              </select>
+            </div>
+
+            <div class="form-group  md:w-6/12 w-full">
+              <label for="">What Tax do you want to file for?*</label>
+              <select class="form-select taxFInput" data-name="tax_to_file" required id="">
+                <option value="PAYE">PAYE</option>
+                <option value="TRACTOR HIRING SERVICE">TRACTOR HIRING SERVICE</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="flex items-center gap-3 mb-4">
+            <div class="form-group md:w-6/12 w-full">
+              <label for="">First name*</label>
+              <input type="text" class="form-control taxFInput" data-name="first_name" required
+                placeholder="Enter your first name">
+            </div>
+
+            <div class="form-group  md:w-6/12 w-full">
+              <label for="">Surname*</label>
+              <input type="text" class="form-control taxFInput" data-name="surname" required
+                placeholder="Enter your last name">
+            </div>
+
+          </div>
+
+          <div class="flex items-center gap-3 mb-4">
+            <div class="form-group md:w-6/12 w-full">
+              <label for="">Email*</label>
+              <input type="text" class="form-control taxFInput" data-name="email" required
+                placeholder="Enter your email">
+            </div>
+
+            <div class="form-group  md:w-6/12 w-full">
+              <label for="">Phone number*</label>
+              <input type="text" class="form-control taxFInput" data-name="phone_number" required
+                placeholder="Enter your phone number">
+            </div>
+
+          </div>
+
+          <div class="" id="indivCorporate">
+
+            <div class="md:flex gap-3 mt-3">
+              <div class="form-group md:w-6/12  w-full">
+                <label class="">Self-assessment form upload *</label>
+                <input class="form-control mt-1 taxFInput2" data-name="form_assessment_upload"
+                  accept=".pdf,.png,.jpg,.jpeg" required type="file" />
+              </div>
+              <div class="form-group md:w-6/12 w-full">
+                <label class="">Income tax form *</label>
+                <input class="form-control mt-1 taxFInput2" data-name="tax_income_upload" accept=".pdf,.png,.jpg,.jpeg"
+                  required type="file" />
+              </div>
+            </div>
+            <div class="md:flex gap-3 mt-3">
+              <div class="form-group md:w-6/12 w-full">
+                <label class="">Evidence of tax payment *</label>
+                <input class="form-control mt-1 taxFInput2" data-name="evidence_of_tax_payment"
+                  accept=".pdf,.png,.jpg,.jpeg" required type="file" />
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+
+
+
+
+      <div class="flex justify-center mt-4">
+        <button class="button md:w-6/12" id="generateReferenceNum">Generate Reference Number</button>
+      </div>
+
+      <div id="msg_box"></div>
+      <div id="msg_box2"></div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="refNumberModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="text-md">Tax filing reference</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+            </button>
+          </div>
+          <div class="modal-body px-5">
+
+            <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
+            <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
+            <p class="text-center text-[#555555]">Kindly check back later to know your application
+              status.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </section>
+
+
+  <section class="w-full mt-20" id="footer">
+
+  </section>
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/filetax.js"></script>
+</body>
+
+</html>

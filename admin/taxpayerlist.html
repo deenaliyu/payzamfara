@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Prime Gauge</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+</head>
+
+<body class="taxpayer">
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme">
+
+      </aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center gap-x-5" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black">Date: <span id="datei"> </span></p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Payer</h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-5">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+              <div class="dropdown mt-2">
+                <button class="flex gap-1 align-items-center" type="button" id="filtermda" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
+                  Filter
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
+                  <button class="dropdown-item" value="Individual" id="Individual">Individual</button>
+                  <button class="dropdown-item" value="Corporate" id="Corporate">Corporate</button>
+                  <button class="dropdown-item" value="Lastlogin" id="login">Last login</button>
+                  <button class="dropdown-item" value="invoicegenerated" id="generated">No of invoice
+                    generated</button>
+                  <button class="dropdown-item" value="Totalpayment" id="payment">Total
+                    payment</button>
+                </div>
+              </div>
+
+              <!-- <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
+                onclick="tableToCSV()">
+
+                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
+                Report</button> -->
+
+              <div class="avatar avatar-online flex gap-x-5">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+                <p class="adminName">system Admin</p>
+              </div>
+            </div>
+
+          </div>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper">
+
+          <div class="container-xxl flex-grow-1 container-p-y taxes">
+            <div class="flex align-items-center gap-1 mb-3">
+              <a type="button" style='color: #005826; font-weight: 500;' onclick="history.back()">Back to
+                Tax payer list</a>
+            </div>
+            <div class="card">
+
+              <div class="p-3 mt-2 md:mx-10" id="userInfo">
+
+              </div>
+
+              <div class="px-4">
+                <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-3" id="pills-tab" role="tablist">
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                      aria-selected="true">
+                      Activity log
+                    </button>
+                  </li>
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" id="pills-app-tab" data-bs-toggle="pill" data-bs-target="#pills-app"
+                      type="button" role="tab" aria-controls="pills-app" aria-selected="true">
+                      Applicable tax
+                    </button>
+                  </li>
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" id="pills-invoice-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-invoice" type="button" role="tab" aria-controls="pills-invoice"
+                      aria-selected="true">
+                      Invoices
+                    </button>
+                  </li>
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" id="pills-payment-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-payment" type="button" role="tab" aria-controls="pills-payment"
+                      aria-selected="true">
+                      Payment history
+                    </button>
+                  </li>
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                      data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                      aria-selected="false">
+                      All taxes
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                    aria-labelledby="pills-home-tab">
+                    <div class="table-responsive -mt-6 md:w-8/12">
+                      <table class="table" id="dataTable77">
+                        <thead>
+                          <tr>
+                            <th>Date and time</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody id="ActivityLogs">
+
+
+                        </tbody>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-app" role="tabpanel" aria-labelledby="pills-app-tab">
+                    <button onclick="exportTablee('showtaxess', '.dataTable')" class="button mb-3">Export CSV</button>
+
+                    <div class="table-responsive -mt-6 ">
+                      <table class="table dataTable" id="showtaxess">
+                        <thead>
+                          <tr>
+                            <th>S/N</th>
+                            <th>Description</th>
+                            <th>Frequency</th>
+                          </tr>
+                        </thead>
+                        <tbody id="showTaxes">
+
+
+                        </tbody>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-invoice" role="tabpanel" aria-labelledby="pills-invoice-tab">
+                    <div class="table-responsive -mt-6">
+                      <table class="table " id="dataTable3">
+                        <thead>
+                          <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                          <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                          <th class="fontBold text-sm text-gray-500">Description</th>
+                          <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
+                          <th class="fontBold text-sm text-gray-500">Amount paid</th>
+                          <th class="fontBold text-sm text-gray-500">Balance yet to be paid
+                          </th>
+                          <th class="fontBold text-sm text-gray-500">Invoice date</th>
+                          <th class="fontBold text-sm text-gray-500">Due date</th>
+                          <th class="fontBold text-sm text-gray-500">status</th>
+                          <th></th>
+                        </thead>
+                        <tbody id="showInvoice1">
+
+
+                        </tbody>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-payment" role="tabpanel" aria-labelledby="pills-payment-tab">
+                    <div class="table-responsive -mt-6">
+                      <table class="table" id="dataTable4">
+                        <thead>
+                          <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                          <th class="fontBold text-gray-500">Payment reference no.</th>
+                          <th class="fontBold text-gray-500">Payment for</th>
+                          <th class="fontBold text-gray-500">Amount paid</th>
+                          <th class="fontBold text-gray-500">Payment method</th>
+                          <th class="fontBold text-gray-500">Payment status</th>
+                          <!-- <th class="fontBold text-gray-500">Download</th> -->
+                        </thead>
+                        <tbody id="showPayment">
+
+                        </tbody>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="table-responsive -mt-6">
+                      <div class="flex justify-end">
+                        <button class="btn btn-primary">save</button>
+                      </div>
+                      <table class="table dataTable2">
+                        <thead>
+                          <tr>
+                            <th>Tick to add to applicable tax</th>
+                            <th>MDA</th>
+                            <th>REVENUE HEAD</th>
+                            <th>INDUSTRY</th>
+                            <th>CATEGORY</th>
+                            <th>Is this compulsory</th>
+                            <th>Frequency</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody id="showAllTaxes">
+
+
+                        </tbody>
+                        <div class="flex justify-center items-center mt-4" id="loader">
+                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                        </div>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
+
+          </section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+
+  <div class="modal fade" id="editMod" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header ">
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
+        </div>
+        <div class="modal-body mb-5">
+
+          <h1 class="text-center text-2xl">TIN Status</h1>
+          <form action="">
+            <p class="text-center mt-4">Update the status of the payer Tax <br>Identification
+              Number.</p>
+
+            <select name="" id="selectInput" class="form-select mt-5">
+              <option disabled selected>update status</option>
+              <option value="0">Un-verfied</option>
+              <option value="1">Verified</option>
+            </select>
+
+            <button class="btn btn-primary mt-4 w-full" id="updateStatus">Update Status</button>
+            <div id="msg_box" class="w-full"></div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
+  <script src="./assets/vendor/libs/export-table/src/tableHTMLExport.js"></script>
+  <!-- <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script> -->
+  <!-- <script src="./assets/js/session.js"></script> -->
+  <script src="./assets/js/taxpayerlist.js"></script>
+  <script src="./assets/js/table2CSV.js"></script>
+  <script src="./assets/js/filtertaxpayer.js"></script>
+  <script src="./assets/js/taxes.js"></script>
+  <script src="./assets/js/singleInvoice.js"></script>
+  <script src="./assets/js/singlepayment.js"></script>
+  <!-- endbuild -->
+  <script>
+    let theAtivo = document.querySelector(`.mdd`)
+    theAtivo.parentElement.classList.add("active")
+  </script>
+  <script>
+    $('#searching').keyup(function () {
+      var table = $('.table').DataTable();
+      table.search($(this).val()).draw();
+    });
+  </script>
+  <script>
+    function tableToCSV() {
+      /* Get the HTML data using Element by Id */
+      var table = document.querySelector(".table");
+
+      /* Declaring array variable */
+      var rows = [];
+
+      //iterate through rows of table
+      for (var i = 0, row; row = table.rows[i]; i++) {
+        //rows would be accessed using the "row" variable assigned in the for loop
+        //Get each cell value/column from the row
+        column1 = row.cells[0].innerText;
+        column2 = row.cells[1].innerText;
+        column3 = row.cells[2].innerText;
+        column4 = row.cells[3].innerText;
+        column5 = row.cells[4].innerText;
+        column6 = row.cells[5].innerText;
+        column7 = row.cells[6].innerText;
+
+
+        /* add a new records in the array */
+        rows.push(
+          [
+            column1,
+            column2,
+            column3,
+            column4,
+            column5,
+            column6,
+            column7
+          ]
+        );
+
+      }
+      csvContent = "data:text/csv;charset=utf-8,";
+      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+      rows.forEach(function (rowArray) {
+        row = rowArray.join(",");
+        csvContent += row + "\r\n";
+      });
+
+      /* create a hidden <a> DOM node and set its download attribute */
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Taxpayer_List.csv");
+      document.body.appendChild(link);
+      /* download the data file named "Stock_Price_Report.csv" */
+      link.click();
+    }
+
+  </script>
+  <!-- Vendors JS -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <!-- Main JS -->
+  <script src="./assets/js/main.js"></script>
+
+  <!-- Page JS -->
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
