@@ -9,7 +9,7 @@
 }
 
 :root {
-  --primaryCol: #F68C36;
+  --primaryCol: #125826;
   --orange: #F7931e;
   --lightBlue: #25B0E9;
   --shadowedBlue: rgba(28, 123, 175, 0.78);
@@ -75,9 +75,9 @@ label {
 
 .btn.btn-prime {
   color: #fff;
-  background-color: #F68C36 !important;
-  border-color: #F68C36;
-  box-shadow: 0 0.125rem 0.25rem 0 #F68C36;
+  background-color: #125826 !important;
+  border-color: #125826;
+  box-shadow: 0 0.125rem 0.25rem 0 #125826;
   border-radius: 100px !important;
 }
 
@@ -87,8 +87,8 @@ label {
 
 .btn.btn-prime:hover {
   color: #fff;
-  background-color: #F68C36;
-  border-color: #F68C36;
+  background-color: #125826;
+  border-color: #125826;
   transform: translateY(-1px);
   border-radius: 100px !important;
 }
@@ -98,7 +98,7 @@ a:hover {
 }
 
 .textPrimary {
-  color: #F68C36;
+  color: #125826;
   /* color: #; */
 }
 
@@ -108,16 +108,16 @@ a:hover {
 }
 
 .btn-prime-outline {
-  color: #F68C36 !important;
+  color: #125826 !important;
   background-color: #fff !important;
-  border: 1px solid #F68C36;
+  border: 1px solid #125826;
   border-radius: 100px !important;
   padding: 7px 20px;
 }
 
 .nav.nav-pills .nav-link.active {
   background: transparent !important;
-  border-bottom: 3px solid #F68C36;
+  border-bottom: 3px solid #125826;
   box-shadow: none !important;
   border-radius: 0 !important;
   color: #E0CEC4;
@@ -129,9 +129,9 @@ a:hover {
 }
 
 .btn-prime-outline:hover {
-  color: #F68C36;
+  color: #125826;
   background-color: #fff;
-  border-color: #F68C36;
+  border-color: #125826;
   transform: translateY(-1px);
   border-radius: 100px !important;
 }
@@ -159,7 +159,7 @@ a:hover {
   background-color: #fff !important;
   color: #1E1E1E !important;
   box-shadow: none;
-  border-bottom: 2px solid #F68C36;
+  border-bottom: 2px solid #125826;
   border-radius: 0px;
 }
 
@@ -182,7 +182,7 @@ ul {
 
 .stretched-link {
   text-decoration: none;
-  color: #F68C36 !important;
+  color: #125826 !important;
 }
 
 .lol {
@@ -223,7 +223,7 @@ ul {
 
 .dashCards .zanumbers {
   font-weight: bold;
-  color: #F68C36;
+  color: #125826;
   font-size: 18px;
 }
 
@@ -269,7 +269,7 @@ ul {
 }
 
 .button {
-  background: #F68C36 !important;
+  background: #125826 !important;
   color: #fff !important;
   border: 2px solid var(--primaryCol);
   border-radius: 100px;
@@ -279,8 +279,8 @@ ul {
 
 .button-secondary {
   background: #fff !important;
-  color: #f68c36 !important;
-  border: 1px solid #f68c36;
+  color: #125826 !important;
+  border: 1px solid #125826;
   ;
   border-radius: 100px;
   padding: 5px 20px;
@@ -288,7 +288,7 @@ ul {
 }
 
 .button-3 {
-  background: #F68C36 !important;
+  background: #125826 !important;
   color: #fff !important;
   border: 2px solid var(--primaryCol);
   border-radius: 50px;
@@ -301,21 +301,21 @@ ul {
 }
 
 .bgPrimary {
-  background-color: #F68C36;
+  background-color: #125826;
 }
 
 .btn-prime {
   color: #fff;
-  background-color: #F68C36;
-  border-color: #F68C36;
-  box-shadow: 0 0.125rem 0.25rem 0 #F68C36;
+  background-color: #125826;
+  border-color: #125826;
+  box-shadow: 0 0.125rem 0.25rem 0 #125826;
   border-radius: 100px !important;
 }
 
 .btn-prime:hover {
   color: #fff;
-  background-color: #F68C36;
-  border-color: #F68C36;
+  background-color: #125826;
+  border-color: #125826;
   transform: translateY(-1px);
   border-radius: 100px !important;
 }
@@ -390,16 +390,16 @@ ul {
 
 .btn.btn-prime {
   color: #fff;
-  background-color: #F68C36 !important;
-  border-color: #F68C36;
-  box-shadow: 0 0.125rem 0.25rem 0 #F68C36;
+  background-color: #125826 !important;
+  border-color: #125826;
+  box-shadow: 0 0.125rem 0.25rem 0 #125826;
   border-radius: 100px !important;
 }
 
 .btn.btn-prime:hover {
   color: #fff;
-  background-color: #F68C36;
-  border-color: #F68C36;
+  background-color: #125826;
+  border-color: #125826;
   transform: translateY(-1px);
   border-radius: 100px !important;
 }
@@ -409,17 +409,17 @@ a:hover {
 }
 
 .btn-prime-outline {
-  color: #F68C36 !important;
+  color: #125826 !important;
   background-color: #fff !important;
-  border: 1px solid #F68C36;
+  border: 1px solid #125826;
   border-radius: 100px !important;
   padding: 7px 20px;
 }
 
 .btn-prime-outline:hover {
-  color: #F68C36;
+  color: #125826;
   background-color: #fff;
-  border-color: #F68C36;
+  border-color: #125826;
   transform: translateY(-1px);
   border-radius: 100px !important;
 }
@@ -447,7 +447,7 @@ a:hover {
   background-color: #fff !important;
   color: #1E1E1E !important;
   box-shadow: none;
-  border-bottom: 2px solid #F68C36;
+  border-bottom: 2px solid #125826;
   border-radius: 0px;
 }
 
@@ -470,7 +470,7 @@ ul {
 
 .stretched-link {
   text-decoration: none;
-  color: #F68C36 !important;
+  color: #125826 !important;
 }
 
 .lol {
@@ -568,9 +568,9 @@ ul {
 }
 
 .taxes .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: #F68C36;
+  color: #125826;
   background-color: none;
-  border-bottom: 2px solid #F68C36;
+  border-bottom: 2px solid #125826;
   border-radius: 0%;
   font-size: 14px;
 }
@@ -581,14 +581,14 @@ ul {
 }
 
 .taxes .nav-pills .nav-link, .nav-pills .show>.nav-link {
-  color: #F68C36;
+  color: #125826;
   background-color: none;
   border-radius: 0%;
   font-size: 14px;
 }
 
 a:hover {
-  color: #F68C36;
+  color: #125826;
 }
 
 
@@ -620,7 +620,7 @@ a:hover {
 }
 
 .payCards.active {
-  border: 2px solid #F68C36;
+  border: 2px solid #125826;
 }
 
 .payCards iconify-icon {
