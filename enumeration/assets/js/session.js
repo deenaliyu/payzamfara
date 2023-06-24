@@ -14,7 +14,7 @@ if (USER_SESSION) {
     text: "It looks like you need to log in to view this page. Please sign in to your account to continue or create an account if you don't have one yet.",
     icon: 'warning',
     iconColor: '#ff0000',
-    confirmButtonColor: '#F68C36',
+    confirmButtonColor: '#125826',
     confirmButtonText: 'Proceed to signin',
     allowOutsideClick: false
   }).then((result) => {

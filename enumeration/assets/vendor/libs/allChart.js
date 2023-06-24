@@ -10,7 +10,7 @@ new Chart(ctx, {
       borderWidth: 0,
       borderRadius: 5,
       barThickness: 40,
-      backgroundColor: '#F68C36',
+      backgroundColor: '#125826',
     }]
   },
   options: {
@@ -32,7 +32,7 @@ new Chart(ctxa, {
       label: 'Industry (Growth)',
       data: [12, 19, 3, 5, 2, 3, 16, 17],
       borderWidth: 1,
-      backgroundColor: '#F68C36',
+      backgroundColor: '#125826',
     }]
   },
   options: {
