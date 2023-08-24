@@ -9,8 +9,8 @@ let THE_SESSION = localStorage.getItem("userDataPrime")
 // if (THE_SESSION) {
 let heeaderr = ""
 heeaderr += `
-  <a href="index.html" class="flex gap-2 items-center">
-  <div class="w-[40px] h-[40px]">
+  <a href="index.html" class="flex gap-1 items-center">
+  <div class="w-[70px] h-[40px]">
     <img src="./assets/img/logo.png" class="" />
   </div>
   <p class="text-black fontBold">Pay Ibom</p>

@@ -73,7 +73,7 @@ async function fetchUsers() {
             <td>
               <button 
               data-bs-toggle="modal" 
-              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}')" 
+              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}', '${txpayers.session_id}',  '${txpayers.ip_address}')" 
               data-bs-target="#viewActivity" 
               class="btn btn-primary btn-sm">View Activities</button>
             </td>
@@ -96,7 +96,7 @@ async function fetchUsers() {
             <td>
               <button 
               data-bs-toggle="modal" 
-              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.name}', '${txpayers.user_category}','${userDetail.surname}')" 
+              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.name}', '${txpayers.user_category}','${userDetail.surname}',, '${txpayers.session_id}',  '${txpayers.ip_address}')" 
               data-bs-target="#viewActivity" 
               class="btn btn-primary btn-sm">View Activities</button>
             </td>
@@ -120,7 +120,7 @@ async function fetchUsers() {
             <td>
               <button 
               data-bs-toggle="modal" 
-              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}')" 
+              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}', '${txpayers.session_id}',  '${txpayers.ip_address}')" 
               data-bs-target="#viewActivity" 
               class="btn btn-primary btn-sm">View Activities</button>
             </td>
@@ -144,7 +144,7 @@ async function fetchUsers() {
             <td>
               <button 
               data-bs-toggle="modal" 
-              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.name}', '${txpayers.user_category}','${userDetail.surname}')" 
+              onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.name}', '${txpayers.user_category}','${userDetail.surname}', '${txpayers.session_id}',  '${txpayers.ip_address}')" 
               data-bs-target="#viewActivity" 
               class="btn btn-primary btn-sm">View Activities</button>
             </td>
@@ -215,7 +215,7 @@ async function getFilters() {
           <td>
             <button 
             data-bs-toggle="modal" 
-            onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}')" 
+            onclick="viewActii('${txpayers.timeIn}', '${txpayers.comment}','${userDetail.first_name}', '${txpayers.user_category}','${userDetail.surname}', '${txpayers.session_id}',  '${txpayers.ip_address}')" 
             data-bs-target="#viewActivity" 
             class="btn btn-primary btn-sm">View Activities</button>
           </td>
@@ -233,12 +233,14 @@ async function getFilters() {
 
 
 
-function viewActii(timeIn, comment, first_name, user_category, surname) {
+function viewActii(timeIn, comment, first_name, user_category, surname, session_id, ip_address) {
   let names = first_name + " " + surname;
   $("#theRe").html(comment)
   $("#time").html(timeIn)
   $("#theName2").html(names)
   $("#theEm").html(user_category)
+  $("#thess").html(session_id)
+  $("#theip").html(ip_address)
   // function fetchUsers() {
   //   const response = fetch(`${HOST}?getActivityLogs&userId=${user_id}&user_category=${user_category}`);
   //   const userAudits = response.json();
