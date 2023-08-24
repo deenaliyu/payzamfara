@@ -1,9 +1,35 @@
-let USER_SESSION2 = localStorage.getItem("MDAINFO");
+let USER_SESSION2 = localStorage.getItem("mdaDataPrime");
 let finalUSER_SESSION = JSON.parse(USER_SESSION2);
-let mdaID = finalUSER_SESSION?.id;
+let mdaID = finalUSER_SESSION?.mda_id;
 
 let ALLREV = ""
 // create new MDA USer
+
+async function fetchRevHeads(categ) {
+  const response = await fetch(`${HOST}/?getAllOffice`)
+  const revHeads = await response.json()
+
+  if (revHeads.status === 0) {
+  } else {
+    theRevs = revHeads.message
+    // console.log(theRevs)
+    $("#rev_heads").html(`
+      <option disabled selected>Select--</option>
+    `)
+    revHeads.message.forEach((revHd, i) => {
+      if (revHd.COL_5 === categ) {
+        $("#rev_heads").append(`
+        <option value="${revHd["office_name"]}">${revHd["office_name"]}</option>
+      `)
+      }
+
+    });
+
+  }
+}
+
+fetchRevHeads();
+
 $("#createUser").on("click", function () {
 
   // console.log('you cick')
@@ -29,33 +55,50 @@ $("#createUser").on("click", function () {
       let obj = {
         endpoint: "createMDAUser",
         data: {
-          mda_id: '4',
+          mda_id: mdaID,
           dashboard_access: "full",
           revenue_head_access: "full",
           payment_access: "full",
           users_access: "full",
           report_access: "full",
-        
+
         },
       };
+
+
+      //   let obj = {
+      //     endpoint: "createMDAUser",
+      //     data: {
+      //         mda_id: "4",
+      //         dashboard_access: "0",
+      //         revenue_head_access: "1",
+      //         payment_access: "1",
+      //         users_access: "0",
+      //         report_access: "0",
+      //         name: "Joohn Testing",
+      //         email: "dee.aliyu40@gmail.com",
+      //         phone_number: "09043432434",
+      //         passwd: "12345"
+      //     }
+      // }
 
       allInputs.forEach((allInput) => {
         obj.data[allInput.dataset.name] = allInput.value;
       });
       allRadioBoxs.forEach((allRadioBox) => {
         // if (allRadioBox.select) {
-          obj.data[allRadioBox?.name] = allRadioBox.value;
+        obj.data[allRadioBox?.name] = allRadioBox.value;
         // }
       });
 
       console.log(obj)
       let StringedData = JSON.stringify(obj);
 
-      // console.log(StringedData)
+      console.log(StringedData)
       $.ajax({
         type: "POST",
         url: HOST,
-        dataType: "json",
+        // dataType: "json",
         data: StringedData,
         success: function (data) {
           console.log(data);
@@ -104,7 +147,7 @@ async function fetchUSERS() {
   $("#loader").css("display", "flex");
 
   const response = await fetch(
-    `${HOST}/php/index.php?mda_id=4&usersParticularMDA`
+    `${HOST}/php/index.php?mda_id=${mdaID}&usersParticularMDA`
   );
   const allMDAUsers = await response.json();
   console.log(allMDAUsers);
@@ -178,19 +221,23 @@ function deleteRev(e) {
         url: `${HOST}?deleteMDAUser&id=${theRevId}`,
         dataType: "json",
         success: function (data) {
-          console.log(data);
-          if (data.status === 1) {
-            Swal.fire("Deleted!", "User has been deleted.", "success");
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          } else {
-            Swal.fire(
-              "Try again!",
-              "Something went wrong, try again !",
-              "error"
-            );
-          }
+          // console.log(data);
+          Swal.fire("Deleted!", "User has been deleted.", "success");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+          // if (data.status === 1) {
+          //   Swal.fire("Deleted!", "User has been deleted.", "success");
+          //   setTimeout(() => {
+          //     window.location.reload();
+          //   }, 1000);
+          // } else {
+          //   Swal.fire(
+          //     "Try again!",
+          //     "Something went wrong, try again !",
+          //     "error"
+          //   );
+          // }
         },
         error: function (request, error) {
           Swal.fire("Try again!", "Something went wrong, try again !", "error");
@@ -223,12 +270,12 @@ function editMDAFunc(e) {
   // allAccess[2].value = theREV[" payment_access"]
   // allAccess[3].value = theREV[" user_access"]
   // allAccess[4].value = theREV[" report_access"]
- 
+
 }
 
 $("#editMDA").on("click", () => {
   let theRevId = sessionStorage.getItem("userUpdate")
-  
+
   $("#msg_box2").html(`
     <div class="flex justify-center items-center mt-4">
       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
@@ -252,12 +299,12 @@ $("#editMDA").on("click", () => {
 
   allSelectBoxes.forEach((allSelected) => {
 
-      if(allSelected.name != 'dataTable_length'){
-        obj.data[allSelected?.name] = allSelected.value;
-      }
-    
-     
-   
+    if (allSelected.name != 'dataTable_length') {
+      obj.data[allSelected?.name] = allSelected.value;
+    }
+
+
+
   });
 
 

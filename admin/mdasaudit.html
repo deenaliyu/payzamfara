@@ -107,21 +107,9 @@
                       <th>No. Of Users</th>
                       <th></th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td scope="row">1</td>
-                        <td>Ministry of Work</td>
-                        <td>5</td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#viewUsers"
-                            class="btn btn-primary btn-sm">View Users</button></td>
-                      </tr>
-                      <tr>
-                        <td scope="row">2</td>
-                        <td>Ministry of Health</td>
-                        <td>10</td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#viewUsers"
-                            class="btn btn-primary btn-sm">View Users</button></td>
-                      </tr>
+                    <tbody id="showThem">
+
+
                     </tbody>
                   </table>
                 </div>
@@ -147,32 +135,20 @@
                 <h1 class="text-xl fontBold">Ministry Of Work</h1>
 
                 <div class="table-responsiveness">
-                  <table class="table auditTable mt-4">
+                  <table class="table auditTable">
                     <thead>
-                      <th>S/N</th>
-                      <th>Name of User</th>
-                      <th>Date & Time</th>
-                      <th>Activity Count</th>
-                      <th>Last Activity Description</th>
-                      <th></th>
+                      <th scope="col">S/N</th>
+                      <th scope="col">Payer ID</th>
+                      <th scope="col">Email</th>
+                      <!-- <th scope="col">IP Address</th> -->
+                      <th scope="col">Name of User</th>
+                      <!-- <th scope="col">Last Login</th> -->
+                      <!-- <th scope="col">Activity Count</th> -->
+                      <th scope="col"></th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Miro Zaki</td>
-                        <td>Just Now</td>
-                        <td>20</td>
-                        <td>Miro registered new user</td>
-                        <td><a href="mdasauditdetails.html" class="btn btn-primary btn-sm">View Activities</a></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Akpan James</td>
-                        <td>14/02/2023, 2.50PM</td>
-                        <td>20</td>
-                        <td>Akpan Logged in</td>
-                        <td><a href="mdasauditdetails.html" class="btn btn-primary btn-sm">View Activities</a></td>
-                      </tr>
+                    <tbody id="showThemmmm">
+
+
                     </tbody>
                   </table>
                 </div>
@@ -205,6 +181,8 @@
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="./assets/vendor/js/bootstrap.js"></script>
   <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -221,6 +199,7 @@
 
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/mdaaudits.js"></script>
   <!-- <script src="../assets/js/invoicess.js"></script> -->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
 

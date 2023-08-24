@@ -4,22 +4,22 @@
 let HOST = "https://useibs.com/php/index.php"
 
 $(".aside").html(`
-    <div class="app-brand demo">
-    <div class="flex gap-x-2">
-    <div class="pt-2">
-    <a href="../index.html">
-    <img src="./assets/img/logo.png" class="w-[120px] -ml-2" alt="" />
+<div class="app-brand demo">
+<div class="flex gap-x-2">
+<div class="pt-2">
+<a href="../index.html">
+<img src="./assets/img/logo.png" class="w-[120px] -ml-2" alt="" />
+</a>
+</div>
+  <div class="pt-3 -ml-4 w-full">
+  <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
+  <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
+  </div>
+  </div>
+  <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+    <i class="bx bx-chevron-left bx-sm align-middle"></i>
   </a>
-    </div>
-      <div class="pt-3 -ml-4 w-full">
-      <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
-      <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
-      </div>
-      </div>
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-      </a>
-    </div>
+</div>
 
 
     <ul class="menu-inner">
@@ -93,12 +93,8 @@ $(".navi")
 </div>
 
                   <div class="mt-4 flex gap-x-5">
-                  <div class="input-group input-group-merge md:w-72 hidden md:flex">
-<span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-<input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-  aria-describedby="basic-addon-search31">
-</div>
-<a href="taxes.html" class="button hidden md:flex">
+                
+<a href="taxes.html" class="button ">
               <iconify-icon icon="ic:baseline-plus"></iconify-icon> Generate Invoice</a>
               
                 <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal" class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
@@ -119,20 +115,27 @@ if (profImg) {
   })
 }
 async function fetchUserDetails2() {
-  const response = await fetch(`${HOST}?userProfile&id=${userInfo2.id}`)
-  const userPrf = await response.json()
+
 
   // console.log(userPrf.user)
-  userDetails = userPrf.user
-  if (profImg) {
-    if (userInfo2.img === "") {
-      profImg.src = "./assets/img/userprofile.png"
-    } else {
-      profImg.src = userPrf.user.img
+  try {
+    const response = await fetch(`${HOST}?userProfile&id=${userInfo2.id}`)
+    const userPrf = await response.json()
+    userDetails = userPrf.user
+    if (profImg) {
+      if (userInfo2.img === "") {
+        profImg.src = "./assets/img/userprofile.png"
+      } else {
+        profImg.src = userPrf.user.img
+      }
     }
+    $("#theProfImg").attr("src", userPrf.user.img)
+    $("#theProfImg2").attr("src", userPrf.user.img)
+  } catch (error) {
+
+    console.log(error)
   }
-  $("#theProfImg").attr("src", userPrf.user.img)
-  $("#theProfImg2").attr("src", userPrf.user.img)
+
 }
 
 fetchUserDetails2()
@@ -140,7 +143,7 @@ fetchUserDetails2()
 
 
 $(".footer").html(`
-<div class="flex justify-between flex-wrap md:flex-nowrap ">
+<div class="flex justify-between">
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px]">Copyright 2023 Primegauge</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
@@ -148,7 +151,7 @@ $(".footer").html(`
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="material-symbols:mail-outline-rounded" width="28" height="28"></iconify-icon> Info@primegauge.com</p>
 <h4>|</h4>
-  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 0800 101 5555</p>
+  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 07007746348243 </p>
 </div>
 </div>
 `);

@@ -28,17 +28,13 @@ async function fetchServices() {
             <div class="flex items-center gap-3 cmsBtns">
   
       `
-      if (adminInfo2.cms_access === "view") {
 
-      } else {
-        added += `
+      added += `
 
         <button data-theid="${theservice.id}" onclick="editThos(this)" class="EditUser"><iconify-icon
         icon="material-symbols:edit-square-outline"></iconify-icon></button>
         <button data-theid="${theservice.id}" onclick="editN(this)" class="DelUser"> <iconify-icon icon="material-symbols:delete-outline"></iconify-icon></button>
         `
-      }
-
       added += `
 
             
@@ -67,16 +63,11 @@ async function fetchServices() {
           <div class="flex items-center gap-3 cmsBtns">
       `
 
-      if (adminInfo2.cms_access === "view") {
-
-      } else {
-        added2 += `
+      added2 += `
         <button data-theid="${theservice.id}" onclick="editThis(this)" class="EditUser"><iconify-icon
         icon="material-symbols:edit-square-outline"></iconify-icon></button>
         <button data-theid="${theservice.id}" onclick="editG(this)" class="DelUser"> <iconify-icon icon="material-symbols:delete-outline"></iconify-icon></button>
         `
-      }
-
       added2 += `
         </div >
         </div >

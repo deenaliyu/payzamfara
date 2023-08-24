@@ -483,7 +483,8 @@ function sendMsg(e) {
           "id": 0,
           "tin": "",
           "img": "",
-          "mda_id": ""
+          "mda_id": "",
+          "enum_id": ""
         }
       }
       theInputs.forEach(inp => {

@@ -2,6 +2,10 @@ var flutter_script = document.createElement('script')
 flutter_script.setAttribute('src', 'https://js.paystack.co/v1/inline.js')
 document.head.appendChild(flutter_script)
 
+var remita_script = document.createElement('script')
+remita_script.setAttribute('src', 'https://remitademo.net/payment/v1/remita-pay-inline.bundle.js')
+document.head.appendChild(remita_script)
+
 // var html2pdff = document.createElement('script')
 // html2pdff.setAttribute('src', 'https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js')
 // document.head.appendChild(html2pdff)
@@ -89,6 +93,9 @@ $("#makePayment").html(`
       <img src="./assets/img/linebig.png" alt="">
     </div>
 
+
+
+    
     <div class="mt-10">
       <div class="mb-4">
         <h1 class="text-xl fontBold">Step 1</h1>
@@ -123,8 +130,10 @@ $("#makePayment").html(`
     </div>
 
     <div class="mt-10">
-      <p>Kindly walk into any of the under-listed banks and present your Invoice number to make payment.
-        Click "<span class="fontBold textPrimary">here</span>" to see the bank list</p>
+      <div class="flex justify-center">
+        <button class="button w-[60%] mt-3" onclick="makePaymentRemita()">Generate RRR</button>
+      </div>
+      
     </div>
   </div>
 
@@ -133,6 +142,8 @@ $("#makePayment").html(`
     <div class="flex justify-center mt-2">
       <img src="./assets/img/linebig.png" alt="">
     </div>
+
+    
 
     <div class="mt-10">
       <p>You can make payment at POS terminals in any of the offices of the Akwa Ibom State Board of Internal
@@ -195,6 +206,88 @@ if (payCards) {
 }
 
 
+function makePaymentRemita() {
+  let thePay = document.querySelector(".theBal").textContent
+  console.log(thePay)
+
+  async function openInvoice(invoicenum) {
+    const response = await fetch(
+      // `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+      `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+    );
+    const userInvoices = await response.json();
+    console.log(userInvoices);
+
+    if (userInvoices.status === 1) {
+      if (userInvoices.message[0].payment_status === "paid") {
+        alert("This Invoice has already been paid")
+      } else {
+
+
+        let invoiceDetails = userInvoices.message[0]
+
+
+        var paymentEngine = RmPaymentEngine.init({
+          key: 'QzAwMDAyNzEyNTl8MTEwNjE4NjF8OWZjOWYwNmMyZDk3MDRhYWM3YThiOThlNTNjZTE3ZjYxOTY5NDdmZWE1YzU3NDc0ZjE2ZDZjNTg1YWYxNWY3NWM4ZjMzNzZhNjNhZWZlOWQwNmJhNTFkMjIxYTRiMjYzZDkzNGQ3NTUxNDIxYWNlOGY4ZWEyODY3ZjlhNGUwYTY=',
+          transactionId: Math.floor(Math.random() * 1101233), // Replace with a reference you generated or remove the entire field for us to auto-generate a reference for you. Note that you will be able to check the status of this transaction using this transaction Id
+          customerId: invoiceDetails.email,
+          firstName: invoiceDetails.first_name,
+          lastName: invoiceDetails.surname,
+          email: invoiceDetails.email,
+          amount: parseFloat(thePay),
+          narration: invoiceDetails.COL_4,
+          onSuccess: function (response) {
+            console.log('callback Successful Response', response);
+
+            let dataToPush = {
+              "endpoint": "createInvidualPayment",
+              "data": {
+                "invoice_number": invoicenum,
+                "payment_channel": "paystack",
+                "payment_reference_number": reference,
+                "receipt_number": reference
+              }
+            }
+            $.ajax({
+              type: "POST",
+              url: HOST,
+              dataType: 'json',
+              data: JSON.stringify(dataToPush),
+              success: function (data) {
+                console.log(data)
+                alert("payment success")
+                nextPrev(1)
+                openReceipt(invoicenum)
+              },
+              error: function (request, error) {
+                console.log(error)
+              }
+            });
+          },
+          onError: function (response) {
+            console.log('callback Error Response', response);
+
+          },
+          onClose: function () {
+            console.log("closed");
+          },
+        });
+        paymentEngine.showPaymentWidget();
+        // let bbButton = document.querySelector("#js-payment-tabs > li.branch.payment-nav > a")
+        // if (bbButton) {
+        //   bbButton.click()
+        // }
+
+      }
+    } else {
+      alert("Wrong Invoice")
+    }
+  }
+  let invoicenn = sessionStorage.getItem("invoice_number")
+  openInvoice(invoicenn)
+
+
+}
 
 function makePayment() {
   let thePay = document.querySelector(".theBal").textContent
@@ -407,7 +500,7 @@ async function openReceipt(invoicenum) {
               <div class="flex items-center justify-center">
                 <img src="./assets/img/akwaimage.png" alt="">
                 <div>
-                  <p class="text-xl fontBold pb-0">Pay Zamfara</p>
+                  <p class="text-xl fontBold pb-0">Pay Ibom</p>
                   <div class="flex items-center gap-x-3 flex-wrap">
                     <p class="text-sm text-[#6F6F84]">www.akwaibompay.ng</p>
                     <p class="text-sm text-[#6F6F84]">Info@akwaibompay.com</p>

@@ -172,7 +172,7 @@ async function fetchInvoices() {
   };
 
   const response = await fetch(
-    `${HOST}/php/index.php?userInvoices&payer_id=${userID}`
+    `${HOST}?userInvoices&payer_id=${userID}`
   );
   const userInvoices = await response.json();
   // console.log(userInvoices);

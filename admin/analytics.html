@@ -82,16 +82,14 @@
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Analytics</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5 ms-auto">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
+            <div class="mt-4 flex gap-x-5 absolute right-24">
+              <div class="">
+                
               </div>
 
               <div class="avatar avatar-online flex gap-x-5">
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">system Admin</p>
+                <p class="adminName">-</p>
               </div>
             </div>
 
@@ -108,34 +106,38 @@
               <ul class="nav nav-pills mb-3 md:gap-[26px] gap-6" role="tablist">
 
                 <li class="nav-item">
-                  <button class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#revPer">Revenue
+                  <button class="nav-link active" data-name="view_revenue" role="tab" data-bs-toggle="tab"
+                    data-bs-target="#revPer">Revenue
                     Performance</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#invmanager">Invoice
+                  <button class="nav-link" data-name="view_invoice" role="tab" data-bs-toggle="tab"
+                    data-bs-target="#invmanager">Invoice
                     Manager</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#paxprela">Taxpayer
+                  <button class="nav-link" data-name="view_taxpayer" role="tab" data-bs-toggle="tab"
+                    data-bs-target="#paxprela">Taxpayer
                     relations</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#tinreqman">TIN
+                  <button class="nav-link" data-name="view_tin" role="tab" data-bs-toggle="tab"
+                    data-bs-target="#tinreqman">TIN
                     Request Manager</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" role="tab" data-bs-toggle="tab"
+                  <button class="nav-link" data-name="view_impressions" role="tab" data-bs-toggle="tab"
                     data-bs-target="#impressions">Impressions</button>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button class="nav-link" role="tab" data-bs-toggle="tab"
                     data-bs-target="#enumeration">Enumeration</button>
-                </li>
+                </li> -->
 
               </ul>
 
@@ -463,6 +465,7 @@
 
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/dashboard.js"></script>
   <script src="./assets/js/analyticsCharts.js"></script>
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->

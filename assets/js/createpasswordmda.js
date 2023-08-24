@@ -30,7 +30,7 @@ $("#createPass").on("click", function () {
           $("#msg_boxi").html(`<p class="text-[green]">Password Updated Successfully !</p>`)
 
           setTimeout(() => {
-            window.location.href = "signin.html"
+            window.location.href = "./mda/index.html"
           }, 1000);
 
 

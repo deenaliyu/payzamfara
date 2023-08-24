@@ -83,7 +83,7 @@ $("#LoginAmin").on("click", (e) => {
 
         localStorage.setItem("adminDataPrime", JSON.stringify(data.user))
         setTimeout(() => {
-          window.location.href = "dashboard.html"
+          window.location.href = "./dashboard.html"
         }, 1000);
 
       } else if (data.status === 0) {
@@ -137,7 +137,7 @@ $("#LoginMda").on("click", (e) => {
         `)
         localStorage.setItem("mdaDataPrime", JSON.stringify(data.user))
         setTimeout(() => {
-          window.location.href = "dashboard.html"
+          window.location.href = "./dashboard.html"
         }, 1000);
 
       } else if (data.status === 0) {

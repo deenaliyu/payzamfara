@@ -1,6 +1,7 @@
 let USER_SESSION = localStorage.getItem("MDAINFO");
-finalUSER_SESSION = JSON.parse(USER_SESSION);
-// let mdaID = finalUSER_SESSION.fullname;
+let finalUSER_SESSION = JSON.parse(USER_SESSION);
+let mdaID = finalUSER_SESSION.fullname;
+let mda_id = finalUSER_SESSION.id;
 
 async function fetchREVssss() {
   const response = await fetch(`${HOST}/?getMDAsRevenueHeads&mdName=${mdaID}`);
@@ -65,43 +66,40 @@ async function fetchPayment() {
     },
   };
   const response = await fetch(
-    `${HOST}/php/index.php?fetchAllPayment`
+    `${HOST}/php/index.php?getcashPayment&mda_id=${mda_id}`
   );
   const paymentHistory = await response.json();
   console.log(paymentHistory);
   $("#loader").css("display", "none");
   if (paymentHistory.status === 1) {
 
-    paymentHistory.message.forEach((payment, i) => {
+    paymentHistory.message.reverse().forEach((payment, i) => {
       const userInvoice = paymentHistory.message[i];
+
       $("#showPayment").append(`
         <tr>
         <td>${i + 1}</td>
         <td>${payment.time_in}</td>
         <td>${payment.first_name} ${payment.surname} </td>
-        <td>${payment.COL_4} </td>
-        <td>&#8358;${payment.COL_6} </td>
-        <td>${payment.first_name}</td>
-        <td>${payment.payment_channel}</td>
-        <td>${payment.tin_status}</td>
+        <td>${payment.revenue_head} </td>
+        <td>&#8358; ${payment.amount} </td>
+        <td>cash</td>
+        <td>
+          <span class="badge bg-success">paid</span>
+        </td>
         
        
         </tr>
         `);
 
     })
-    // message.forEach((revenueHead, i) => {
-    // for (let i = 0; i < paymentHistory.message.length; i++) {
-    
 
-      // if (i === 4) {
-      //   break;
-      // }
-    // }
   } else {
     // $("#showInvoice").html("<tr></tr>");
     $("#dataTable").DataTable();
   }
 }
 
-fetchPayment();
+fetchPayment().then(uu => {
+  $("#dataTable").DataTable();
+});

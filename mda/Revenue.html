@@ -1,703 +1,422 @@
 <!DOCTYPE html>
 
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="./assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
 
-    <title>Prime Gauge</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <meta name="description" content="" />
+  <title>Prime Gauge</title>
 
-    <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/img/favicon/favicon.ico"
-    />
+  <meta name="description" content="" />
 
-    <!-- Fonts -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+  <!-- Fonts -->
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/dataTable.css" />
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/css/core.css"
-      class="template-customizer-core-css"
-    />
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/css/theme-default.css"
-      class="template-customizer-theme-css"
-    />
-    <link rel="stylesheet" href="./assets/css/demo.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Vendors CSS -->
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
-    />
-    <script src="./assets/vendor/js/helpers.js"></script>
-    <script src="./assets/js/config.js"></script>
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
-  <style>
-    /* The modal (background) */
-    .modal {
-      display: none;
-      position: fixed;
-      /* position: absolute; */
-      /* z-index: 1; */
-      /* left: 0; */
-      /* top: 0; */
-      /* width: 100%; */
-      /* height: 100%; */
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
-    }
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css" />
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+</head>
 
-    /* @media screen () {
+<style>
+  /* The modal (background) */
+  .modal {
+    display: none;
+    position: fixed;
+    /* position: absolute; */
+    /* z-index: 1; */
+    /* left: 0; */
+    /* top: 0; */
+    /* width: 100%; */
+    /* height: 100%; */
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  /* @media screen () {
     } */
 
-    /* Modal Content */
-    .modal-content {
-      background-color: white;
-      margin: 2vh auto;
-      padding: 20px;
-      border: 1px solid #888;
-      /* width: 100vh; */
-    }
+  /* Modal Content */
+  .modal-content {
+    background-color: white;
+    margin: 2vh auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /* width: 100vh; */
+  }
 
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
 
-  <body>
-    <div id="myModal" class="modal">
-      <div class="modal-content md:w-[100vh]">
-        <span class="close flex align-items-end justify-content-end"
-          >&times;</span
-        >
-        <div class="">
-          <p class="text-[3vh] font-semibold text-black text-center">
-            Create Revenue Head
-          </p>
-          <hr />
+<body>
+  <div id="myModal" class="modal">
+    <div class="modal-content md:w-[100vh]">
+      <span class="close flex align-items-end justify-content-end">&times;</span>
+      <div class="">
+        <p class="text-[3vh] font-semibold text-black text-center">
+          Create Revenue Head
+        </p>
+        <hr />
 
-          <div class="md:mx-[9vh]">
-            <!-- <form class=""> -->
-              <div class="my-[2vh]">
-                <label for="defaultSelect" class="my-0 text-[2vh]"
-                  >Revenue Head<span class="text-[red]">*</span></label
-                >
-                <input
-                  type="text"
-                  data-name="fullname"
-                  name=""
-                  class="form-control revInput"
-                  id=""
-                  placeholder="Enter Name"
-                />
-              </div>
-
-              <div class="my-[2vh]">
-                <label for="defaultSelect" class="my-0 text-[2vh]"
-                  >Frequency<span class="text-[red]">*</span></label
-                >
-
-                <select
-                  class="form-select revInput"
-                  id="Frequency"
-                  aria-label="Default select example"
-                  data-name="frequency"
-                 
-                >
-                  <option selected>--select</option>
-                  <option value="Full access">One-off</option>
-                  <option value="View only">Monthly</option>
-                  <option value="View only">Annually</option>
-                </select>
-              </div>
-
-              <div class="my-[2vh]">
-                <label for="defaultSelect" class="my-0 text-[2vh]"
-                  >Amount to be paid<span class="text-[red]">*</span></label
-                >
-                <input
-                  type="number"
-                  data-name="amount"
-                  name="Amount to be paid"
-                  class="form-control revInput"
-                  id="nameLarge"
-                  placeholder="100000"
-                />
-              </div>
-
-              <div class="my-[2vh]">
-                <label for="defaultSelect" class="my-0 text-[2vh]"
-                  >Due Date<span class="text-[red]">*</span></label
-                >
-                <input
-                  type="date"
-                  name="date"
-                  class="form-control"
-                  id=""
-                  data-name="date"
-                  placeholder="Enter Name"
-                />
-              </div>
-
-              <div class="my-[2vh]">
-                <label for="defaultSelect" class="my-0 text-[2vh]"
-                  >Category<span class="text-[red]">*</span></label
-                >
-
-                <select
-                  class="form-select revInput"
-                  id="Category"
-                  
-                  aria-label="Default select example"
-                  data-name="category"
-                >
-                  <option selected>--select</option>
-                  <option value="Individual">Individual</option>
-                  <option value="Corporate">Corporate</option>
-                  <option value="State Agency">State Agency</option>
-                  <option value="Federal Agency">Federal Agency</option>
-                </select>
-              </div>
-
-              <div class="">
-                <p>Payment Method</p>
-
-                <div class="flex mt-2 flex-row gap-3">
-                  <span class="ml-3 text-sm text-gray-900 dark:text-gray-300"
-                    >Direct remittance</span
-                  >
-                  <label
-                    class="relative inline-flex items-center cursor-pointer"
-                  >
-                    <input type="checkbox" value="" class="sr-only peer" />
-
-                    <div
-                      class="w-11 h-6 bg-[#005826] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#005826] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#005826]"
-                    ></div>
-                    <span class="ml-3 text-sm text-gray-900 dark:text-gray-300"
-                      >Split remittance</span
-                    >
-                  </label>
-                </div>
-              </div>
-
-              <button id="createRevenue" class="button w-full text-center p-2 my-3">
-                Request for approval
-              </button>
-              <div id="msg_box" class="w-full">
-
-              </div>
-            <!-- </form> -->
+        <div class="md:mx-[9vh]">
+          <!-- <form class=""> -->
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Revenue Head<span class="text-[red]">*</span></label>
+            <input type="text" data-name="fullname" name="" class="form-control revInput" id=""
+              placeholder="Enter Name" />
           </div>
-        </div>
-      </div>
-    </div>
 
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Frequency<span class="text-[red]">*</span></label>
 
-    <!-- edit revenue head modal -->
-
-    <div class="modal fade" id="editRev" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header ">
-            <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Edit Revenue Head </h5>
-            <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
-              aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
+            <select class="form-select revInput" id="Frequency" aria-label="Default select example"
+              data-name="frequency">
+              <option selected>--select</option>
+              <option value="1">One-off</option>
+              <option value="2">Monthly</option>
+              <option value="3">Annually</option>
+            </select>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col mb-3">
-                <label for="nameLarge" class="form-label">Revenue head name</label>
-                <input type="text" id="nameLarge" class="form-control revInput2" placeholder="Enter name.."
-                  data-name="COL_4" />
-              </div>
-            </div>
-            <!-- <div class="row">
-              <div class="col mb-3">
-                <label for="nameLarge" class="form-label">Amount to be paid</label>
-                <input type="text" id="nameLarge" class="form-control revInput2" data-name="COL_5"
-                  placeholder="NGN XXX" />
-              </div>
-            </div> -->
-            <div class="row">
-              <div class="col mb-3">
-                <label for="dobLarge" class="form-label">Select Category</label>
-                <select id="defaultSelect" class="form-select revInput2" data-name="COL_5">
-                  <option value="Corporate">Corporate</option>
-                  <option value="Individual">Individual</option>
-                  <option value="State Agency">State Agency</option>
-                  <option value="Federal Agency">Federal Agency</option>
-                </select>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col mb-3">
-                <label for="dobLarge" class="form-label">Change Status</label>
-                <select id="defaultSelect" class="form-select revInput2" data-name="COL_5">
-                  <option value="Corporate">Active</option>
-                  <option value="Individual">Inactive</option>
-                </select>
-              </div>
-            </div>
-  
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Amount to be paid<span
+                class="text-[red]">*</span></label>
+            <input type="number" data-name="amount" name="Amount to be paid" class="form-control revInput"
+              id="nameLarge" placeholder="100000" />
           </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-prime w-full" id="editRevenue">Save</button>
-            <div id="msg_box2" class="w-full">
-  
+
+          <!-- <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Due Date<span class="text-[red]">*</span></label>
+            <input type="date" name="date" class="form-control" id="" data-name="date" placeholder="Enter Name" />
+          </div> -->
+
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Category<span class="text-[red]">*</span></label>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Individual" id="Individual" checked>
+              <label class="form-check-label" for="Individual">
+                Individual
+              </label>
             </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Corporate" id="Corporate">
+              <label class="form-check-label" for="Corporate">
+                Corporate
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="State Agency" id="State Agency">
+              <label class="form-check-label" for="State Agency">
+                State Agency
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Federal Agency" id="Federal Agency">
+              <label class="form-check-label" for="Federal Agency">
+                Federal Agency
+              </label>
+            </div>
+
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        <!-- Menu -->
+          <!-- <div class="">
+            <p>Payment Method</p>
 
-        <aside
-          id="layout-menu"
-          class="aside layout-menu menu-vertical menu bg-menu-theme"
-        ></aside>
-        <!-- / Menu -->
+            <div class="flex mt-2 flex-row gap-3">
+              <span class="ml-3 text-sm text-gray-900 dark:text-gray-300">Direct remittance</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" class="sr-only peer" />
 
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
-
-          <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl h-[15vh] align-items-center bg-navbar-theme"
-            id="layout-navbar"
-          >
-            <div
-              class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none"
-            >
-              <a
-                class="nav-item nav-link px-0 me-xl-4"
-                href="javascript:void(0)"
-              >
-                <i class="bx bx-menu bx-sm"></i>
-              </a>
-            </div>
-
-            <div
-              class="navbar-nav-right flex items-center justify-between"
-              id="navbar-collapse"
-            >
-              <div class="">
-                <p class="text-sm text-black" id="datei">-</p>
-                <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">
-                  Revenue Head
-                </h1>
-              </div>
-
-              <div class="mt-4 flex gap-x-2">
                 <div
-                  class="input-group input-group-merge md:w-72 hidden md:flex"
-                >
-                  <span
-                    class="input-group-text rounded-2xl"
-                    id="basic-addon-search31"
-                    ><i class="bx bx-search"></i
-                  ></span>
-                  <input
-                    type="text"
-                    class="form-control rounded-2xl"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                    aria-describedby="basic-addon-search31"
-                  />
+                  class="w-11 h-6 bg-[#125826] peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[#125826] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#125826]">
                 </div>
-              </div>
-
-              <button
-                class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[40vh] md:text-[2.2vh] text-[2vh] hover:text-white"
-                id="MyBTN"
-              >
-                Create revenue head
-              </button>
-
-              <!-- <div class="mt-4 flex flex-row gap-2">
-                <div class="">
-                  <img
-                    src="./assets/img/avatars/1.png"
-                    alt
-                    class="md:w-[7vh] w-10 h-auto rounded-circle"
-                  />
-                </div>
-
-                <div class="md:mt-[2vh] text-black text-[2vh] md:text-[2.3vh]">
-                  Ministry of Agriculture
-                </div>
-              </div> -->
-
-              <a class="mt-4 flex flex-row gap-2" href="./profile.html">
-                <div class="">
-                  <img
-                    src="./assets/img/avatars/1.png"
-                    alt
-                    class="md:w-[5vh] w-10 h-auto rounded-circle"
-                  />
-                </div>
-
-                <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]">
-                  Ministry of Agriculture
-                </div>
-              </a>
+                <span class="ml-3 text-sm text-gray-900 dark:text-gray-300">Split remittance</span>
+              </label>
             </div>
-          </nav>
+          </div> -->
 
-          <!-- / Navbar -->
+          <button id="createRevenue" class="button w-full text-center p-2 my-3">
+            Request for approval
+          </button>
+          <div id="msg_box" class="w-full">
 
-          <!-- Content wrapper -->
-          <section class="content-wrapper border-t-2 border-grey-500 bg-white">
-            <div class="container-xxl flex-grow-1 container-p-y taxes">
-              <div class="px-4 border-1 rounded-2xl">
-                <h1 class="text-xl text-[#282828] fontBold mt-4">
-                  Revenue Head
-                </h1>
-                <hr class="text-[#F4F4F4] my-2" />
-                <div class="table-responsive p-2">
-                  <table class="table theTable table-striped" id="dataTable">
-                    <thead class="text-[2.2vh] text-center">
-                      <th class="fontBold text-sm text-gray-500">
-                        <div class="flex flex-row gap-2">
-                          <iconify-icon
-                            icon="material-symbols:indeterminate-check-box-outline"
-                            style="font-size: 3vh"
-                          ></iconify-icon>
-                          <div class="flex">
-                            <p>S/N</p>
-                            <iconify-icon
-                              icon="material-symbols:arrow-downward-rounded"
-                            ></iconify-icon>
-                          </div>
-                        </div>
-                      </th>
-                      <th class="fontBold text-gray-500">Revenue head</th>
-                      <th class="fontBold text-gray-500">Category</th>
-                      <th class="fontBold text-gray-500">Amount</th>
-                      <th class="fontBold text-gray-500">Frequency</th>
-                      <th class="fontBold text-gray-500">Status</th>
-                      <th></th>
-                    </thead>
-                    <tbody id="showPayment">
-                    
-     
-                      <!-- <div class="flex justify-center items-center mt-4" id="loader">
-                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900 mr-4"></div>
-                        loading...
-                      </div> -->
-                    </tbody>
-                    <!-- <tbody id="showPayment text-center">
-                      <tr class="text-[2vh] text-center">
-                        <td>
-                          <div class="flex gap-3">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id=""
-                            />
-                            <label for="">1</label>
-                          </div>
-                        </td>
-                        <td>REGISTRATION OF FISHING BOAT</td>
-                        <td>Individual</td>
-                        <td>One-off</td>
-                        <td>
-                          <div class="bg-red-200 rounded-2xl py-1 px-3">
-                            <p class="text-[red]">Denied</p>
-                          </div>
-                        </td>
-                        <td>
-                          <div
-                            class="flex justify-content-between align-items-center"
-                          >
-                            <button
-                            onclick="editRevFunc(this)" data-revid="${revHd.id}" data-bs-toggle="modal"
-                            data-bs-target="#editRev"
-                            >
-                              <iconify-icon
-                                icon="fa6-regular:pen-to-square"
-                                style="font-size: 2.4vh"
-                              ></iconify-icon>
-                            </button>
-                            <button
-                              onclick="deleteRev(this)"
-                              data-revid="${revHd.id}"
-                            >
-                              <iconify-icon
-                                icon="material-symbols:delete-outline-sharp"
-                                style="font-size: 2.4vh"
-                              ></iconify-icon>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    
-
-                      <tr class="text-[2vh] text-center">
-                        <td>
-                          <div class="flex gap-3">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id=""
-                            />
-                            <label for="">1</label>
-                          </div>
-                        </td>
-                        <td>REGISTRATION OF FISHING BOAT</td>
-                        <td>Individual</td>
-                        <td>One-off</td>
-                        <td>
-                          <div class="bg-orange-200 rounded-2xl py-1 px-3">
-                            <p class="text-[orange]">Pending</p>
-                          </div>
-                        </td>
-                        <td>
-                          <div
-                            class="flex justify-content-between align-items-center"
-                          >
-                            <a href="./manageuser.html"
-                              ><iconify-icon
-                                icon="fa6-regular:pen-to-square"
-                                style="font-size: 2.4vh"
-                              ></iconify-icon
-                            ></a>
-                            <iconify-icon
-                              icon="material-symbols:delete-outline-sharp"
-                              style="font-size: 2.4vh"
-                            ></iconify-icon>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="text-[2vh] text-center">
-                        <td>
-                          <div class="flex gap-3">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              value=""
-                              id=""
-                            />
-                            <label for="">1</label>
-                          </div>
-                        </td>
-                        <td>REGISTRATION OF FISHING BOAT</td>
-                        <td>Individual</td>
-                        <td>One-off</td>
-                        <td>
-                          <div class="bg-green-100 rounded-2xl py-1 px-3">
-                            <p class="text-[green]">Approved</p>
-                          </div>
-                        </td>
-
-                        <td>
-                          <div
-                            class="flex justify-content-between align-items-center"
-                          >
-                            <button
-
-                            onclick="deleteRev(this)" data-revid="${revHd.id}"
-                              ><iconify-icon
-                                icon="fa6-regular:pen-to-square"
-                                style="font-size: 2.4vh"
-                              ></iconify-icon
-                            ></button>
-                            <iconify-icon
-                              icon="material-symbols:delete-outline-sharp"
-                              style="font-size: 2.4vh"
-                            ></iconify-icon>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody> -->
-                  </table>
-                </div>
-                <div class="flex justify-center items-center mt-4" id="loader">
-                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
-                  loading...
-                </div>
-              </div>
-            </div>
-            <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
-            <div class="content-backdrop fade"></div>
-          </section>
-
-          <!-- Content wrapper -->
+          </div>
+          <!-- </form> -->
         </div>
-        <!-- / Layout page -->
       </div>
-
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+  </div>
 
-    <div class="modal fade" id="notiModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Notifications</h5>
+
+  <!-- edit revenue head modal -->
+
+  <div class="modal fade" id="editRev" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header ">
+          <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Edit Revenue Head </h5>
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col mb-3">
+              <label for="nameLarge" class="form-label">Revenue head name</label>
+              <input type="text" id="nameLarge" class="form-control revInput2" data-name="COL_4" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="nameLarge" class="form-label">Amount to be paid</label>
+              <input type="text" id="nameLarge" class="form-control revInput2" data-name="COL_6" />
+            </div>
+          </div>
+
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Frequency</label>
+
+            <select class="form-select revInput2" data-name="frequency">
+              <option selected>--select</option>
+              <option value="1">One-off</option>
+              <option value="2">Monthly</option>
+              <option value="3">Annually</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="dobLarge" class="form-label">Select Category</label>
+              <select id="defaultSelect" class="form-select revInput2" data-name="COL_5">
+                <option value="Corporate">Corporate</option>
+                <option value="Individual">Individual</option>
+                <option value="State Agency">State Agency</option>
+                <option value="Federal Agency">Federal Agency</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3">
+              <label for="dobLarge" class="form-label">Change Status</label>
+              <select id="defaultSelect" class="form-select revInput2" data-name="COL_5">
+                <option value="Corporate">Active</option>
+                <option value="Individual">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-prime w-full" id="editRevenue">Save</button>
+          <div id="msg_box2" class="w-full">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+
+      <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme"></aside>
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl h-[15vh] align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">
+                Revenue Head
+              </h1>
+            </div>
+
+            <div class="mt-4 flex gap-x-2">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31" />
+              </div>
+            </div>
+
             <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+              class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[40vh] md:text-[2.2vh] text-[2vh] hover:text-white"
+              id="MyBTN">
+              Create revenue head
             </button>
+            <a class="mt-4 flex flex-row gap-2" href="./profile.html">
+              <div class="">
+                <img src="./assets/img/userprofile.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle"
+                  id="theProfImg1" />
+              </div>
+              <p id="mdName"></p>
+            </a>
           </div>
-          <div class="modal-body relative">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your TIN has been verified</p>
-              <button
-                class="text-[#005826] text-[12px] underline underline-offset-1"
-              >
-                clear
-              </button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3" />
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is successful</p>
-              <button
-                class="text-[#005826] text-[12px] underline underline-offset-1"
-              >
-                clear
-              </button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3" />
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your complaint has been answered</p>
-              <button
-                class="text-[#005826] text-[12px] underline underline-offset-1"
-              >
-                clear
-              </button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3" />
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is successful</p>
-              <button
-                class="text-[#005826] text-[12px] underline underline-offset-1"
-              >
-                clear
-              </button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3" />
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is due</p>
-              <button
-                class="text-[#005826] text-[12px] underline underline-offset-1"
-              >
-                clear
-              </button>
+        </nav>
+
+        <!-- / Navbar -->
+
+        <!-- Content wrapper -->
+        <section class="content-wrapper border-t-2 border-grey-500 bg-white">
+          <div class="container-xxl flex-grow-1 container-p-y taxes">
+            <div class="px-4 border-1 rounded-2xl">
+              <h1 class="text-xl text-[#282828] fontBold mt-4">
+                Revenue Head
+              </h1>
+              <hr class="text-[#F4F4F4] my-2" />
+              <div class="table-responsive p-2">
+                <table class="table theTable table-striped" id="dataTable">
+                  <thead class="text-[2.2vh] text-center">
+                    <th class="fontBold text-sm text-gray-500">
+                      <div class="flex flex-row gap-2">
+                        <iconify-icon icon="material-symbols:indeterminate-check-box-outline"
+                          style="font-size: 3vh"></iconify-icon>
+                        <div class="flex">
+                          <p>S/N</p>
+                          <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
+                        </div>
+                      </div>
+                    </th>
+                    <th class="fontBold text-gray-500">Revenue head</th>
+                    <th class="fontBold text-gray-500">Category</th>
+                    <th class="fontBold text-gray-500">Amount</th>
+                    <th class="fontBold text-gray-500">Frequency</th>
+                    <th class="fontBold text-gray-500">Status</th>
+                    <th></th>
+                  </thead>
+                  <tbody id="showPayment">
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex justify-center items-center mt-4" id="loader">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                loading...
+              </div>
             </div>
           </div>
-        </div>
+          <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
+          <div class="content-backdrop fade"></div>
+        </section>
+
+        <!-- Content wrapper -->
       </div>
+      <!-- / Layout page -->
     </div>
 
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="./assets/vendor/libs/popper/popper.js"></script>
-    <script src="./assets/vendor/js/bootstrap.js"></script>
-    <script src="./assets/js/jquery.datatables.min.js"></script>
-    <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
-    <script src="./assets/vendor/libs/echarts/echarts.js"></script>
-    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="./assets/js/nav.js"></script>
-    <script src="./assets/vendor/js/menu.js"></script>
-    <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="./assets/js/session.js"></script>
-    <!-- endbuild -->
-    <script>
-      let theAtivo = document.querySelector(`.das`);
-      theAtivo.parentElement.classList.add("active");
-    </script>
-    <!-- Vendors JS -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <!-- Main JS -->
-    <script src="./assets/js/taxes.js"></script>
-    <script src="./assets/js/main.js"></script>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
 
-    <script src="./assets/js/revHeads.js"></script>
 
-    <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="./assets/js/session.js"></script>
+  <!-- endbuild -->
+  <script>
+    let theAtivo = document.querySelector(`.das`);
+    theAtivo.parentElement.classList.add("active");
+  </script>
+  <!-- Vendors JS -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <!-- Main JS -->
+  <script src="./assets/js/taxes.js"></script>
+  <script src="./assets/js/main.js"></script>
 
-    <script>
-      var modal = document.getElementById("myModal");
+  <script src="./assets/js/revHeads.js"></script>
 
-      // Get the button that opens the modal
-      var btn = document.getElementById("MyBTN");
+  <!-- Page JS -->
 
-      // Get the <span> element that closes the modal
-      var span = document.getElementsByClassName("close")[0];
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-      // When the user clicks on the button, open the modal
-      btn.onclick = function () {
-        modal.style.display = "block";
-      };
+  <script>
+    var modal = document.getElementById("myModal");
 
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function () {
+    // Get the button that opens the modal
+    var btn = document.getElementById("MyBTN");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+      modal.style.display = "block";
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
         modal.style.display = "none";
-      };
+      }
+    };
+  </script>
+</body>
 
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      };
-    </script>
-  </body>
 </html>

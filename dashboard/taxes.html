@@ -70,12 +70,12 @@
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
-              </div>
-              <a href="../generateinvoice.html" class="button">
+              </div> -->
+              <a href="./taxes.html" class="button">
                 <iconify-icon icon="ic:baseline-plus"></iconify-icon> Generate Invoice</a>
 
               <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
@@ -104,6 +104,12 @@
                   </button>
                 </li>
                 <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="pills-tax-tab" data-bs-toggle="pill" data-bs-target="#pills-tax"
+                    type="button" role="tab" aria-controls="pills-tax" aria-selected="false">
+                    Presumptive Tax
+                  </button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
                   <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
                     All taxes
@@ -120,23 +126,38 @@
                   </div>
 
 
+                  <div class="accordion apt" id="accordionExample">
+                  
+                  </div>
+                  
+                </div>
+
+                <div class="tab-pane fade" id="pills-tax" role="tabpanel" aria-labelledby="pills-tax-tab">
+
+                  <div class="flex justify-end mb-4 -mt-6">
+                    <button class="button hidden" id="genInv"> <iconify-icon icon="ic:baseline-plus"></iconify-icon>
+                      Generate
+                      Invoice</button>
+                  </div>
+
                   <div class="table-responsive -mt-6">
-                    <table class="table" id="dataTable">
+                    <table class="table" id="dataTable3">
                       <thead>
                         <tr>
                           <th></th>
                           <th>S/N</th>
                           <th>Description</th>
+                          <th>Category</th>
                           <th>Frequency</th>
                           <th>Amount</th>
                           <th></th>
                         </tr>
                       </thead>
-                      <tbody id="showTaxes">
+                      <tbody id="showPresumptiveTax">
                         <!-- COMING FROM JS -->
-                        <div class="flex justify-center items-center mt-4" id="loaderr">
+                        <!-- <div class="flex justify-center items-center mt-4" id="loaderr">
                           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                        </div>
+                        </div> -->
                       </tbody>
                       <div class="flex justify-center items-center mt-4" id="loader">
                         <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
@@ -173,6 +194,7 @@
                   </div>
                 </div>
 
+                
               </div>
             </div>
 
@@ -242,7 +264,7 @@
   <script src="./assets/js/nav.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-  <script src="./assets/js/session.js"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
   <!-- endbuild -->
   <script>
     let theAtivo = document.querySelector(`.das`)

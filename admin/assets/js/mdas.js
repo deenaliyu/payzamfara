@@ -100,10 +100,90 @@ async function fetchMDAs() {
 
 }
 
-
-
-
 fetchMDAs()
+
+
+async function getAllRevH() {
+  const response = await fetch(`${HOST}/?getAllRevenueHeads`)
+  const revHeads = await response.json()
+
+  if (revHeads.status === 0) {
+  } else {
+    let pendingRevs = revHeads.message.filter(rr => rr.status === "pending")
+
+    pendingRevs.forEach((revHd, i) => {
+
+      $("#revHeadsShow2").append(`
+        <tr class="relative">
+          <td>${i + 1}</td>
+          <td>${revHd["COL_3"]} </td>
+          <td>${revHd["COL_4"]}</td>
+          <td>${revHd["COL_5"]}</td>
+          <td>${revHd["frequency"]}</td>
+          <td>&#8358; ${revHd["COL_6"]}</td>
+          <td>&#8358; ${(revHd.total_gen_revenue === "" ? 0 : revHd.total_gen_revenue.toLocaleString())}</td>
+          <td>
+            <button onclick="arroveRev(this)" class="button btn" data-revid="${revHd.id}">Approve</button>
+          </td>
+        </tr>
+      `)
+
+
+    })
+  }
+}
+
+getAllRevH()
+
+function arroveRev(e) {
+  let theRevId = e.dataset.revid
+  // console.log(theRevId)
+  Swal.fire({
+    title: 'Request Approval',
+    text: "Do you want to approve this request",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, approve it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "GET",
+        url: `${HOST}?ApproveRevenueHeadStatus&id=${theRevId}`,
+        dataType: "json",
+        success: function (data) {
+          console.log(data)
+          if (data.status === 1) {
+            Swal.fire(
+              'Approved!',
+              'Revenue Head has been approved.',
+              'success'
+            )
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000);
+          } else {
+            Swal.fire(
+              'Try again!',
+              'Something went wrong, try again !',
+              'error'
+            )
+          }
+        },
+        error: function (request, error) {
+          Swal.fire(
+            'Try again!',
+            'Something went wrong, try again !',
+            'error'
+          )
+        }
+      });
+
+    }
+  })
+
+}
 
 function editMdaFunc(e) {
   let editaID = e.dataset.userid
@@ -188,6 +268,24 @@ $("#createMDA").on("click", () => {
     obj.data[allInput.dataset.name] = allInput.value
   })
   console.log(obj)
+  var switchInput = document.getElementById("switchInput");
+  var switchValue = switchInput.checked;
+
+  // Process the switch value
+  if (switchValue) {
+    obj.data.allow_payment = 1;
+  } else {
+    obj.data.allow_payment = 2;
+  }
+
+  var switchInput1 = document.getElementById("switchInput1");
+  var switchValue1 = switchInput1.checked;
+
+  if (switchValue1) {
+    obj.data.office_creation = 1;
+  } else {
+    obj.data.office_creation = 2;
+  }
 
   $.ajax({
     type: "POST",
@@ -249,7 +347,26 @@ $("#editMDAs").on("click", (e) => {
   allInputs.forEach(allInput => {
     obj.data[allInput.dataset.name] = allInput.value
   })
+  var switchInput = document.getElementById("switchInput");
+  var switchValue = switchInput.checked;
+
+  // Process the switch value
+  if (switchValue) {
+    obj.data.allow_payment = 1;
+  } else {
+    obj.data.allow_payment = 2;
+  }
+
+  var switchInput1 = document.getElementById("switchInput1");
+  var switchValue1 = switchInput1.checked;
+
+  if (switchValue1) {
+    obj.data.office_creation = 1;
+  } else {
+    obj.data.office_creation = 2;
+  }
   let queryString = $.param(obj.data);
+  console.log(queryString);
   $.ajax({
     type: "GET",
     url: `${HOST}?updateMDA&` + queryString,
@@ -278,7 +395,7 @@ $("#editMDAs").on("click", (e) => {
       $("#msg_box2").html(`
         <p class="text-danger text-center mt-4 text-lg">Something went wrong, Try again !</p>
       `)
-      $("#editMda").removeClass("hidden")
+      $("#editMDAs").removeClass("hidden")
       console.log(error);
     }
   });

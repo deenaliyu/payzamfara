@@ -120,29 +120,12 @@
               </button>
             </a>
 
-
-            <!-- <div class="mt-4 flex flex-row gap-2">
-            <div class="">
-              <img
-                src="./assets/img/avatars/1.png"
-                alt
-                class="md:w-[7vh] w-10 h-auto rounded-circle"
-              />
-            </div>
-
-            <div class="md:mt-[2vh] text-black text-[2vh] md:text-[2.3vh]">
-              Ministry of Agriculture
-            </div>
-          </div> -->
-
             <a class="mt-4 flex flex-row gap-2" href="./profile.html">
               <div class="">
-                <img src="./assets/img/avatars/1.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle" />
+                <img src="./assets/img/userprofile.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle"
+                  id="theProfImg1" />
               </div>
-
-              <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]" id="mdName">
-                Ministry of Agriculture
-              </div>
+              <p id="mdName"></p>
             </a>
           </div>
         </nav>
@@ -153,7 +136,7 @@
           <div class=" flex justify-content-between ">
             <p>Payment</p>
 
-            <a href="#" class="text-black hover:text-[#005826]">
+            <a href="#" class="text-black hover:text-[#125826]">
               <p class="flex flex-row gap-1 " id="MyBTN">
                 Cash Deposit
                 <iconify-icon icon="gg:danger"></iconify-icon>
@@ -165,24 +148,10 @@
             <div class=" md:flex md:flex-row justify-content-around px-4 md:my-4 my-4 md:ml-0 mx-[4vh]">
               <a class="" href="./cashpayment.html">
                 <button
-                  class="text-center border-1 border-[#005826] md:my-0 my-2 py-2 lg:px-[20vh] px-[15vh]  rounded-3xl bg-[transparent] hover:bg-[#005826] text-[#005826] hover:text-white">
+                  class="text-center border-1 border-[#125826] md:my-0 my-2 py-2 lg:px-[20vh] px-[15vh]  rounded-3xl bg-[transparent] hover:bg-[#125826] text-[#125826] hover:text-white">
                   Cash Payment
                 </button>
               </a>
-
-
-
-
-              <a class="" href="./generateinvoice.html">
-
-                <button
-                  class="text-center border-1 border-[#005826] md:my-0 my-2 py-2 lg:px-[20vh] px-[14vh] rounded-3xl bg-[transparent] hover:bg-[#005826] text-[#005826] hover:text-white">
-
-                  Generate Invoice
-
-                </button>
-              </a>
-
             </div>
 
           </div>
@@ -190,18 +159,18 @@
 
           <div class="px-4 border-1 rounded-2xl mt-4">
             <p class="text-[2.6vh] pt-[5vh] font-semibbold text-black">Payment History</p>
-            <div class="border-t-2 mx-2 pt-3  px-2">
+            <div class="border-t-2 py-4">
 
               <div class="table-responsive">
-                <table class="table table-striped" id="dataTable">
+                <table class="table" id="dataTable">
                   <thead>
-                    <tr class="text-center text-[2.2vh]">
+                    <tr class="text-[2.2vh]">
                       <th>S/N</th>
                       <th>Date of payment</th>
                       <th>Payer Name</th>
                       <th>Payment for</th>
                       <th>Amount paid</th>
-                      <th>Paid by</th>
+                      <!-- <th>Paid by</th> -->
                       <th>Payment method</th>
                       <th>Status</th>
 
@@ -210,46 +179,7 @@
                   <tbody id="showPayment">
 
                   </tbody>
-                  <!-- <tbody class="table-border-bottom-0" id="showUsers">
-                <tr class="text-[2vh] text-center">
-                  <td>1</td>
-                  <td>12/22/2091</td>
-                  <td>Mior otunba</td>
-                  <td>Tractor</td>
-                  <td>20000</td>
-                  <td>mior otunba</td>
-                  <td>paystack</td>
-                  <td><div class="bg-[#ECFDF3] rounded-2xl py-1 px-3">
-                    <p class="text-[#027A48]">Paid</p>
-                  </div></td>
-                  <td>
-                    <button class="button py-1 px-3">
-                      <a href="#" class="hover:text-white"
-                        >view</a
-                      >
-                    </button>
-                  </td>
-                </tr>
-                <tr class="text-[2vh] text-center">
-                  <td>1</td>
-                  <td>12/22/2091</td>
-                  <td>Mior otunba</td>
-                  <td>Tractor</td>
-                  <td>20000</td>
-                  <td>mior otunba</td>
-                  <td>paystack</td>
-                  <td><div class="bg-[#ECFDF3] rounded-2xl py-1 px-3">
-                    <p class="text-[#027A48]">Paid</p>
-                  </div></td>
-                  <td>
-                    <button class="button py-1 px-3">
-                      <a href="#" class="hover:text-white"
-                        >view</a
-                      >
-                    </button>
-                  </td>
-                </tr>
-              </tbody> -->
+
                 </table>
               </div>
               <div class="flex justify-center items-center mt-4" id="loader">
@@ -270,84 +200,9 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <div class="modal fade" id="generateInvModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-            </button>
-          </div>
-          <div class="modal-body relative">
-            <div class="flex justify-center">
-              <form class=" sm:w-10/12 p-3 relative h-[50vh] overflow-y-auto">
-                <h1 class="text-2xl font-bold mb-6 text-center">Generate Invoice</h1>
-
-                <div id="formShower">
-
-                </div>
-                <div class="form-group">
-                  <select name="" id="getMDAs" class="form-select">
-                    <option disabled selected>--- Select MDA ---</option>
-                  </select>
-                </div>
-
-                <p class="text-3xl fontBold mt-10">List of Payable Taxes</p>
-                <p class="text-gray-600">Select those applicable</p>
-
-                <div class="mt-6" id="listOfpayable">
-
-                </div>
 
 
-              </form>
-            </div>
-            <button class="button w-full mt-6" id="generateInvoice">Generate Invoice</button>
-            <div id="msg_box" class="w-full">
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="notiModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Notifications</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-            </button>
-          </div>
-          <div class="modal-body relative">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your TIN has been verified</p>
-              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is successful</p>
-              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your complaint has been answered</p>
-              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is successful</p>
-              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-            </div>
-            <hr class="text-[#D7D7D7] my-3">
-            <div class="flex justify-between">
-              <p class="text-[16px]">Your payment is due</p>
-              <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- / Layout wrapper -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -360,7 +215,8 @@
     <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="./assets/js/nav.js"></script>
     <script src="./assets/vendor/js/menu.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- <script src="./assets/js/session.js"></script> -->
     <!-- endbuild -->
     <script src="../assets/js/invoicess.js"></script>

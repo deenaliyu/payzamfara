@@ -32,6 +32,7 @@ $("#Submitcomplain").on("click", function (e) {
         data: {
           "id": userDATA.id,
           img: "",
+          enum_id: "",
           content: tinymce.get('textarea').getContent()
         }
       }

@@ -53,7 +53,7 @@ $("#verifyInvoice").on("click", () => {
                   </a>
 
                   <button type="button" id="payNowNow" class="button flex gap-3 items-center px-10">
-                    <span>Pay Now</span>
+                    <span>Preview & Pay Now</span>
                   </button>
                 </div>
               </div>

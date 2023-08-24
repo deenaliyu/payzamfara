@@ -69,13 +69,13 @@
               <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Audit Trail</h1>
             </div>
+            <button class="flex gap-1 align-items-center mt-4" type="button" data-bs-toggle="modal"
+              data-bs-target="#filterInvoice">
+              <iconify-icon icon="mdi:filter-variant" style="font-size: 3vh"></iconify-icon>
+              Filter
+            </button>
 
             <div class="mt-4 flex gap-x-5 ms-auto">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
 
               <div class="avatar avatar-online flex gap-x-2 items-center">
                 <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
@@ -94,44 +94,75 @@
             <section class="w-12/12 main_section">
 
 
-              <h1 class="text-3xl fontBold text-[#000]">End Users Audit</h1>
+              <h1 class="text-xl fontBold text-[#000]">Summary</h1>
 
-              <h1 class="text-xl fontBold text-[#000]">Recent Activity</h1>
+              <div class="grid md:grid-cols-3 grid-cols-2 gap-3">
 
-              <div class="card card-body mt-4">
+                <div class="dashCards card md:w-[280px]">
+                  <p class="headder text-gray-500">Total Activity Count by Date</p>
+                  <div class="flex items-center justify-between gap-4 mt-3">
+                    <select class="form-select form-select-sm" onchange="fetchCateg2(this)" id="categgg2">
+
+                    </select>
+                    <p class="zanumbers "><span class="" id="totalRegis">-</span></p>
+                  </div>
+                </div>
+
+                <div class="dashCards card md:w-[280px]">
+
+                  <div class="headder">
+                    <p class="text-gray-500">Total User Logins by Date</p>
+                  </div>
+
+                  <div class="flex items-center justify-between gap-4 mt-3">
+                    <select class="form-select form-select-sm" onchange="fetchCateg(this)" id="categgg">
+
+                    </select>
+
+                    <p class="zanumbers" id="totalRegCateg">-</p>
+                  </div>
+
+                </div>
+
+                <div class=" dashCards card md:w-[280px]">
+                  <p class="headder text-gray-500">Total System Errors Incurred by Date</p>
+
+                  <div class="flex items-center justify-between gap-4 mt-3">
+                    <select class="form-select form-select-sm" onchange="fetchCateg2(this)" id="categgg3">
+
+                    </select>
+
+                    <p class="zanumbers" id="totalRegCategRege">-</p>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="flex justify-end mt-4">
+                <button onclick="convertTableToCSV()"
+                  class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[37vh] md:text-[2.2vh] text-[2vh] hover:text-white flex justify-content-center align-items-center">
+                  <iconify-icon icon="material-symbols:cloud-download-rounded"
+                    style="font-size: 3vh; padding-right: 1.5vh"></iconify-icon>
+                  Download Report
+                </button>
+              </div>
+              <div class="card card-body mt-2">
                 <div class="table-responsiveness">
-                  <table class="table auditTable">
+                  <table class="table auditTable" id="dataTable" id="myTable">
                     <thead>
                       <th scope="col">S/N</th>
-                      <th scope="col">Payer ID</th>
-                      <th scope="col">Session ID</th>
-                      <th scope="col">IP Address</th>
-                      <th scope="col">Name of User</th>
-                      <th scope="col">Last Login</th>
-                      <th scope="col">Activity Count</th>
+                      <th scope="col">Time Stamp</th>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Role</th>
+                      <!-- <th scope="col" class="hidden">Session ID</th>
+                      <th scope="col" class="hidden">IP Address</th>
+                      <th scope="col" class="hidden">Duration</th> -->
+                      <th scope="col">Activity Type</th>
                       <th scope="col"></th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td scope="row">1</td>
-                        <td>AKWR-2383</td>
-                        <td>3A6ADFEE0EFE2</td>
-                        <td>44.54.334.4</td>
-                        <td>Bashir Muhammad</td>
-                        <td>Just now</td>
-                        <td>50</td>
-                        <td><a href="useraudit.html" class="btn btn-primary btn-sm">View Activities</a></td>
-                      </tr>
-                      <tr>
-                        <td scope="row">2</td>
-                        <td>AKWR-2383</td>
-                        <td>3A6ADFEE0EFE2</td>
-                        <td>44.54.334.4</td>
-                        <td>Aliyu Kamilu</td>
-                        <td>Just now</td>
-                        <td>100</td>
-                        <td><a href="useraudit.html" class="btn btn-primary btn-sm">View Activities</a></td>
-                      </tr>
+                    <tbody id="showThem">
+
+
                     </tbody>
                   </table>
                 </div>
@@ -156,6 +187,107 @@
   </div>
   <!-- / Layout wrapper -->
 
+  <div class="modal fade" id="viewActivity">
+    <div class=" modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-[#000] fontBold" id="exampleModalLabel">About Activity</h5>
+          <button type="button" class="btn-close flex justify-center items-center" data-bs-dismiss="modal"
+            aria-label="Close">
+            <iconify-icon icon="icon-park:close"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row gap-y-5">
+            <div class="col-sm-6">
+              <p>Event Type</p>
+              <p class="text-[#000]" id="theRe">-</p>
+            </div>
+            <div class="col-sm-6">
+              <p>Timestamp:</p>
+              <p class="text-[#000]" id="time">-</p>
+            </div>
+            <div class="col-sm-6">
+              <p>User name</p>
+              <p class="text-[#000]" id="theName2">-</p>
+            </div>
+            <div class="col-sm-6">
+              <p>Role</p>
+              <p class="text-[#000]" id="theEm">-</p>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="filterInvoice" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content md:w-[100vh]">
+        <span class="flex justify-content-end">
+          <button>
+            <iconify-icon icon="ph:x-thin" data-bs-dismiss="modal" aria-label="Close"
+              style="font-size: 3vh; margin-right: 2vh; margin-top: 2vh"></iconify-icon>
+          </button>
+        </span>
+
+        <div class="mx-3">
+          <p class="text-[3vh] font-semibold text-black text-center">
+            Filter by
+          </p>
+          <hr />
+        </div>
+
+        <!-- <hr /> -->
+
+        <div class="p-4">
+          <div class="col-span-2 my-3 ">
+            <label for="">User Type</label>
+            <select required class="form-select w-[250px]" id="userTyp">
+              <option value="">select</option>
+              <option value="Payer User">End User</option>
+              <option value="Admin User">Admin User</option>
+              <option value="Enum User">Enum user</option>
+              <option value="Mda User">Mda user</option>
+            </select>
+          </div>
+
+          <div class="col-span-2 my-3 ">
+            <label for="">Activity</label>
+            <select required class="form-select w-[250px]" id="actiType">
+              <option value="">select</option>
+              <option value="Applicable taxes">Applicable taxes</option>
+              <option value="Logged In">Logged In</option>
+              <option value="Logged In">Logged In</option>
+              <option value="Admin Loggedin successfully">Admin Loggedin successfully</option>
+            </select>
+          </div>
+          <div class="flex space-x-5">
+            <div class="flex flex-column my-3">
+              <label for="">From</label>
+              <input type="date" name="date" class="form-control" id="fromDate" />
+            </div>
+            <div class="flex flex-column my-3">
+              <label for="">to</label>
+              <input type="date" name="date" class="form-control" id="toDate" />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="flex item-center justify-content-center mb-3">
+          <button type="button" class="btn btn-prime w-50 py-1 px-4" id="" onclick="getFilters()">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
@@ -165,6 +297,8 @@
   <script src="./assets/vendor/js/bootstrap.js"></script>
   <script src="./assets/vendor/libs/echarts/echarts.js"></script>
   <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
@@ -180,11 +314,46 @@
 
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/enduseraudit.js"></script>
+  <script src="./assets/js/auditcards.js"></script>
   <!-- <script src="../assets/js/invoicess.js"></script> -->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
 
   <!-- Page JS -->
+  <script>
+    function convertTableToCSV() {
+      const table = document.getElementById("dataTable");
+      let csvContent = "data:text/csv;charset=utf-8,";
 
+      // Add headers to the CSV
+      const headers = Array.from(table.querySelectorAll("thead th"));
+      csvContent += headers.map(th => th.innerText).join(",") + "\n";
+
+      // Add rows to the CSV
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+      rows.forEach(row => {
+        const cells = Array.from(row.querySelectorAll("td"));
+        const csvRow = cells.map(cell => cell.innerText).join(",");
+        csvContent += csvRow + "\n";
+      });
+      const dataTable = $(table).DataTable();
+
+      // Get hidden rows using DataTables API
+      const hiddenRows = dataTable.rows(":hidden").data().toArray();
+
+      // Add hidden rows to the CSV
+      hiddenRows.forEach(hiddenRow => {
+        const csvRow = hiddenRow.join(",");
+        csvContent += csvRow + "\n";
+      });
+      const encodedURI = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedURI);
+      link.setAttribute("download", "table_data.csv");
+      document.body.appendChild(link);
+      link.click();
+    }
+  </script>
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>

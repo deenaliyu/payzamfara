@@ -395,3 +395,6 @@ a:hover {
 /* .crisp-client .cc-1m7s .cc-qvio {
   background-color: #1972F5 !important;
 } */
+.collapse{
+  visibility: visible  !important;
+}

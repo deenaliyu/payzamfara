@@ -65,24 +65,18 @@
 
           <div class="navbar-nav-right flex items-center gap-x-5" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" >Date:  <span id="datei"> </span></p>
+              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Reports</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" id="searching" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
-              <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
-              data-bs-target="#filterInvoice">
-              <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
-              Filter
-            </button>
-              <button class="button flex gap-x-1" onclick="exportData()">
-                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download Report</button>
-              <div class="avatar avatar-online flex gap-x-5">
+            <div class="mt-4 flex gap-x-5 absolute right-24">
+
+
+              <button class="button flex gap-x-1 items-center" id="settlReportD" onclick="exportData()">
+                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
+                Report</button>
+
+              <div class="avatar avatar-online flex items-center gap-x-5">
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
                 <p class="adminName">system Admin</p>
               </div>
@@ -98,6 +92,45 @@
 
           <div class="container-xxl flex-grow-1 container-p-y taxes">
             <p class="font-bold text-2xl text-black">Settlement report</p>
+
+            <h1 class="text-xl fontBold text-[#000] mt-10 mb-3">Summary</h1>
+
+            <div class="grid md:grid-cols-3 grid-cols-2 gap-3">
+
+              <div class="dashCards card md:w-[280px]">
+                <p class="text-[#000] text-[17px] flex items-center gap-2"> <iconify-icon class="text-[#005826]"
+                    icon="solar:wallet-bold"></iconify-icon>
+                  <span>Total payment received </span></p>
+                <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">&#8358; 2000</span></p>
+              </div>
+
+              <div class="dashCards card md:w-[280px]">
+                <p class="text-[#000] text-[17px] flex items-center gap-2"> <iconify-icon class="text-[#005826]"
+                    icon="solar:wallet-bold"></iconify-icon>
+                  <span>Fee to TSA</span></p>
+                <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">&#8358; 26,666,70</span></p>
+
+              </div>
+
+              <div class="dashCards card md:w-[280px]">
+                <p class="text-[#000] text-[17px] flex items-center gap-2"> <iconify-icon class="text-[#005826]"
+                    icon="solar:wallet-bold"></iconify-icon>
+                  <span>Fee to MDA</span></p>
+                <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">&#8358; 26,666,70</span></p>
+
+              </div>
+
+              <div class="dashCards card md:w-[280px]">
+                <p class="text-[#000] text-[17px] flex items-center gap-2"> <iconify-icon class="text-[#005826]"
+                    icon="solar:wallet-bold"></iconify-icon>
+                  <span>Fee to 3rd party</span></p>
+                <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">&#8358; 26,666,70</span></p>
+
+              </div>
+
+
+            </div>
+
             <div class="card px-2 py-4 mt-6 table-responsive">
               <table class="table invoiceTable colet" id="dataTable">
                 <thead>
@@ -115,54 +148,54 @@
                   </tr>
                 </thead>
                 <tbody class="table-border-bottom-0" id="">
-                    <tr>
-                        <td>1</td>
-                        <td>10.12.2023</td>
-                        <td>1234567</td>
-                        <td>Ministry of Agric.</td>
-                        <td>TRACTOR HIRING SERVICE</td>
-                        <td>N 10,000</td>
-                        <td>N 250.00</td>
-                        <td>N 250.00</td>
-                        <td>N 3,500.00</td>
-                        <td>N 6,000.00</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>10.12.2023</td>
-                        <td>1234567</td>
-                        <td>Ministry of Agric.</td>
-                        <td>TRACTOR HIRING SERVICE</td>
-                        <td>N 10,000</td>
-                        <td>N 250.00</td>
-                        <td>N 250.00</td>
-                        <td>N 3,500.00</td>
-                        <td>N 6,000.00</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>10.12.2023</td>
-                        <td>1234567</td>
-                        <td>Ministry of Agric.</td>
-                        <td>TRACTOR HIRING SERVICE</td>
-                        <td>N 10,000</td>
-                        <td>N 250.00</td>
-                        <td>N 250.00</td>
-                        <td>N 3,500.00</td>
-                        <td>N 6,000.00</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>10.12.2023</td>
-                        <td>1234567</td>
-                        <td>Ministry of Agric.</td>
-                        <td>TRACTOR HIRING SERVICE</td>
-                        <td>N 10,000</td>
-                        <td>N 250.00</td>
-                        <td>N 250.00</td>
-                        <td>N 3,500.00</td>
-                        <td>N 6,000.00</td>
-                    </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>10.12.2023</td>
+                    <td>1234567</td>
+                    <td>Ministry of Agric.</td>
+                    <td>TRACTOR HIRING SERVICE</td>
+                    <td>N 10,000</td>
+                    <td>N 250.00</td>
+                    <td>N 250.00</td>
+                    <td>N 3,500.00</td>
+                    <td>N 6,000.00</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>10.12.2023</td>
+                    <td>1234567</td>
+                    <td>Ministry of Agric.</td>
+                    <td>TRACTOR HIRING SERVICE</td>
+                    <td>N 10,000</td>
+                    <td>N 250.00</td>
+                    <td>N 250.00</td>
+                    <td>N 3,500.00</td>
+                    <td>N 6,000.00</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>10.12.2023</td>
+                    <td>1234567</td>
+                    <td>Ministry of Agric.</td>
+                    <td>TRACTOR HIRING SERVICE</td>
+                    <td>N 10,000</td>
+                    <td>N 250.00</td>
+                    <td>N 250.00</td>
+                    <td>N 3,500.00</td>
+                    <td>N 6,000.00</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>10.12.2023</td>
+                    <td>1234567</td>
+                    <td>Ministry of Agric.</td>
+                    <td>TRACTOR HIRING SERVICE</td>
+                    <td>N 10,000</td>
+                    <td>N 250.00</td>
+                    <td>N 250.00</td>
+                    <td>N 3,500.00</td>
+                    <td>N 6,000.00</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -189,62 +222,7 @@
 
 
   <!-- build:js assets/vendor/js/core.js -->
-  <div class="modal fade" id="filterInvoice" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header ">
-          <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Filter</h5>
-          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
-            aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col mb-3" id="mdass">
-              <label for="defaultSelect" class="form-label">MDA</label>
-              <div class="form-group">
-                <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select MDA ---</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col mb-0" id="the_rev">
-              <label for="defaultSelect" class="form-label">Revenue Head</label>
-              <div class="form-group">
-                <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select RevHead ---</option>
-                </select>
-              </div>
-            </div>
-            <div class="col mb-0">
-              <label for="dobLarge" class="form-label">Payment status</label>
-              <select id="defaultSelect" class="form-select">
-                <option>All</option>
-                <option value="Due">Due</option>
-                <option value="Paid">Paid</option>
-                <option value="Installment">Installment</option>
-              </select>
-            </div>
-          </div>
-          <div class="row g-2">
-            <label for="" class="mt-3">Date</label>
-            <div class="col mb-0">
-              <label for="emailLarge" class="form-label">From</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-            </div>
-            <div class="col mb-0">
-              <label for="dobLarge" class="form-label">To</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer ">
-          <button type="button" class="btn btn-prime w-full" id="filterMda">Apply</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -252,22 +230,22 @@
   <script src="./assets/js/jquery.datatables.min.js"></script>
   <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script>
-    $('#searching').keyup(function() {
-     var table = $('.table').DataTable();
-     table.search($(this).val()).draw();
- });
- </script>
- 
+    $('#searching').keyup(function () {
+      var table = $('.table').DataTable();
+      table.search($(this).val()).draw();
+    });
+  </script>
+
   <script>
- function exportData(){
-    /* Get the HTML data using Element by Id */
-    var table = document.querySelector(".invoiceTable");
- 
-    /* Declaring array variable */
-    var rows =[];
- 
+    function exportData() {
+      /* Get the HTML data using Element by Id */
+      var table = document.querySelector(".invoiceTable");
+
+      /* Declaring array variable */
+      var rows = [];
+
       //iterate through rows of table
-    for(var i=0,row; row = table.rows[i];i++){
+      for (var i = 0, row; row = table.rows[i]; i++) {
         //rows would be accessed using the "row" variable assigned in the for loop
         //Get each cell value/column from the row
         column1 = row.cells[0].innerText;
@@ -280,47 +258,49 @@
         column8 = row.cells[7].innerText;
         column9 = row.cells[8].innerText;
         column10 = row.cells[9].innerText;
- 
-    /* add a new records in the array */
+
+        /* add a new records in the array */
         rows.push(
-            [
-                column1,
-                column2,
-                column3,
-                column4,
-                column5,
-                column6,
-                column7,
-                column8,
-                column9,
-                column10
-            ]
+          [
+            column1,
+            column2,
+            column3,
+            column4,
+            column5,
+            column6,
+            column7,
+            column8,
+            column9,
+            column10
+          ]
         );
- 
-        }
-        csvContent = "data:text/csv;charset=utf-8,";
-         /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-        rows.forEach(function(rowArray){
-            row = rowArray.join(",");
-            csvContent += row + "\r\n";
-        });
- 
-        /* create a hidden <a> DOM node and set its download attribute */
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "Collection.csv");
-        document.body.appendChild(link);
-         /* download the data file named "Stock_Price_Report.csv" */
-        link.click();
-}
+
+      }
+      csvContent = "data:text/csv;charset=utf-8,";
+      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+      rows.forEach(function (rowArray) {
+        row = rowArray.join(",");
+        csvContent += row + "\r\n";
+      });
+
+      /* create a hidden <a> DOM node and set its download attribute */
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Collection.csv");
+      document.body.appendChild(link);
+      /* download the data file named "Stock_Price_Report.csv" */
+      link.click();
+    }
   </script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="./assets/js/nav.js"></script>
+
   <script>
     let theAtivo = document.querySelector(".dggg")
     theAtivo.parentElement.classList.add("active")
   </script>
+  <script src="./assets/js/accessLevel.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/vendor/js/menu.js"></script>
   <!-- <script src="./assets/js/collection.js"></script>

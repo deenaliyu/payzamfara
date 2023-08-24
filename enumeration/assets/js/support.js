@@ -1,64 +1,52 @@
-async function fetchInvoice() {
+let userDATA = JSON.parse(localStorage.getItem("enumDataPrime"))
 
-  $("#showThem").html("");
-  $("#loader").css("display", "flex");
 
-  let config = {
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "*",
-    },
-  };
-  const response = await fetch(
-    `${HOST}?getSupport`
-  );
-  const userInvoices = await response.json();
-  console.log(userInvoices);
-  $("#loader").css("display", "none");
-  if (userInvoices.status === 1) {
+async function getSupport() {
+  const response = await fetch(`${HOST}/php/index.php?getSupportByEnumId&id=${userDATA.id}`);
+  const supportss = await response.json();
 
-    userInvoices.message.reverse().forEach((userInvoice, i) => {
-      let addd = ""
-      addd += `
-          <tr class="relative">
+  console.log(supportss)
+  if (supportss.status === 1) {
+
+    supportss.message.reverse().forEach((suprt, i) => {
+      let theSprt = ""
+      theSprt += `
+        <tr class="relative">
           <td>${i + 1}</td>
-          <td>${userInvoice.fullname}</td>
-          <td>${userInvoice.email}</td>
-          <td>${userInvoice.subject}</td>
-          <td>${userInvoice.ticket_number}</td>
-          <td>${userInvoice.time_in}</td>
-            `
-      if (userInvoice.status === "answered") {
-        addd += `
-              <td id="" class="checking">
-                <p class='text-success'>${userInvoice.status}</p>
-              </td>
-              
-              `
+          <td>${suprt.ticket_number}</td>
+          <td>${suprt.subject}</td>
+          <td>${suprt.time_in.split(" ")[0]}</td>
+        `
+      if (suprt.status === "pending") {
+        theSprt +=
+          `  
+          <td class="text-danger">${suprt.status}</td>
+        <`
       } else {
-        addd += `
-              <td id="" class="checking">
-                <p class='text-danger'>${userInvoice.status}</p>
-              </td>
-              `
+
+        theSprt +=
+          `  
+          <td class="text-success">${suprt.status}</td>
+        `
       }
 
-      addd += `
-          <td>
-            <a href="./complain.html?id=${userInvoice.id}&ticket_number=${userInvoice.ticket_number}" class="btn btn-primary btn-sm viewUser" >View Ticket</a>
-          </td>
+      theSprt +=
+        `  
+          <td class="text-success"><a href="viewticket.html?ticket_number=${suprt.ticket_number}&id=${suprt.id}" class="btn btn-primary">View</a></td>
+
           </tr>
-          `
-      $("#showThem").append(addd);
+        `
+
+      $("#theSupport").append(theSprt)
+
     });
+
+
   } else {
-    // $("#showInvoice").html("<tr></tr>");
-    $("#dataTable").DataTable();
+
   }
 }
 
-fetchInvoice().then((uu) => {
+getSupport().then((uu) => {
   $("#dataTable").DataTable();
 });

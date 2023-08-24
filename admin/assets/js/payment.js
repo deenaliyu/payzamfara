@@ -184,7 +184,7 @@ async function openReceipt(invoicenumber) {
               <div class="flex items-center justify-center">
                 <img src="./assets/img/akwaimage.png" alt="">
                 <div>
-                  <p class="text-xl fontBold pb-0">Pay Zamfara</p>
+                  <p class="text-xl fontBold pb-0">Pay Ibom</p>
                   <div class="flex items-center gap-x-3 flex-wrap">
                     <p class="text-sm text-[#6F6F84]">www.akwaibompay.ng</p>
                     <p class="text-sm text-[#6F6F84]">Info@akwaibompay.com</p>

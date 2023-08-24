@@ -63,41 +63,25 @@
             </a>
           </div>
 
-          <div class="navbar-nav-right flex items-center gap-x-5" id="navbar-collapse">
-            <div class="">
-              <p class="text-sm text-black">Date: <span id="datei"> </span></p>
+          <div class="navbar-nav-right flex items-center gap-x-5 relative" id="navbar-collapse">
+            <div class="flex-1">
+              <p class="text-sm text-black">Date: <span class="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Payer</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+            <div class="mt-4 flex gap-x-5  absolute right-24">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
-              </div>
-              <div class="dropdown mt-2">
-                <button class="flex gap-1 align-items-center" type="button" id="filtermda" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
-                  Filter
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-                  <button class="dropdown-item" value="Individual" id="Individual">Individual</button>
-                  <button class="dropdown-item" value="Corporate" id="Corporate">Corporate</button>
-                  <button class="dropdown-item" value="Lastlogin" id="login">Last login</button>
-                  <button class="dropdown-item" value="invoicegenerated" id="generated">No of invoice
-                    generated</button>
-                  <button class="dropdown-item" value="Totalpayment" id="payment">Total
-                    payment</button>
-                </div>
-              </div>
+              </div> -->
+
 
               <!-- <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
                 onclick="tableToCSV()">
 
                 <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                 Report</button> -->
-
               <div class="avatar avatar-online flex gap-x-5">
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
                 <p class="adminName">system Admin</p>
@@ -184,23 +168,8 @@
                   <div class="tab-pane fade" id="pills-app" role="tabpanel" aria-labelledby="pills-app-tab">
                     <button onclick="exportTablee('showtaxess', '.dataTable')" class="button mb-3">Export CSV</button>
 
-                    <div class="table-responsive -mt-6 ">
-                      <table class="table dataTable" id="showtaxess">
-                        <thead>
-                          <tr>
-                            <th>S/N</th>
-                            <th>Description</th>
-                            <th>Frequency</th>
-                          </tr>
-                        </thead>
-                        <tbody id="showTaxes">
+                    <div class="accordion apt" id="accordionExample">
 
-
-                        </tbody>
-                        <div class="flex justify-center items-center mt-4" id="loader">
-                          <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
-                        </div>
-                      </table>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="pills-invoice" role="tabpanel" aria-labelledby="pills-invoice-tab">
@@ -211,9 +180,6 @@
                           <th class="fontBold text-sm text-gray-500">Invoice No.</th>
                           <th class="fontBold text-sm text-gray-500">Description</th>
                           <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
-                          <th class="fontBold text-sm text-gray-500">Amount paid</th>
-                          <th class="fontBold text-sm text-gray-500">Balance yet to be paid
-                          </th>
                           <th class="fontBold text-sm text-gray-500">Invoice date</th>
                           <th class="fontBold text-sm text-gray-500">Due date</th>
                           <th class="fontBold text-sm text-gray-500">status</th>

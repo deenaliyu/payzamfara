@@ -64,13 +64,13 @@
 
     </div>
 
-    <div class="md:w-9/12 w-full bg-[url('./assets/img/slide2.png')] bg-center overflow-y-scroll">
+    <div class="md:w-9/12 w-full bg-[url('./assets/img/slideimg.png')] bg-center overflow-y-scroll">
 
       <section class="formTabs h-full">
 
         <div class="flex justify-center items-center h-full">
 
-          <form action="" class="md:w-[60%] w-[80%]">
+          <form action="" class="md:w-[60%] w-[80%] firstDiv">
             <h1 class="fontBold text-2xl">Generate Invoice</h1>
             <h1 class="mb-3 mt-3">Basic Information</h1>
 
@@ -89,8 +89,8 @@
               <label for="">What do you want to pay for?*</label>
               <!-- <input type="text" class="form-control mb-1" id="select-search" onkeyup="filterOptions()"
                 placeholder="Search..."> -->
-              <select onchange="updateSelectedOption()" class="revHeadInputSel form-select genInv" required name=""
-                id="rev_heads">
+              <select onchange="updateSelectedOption()" class="revHeadInputSel form-select genInv revHeadsss" required
+                name="" id="rev_heads">
                 <!-- <option disabled selected>Select--</option> -->
 
               </select>
@@ -127,7 +127,7 @@
         </div>
         <div class="flex justify-center items-center h-full -mt-10">
 
-          <form action="" class="md:w-[70%]">
+          <form action="" class="md:w-[70%] secondForm">
             <h1 class="fontBold text-2xl">Generate Invoice</h1>
             <h1 class="mb-3 mt-3">Personal Details</h1>
 
@@ -145,7 +145,7 @@
               </div>
             </div>
 
-            <div class="flex items-center mb-4 gap-2">
+            <div class="flex items-center mb-4 gap-2" id="theEmail">
               <div class="form-group w-full">
                 <label for="">Email *</label>
                 <input type="text" class="form-control payInputs" required data-name="email"
@@ -154,37 +154,113 @@
 
               <div class="form-group w-full">
                 <label for="">Phone number *</label>
-                <input type="tel" class="form-control payInputs" required data-name="phone"
-                  placeholder="Your 11-digits phone number">
+                <input type="number" class="form-control payInputs" minlength="11" maxlength="11" required
+                  data-name="phone" placeholder="Your 11-digits phone number">
               </div>
             </div>
 
-            <div class="flex items-center mb-4 gap-2">
-              <div class="form-group w-full">
+            <div class="flex items-center mb-4 gap-2" >
+              <div class="form-group w-full" id="theTin">
                 <label for="">TIN (Optional)</label>
-                <input type="text" class="form-control payInputs" id="tin" required data-name="tax_number"
-                  placeholder="Enter your TIN">
+                <input type="text" class="form-control payInputs" id="tin" data-name="tin" placeholder="Enter your TIN">
               </div>
 
               <div class="form-group w-full">
                 <label for="">State*</label>
-                <select name="" id="selectState" class="form-select">
+                <select name="" id="selectState" class="form-select payInputs" data-name="state">
                   <option value="Akwa Ibom">Akwa Ibom</option>
                 </select>
               </div>
             </div>
 
-            <div class="flex items-center mb-4 gap-2">
+            <div class="flex items-center mb-4 gap-2" >
               <div class="form-group w-full">
                 <label for="">LGA*</label>
                 <select name="" id="selectLGA" class="form-select payInputs" required data-name="lga">
                 </select>
               </div>
 
-              <div class="form-group w-full">
+              <div class="form-group w-full" id="theLga">
                 <label for="">Address*</label>
-                <input type="text" class="form-control payInputs" required data-name="address"
+                <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
                   placeholder=" Enter your address">
+              </div>
+            </div>
+
+
+
+
+            <button class="button w-full" type="button" onclick="goToPreviewPage()">Continue</button>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-full -mt-10">
+          <form action="" class="md:w-[70%] secondForm">
+            <h1 class="fontBold text-2xl">Generate Invoice</h1>
+            <h1 class="mb-3 mt-3">Billing Details</h1>
+            <div class="shadow-md p-3 bg-[#E9ECEF]" id="bill">
+              <div class="flex space-x-3">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+            <h1 class="mb-3 mt-3">User Details</h1>
+            <div class="flex items-center mb-4 gap-2" id="theName">
+              <div class="form-group w-full">
+                <label for="">First name</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="first_name">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Surname</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="surname">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">Email</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="email">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Phone number *</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="phone">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">TIN (Optional)</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="tin">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">State</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="state">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">LGA</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="lga">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Address</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="address">
               </div>
             </div>
 
@@ -195,19 +271,16 @@
               onclick="generateInvoiceNon()">Continue</button>
             <div id="msg_box"></div>
           </form>
-
         </div>
       </section>
 
 
-
-
       <section class="formTabs pb-5">
         <div class="md:pt-10 pt-3 md:px-10 px-4">
-          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+          <!-- <button class="flex items-center gap-2" onclick="nextPrev(-1)">
             <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
             <span>Go back</span>
-          </button>
+          </button> -->
         </div>
 
         <div class="invoiceContainer flex justify-center">

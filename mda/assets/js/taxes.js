@@ -4,7 +4,7 @@ async function getTaxes() {
   const response = await fetch(`${HOST}?getAllRevenueHeads`)
   const revenueHeads = await response.json()
 
-  console.log(revenueHeads)
+  // console.log(revenueHeads)
 
   let ii = 0
   revenueHeads.message.forEach((revenuehead, i) => {

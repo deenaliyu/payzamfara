@@ -13,12 +13,46 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <!-- <link rel="stylesheet" href="assets/css/responsive.css" /> -->
   <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
 
 </head>
 
 <body>
+  <div class="modal fade" id="snapModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Take a Snap</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row pakainfo">
+              <div class="col-md-6 pakainfo">
+                <div id="live_camera"></div>
+
+
+                <input class="button mt-3" type=button value="Take Snapshot" onClick="capture_web_snapshot()">
+                <input type="hidden" name="image" class="image-tag">
+              </div>
+              <div class="col-md-6">
+                <div id="preview">Your captured image will appear here...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="outline-btn" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="button" data-bs-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <header>
     <div class="flex gap-2 items-center p-3 border-b">
       <img src="./assets/img/logo.png" class="w-[50px]" alt="">
@@ -79,7 +113,6 @@
             <select class="form-select enumInput" data-name="tax_category" required>
               <option value="Formal">Formal</option>
               <option value="Informal">Informal</option>
-              <option value="Presumptive tax">Presumptive tax</option>
             </select>
           </div>
 
@@ -126,18 +159,24 @@
 
           </div>
 
-          <div class="flex gap-3 md:flex-row flex-col mb-3">
+          <div class="flex gap-3 md:flex-row flex-col mb-3 items-center">
 
             <div class="form-group md:w-6/12">
               <label for="">Latitude*</label>
-              <input type="text" class="form-control w-full enumInput" data-name="latitude" required placeholder="0.00">
+              <input type="text" class="form-control w-full enumInput" data-name="latitude" id="latitude" required
+                placeholder="">
             </div>
 
             <div class="form-group md:w-6/12">
               <label for="">Longitude*</label>
-              <input type="email" class="form-control w-full enumInput" data-name="longitude" required required>
+              <input type="email" class="form-control w-full enumInput" data-name="longitude" id="longitude" required
+                required>
             </div>
 
+            <div>
+              <iconify-icon icon="fluent:location-28-filled" class="cursor-pointer"
+                onclick="getLatsAndLng()"></iconify-icon>
+            </div>
           </div>
 
 
@@ -152,7 +191,7 @@
 
             <div class="form-group md:w-6/12">
               <label for="">LGA*</label>
-              <select class="form-select enumInput" data-name="lga" required>
+              <select class="form-select enumInput" id="LGAs" data-name="lga" required>
                 <option value="Abak">Abak</option>
               </select>
             </div>
@@ -168,9 +207,11 @@
             </div>
 
             <div class="form-group md:w-6/12">
-              <label for="">Area*</label>
+              <label for="">Cluster*</label>
               <select class="form-select enumInput" data-name="area" required>
-                <option value="Select---">Select---</option>
+                <option value="">Select---</option>
+                <option value="Cluster A">Cluster A</option>
+                <option value="Cluster B">Cluster B</option>
               </select>
             </div>
 
@@ -233,8 +274,8 @@
                 <label for="">ID Type*</label>
                 <select class="form-select enumInput2" data-name="id_type" required>
                   <option value="">Select ---</option>
-                  <option value="1">BVN</option>
-                  <option value="2">NIN</option>
+                  <option value="BVN">BVN</option>
+                  <option value="NIN">NIN</option>
 
                 </select>
               </div>
@@ -253,8 +294,8 @@
 
               <label for="">Status*</label>
               <select class="form-select enumInput2" data-name="property_owner" required>
-                <option value="1">Property Owner</option>
-                <option value="2">Renting Occupant</option>
+                <option value="Property Owner">Property Owner</option>
+                <option value="Renting Occupant">Renting Occupant</option>
               </select>
 
             </div>
@@ -308,8 +349,19 @@
           <p class="mt-2 mb-4">Biometric Information</p>
 
           <div class="form-group mb-3">
-            <label for="" class="mb-4">Upload Profile picture*</label>
-            <img src="./assets/img/proppicture.png" alt="">
+            <label for="select">Upload or Snap <span>*</span></label>
+            <div class="row items-center">
+              <div class="col-sm-8 hidden">
+                <input type="file" class="imgUpl form-control" name="uploadimg" onchange="encodeImageFileAsURL(this)"
+                  accept="image/*" required>
+              </div>
+              <div class="col-sm-4">
+                <button class="button" type="button" data-bs-toggle="modal" data-bs-target="#snapModal" id="snapBtn"><i
+                    class="fa fa-camera"></i> Snap</button>
+              </div>
+            </div>
+            <!-- <label for="">Upload Profile picture*</label>
+            <img src="./assets/img/profilepic.png" alt=""> -->
           </div>
 
           <div class="form-group mb-3 mt-5">
@@ -329,31 +381,31 @@
       <section class="formTabs h-full">
 
         <div class="md:pt-4 pt-3">
-          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+          <!-- <button class="flex items-center gap-2" onclick="nextPrev(-1)">
             <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
             <span>Go back</span>
-          </button>
+          </button> -->
         </div>
 
         <div class="flex justify-between mt-4">
           <button class="outline-btn" onclick="nextPrev(-3)">Edit Profile</button>
 
-          <button class="button flex items-center gap-3">
+          <button class="button flex items-center gap-3" onclick="printPreview('printView')">
             <iconify-icon icon="uit:print"></iconify-icon>
             <span> Print</span>
           </button>
         </div>
 
-        <div class="border rounded-md p-3 mt-4">
+        <div class="border rounded-md p-3 mt-4" id="printView">
           <p>Biometrics Information</p>
 
-          <img src="./assets/img/proppicture.png" alt="">
+          <div id="imageTag"></div>
 
           <img src="./assets/img/bio2.png" class="mt-3" alt="">
 
           <p class="mt-3">Property Information</p>
 
-          <form action="" class="mt-4 w-8/12">
+          <form action="" class="mt-4 w-8/12" id="thePrForm">
 
             <div class="form-group mb-3">
               <label for="">Tax Category</label>
@@ -416,7 +468,7 @@
               </div>
 
               <div class="form-group md:w-6/12">
-                <label for="">Area</label>
+                <label for="">Cluster</label>
                 <input class="form-control enumPrev1" data-name="area" readonly>
               </div>
 
@@ -516,7 +568,7 @@
           </form>
         </div>
 
-        <button class="button w-8/12 mt-3 mb-4" onclick="registerUser()">Verify</button>
+        <button class="button w-8/12 mt-3 mb-4" id="theButton" onclick="registerUser()">Verify</button>
         <div id="msg_box"></div>
 
 
@@ -528,22 +580,22 @@
         <div class="mt-5">
           <h1 class="text-lg fontBold text-center">Congratulations</h1>
 
-          <p class="text-center mt-5">To complete the user registration process, kindly choose your preferred
-            method of
+          <p class="text-center mt-5">To complete the user registration process, kindly choose your preferred method of
             verification</p>
 
 
-          <div class="flex justify-around mt-5">
-            <button class="button flex items-center gap-3" onclick="nextPrev(1)">
+          <div class="flex justify-around mt-5" id="sendMailBtnCont">
+            <button class="button flex items-center gap-3" onclick="emailVerifcation()">
               <iconify-icon icon="iconamoon:email"></iconify-icon>
               <span>Email Verification</span>
             </button>
 
-            <button class="outline-btn flex items-center gap-3" onclick="nextPrev(1)">
+            <button class="outline-btn flex items-center gap-3" onclick="phoneVerifcation()">
               <iconify-icon icon="quill:phone"></iconify-icon>
               <span>Phone Verification</span>
             </button>
           </div>
+          <div id="msg_box2"></div>
         </div>
 
       </section>
@@ -556,19 +608,22 @@
 
 
         <div class="form-group flex justify-center mt-5">
-          <input type="text" class="form-control w-4/12" placeholder="Enter OTP">
+          <input type="text" class="form-control md:w-4/12" id="codeee" placeholder="Enter OTP">
         </div>
 
-        <div class="flex justify-center mt-5">
-          <button class="button" onclick="nextPrev(1)">Verify</button>
+        <div class="flex justify-center mt-5" id="theVerifyy">
+          <button class="button" onclick="verifyAccounttt()">Verify</button>
         </div>
+        <div id="msg_boxx"></div>
 
-        <div class="mt-5">
-          <p class="text-center">Didn't get OTP ? <span class="textPrimary">Resend</span></p>
+        <div class="mt-5" id="resCont">
+          <p class="text-center">Didn't get OTP ? <button disabled class="textPrimary disabled" id="resend"
+              onclick="resend()">Resend</button></p>
         </div>
+        <div class="text-center" id="countdown"></div>
+        <div id="msg_box3"></div>
 
-        <p onclick="nextPrev(-1)" class="mt-5 textPrimary text-center cursor-pointer">Choose a new verification
-          method
+        <p onclick="nextPrev(-1)" class="mt-5 textPrimary text-center cursor-pointer">Choose a new verification method
         </p>
       </section>
 
@@ -579,7 +634,20 @@
         </div>
 
         <div class="flex justify-center mt-10">
-          <a href="index.html" class="button">Go to Dashboard</a>
+          <a href="dashboard.html" class="button">Go to Dashboard</a>
+        </div>
+
+      </section>
+
+      <section class="formTabs pb-5" id="receipt">
+
+        <div class="flex justify-center mt-20">
+          <img src="./assets/img/succes.png" alt="">
+        </div>
+
+        <p class="text-center text-xl">Check your email to verify your account.</p>
+        <div class="flex justify-center mt-10">
+          <a href="dashboard.html" class="button">Go to Dashboard</a>
         </div>
 
       </section>
@@ -597,10 +665,13 @@
   <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
   <script>
     AOS.init();
   </script>
   <script src="assets/js/nav.js"></script>
+  <script src="assets/js/webcam.js"></script>
+  <script src="assets/js/snapping.js"></script>
   <script src="assets/js/tabHandler.js"></script>
   <script src="assets/js/enumerationprop.js"></script>
 </body>

@@ -38,6 +38,7 @@
   <!-- Page CSS -->
   <script src="./assets/vendor/js/helpers.js"></script>
   <script src="./assets/js/config.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
 <body>
@@ -56,35 +57,35 @@
         <!-- Navbar -->
 
         <nav
-        class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-        id="layout-navbar">
-        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-          <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
-          </a>
-        </div>
-
-        <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
-          <div class="">
-            <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
-            <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
           </div>
 
-          <div class="mt-4 flex gap-x-5 ms-auto">
-            <div class="input-group input-group-merge md:w-72 hidden md:flex">
-              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-              <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                aria-describedby="basic-addon-search31">
+          <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
             </div>
 
-            <div class="avatar avatar-online flex gap-x-2 items-center">
-              <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-              <p class="adminName">-</p>
+            <div class="mt-4 flex gap-x-5 ms-auto">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div>
+
+              <div class="avatar avatar-online flex gap-x-2 items-center">
+                <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+                <p class="adminName">-</p>
+              </div>
             </div>
+
           </div>
-
-        </div>
-      </nav>
+        </nav>
 
         <!-- / Navbar -->
 
@@ -99,8 +100,8 @@
                     class="h-[70px] w-[70px] rounded-circle" />
                 </div>
                 <div class="mainInfo">
-                  <h4 class="text-[18px] text-[#2E2F5B]">-</h4>
-                  <p class="text-[14px] text-[#667085] pt-2">Payer ID: -</p>
+                  <h4 class="text-[18px] text-[#2E2F5B]" id="theNamee">-</h4>
+                  <p class="text-[14px] text-[#667085] pt-2" id="payeId">Payer ID: -</p>
                 </div>
               </div>
               <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2" id="pills-tab" role="tablist">
@@ -126,123 +127,77 @@
               <div class="tab-content" id="pills-tabContent">
 
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <section class="w-12/12 main_section">
-                        <div class="p-2">
-                          <div class="w-full">
-          
-                              <table class="table table-sm">
-                                <thead>
-                                  <tr>
-                                    <th>Date and time</th>
-                                    <th>Description</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0" id="">
-                                    <tr>
-                                        <td>14/02/2023, 1.50PM</td>
-                                        <td>Logged out</td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/02/2023, 2.50PM</td>
-                                        <td>Edited taxpayer information </td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/02/2023, 3.50PM</td>
-                                        <td>Registered a new tax payer </td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/02/2023, 1.50PM</td>
-                                        <td>Logged in</td>
-                                    </tr>
-                                    <tr>
-                                        <td>14/02/2023, 1.50PM</td>
-                                        <td>Changed password</td>
-                                    </tr>
-                                </tbody>
-                              </table>
-          
-                            </div>
-          
-          
-                      </section>
+                  <section class="w-12/12 main_section">
+                    <div class="p-2">
+                      <div class="w-full">
+
+                        <table class="table table-sm">
+                          <thead>
+                            <tr>
+                              <th>Date and time</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0" id="showThem2">
+
+
+                          </tbody>
+                        </table>
+
+                      </div>
+
+
+                  </section>
                 </div>
 
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="table-responsive -mt-6">
-                        <h4 class="text-[#696868] py-3">Your photo</h4>
-    
-                        <div class="flex justify-between md:w-[550px] w-full items-center">
-                          <div class="flex gap-x-2 items-center">
-                            <p class="w-[221px] text-[#101828]">This will be displayed on your
-                              profile</p>
-                            <div class="avatar avatar-online">
-                              <img src="./assets/img/userprofile.png" id="theProfImg2" alt
-                                class="h-[70px] w-[70px] rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex gap-x-2">
-                            <button class="text-[#101828] text-[16px]" id="openUpload">Update picture</button>
-                            <input type="file" class="hidden" accept=".png, .jpg" onchange="profileChanged()"
-                              id="profile_picIn" />
-                            <!-- <button class="text-[#101828] text-[16px]">Delete</button> -->
-                          </div>
+                  <div class="table-responsive -mt-6">
+                    <h4 class="text-[#696868] py-3">Your photo</h4>
+
+                    <div class="">
+                      <div class="flex gap-x-2 items-center">
+                        <p class="w-[221px] text-[#101828]">This will be displayed on your
+                          profile</p>
+                        <div class="avatar avatar-online">
+                          <img src="./assets/img/userprofile.png" id="theProfImg2" alt
+                            class="h-[70px] w-[70px] rounded-circle" />
                         </div>
-    
-                        <section id="proffer" class="hidden">
-    
-                          <img src="" id="preview" class="w-[200px] h-[200px] object-cover" alt="">
-                          <button class="button mt-2" id="updatePic">Update</button>
-                          <div id="msg_center"></div>
-    
-                        </section>
-    
-    
-                        <hr class="text-[#F4F4F4] my-3">
-                        <div class="flex justify-between md:w-[550px] w-full mt-4">
-                          <p class="text-[#696868]">Update details here.</p>
-                          <button class="text-[#101828] text-[16px]" data-bs-toggle="modal"
-                            data-bs-target="#editdetailsmodal">Edit</button>
-                        </div>
-                        <hr class="text-[#F4F4F4] my-3">
-    
-                        <div class="prof">
-    
-                          <div class="flex justify-between md:w-[550px]">
-                            <label class="w-[195px]">Email</label>
-                            <div class="form-group md:w-[454px] w-full">
-                              <input class="form-control mt-1 regInputs" type="text" placeholder="Akpan@gmail.com"/>
-                            </div>
-                          </div>
-                          <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                            <label class="w-[195px]">Phone number</label>
-                            <div class="form-group md:w-[454px] w-full">
-                              <input class="form-control mt-1 regInputs" type="text" placeholder="0845 555 5699"/>
-                            </div>
-                          </div>
-                          <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                            <label class="w-[195px]">State</label>
-                            <select class="form-select mt-1 regInputs md:w-[454px] w-full" id="STATES" data-name="state" required>
-                                <option value="Akwa Ibom">Akwa Ibom</option>
-                              </select>
-                          </div>
-                          <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                            <label class="w-[195px]">Local Govt</label>
-                            <select class="form-select mt-1 regInputs md:w-[454px] w-full" id="LGAs" data-name="lga" required>
-                                <option selected disabled>--Select LGA--</option>
-                              </select>
-                          </div>
-                          
-                          <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                            <label class="w-[195px]">Address</label>
-                            <div class="form-group md:w-[454px] w-full">
-                              <input class="form-control mt-1 regInputs" type="text" placeholder="10, Allen avenue, Bodija, Ibadan."/>
-                            </div>
-                          </div>
-                        </div>
-    
-    
-    
                       </div>
+
+                      <div class="flex gap-x-2 md:w-10/12 mt-4">
+
+                        <input type="file" class="form-control w-9/12" accept=".png, .jpg" id="picUpload" />
+                        <button class="button w-3/12" id="profile_picIn">Change picture</button>
+                        <!-- <button class="text-[#101828] text-[16px]">Delete</button> -->
+                      </div>
+                      <div id="msg_center"></div>
+                    </div>
+
+                    <section id="proffer" class="hidden">
+
+                      <img src="" id="preview" class="w-[200px] h-[200px] object-cover" alt="">
+                      <button class="button mt-2" id="updatePic">Update</button>
+                      <div id="msg_center"></div>
+
+                    </section>
+
+
+                    <hr class="text-[#F4F4F4] my-3">
+                    <div class="flex justify-between md:w-[550px] w-full mt-4">
+                      <p class="text-[#696868]">Update details here.</p>
+                      <button class="text-[#101828] text-[16px]" data-bs-toggle="modal"
+                        data-bs-target="#editdetailsmodal">Edit</button>
+                    </div>
+                    <hr class="text-[#F4F4F4] my-3">
+
+                    <div id="theProff">
+
+
+                    </div>
+
+
+
+                  </div>
 
 
                 </div>
@@ -256,29 +211,23 @@
                   <hr class="text-[#F4F4F4] my-3">
 
                   <div class="flex justify-between md:w-[550px] mb-3 items-center gap-3">
-                    <label class="w-[195px]">Old Password</label>
-                    <div class="form-group md:w-[454px] w-full">
-                      <input class="form-control mt-1 passinput" id="oldPass" type="text" placeholder="**********" />
-                    </div>
-                    <iconify-icon icon="ic:outline-remove-red-eye cursor-pointer" onclick="showPass(0)"></iconify-icon>
-                  </div>
-
-                  <div class="flex justify-between md:w-[550px] mb-3 items-center gap-3">
                     <label class="w-[195px]">New Password</label>
                     <div class="form-group md:w-[454px] w-full">
-                      <input class="form-control mt-1 pass passinput" id="newPass" type="text"
+                      <input class="form-control mt-1 pass passinput" id="newPass" type="password"
                         placeholder="**********" />
                     </div>
-                    <iconify-icon icon="ic:outline-remove-red-eye cursor-pointer" onclick="showPass(1)"></iconify-icon>
+                    <iconify-icon icon="ic:outline-remove-red-eye" class="cursor-pointer"
+                      onclick="showPass(0)"></iconify-icon>
                   </div>
 
                   <div class="flex justify-between md:w-[550px] mb-3 items-center gap-3">
                     <label class="w-[195px]">Confirm New <br>Password</label>
                     <div class="form-group md:w-[454px] w-full">
-                      <input class="form-control mt-1 newpass passinput" id="newPass2" type="text"
+                      <input class="form-control mt-1 newpass passinput" id="newPass2" type="password"
                         placeholder="**********" />
                     </div>
-                    <iconify-icon icon="ic:outline-remove-red-eye cursor-pointer" onclick="showPass(2)"></iconify-icon>
+                    <iconify-icon icon="ic:outline-remove-red-eye" class="cursor-pointer"
+                      onclick="showPass(1)"></iconify-icon>
                   </div>
 
                   <div id="msg_box2" class="w-full"></div>
@@ -306,99 +255,7 @@
 
 
 
-  <div class="modal fade" id="editdetailsmodal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Edit Profile</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
 
-        <form class="p-10">
-
-            <div class="prof">
-    
-                <div class="flex justify-between md:w-[550px]">
-                  <label class="w-[195px]">Email</label>
-                  <div class="form-group md:w-[454px] w-full">
-                    <input class="form-control mt-1 regInputs" type="text" placeholder="Akpan@gmail.com"/>
-                  </div>
-                </div>
-                <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                  <label class="w-[195px]">Phone number</label>
-                  <div class="form-group md:w-[454px] w-full">
-                    <input class="form-control mt-1 regInputs" type="text" placeholder="0845 555 5699"/>
-                  </div>
-                </div>
-                <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                  <label class="w-[195px]">State</label>
-                  <select class="form-select mt-1 regInputs md:w-[454px] w-full" id="STATES" data-name="state" required>
-                      <option value="Akwa Ibom">Akwa Ibom</option>
-                    </select>
-                </div>
-                <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                  <label class="w-[195px]">Local Govt</label>
-                  <select class="form-select mt-1 regInputs md:w-[454px] w-full" id="LGAs" data-name="lga" required>
-                      <option selected disabled>--Select LGA--</option>
-                    </select>
-                </div>
-                
-                <div class="flex justify-between md:w-[550px] mt-2 items-center">
-                  <label class="w-[195px]">Address</label>
-                  <div class="form-group md:w-[454px] w-full">
-                    <input class="form-control mt-1 regInputs" type="text" placeholder="10, Allen avenue, Bodija, Ibadan."/>
-                  </div>
-                </div>
-              </div>
-
-          <button class="button w-full mt-4" id="updateProfile">Update Profile</button>
-          <div class="w-full" id="msg_box"></div>
-        </form>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="notiModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Notifications</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
-        <div class="modal-body relative">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your TIN has been verified</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your complaint has been answered</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is due</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- / Layout wrapper -->
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
@@ -409,6 +266,7 @@
   <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="./assets/vendor/libs/echarts/echarts.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>

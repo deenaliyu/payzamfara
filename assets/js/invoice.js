@@ -49,6 +49,9 @@ function convertNumberToWords(number) {
 
 }
 
+function sumArray(numbers) {
+  return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
 function editoo() {
   let theBal = $(".theBal").text();
 
@@ -92,163 +95,291 @@ async function openInvoice(invoicenum) {
   invoicenum2 = invoicenum
 
   const response = await fetch(
-    `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+    `${HOST}?getSingleInvoice&invoiceNumber=${invoicenum}`
   );
   const userInvoices = await response.json();
   console.log(userInvoices);
 
   if (userInvoices.status === 1) {
+    let invoice_info = userInvoices.message[0]
+    let TotalInvoice = ""
 
-    userInvoices.message.forEach((invoice_info, i) => {
-      // let address = ""
-      // if (user_session) {
-      //   address = `${user_session.lga}, ${user_session.state}, Nigeria`
-      // } else {
-      //   address = "Akwa Ibom, Nigeria"
-      // }
-      $("#invoiceCard").html(`
-          <div class="invoicetop"></div>
+    TotalInvoice += `
+      <div class="invoicetop"></div>
 
-          <div class="flex px-6 pt-3 items-center justify-between">
+      <div class="flex px-6 pt-3 items-center justify-between">
 
-            <h1 class="fontBold text-2xl">Invoice</h1>
+        <h1 class="fontBold text-2xl">Invoice</h1>
 
-            <div class="flex items-center gap-1">
-              <img src="./assets/img/vector.png" alt="">
-              <p class="text-2xl fontBold">${invoice_info.invoice_number}</p>
-            </div>
+        <div class="flex items-center gap-1">
+          <img src="./assets/img/vector.png" alt="">
+          <p class="text-2xl fontBold">${invoice_info.invoice_number}</p>
+        </div>
 
-          </div>
+      </div>
+      <div class="mt-2 px-6 ">
+      <img src="./assets/img/akwaimage.png" alt="">
+      </div>
+`
+if (userInvoices.message.length > 1) {
+  TotalInvoice += `
+      <div class="flex  justify-between px-6 mt-4">
+        <div class="w-full">
+          <p class="text-[#555555]">FROM :</p>
+          <p class="fontBold">Akwa Ibom Sate</p>
+        </div>
 
-          <div class="flex  justify-between px-6 mt-4">
-            <div class="w-full">
-              <p class="text-[#555555]">FROM :</p>
-              <p class="fontBold">${invoice_info.COL_3}</p>
-              <p class="text-[#222234] w-[60%] text-sm">Uyo, Akwa Ibom</p>
-            </div>
+        <div class="w-full md:mr-[-10%]">
+          <p class="text-[#555555]">TO :</p>
+          <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
+          <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Akwa Ibom</p>
+        </div>
 
-            <div class="w-full md:mr-[-10%]">
-              <p class="text-[#555555]">TO :</p>
-              <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
-              <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Akwa Ibom</p>
-            </div>
+      </div>
+`
+}else{
+  TotalInvoice += `
+  <div class="flex  justify-between px-6 mt-4">
+    <div class="w-full">
+      <p class="text-[#555555]">FROM :</p>
+      <p class="fontBold">${invoice_info.COL_3}</p>
+      <p class="text-[#222234] w-[60%] text-sm">Uyo, Akwa Ibom</p>
+    </div>
 
-          </div>
+    <div class="w-full md:mr-[-10%]">
+      <p class="text-[#555555]">TO :</p>
+      <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
+      <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Akwa Ibom</p>
+    </div>
 
-          <div class="px-6 mt-4">
-            <p class="text-[#555555]">INFO :</p>
+  </div>
+`
+}
+ TotalInvoice += `
+      <div class="px-6 mt-4">
+        <p class="text-[#555555]">INFO :</p>
 
-            <table class="table table-borderless invTa md:w-[70%] w-full">
-              <tr>
-                <td>
-                  <p class="fontBold">Payer ID: ${invoice_info.tax_number}</p>
-                </td>
-                <td>Due Date: ${invoice_info.due_date}</td>
+        <table class="table table-borderless invTa md:w-[70%] w-full">
+          <tr>
+            <td>
+              <p class="fontBold">Payer ID: ${invoice_info.tax_number}</p>
+            </td>
+            <td>Due Date: ${invoice_info.due_date}</td>
+          </tr>
+          <tr>
+            <td>Invoice Date: ${invoice_info.date_created}</td>
+            <td>Expiry Date: ${invoice_info.due_date}</td>
+          </tr>
+        </table>
+      </div>
+    `
+
+    if (userInvoices.message.length > 1) {
+      let theTotal = []
+      TotalInvoice += `
+        <div class="px-6">
+          <table class="table table-borderless table-sm">
+            <thead>
+              <tr class="bg-[#005826]">
+                <td class="text-[#fff] text-sm">ITEM DESCRIPTION</td>
+                <td class="text-[#fff] text-sm">QTY</td>
+                <td class="text-[#fff] text-sm">RATE</td>
+                <td class="text-[#fff] text-sm">AMOUNT</td>
               </tr>
-              <tr>
-                <td>Invoice Date: ${invoice_info.date_created}</td>
-                <td>Expiry Date: ${invoice_info.due_date}</td>
-              </tr>
-            </table>
-          </div>
+            </thead>
+            <tbody>
+          `
 
-          <div class="flex justify-end">
-            <div class="md:w-[70%] w-[90%]">
-              <table class="table table-borderless">
+      userInvoices.message.forEach(element => {
+        TotalInvoice += `
                 <tr>
-                  <td class="text-[#555555] text-sm">ITEM DESCRIPTION</td>
-                  <td class="text-[#555555] text-sm">QTY</td>
-                  <td class="text-[#555555] text-sm">RATE</td>
-                  <td class="text-[#555555] text-sm">AMOUNT</td>
-                </tr>
-                <tr class="border-b border-b border-[#6F6F84]">
-                  <td class="text-sm">${invoice_info.COL_4}</td>
+                  <td class="text-sm">${element.COL_4}</td>
                   <td class="text-sm">01</td>
-                  <td class="text-sm"></td>
-                  <td class="text-sm">${invoice_info.COL_6}</td>
+                  <td class="text-sm">${element.COL_6}</td>
+                  <td class="text-sm">${element.COL_6}</td>
                 </tr>
-                <tr>
-                  <td class="text-[#555555] text-sm">Sub Total</td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-[#000] text-sm">${invoice_info.COL_6}</td>
-                </tr>
-                <tr class="border-b border-b border-[#6F6F84]">
-                  <td class="text-[#555555] text-sm">Discount</td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-[#000] text-sm">N0.00</td>
-                </tr>
+              `
+        theTotal.push(parseFloat(element.COL_6))
+      });
 
-                <tr>
-                  <td colspan="3" class="text-[#000]">Grand Total<span class="text-[#555555]"> (NGN)</span></td>
-                  <td class="text-[#000] text-xl fontBold">N${invoice_info.COL_6}</td>
-                </tr>
+      TotalInvoice += `
+              <tr class="border-t border-[#6F6F84]">
+                <td class="text-[#555555] text-sm">Sub Total</td>
+                <td></td>
+                <td></td>
+                <td class="text-[#000] text-sm">${sumArray(theTotal)}</td>
+              </tr>
+              <tr>
+                <td class="text-[#555555] text-sm">Discount</td>
+                <td></td>
+                <td></td>
+                <td class="text-[#000] text-sm">N0.00</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-[#000]">Grand Total<span class="text-[#555555]"> (NGN)</span></td>
+                <td class="text-[#000] text-xl fontBold">N${sumArray(theTotal)}</td>
+              </tr>
 
-                <tr>
-                  <td colspan="2" class="text-[#000]">Paying</td>
-                  <td class="textPrimary">
-                    <div class="showEorAp">
-                      <button class="textPrimary gap-1 flex items-center" id="editBtn">
-                        <i class="fas fa-pen"></i>
-                        <span>Edit</span>
-                      </button>
-                    </div>
-                  </td>
-                  <td class="text-xl textPrimary fontBold">
-                    <div id="showBal">
-                    &#8358; <span class="theBal"> ${invoice_info.COL_6}</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="2" class="text-[#000] fontBold">Balance</td>
-                  <td class="textPrimary">
-                  </td>
-                  <td id="balancing" class="hidden text-lg textPrimary fontBold pb-0"></td>
+              <tr>
+                <td colspan="2" class="text-[#000]">Paying</td>
+                <td class="textPrimary">
+                  <div class="showEorAp">
+                    <button class="textPrimary gap-1 flex items-center" id="editBtn">
+                      <i class="fas fa-pen"></i>
+                      <span>Edit</span>
+                    </button>
+                  </div>
+                </td>
+                <td class="text-xl textPrimary fontBold">
+                  <div id="showBal">
+                  &#8358; <span class="theBal"> ${sumArray(theTotal)}</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-[#000] fontBold">Balance</td>
+                <td class="textPrimary">
+                </td>
+                <td id="balancing" class="hidden text-lg textPrimary fontBold pb-0"></td>
 
-                </tr>
+              </tr>
 
-                <tr>
-                  <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
-                </tr>
-                <tr>
-                  <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize"><span id="amword">${convertNumberToWords(invoice_info.COL_6)}</span> Naira Only</td>
-                </tr>
+              <tr>
+                <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-sm text-gray-500 pt-0 text-capitalize"><span id="amword">${convertNumberToWords(sumArray(theTotal))}</span> Naira Only</td>
+              </tr>
+            </tbody>
+          </table>  
+        </div>
+        `
+    } else {
+      TotalInvoice += `
+        <div class="px-6">
+          <table class="table table-borderless">
+            <tr class="bg-[#005826]">
+              <td class="text-[#fff] text-sm">ITEM DESCRIPTION</td>
+              <td class="text-[#fff] text-sm">QTY</td>
+              <td class="text-[#fff] text-sm">RATE</td>
+              <td class="text-[#fff] text-sm">AMOUNT</td>
+            </tr>
+            <tr class="border-b border-b border-[#6F6F84]">
+              <td class="text-sm">${invoice_info.COL_4}</td>
+              <td class="text-sm">01</td>
+              <td class="text-sm"></td>
+              <td class="text-sm">${invoice_info.COL_6}</td>
+            </tr>
+            <tr>
+              <td class="text-[#555555] text-sm">Sub Total</td>
+              <td></td>
+              <td></td>
+              <td class="text-[#000] text-sm">${invoice_info.COL_6}</td>
+            </tr>
+            <tr class="border-b border-b border-[#6F6F84]">
+              <td class="text-[#555555] text-sm">Discount</td>
+              <td></td>
+              <td></td>
+              <td class="text-[#000] text-sm">N0.00</td>
+            </tr>
 
-              </table>
+            <tr>
+              <td colspan="3" class="text-[#000]">Grand Total<span class="text-[#555555]"> (NGN)</span></td>
+              <td class="text-[#000] text-xl fontBold">N${invoice_info.COL_6}</td>
+            </tr>
 
-              
-            </div>
-          </div>
-
-
-          <hr class="my-4 md:mx-10 mx-4">
-
-          <div class="md:px-10 px-2 pb-6">
-            <div class="flex items-center justify-center">
-              <img src="./assets/img/akwaimage.png" alt="" class="w-36">
-              <div>
-                <p class="text-xl fontBold pb-0">Pay Zamfara</p>
-                <div class="flex items-center gap-x-3 flex-wrap">
-                  <p class="text-sm text-[#6F6F84]">www.payzamfara.ng</p>
-                  <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
-                  <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
-                  <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
+            <tr>
+              <td colspan="2" class="text-[#000]">Paying</td>
+              <td class="textPrimary">
+                <div class="showEorAp">
+                  <button class="textPrimary gap-1 flex items-center" id="editBtn">
+                    <i class="fas fa-pen"></i>
+                    <span>Edit</span>
+                  </button>
                 </div>
-              </div>
+              </td>
+              <td class="text-xl textPrimary fontBold">
+                <div id="showBal">
+                &#8358; <span class="theBal"> ${invoice_info.COL_6}</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-[#000] fontBold">Balance</td>
+              <td class="textPrimary">
+              </td>
+              <td id="balancing" class="hidden text-lg textPrimary fontBold pb-0"></td>
+
+            </tr>
+
+            <tr>
+              <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize"><span id="amword">${convertNumberToWords(invoice_info.COL_6)}</span> Naira Only</td>
+            </tr>
+
+          </table>
+
+          
+        </div>
+    `
+    }
+
+
+    TotalInvoice += `
+      <hr class="my-4 md:mx-10 mx-4">
+
+      <div class="md:px-10 px-2 pb-6">
+        <div class="flex items-center justify-center">
+          <img src="./assets/img/akwaimage.png" alt="">
+          <div>
+            <p class="text-xl fontBold pb-0">Pay Ibom</p>
+            <div class="flex items-center gap-x-3 flex-wrap">
+              <p class="text-sm text-[#6F6F84]">www.akwaibompay.ng</p>
+              <p class="text-sm text-[#6F6F84]">Info@akwaibompay.com</p>
+              <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
+              <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
             </div>
-
           </div>
-      `)
+        </div>
 
-    })
+      </div>
+    `
+
+    $("#invoiceCard").html(TotalInvoice)
 
     $("#editBtn").on("click", function () {
       editoo();
     });
   } else {
-    $("#invoiceCard").html(`Invalid Invoice, or expired invoice`)
+    $("#invoiceCard").html(`
+      <div class="invoicetop"></div>
+      <div class="flex justify-center items-center h-[60vh]">
+        <p class="fontBold text-xl">Invalid Invoice, or expired invoice</p>
+      </div>
+    `)
+
+    let thePP = document.querySelector('.invoiceContainer')
+
+    let thSiblings = thePP.nextElementSibling
+    let sesinID = JSON.parse(localStorage.getItem("userDataPrime"))
+    if(sesinID) {
+      thSiblings.innerHTML = `
+        <a href="./dashboard/taxes.html" class="button flex gap-3 items-center px-10 mt-6">
+          <span>Regenerate Invoice</span>
+          <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+        </a>
+      `
+    } else {
+      thSiblings.innerHTML = `
+        <a href="./generateinvoice.html" class="button flex gap-3 items-center px-10 mt-6">
+          <span>Regenerate Invoice</span>
+          <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+        </a>
+      `
+    }
+    
   }
 }
 

@@ -11,23 +11,21 @@ console.log(userDATA)
 // })
 
 function Profile() {
-  let userInfo = JSON.parse(window.localStorage.getItem("mdaDataPrime"));
-
   $(".mainInfo").html(`
-    <h4 class="text-[18px] text-[#2E2F5B] mt-2">${userInfo.email}</h4>
+    <h4 class="text-[18px] text-[#2E2F5B] mt-2">${userDATA.email}</h4>
   `)
   $(".prof").html(`
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
       <label class="w-[195px]">Email</label>
       <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.email}"
+        <input class="form-control mt-1 regInputs" readonly type="text" value="${userDATA.email}"
           maxlength="15" />
       </div>
     </div>
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
       <label class="w-[195px]">Phone</label>
       <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.phone_number}"
+        <input class="form-control mt-1 regInputs" readonly type="text" value="${userDATA.phone_number}"
         maxlength="15" />
       </div>
     </div>
@@ -39,14 +37,14 @@ function Profile() {
     <div class="flex justify-between mt-2">
       <label class="w-4/12">Email</label>
       <div class="form-group w-8/12">
-        <input class="form-control mt-1 updtProf" data-name="email" type="text" value="${userInfo.email}" />
+        <input class="form-control mt-1 updtProf" data-name="email" type="text" value="${userDATA.email}" />
       </div>
     </div>
 
     <div class="flex justify-between mt-2 items-center">
       <label class="w-4/12">Phone number</label>
       <div class="form-group w-8/12">
-        <input class="form-control mt-1 updtProf" data-name="phone_number" type="text" value="${userInfo.phone_number}" maxlength="15" />
+        <input class="form-control mt-1 updtProf" data-name="phone_number" type="text" value="${userDATA.phone_number}" maxlength="15" />
       </div>
     </div>
     <div class="flex justify-between mb-3 mt-2 items-center">
@@ -168,10 +166,10 @@ $("#updateProfile").on("click", function (e) {
 
 let userDetails
 async function fetchUserDetails() {
-  const response = await fetch(`${HOST}?userProfileMda&id=${userDATA.id}`)
+  const response = await fetch(`${HOST}?userProfileMda&mda_id=${userDATA.id}`)
   const userPrf = await response.json()
 
-  // console.log(userPrf.user)
+  console.log(userPrf)
   userDetails = userPrf.user
 
   $("#theProfImg").attr("src", userPrf.user.img)

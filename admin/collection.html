@@ -71,23 +71,19 @@
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Reports</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" id="searching" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
-              <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
+            <div class="mt-4 flex gap-x-5 absolute right-24">
+    
+              <!-- <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
                 data-bs-target="#filterInvoice">
                 <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
                 Filter
-              </button>
-              <button class="button flex gap-x-1" onclick="exportData()">
+              </button> -->
+              <button class="button flex gap-x-1 items-center" id="collReportd" onclick="exportData()">
                 <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                 Report</button>
-              <div class="avatar avatar-online flex gap-x-5">
+              <div class="avatar avatar-online flex gap-x-5 items-center">
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">system Admin</p>
+                <p class="adminName">-</p>
               </div>
             </div>
 
@@ -102,7 +98,7 @@
           <div class="container-xxl flex-grow-1 container-p-y taxes">
             <p class="font-bold text-2xl text-black">Collection report</p>
             <div class="card px-2 py-4 mt-6 table-responsive">
-              <table class="table invoiceTable colet table-sm myTable" id="dataTable">
+              <table class="table invoiceTable colet table-sm myTable collTab" id="dataTable">
                 <thead>
                   <tr class="text-center">
                     <th></th>
@@ -258,6 +254,7 @@
     theAtivo.parentElement.classList.add("active")
   </script>
   <!-- <script src="./assets/js/session.js"></script> -->
+  <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="./assets/js/collection.js"></script>
   <script src="./assets/js/filterInv.js"></script>

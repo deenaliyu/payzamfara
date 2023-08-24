@@ -1,2 +1,2 @@
-fullname,industry,state,geolocation,lga,email,phone,status,address
-Name of MDA,Poultry,Akwa Ibom,Akwa South,Chibuk,emailaddress,phonenum,"1 or 2 (1 for active, 2 for inactive)",the address
+fullname,industry,state,geolocation,lga,email,phone,address,allow_payment,office_creation
+Name of MDA,Poultry,Akwa Ibom,Akwa South,Chibuk,emailaddress,phonenum,the address,"1 or 2 (1 for yes, 2 for no)","1 or 2 (1 for yes, 2 for no)"

@@ -1,159 +1,106 @@
 <!DOCTYPE html>
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="./assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
 
-    <title>PrimeGuage</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <meta name="description" content="" />
+  <title>PrimeGuage</title>
 
-    <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/img/favicon/favicon.ico"
-    />
+  <meta name="description" content="" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/dataTable.css" />
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/css/core.css"
-      class="template-customizer-core-css"
-    />
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/css/theme-default.css"
-      class="template-customizer-theme-css"
-    />
-    <link rel="stylesheet" href="./assets/css/demo.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Vendors CSS -->
-    <link
-      rel="stylesheet"
-      href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"
-    />
-    <script src="./assets/vendor/js/helpers.js"></script>
-    <script src="./assets/js/config.js"></script>
-  </head>
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
-  <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        <!-- Menu -->
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css" />
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/js/config.js"></script>
+</head>
 
-        <aside
-          id="layout-menu"
-          class="layout-menu menu-vertical menu bg-menu-theme aside"
-          id="aside"
-        ></aside>
-        <!-- / Menu -->
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
 
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme aside" id="aside"></aside>
+      <!-- / Menu -->
 
-          <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl h-[15vh] align-items-center bg-navbar-theme"
-            id="layout-navbar"
-          >
-            <div
-              class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none"
-            >
-              <a
-                class="nav-item nav-link px-0 me-xl-4"
-                href="javascript:void(0)"
-              >
-                <i class="bx bx-menu bx-sm"></i>
-              </a>
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+
+        <nav class="layout-navbar container-xxl navbar navbar-expand-xl h-[15vh] align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+            <div class="">
+              <p class="text-sm text-black" id="datei">-</p>
+              <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">
+                Users
+              </h1>
             </div>
 
-            <div
-              class="navbar-nav-right flex items-center justify-between"
-              id="navbar-collapse"
-            >
-              <div class="">
-                <p class="text-sm text-black" id="datei">-</p>
-                <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">
-                  Users
-                </h1>
+            <div class="mt-4 flex gap-x-2">
+              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31" />
               </div>
+            </div>
 
-              <div class="mt-4 flex gap-x-2">
-                <div
-                  class="input-group input-group-merge md:w-72 hidden md:flex"
-                >
-                  <span
-                    class="input-group-text rounded-2xl"
-                    id="basic-addon-search31"
-                    ><i class="bx bx-search"></i
-                  ></span>
-                  <input
-                    type="text"
-                    class="form-control rounded-2xl"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                    aria-describedby="basic-addon-search31"
-                  />
-                </div>
-              </div>
-
-              <!-- <button
+            <!-- <button
                 class=""
               > -->
-                <!-- <a
+            <!-- <a
                   href="taxes.html"
                   class="md:text-[2.2vh] text-[2vh] hover:text-white"
                   onclick="{HandleClick}"
                   >Generate Invoice</a
                 > -->
-                <!-- <span class="">
+            <!-- <span class="">
                   <a
                     href="./CreateUser.html"
                     class="md:text-[2.2vh] text-[2vh] hover:text-white"
                     >Create User</a
                   >
                 </span> -->
-                <a
-                href="./CreateUser.html"
-                class="md:text-[2.2vh] text-[2vh] hover:text-white"
-              >
-                <button
-                  class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[40vh]"
-                >
-                  <iconify-icon icon="ic:baseline-plus"></iconify-icon>
+            <a href="./CreateUser.html" class="md:text-[2.2vh] text-[2vh] hover:text-white">
+              <button class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[40vh]">
+                <iconify-icon icon="ic:baseline-plus"></iconify-icon>
 
-                  Create User
-                </button>
-              </a>
+                Create User
+              </button>
+            </a>
 
-              <!-- </button> -->
+            <!-- </button> -->
 
-              <!-- <div class="mt-4 flex flex-row gap-2">
+            <!-- <div class="mt-4 flex flex-row gap-2">
                 <div class="">
                   <img
                     src="./assets/img/avatars/1.png"
@@ -166,137 +113,92 @@
                   Ministry of Agriculture
                 </div>
               </div> -->
-              <div class="mt-4 flex flex-row gap-2">
-                <div class="">
-                  <img
-                    src="./assets/img/avatars/1.png"
-                    alt
-                    class="md:w-[5vh] w-10 h-auto rounded-circle"
-                  />
-                </div>
-
-                <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]">
-                  Ministry of Agriculture
-                </div>
+            <div class="mt-4 flex flex-row gap-2">
+              <div class="">
+                <img src="./assets/img/avatars/1.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle" />
               </div>
+
+              <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]" id="mdName">-</div>
             </div>
-          </nav>
+          </div>
+        </nav>
 
-          <!-- / Navbar -->
+        <!-- / Navbar -->
 
-          <!-- Content wrapper -->
-          <div class="content-wrapper bg-white border-t-2">
-            <!-- Content -->
+        <!-- Content wrapper -->
+        <div class="content-wrapper bg-white border-t-2">
+          <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="flex align-items-center gap-1 my-2 hover:text-[#005826]">
-                <iconify-icon
-                  icon="material-symbols:arrow-back-rounded"
-                ></iconify-icon>
-                <a type="button" class="text-[2vh]" onclick="history.back()"
-                  >Go Back</a
-                >
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="flex align-items-center gap-1 my-2 hover:text-[#125826]">
+              <iconify-icon icon="material-symbols:arrow-back-rounded"></iconify-icon>
+              <a type="button" class="text-[2vh]" onclick="history.back()">Go Back</a>
+            </div>
+            <div class=" py-4 px-6">
+              <div class="">
+                <p class="text-[2.4vh] font-semibold">User</p>
               </div>
-              <div class=" py-4 px-6">
-                <div class="">
-                  <p class="text-[2.4vh] font-semibold">User</p>
+              <form class="">
+                <div class="flex justify-content-between flex-row">
+                  <img src="./assets/img/avatars/1.png" alt class="md:w-[7vh] w-10 h-auto my-2 rounded-circle" />
+                  <div class="mt-3">
+                    <a href="#" class="hover:text-white">
+                      <button class="button py-2 px-8">
+                        Edit
+
+                      </button>
+
+                    </a>
+                  </div>
                 </div>
-                <form class="">
-                  <div class="flex justify-content-between flex-row">
-                    <img
-                      src="./assets/img/avatars/1.png"
-                      alt
-                      class="md:w-[7vh] w-10 h-auto my-2 rounded-circle"
-                    />
-                    <div class="mt-3">
-                        <a href="#" class="hover:text-white">
-                          <button class="button py-2 px-8">
-                  Edit
 
-                          </button>
-
-                        </a>
-                    </div>
-                  </div>
-
-                  <div class="">
-                    <div class="grid md:grid-cols-5 gap-3 grid-cols-1">
-                      <div class="col-span-2">
-                        <div class="my-2">
-                          <label for="defaultSelect" class="my-0 text-[2vh]"
-                            >Name of User
-                            <span class="text-[red]">*</span></label
-                          >
-                          <input
-                            required
-                            type="fixed"
-                            class="form-control userInputs md:w-[59vh]"
-                            data-name="fullname"
-                            placeholder="Adamu"
-                            readonly
-                          />
-                        </div>
-
-                        <div class="my-2">
-                          <label for="defaultSelect" class="my-0 text-[2vh]"
-                            >Phone Number
-                            <span class="text-[red]">*</span></label
-                          >
-                          <input
-                            required
-                            type="fixed"
-                            class="form-control userInputs md:w-[59vh]"
-                            data-name="fullname"
-                            placeholder="+235669889"
-                            readonly
-                          />
-                        </div>
-                      </div>
-
-                      <div class="col-span-2">
-                        <div class="my-2">
-                          <label for="defaultSelect" class="my-0 text-[2vh]"
-                            >Email<span class="text-[red]">*</span></label
-                          >
-                          <input
-                            required
-                            type="text"
-                            class="form-control userInputs md:w-[59vh]"
-                            data-name="fullname"
-                            placeholder="Adamu@gmail.com"
-                            readonly
-                          />
-                        </div>
-
-                        <div class="my-2">
-                          <label for="defaultSelect" class="my-0 text-[2vh]"
-                            >Password <span class="text-[red]">*</span></label
-                          >
-                          <input
-                            required
-                            type="fixed"
-                            class="form-control userInputs md:w-[59vh]"
-                            data-name="fullname"
-                            placeholder="*********"
-                            readonly
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="mt-[4vh]">
-                    <p class="text-[2.2vh] font-semibold text-black">
-                      Access Level
-                    </p>
-                  </div>
+                <div class="">
                   <div class="grid md:grid-cols-5 gap-3 grid-cols-1">
                     <div class="col-span-2">
-                      <div class="my-1">
-                        <label for="defaultSelect" class="my-0 text-[2vh]"
-                          >Revenue Head<span class="text-[red]">*</span></label
-                        >
-                        <!-- <input
+                      <div class="my-2">
+                        <label for="defaultSelect" class="my-0 text-[2vh]">Name of User
+                          <span class="text-[red]">*</span></label>
+                        <input required type="fixed" class="form-control userInputs md:w-[59vh]" data-name="fullname"
+                          placeholder="Adamu" readonly />
+                      </div>
+
+                      <div class="my-2">
+                        <label for="defaultSelect" class="my-0 text-[2vh]">Phone Number
+                          <span class="text-[red]">*</span></label>
+                        <input required type="fixed" class="form-control userInputs md:w-[59vh]" data-name="fullname"
+                          placeholder="+235669889" readonly />
+                      </div>
+                    </div>
+
+                    <div class="col-span-2">
+                      <div class="my-2">
+                        <label for="defaultSelect" class="my-0 text-[2vh]">Email<span
+                            class="text-[red]">*</span></label>
+                        <input required type="text" class="form-control userInputs md:w-[59vh]" data-name="fullname"
+                          placeholder="Adamu@gmail.com" readonly />
+                      </div>
+
+                      <div class="my-2">
+                        <label for="defaultSelect" class="my-0 text-[2vh]">Password <span
+                            class="text-[red]">*</span></label>
+                        <input required type="fixed" class="form-control userInputs md:w-[59vh]" data-name="fullname"
+                          placeholder="*********" readonly />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-[4vh]">
+                  <p class="text-[2.2vh] font-semibold text-black">
+                    Access Level
+                  </p>
+                </div>
+                <div class="grid md:grid-cols-5 gap-3 grid-cols-1">
+                  <div class="col-span-2">
+                    <div class="my-1">
+                      <label for="defaultSelect" class="my-0 text-[2vh]">Revenue Head<span
+                          class="text-[red]">*</span></label>
+                      <!-- <input
                           required
                           type="text"
                           class="form-control userInputs"
@@ -304,153 +206,120 @@
                           placeholder="Enter Full Name.."
                           style="width: 60vh"
                         /> -->
-                        <select
-                          class="form-select"
-                          id="Revenue Head"
-                          aria-label="Default select example"
-                        >
+                      <select class="form-select" id="Revenue Head" aria-label="Default select example">
                         <option selected>--select</option>
                         <option value="Full access">Full access</option>
                         <option value="View only">View only</option>
-                        </select>
-                      </div>
+                      </select>
+                    </div>
 
-                      <div class="my-1">
-                        <label for="defaultSelect" class="my-0 text-[2vh]"
-                          >Users<span class="text-[red]">*</span></label
-                        >
-                        <select
-                          class="form-select"
-                          id="Users"
-                          aria-label="Default select example"
-                        >
+                    <div class="my-1">
+                      <label for="defaultSelect" class="my-0 text-[2vh]">Users<span class="text-[red]">*</span></label>
+                      <select class="form-select" id="Users" aria-label="Default select example">
                         <option selected>--select</option>
                         <option value="Full access">Full access</option>
                         <option value="View only">View only</option>
-                        </select>
-                      </div>
+                      </select>
                     </div>
+                  </div>
 
-                    <div class="col-span-2">
-                      <div class="my-1">
-                        <label for="defaultSelect" class="my-0 text-[2vh]"
-                          >Payment<span class="text-[red]">*</span></label
-                        >
-                        <select
-                          class="form-select"
-                          id="Payment"
-                          aria-label="Default select example"
-                        >
-                          <option selected>--select</option>
-                          <option value="Full access">Full access</option>
-                          <option value="View only">View only</option>
-                         
-                        </select>
-                      </div>
-
-                      <div class="my-1">
-                        <label for="defaultSelect" class="my-0 text-[2vh]"
-                          >Report<span class="text-[red]">*</span></label
-                        >
-                        <select
-                          class="form-select"
-                          id="Report"
-                          aria-label="Default select example"
-                        >
+                  <div class="col-span-2">
+                    <div class="my-1">
+                      <label for="defaultSelect" class="my-0 text-[2vh]">Payment<span
+                          class="text-[red]">*</span></label>
+                      <select class="form-select" id="Payment" aria-label="Default select example">
+                        <option selected>--select</option>
                         <option value="Full access">Full access</option>
                         <option value="View only">View only</option>
-                       
-                        </select>
-                      </div>
+
+                      </select>
+                    </div>
+
+                    <div class="my-1">
+                      <label for="defaultSelect" class="my-0 text-[2vh]">Report<span class="text-[red]">*</span></label>
+                      <select class="form-select" id="Report" aria-label="Default select example">
+                        <option value="Full access">Full access</option>
+                        <option value="View only">View only</option>
+
+                      </select>
                     </div>
                   </div>
-                </form>
+                </div>
+              </form>
 
-                <div class="mt-4">
-                  <div class="text-2xl font-semibold text-black">
-                    Activity Log
-                  </div>
+              <div class="mt-4">
+                <div class="text-2xl font-semibold text-black">
+                  Activity Log
+                </div>
 
-                  <div class="table-responsive">
-                    <table class="table table-striped" id="dataTable">
-                      <thead>
-                        <tr class="text-center text-[2.2vh]">
-                          <th>Date & Time</th>
-                          <th>Revenue Head</th>
-                          <th>Name of citizen</th>
-                          <th>Amount</th>
-                          <th>Amount Received</th>
-                          <th>Reference no.</th>
-                          <th>Mode of payment</th>
-                        
-                        </tr>
-                      </thead>
-                      <tbody class="table-border-bottom-0" id="showUsers">
-                        <tr class="text-[2vh] text-center">
-                          <td>1/22/1990 & 6:00pm</td>
-                          <td>REGISTRATION OF FISHING BOAT</td>
-                          <td>David ayoola</td>
-                          <td>100000</td>
-                          <td>829301233</td>
-                          <td>#1000</td>
-                          <td>Cash</td>
+                <div class="table-responsive">
+                  <table class="table table-striped" id="dataTable">
+                    <thead>
+                      <tr class="text-center text-[2.2vh]">
+                        <th>Date & Time</th>
+                        <th>Revenue Head</th>
+                        <th>Name of citizen</th>
+                        <th>Amount</th>
+                        <th>Amount Received</th>
+                        <th>Reference no.</th>
+                        <th>Mode of payment</th>
 
-                          <td>
-                            <div
-                              class="flex justify-content-between align-items-center"
-                            >
-                              <iconify-icon
-                                icon="material-symbols:delete-outline-sharp"
-                                style="font-size: 2.4vh"
-                              ></iconify-icon>
-                            </div>
-                          </td>
-                          
-                        </tr>
-                        <tr class="text-[2vh] text-center">
-                            <td>1/22/1990 & 6:00pm</td>
-                            <td>REGISTRATION OF FISHING BOAT</td>
-                            <td>David ayoola</td>
-                            <td>100000</td>
-                            <td>829301233</td>
-                            <td>#1000</td>
-                            <td>Cash</td>
-  
-                            <td>
-                              <div
-                                class="flex justify-content-between align-items-center"
-                              >
-                                <iconify-icon
-                                  icon="material-symbols:delete-outline-sharp"
-                                  style="font-size: 2.4vh"
-                                ></iconify-icon>
-                              </div>
-                            </td>
-                            
-                          </tr>
-                          <tr class="text-[2vh] text-center">
-                            <td>1/22/1990 & 6:00pm</td>
-                            <td>REGISTRATION OF FISHING BOAT</td>
-                            <td>David ayoola</td>
-                            <td>100000</td>
-                            <td>829301233</td>
-                            <td>#1000</td>
-                            <td>Cash</td>
-  
-                            <td>
-                              <div
-                                class="flex justify-content-between align-items-center"
-                              >
-                                <iconify-icon
-                                  icon="material-symbols:delete-outline-sharp"
-                                  style="font-size: 2.4vh"
-                                ></iconify-icon>
-                              </div>
-                            </td>
-                            
-                          </tr>
-                      </tbody>
-                    </table>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0" id="showUsers">
+                      <tr class="text-[2vh] text-center">
+                        <td>1/22/1990 & 6:00pm</td>
+                        <td>REGISTRATION OF FISHING BOAT</td>
+                        <td>David ayoola</td>
+                        <td>100000</td>
+                        <td>829301233</td>
+                        <td>#1000</td>
+                        <td>Cash</td>
+
+                        <td>
+                          <div class="flex justify-content-between align-items-center">
+                            <iconify-icon icon="material-symbols:delete-outline-sharp"
+                              style="font-size: 2.4vh"></iconify-icon>
+                          </div>
+                        </td>
+
+                      </tr>
+                      <tr class="text-[2vh] text-center">
+                        <td>1/22/1990 & 6:00pm</td>
+                        <td>REGISTRATION OF FISHING BOAT</td>
+                        <td>David ayoola</td>
+                        <td>100000</td>
+                        <td>829301233</td>
+                        <td>#1000</td>
+                        <td>Cash</td>
+
+                        <td>
+                          <div class="flex justify-content-between align-items-center">
+                            <iconify-icon icon="material-symbols:delete-outline-sharp"
+                              style="font-size: 2.4vh"></iconify-icon>
+                          </div>
+                        </td>
+
+                      </tr>
+                      <tr class="text-[2vh] text-center">
+                        <td>1/22/1990 & 6:00pm</td>
+                        <td>REGISTRATION OF FISHING BOAT</td>
+                        <td>David ayoola</td>
+                        <td>100000</td>
+                        <td>829301233</td>
+                        <td>#1000</td>
+                        <td>Cash</td>
+
+                        <td>
+                          <div class="flex justify-content-between align-items-center">
+                            <iconify-icon icon="material-symbols:delete-outline-sharp"
+                              style="font-size: 2.4vh"></iconify-icon>
+                          </div>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -495,5 +364,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
+</body>
+
 </html>

@@ -68,8 +68,11 @@
 
             <div class="mt-4 flex gap-x-5">
               <div class="flex gap-x-5" id="createRevCont">
-                
 
+
+                <button class="button" data-bs-toggle="modal" data-bs-target="#createRevenueHead">Create</button>
+                <button class="button-secondary" data-bs-toggle="modal" data-bs-target="#bulkCreateRevModal">Create
+                  Bulk</button>
 
               </div>
 
@@ -109,29 +112,29 @@
                   <p>Number of Revenue heads: <span>6</span></p>
                   <p>Date created: <span>22/02/2023</span></p>
                   <p>Contact: <span>091234593</span></p>
-                  
+
                 </div>
-<div class="flex justify-content-center">
-  <div id="" class="pt-3 flex space-x-3">
-    <div class="form-check form-switch flex space-x-2">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Allow payment</label>
-      <div class="flex space-x-1">
-        <p>No</p>
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-        <p>Yes</p>
-      </div>
-    </div>
-    <div class="form-check form-switch flex space-x-2">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Allow Creation of offices</label>
-      <div class="flex space-x-1">
-        <p>No</p>
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-        <p>Yes</p>
-      </div>
-    </div>
-  </div>
-</div>
-               
+                <div class="flex justify-content-center">
+                  <div class="pt-3 flex space-x-3">
+                    <div class="form-check form-switch flex space-x-2">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Allow payment</label>
+                      <div class="flex space-x-1" id="allow_payment">
+                        <p>No</p>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <p>Yes</p>
+                      </div>
+                    </div>
+                    <div class="form-check form-switch flex space-x-2">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Allow Creation of offices</label>
+                      <div class="flex space-x-1" id="user_creation">
+                        <p>No</p>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                        <p>Yes</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
 
@@ -144,7 +147,7 @@
                   </button>
                 </li>
 
-                <li class="nav-item flex align-items-center">
+                <li class="nav-item flex align-items-center" id="aprrv">
                   <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#approvlreq">
                     Approval requests
                   </button>
@@ -177,7 +180,7 @@
 
                 <div class="tab-pane fade" id="approvlreq" role="tabpanel">
 
-                  <table class="table table-sm" id="dataTable3">
+                  <table class="table table-sm" id="dataTable1">
                     <thead>
                       <tr>
                         <th>S/N</th>
@@ -185,44 +188,11 @@
                         <th>Category</th>
                         <th>Frequency</th>
                         <th>Amount per head</th>
-                        <th>Status</th>
+                        <th>Revenue generated</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody id="revHeadsShow2">
-                      <tr>
-                        <td>1</td>
-                        <td>REGISTRATION OF FISHERMEN/FISH FARMERS</td>
-                        <td>Individual</td>
-                        <td>One-off</td>
-                        <td>N 19594</td>
-                        <td><span class="badge rounded-pill bg-warning">Pending</span></td>
-                        <td>
-                          <div class="flex items-center gap-3">
-                            <button onclick="deleteRev(this)" data-revid="${revHd.id}"><iconify-icon
-                                icon="material-symbols:delete-outline-rounded"></iconify-icon></button>
-                            <button onclick="editRevFunc(this)" data-revid="${revHd.id}" data-bs-toggle="modal"
-                              data-bs-target="#editRev"><iconify-icon
-                                icon="material-symbols:edit-square-outline"></iconify-icon></button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>PROCESSING OF RICE</td>
-                        <td>Individual</td>
-                        <td>One-off</td>
-                        <td>N 19594</td>
-                        <td><span class="badge rounded-pill bg-danger">Denied</span></td>
-                        <td>
-                          <div class="flex items-center gap-3">
-                            <button><iconify-icon
-                                icon="material-symbols:delete-outline-rounded"></iconify-icon></button>
-                            <button data-bs-toggle="modal" data-bs-target="#editRev"><iconify-icon
-                                icon="material-symbols:edit-square-outline"></iconify-icon></button>
-                          </div>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
 
@@ -301,14 +271,18 @@
                 data-name="fullname" />
             </div>
           </div>
-          <!-- <div class="row">
+          <div class="row">
             <div class="col mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">Give information on what the tax is
-                about</label>
-              <textarea class="form-control revInput" id="exampleFormControlTextarea1" data-name="description" rows="3"
-                spellcheck="false"></textarea>
+              <label for="defaultSelect" class="">Frequency</label>
+              <select class="form-select revInput" id="Frequency" aria-label="Default select example"
+                data-name="frequency">
+                <option selected>--select</option>
+                <option value="One-off">One-off</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Annually">Annually</option>
+              </select>
             </div>
-          </div> -->
+          </div>
           <div class="row">
             <div class="col mb-3">
               <label for="nameLarge" class="form-label">Amount to be paid</label>
@@ -316,17 +290,40 @@
                 placeholder="NGN XXX" />
             </div>
           </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="dobLarge" class="form-label">Select Category</label>
-              <select id="defaultSelect" class="form-select revInput" data-name="category">
-                <option value="Corporate">Corporate</option>
-                <option value="Individual">Individual</option>
-                <option value="State Agency">State Agency</option>
-                <option value="Federal Agency">Federal Agency</option>
-              </select>
+
+          <div class="my-[2vh]">
+            <label for="defaultSelect" class="my-0 text-[2vh]">Category<span class="text-[red]">*</span></label>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Individual" id="Individual" checked>
+              <label class="form-check-label" for="Individual">
+                Individual
+              </label>
             </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Corporate" id="Corporate">
+              <label class="form-check-label" for="Corporate">
+                Corporate
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="State Agency" id="State Agency">
+              <label class="form-check-label" for="State Agency">
+                State Agency
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="Federal Agency" id="Federal Agency">
+              <label class="form-check-label" for="Federal Agency">
+                Federal Agency
+              </label>
+            </div>
+
           </div>
+
 
         </div>
         <div class="modal-footer ">
@@ -362,6 +359,8 @@
                 placeholder="NGN XXX" />
             </div>
           </div>
+
+
           <div class="row">
             <div class="col mb-3">
               <label for="dobLarge" class="form-label">Select Category</label>
@@ -374,6 +373,34 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col mb-3">
+              <label for="dobLarge" class="form-label">Status</label>
+              <select id="defaultSelect" class="form-select revInput2" data-name="status">
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="defaultSelect" class="">Frequency</label>
+              <select class="form-select revInput2" id="Frequency" aria-label="Default select example"
+                data-name="frequency">
+                <option selected>--select</option>
+                <option value="One-off">One-off</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Annually">Annually</option>
+              </select>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col mb-3">
+              <label for="nameLarge" class="form-label">Due Date</label>
+              <input type="date" name="date" class="form-control revInput" id="" data-name="due_date"
+                placeholder="Enter Name" />
+            </div>
+          </div> -->
         </div>
         <div class="modal-footer ">
           <button type="button" class="btn btn-prime w-full" id="editRevenue">Save</button>
@@ -384,7 +411,6 @@
       </div>
     </div>
   </div>
-
   <input type="hidden" id="mdaID" value="">
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
@@ -406,9 +432,10 @@
 
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script src="./assets/js/accessLevel.js"></script>
+  
   <!-- Main JS -->
   <script src="./assets/js/revHead.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/main.js"></script>
 </body>
 

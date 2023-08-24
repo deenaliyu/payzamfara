@@ -4,27 +4,29 @@
 let HOST = "https://useibs.com/php/index.php";
 
 $(".aside").html(`
-    <div class="app-brand demo">
-    <div class="flex gap-x-2">
-      <a href="../index.html">
-        <img src="./assets/img/logo.png" class="w-[70px] -ml-2" alt="" />
-      </a>
-      <div class="pt-3">
-      <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
-      <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
-      </div>
-      </div>
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-      </a>
-    </div>
+<div class="app-brand demo">
+<div class="flex gap-x-2">
+<div class="pt-2">
+<a href="../index.html">
+<img src="./assets/img/logo.png" class="w-[120px] -ml-2" alt="" />
+</a>
+</div>
+  <div class="pt-3 -ml-4 w-full">
+  <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
+  <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
+  </div>
+  </div>
+  <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+  </a>
+</div>
 
 
     <ul class="menu-inner">
       <!-- Dashboard -->
       <h4 class="menu-link pl-8 pt-5">MENU</h4>
       <li class="menu-item">
-        <a href="index.html"  class="menu-link dass">
+        <a href="dashboard.html"  class="menu-link dass">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
         </a>
@@ -69,7 +71,7 @@ $(".aside").html(`
     </ul>
 
 `);
-let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
+let userInfo2 = JSON.parse(window.localStorage.getItem("enumDataPrime"));
 
 $(document).ready(function () {
   var path = window.location.pathname;
@@ -105,6 +107,21 @@ if (profImg) {
     window.location.href = "user.html"
   })
 }
+// getEnumUser
+
+if (profImg) {
+  if (userInfo2.img === "" || userInfo2.img === null) {
+    profImg.src = "./assets/img/userprofile.png"
+  } else {
+    profImg.src = userInfo2.img
+  }
+}
+// $("#theProfImg").attr("src", userPrf.user.img)
+// $("#theProfImg2").attr("src", userPrf.user.img)
+
+$(".adminName").html(userInfo2.fullname)
+$("#theNamee").html(userInfo2.fullname)
+$("#payeId").html(userInfo2.agent_id)
 
 // console.log(userInfo2.img)
 async function fetchUserDetails2() {
@@ -112,24 +129,12 @@ async function fetchUserDetails2() {
   const userPrf = await response.json()
 
   // console.log(userPrf.user.img)
-  userDetails = userPrf.user
-  if (profImg) {
-    if (userInfo2.img === "") {
-      profImg.src = "./assets/img/userprofile.png"
-    } else {
-      profImg.src = userPrf.user.img
-    }
-  }
-  $("#theProfImg").attr("src", userPrf.user.img)
-  $("#theProfImg2").attr("src", userPrf.user.img)
-  // $(".theProfImg1").attr("src", userPrf.user.img)
-  $(".adminName").html(userPrf.user.fullname)
-}
 
-fetchUserDetails2()
+}
+// fetchUserDetails2()
 
 $(".footer").html(`
-<div class="flex justify-between flex-wrap md:flex-nowrap">
+<div class="flex justify-between">
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px]">Copyright 2023 Primegauge</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
@@ -137,13 +142,38 @@ $(".footer").html(`
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="material-symbols:mail-outline-rounded" width="28" height="28"></iconify-icon> Info@primegauge.com</p>
 <h4>|</h4>
-  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 0800 101 5555</p>
+  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 07007746348243 </p>
 </div>
 </div>
 `);
 const currentDate = new Date();
 $(".datei").html(currentDate.toLocaleDateString());
 $(".datem").html(currentDate.toLocaleDateString());
+
+let logoutTimeout;
+
+function startLogoutTimer() {
+    // Set the timeout to 10 minutes (600,000 milliseconds)
+    logoutTimeout = setTimeout(logout, 600000);
+}
+
+function resetLogoutTimer() {
+    clearTimeout(logoutTimeout);
+    startLogoutTimer();
+}
+
+function logout() {
+  localStorage.removeItem("adminDataPrime");
+    // alert('You have been logged out due to inactivity.');
+    window.location.href = "./index.html";
+}
+
+// Attach event listeners to reset the logout timer on user activity
+document.addEventListener('mousemove', resetLogoutTimer);
+document.addEventListener('keydown', resetLogoutTimer);
+
+// Start the logout timer when the page loads
+startLogoutTimer();
 
 $("#logout").on("click", function (e) {
   e.preventDefault();
@@ -159,7 +189,7 @@ $("#logout").on("click", function (e) {
     if (result.isConfirmed) {
       Swal.fire("Your Account have been successfully Logged out.", "success");
       localStorage.removeItem("adminDataPrime");
-      window.location.href = "../index.html";
+      window.location.href = "./index.html";
     }
   });
 });
@@ -1087,27 +1117,33 @@ let lgaList = {
 
 let stateSelect = document.querySelector("#STATES")
 let lgaSelect = document.querySelector('#LGAs')
+
 if (stateSelect) {
-  lgaList["AkwaIbom"].forEach(lga => {
-    lgaSelect.innerHTML += `
+  stateSelect.innerHTML = STATES
+}
+
+
+// if (stateSelect) {
+lgaList["AkwaIbom"].forEach(lga => {
+  lgaSelect.innerHTML += `
       <option value="${lga}">${lga}</option>
     `
-  })
-  stateSelect.addEventListener('change', function () {
-    let selectedState = $(this).val()
+})
+// stateSelect.addEventListener('change', function () {
+//   let selectedState = $(this).val()
 
-    let arrStates = Object.values(lgaList)
-    let finalarrState = arrStates[stateSelect.selectedIndex - 1]
+//   let arrStates = Object.values(lgaList)
+//   let finalarrState = arrStates[stateSelect.selectedIndex - 1]
 
-    lgaSelect.innerHTML = ''
+//   lgaSelect.innerHTML = ''
 
-    finalarrState.forEach((opt, ii) => {
-      lgaSelect.innerHTML += `
-        <option value="${opt}">${opt}</option>
-      `
-    })
+//   finalarrState.forEach((opt, ii) => {
+//     lgaSelect.innerHTML += `
+//         <option value="${opt}">${opt}</option>
+//       `
+//   })
 
 
-  })
+// })
 
-}
+// }`

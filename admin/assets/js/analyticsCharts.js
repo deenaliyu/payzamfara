@@ -6,10 +6,12 @@ function barCharts(dataDat, theValue, theElement) {
   option = {
     tooltip: {
       trigger: 'axis',
+      extraCssText: "width:200px; white-space:pre-wrap;",
       axisPointer: {
         type: 'shadow'
       }
     },
+
     grid: {
       left: '3%',
       right: '4%',
@@ -25,7 +27,8 @@ function barCharts(dataDat, theValue, theElement) {
         data: dataDat,
         axisTick: {
           alignWithLabel: true
-        }
+        },
+
       }
     ],
     yAxis: [
@@ -33,6 +36,7 @@ function barCharts(dataDat, theValue, theElement) {
         type: 'value',
         show: true,
         name: "",
+        tittle: "Revenue Generated",
         nameLocation: "end",
         nameRotate: 20
       }
@@ -51,9 +55,33 @@ function barCharts(dataDat, theValue, theElement) {
 
 }
 
+async function getMDALGAPerformance(loopWord, endpoint, idToPush, tittle, objTitle) {
 
-barCharts(['Abak', 'Ekat', 'Ekinin', 'Ika', 'Bono', 'Mbo', 'Uyo'], [3000, 2800, 2600, 300, 250, 200, 150], "lgaChart")
-barCharts(['Agric', 'Edu', 'Works', 'Finance', 'VIO', 'Lands', 'Transport'], [2900, 2800, 2600, 900, 700, 200, 150], "mdaChart")
+  const response = await fetch(`${HOST}?${endpoint}`)
+  const data = await response.json()
+
+  let theNumbers = []
+  let categoryArr = []
+
+  if (data.status === 1) {
+
+    data[loopWord].forEach(dta => {
+      theNumbers.push(parseInt(dta.count))
+      categoryArr.push(dta[objTitle])
+    });
+
+    barCharts(categoryArr, theNumbers, idToPush)
+  } else {
+
+  }
+}
+
+getMDALGAPerformance("revenuePerLGA", "getMDALGAPerformance", "lgaChart", "Revenue generated", "lga")
+getMDALGAPerformance("MDAPerformance", "getMDAPerformance", "mdaChart", "Revenue generated", "mda")
+
+
+
+// barCharts(['Agric', 'Edu', 'Works', 'Finance', 'VIO', 'Lands', 'Transport'], [2900, 2800, 2600, 900, 700, 200, 150], "mdaChart")
 
 barCharts(['PAYE', 'Stamp Duties', 'Laboratory', 'Pool', 'VIO', 'Lands', 'Transport'], [2900, 2800, 2600, 900, 700, 200, 150], "revHeads")
 barCharts(['Online Payment', 'Remita', 'Bank Branch', 'POS', 'USSD', 'E-naira', 'ATM'], [300, 200, 100, 400, 100, 40, 150], "payment")
@@ -516,8 +544,63 @@ ENGAGEMENT()
 
 // ENUMERATIONNN
 
+function calculatePercentage(number, total) {
+
+  if (total === 0) {
+    return 0;
+  }
+
+  return (number / total) * 100;
+}
+
+async function getEnumerationCategoryDashboard() {
+  try {
+    const response = await fetch(`${HOST}?getEnumerationCategoryDashboard`)
+    const data = await response.json()
+
+    // TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)
+    let labelss = []
+    let numberrs = []
+    data[1].forEach(dta => {
+      labelss.push(dta.by_account)
+      numberrs.push(parseInt(dta.count))
+    })
+
+    // console.log(labelss)
+    totalTaxPayer(labelss, numberrs)
+
+    // TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE
+    let labelss2 = []
+    let numberrs2 = []
+    let tt = 0
+    data[0].forEach((dta, i) => {
+
+      if (dta.tax_category !== "") {
+        tt += parseInt(dta.count)
+        labelss2.push(dta.tax_category)
+        if (i === data[0].length - 1) {
+
+          data[0].forEach(ffff => {
+            numberrs2.push(calculatePercentage(parseInt(ffff.count), tt))
+          })
+
+        }
+
+
+      }
+
+    })
+
+    totalRegis(labelss2, numberrs2)
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+getEnumerationCategoryDashboard()
 // TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)
-function totalTaxPayer() {
+function totalTaxPayer(labelss, numberss) {
   const ctx = document.getElementById("totalTaxPayer").getContext('2d');
   const chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -525,12 +608,12 @@ function totalTaxPayer() {
 
     // The data for our dataset
     data: {
-      labels: ["Basheer", "Kachi", "Cynthia", "Madu", "Sule", "Ibrahim"],
+      labels: labelss,
       datasets: [
         {
           label: "TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)",
           backgroundColor: ['#005826', '#EA4335', '#63B967', '#3A37D0', '#7AD0C7', '#242424'],
-          data: [200, 230, 100, 70, 200, 230, 100]
+          data: numberss
         }
       ]
     },
@@ -543,11 +626,11 @@ function totalTaxPayer() {
   });
 
 }
-totalTaxPayer()
+
 
 // % of TAXPAYERS REGISTERED(BY CATEGORY)
 
-function totalRegis() {
+function totalRegis(labelss2, numberrs2) {
   const ctx = document.getElementById("totalRegis").getContext('2d');
   const chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -555,12 +638,12 @@ function totalRegis() {
 
     // The data for our dataset
     data: {
-      labels: ["Individual", "Corporate", "Properties"],
+      labels: labelss2,
       datasets: [
         {
           label: "% of TAXPAYERS REGISTERED(BY CATEGORY)",
           backgroundColor: ['#63B967', "#E8E8E8", "#EA4335"],
-          data: [80, 20, 69]
+          data: numberrs2
         }
       ]
     },
@@ -573,4 +656,3 @@ function totalRegis() {
   });
 
 }
-totalRegis()

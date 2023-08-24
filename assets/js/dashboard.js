@@ -85,28 +85,65 @@ async function fetchInvoice() {
 async function fetchTaxes() {
   let userInfo = JSON.parse(localStorage.getItem("userDataPrime"))
 
-  const response = await fetch(`${HOST}?getAllRevenueHeads`)
-  const revenueHeads = await response.json()
+  const response = await fetch(
+    `${HOST}?getApplicableTaxes&tax_number=${userInfo.tax_number}`
+  );
+  const revenueHeads = await response.json();
 
-  console.log(revenueHeads)
+  // console.log(revenueHeads);
+  $("#loaderr").remove();
+  for (const item of revenueHeads) {
 
-  let ii = 0
-  for (let i = 0; i < revenueHeads.message.length; i++) {
-    const revenuehead = revenueHeads.message[i];
-    if (revenuehead.COL_5 === userInfo.category) {
-      ii++
-      $("#showTaxes").append(`
-        <tr>
-          <td>${ii}</td>
-          <td>Monthly</td>
-          <td>${revenuehead["COL_4"]}</td>          
-        </tr>
-      `)
+    let aa = ""
+
+    aa += `
+                      <tr>
+                        <td><a class="text-primary" href="./taxes.html">
+                        ${item.business_type}</a> </th>
+                        <td>Monthly</th>
+                       
+                    
+    `
+
+    for(const key in item) {
+
+      if(item[key].id) {
+        let i = key
+      
+      }else{
+        aa += `
+
+       
+`
+      }
+      
     }
-    if (ii === 5) {
-      break;
-    }
+    
+
+    aa +=`
+    </tr>
+    `
+
+    $("#showTaxes").append(aa)
   }
+
+
+  // for (let i = 0; i < revenueHeads.message.length; i++) {
+  //   const revenuehead = revenueHeads.message[i];
+  //   if (revenuehead.COL_5 === userInfo.category) {
+  //     ii++
+  //     $("#showTaxes").append(`
+  //       <tr>
+  //         <td>${ii}</td>
+  //         <td>Monthly</td>
+  //         <td>${revenuehead["COL_4"]}</td>          
+  //       </tr>
+  //     `)
+  //   }
+  //   if (ii === 5) {
+  //     break;
+  //   }
+  // }
 }
 
 fetchTaxes()

@@ -64,30 +64,14 @@
           </div>
 
           <div class="navbar-nav-right flex items-center gap-x-10" id="navbar-collapse">
-            <div class="">
+            <div class="flex-1">
               <p class="text-sm text-black">Date: <span id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Payer</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <input type="text" class="form-control" id="searching" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
-              <div class="dropdown mt-2">
-                <button class="flex gap-1 align-items-center" type="button" id="filtermda" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
-                  Filter
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-                  <button class="dropdown-item" value="Individual" id="Individual">Individual</button>
-                  <button class="dropdown-item" value="Corporate" id="Corporate">Corporate</button>
-                  <button class="dropdown-item" value="Lastlogin" id="login">Last login</button>
-                  <button class="dropdown-item" value="invoicegenerated" id="generated">No of invoice generated</button>
-                  <button class="dropdown-item" value="Totalpayment" id="payment">Total payment</button>
-                </div>
-              </div>
+            <div class="mt-4 flex flex-1 gap-x-5">
+
+
               <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
                 onclick="tableToCSV()">
 
@@ -197,7 +181,7 @@
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
   <script>
-   
+
   </script>
 
   <!-- Vendors JS -->

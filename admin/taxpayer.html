@@ -63,41 +63,26 @@
             </a>
           </div>
 
-          <div class="navbar-nav-right flex items-center gap-x-5" id="navbar-collapse">
+          <div class="navbar-nav-right relative flex items-center gap-x-5" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black">Date: <span id="datei"> </span></p>
+              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Payer</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" id="searching" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
-              <div class="dropdown mt-2">
-                <button class="flex gap-1 align-items-center" type="button" id="filtermda" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
-                  Filter
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-                  <button class="dropdown-item" value="Individual" id="Individual">Individual</button>
-                  <button class="dropdown-item" value="Corporate" id="Corporate">Corporate</button>
-                  <button class="dropdown-item" value="Lastlogin" id="login">Last login</button>
-                  <button class="dropdown-item" value="invoicegenerated" id="generated">No of invoice generated</button>
-                  <button class="dropdown-item" value="Totalpayment" id="payment">Total payment</button>
+            <div class="mt-4 flex gap-x-5 absolute right-24">
+
+
+              <div class="flex items-center gap-2">
+                <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
+                  onclick="tableToCSV()" id="txdReport">
+
+                  <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
+                  Report</button>
+
+                <div class="avatar avatar-online flex gap-x-5 items-center">
+                  <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+                  <p class="adminName">-</p>
                 </div>
-              </div>
-              <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
-                onclick="tableToCSV()">
-
-                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
-                Report</button>
-
-              <div class="avatar avatar-online flex gap-x-5">
-                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">system Admin</p>
               </div>
             </div>
 
@@ -111,31 +96,155 @@
 
           <div class="container-xxl flex-grow-1 container-p-y taxes">
 
-            <div class="card py-4 mt-6 px-2">
-              <div class="table-responsive">
-                <table class="table" id="dataTable">
-                  <thead>
-                    <tr class="text-center">
-                      <th></th>
-                      <th>Picture</th>
-                      <th>Payer ID</th>
-                      <th>Name of Tax payer</th>
-                      <th>Category</th>
-                      <th>TIN</th>
-                      <th>Contact</th>
-                      <th>TIN Status</th>
-                      <th>Date created</th>
-                      <th>Manage</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0" id="showreport">
+            <div>
+              <h2 class="text-xl fontBold mb-4">Summary</h2>
 
-                  </tbody>
-                </table>
+              <div class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-3">
+
+                <div class="dashCards card md:w-[180px]">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Registered Taxpayers</p>
+                  </div>
+
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="registered">-</span></p>
+                </div>
+
+                <div class="dashCards card md:w-[180px]">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Self Registered</p>
+                  </div>
+
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="selfRegis">-</span></p>
+
+                </div>
+
+                <div class="dashCards card md:w-[180px]">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Enumerated</p>
+                  </div>
+
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="enumRegs">-</span></p>
+
+                </div>
+
+                <div class="dashCards card md:w-[180px]">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Active users</p>
+                  </div>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">2670</span></p>
+
+                </div>
+
+                <div class="dashCards card md:w-[180px]">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Inactive users</p>
+                  </div>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">270</span></p>
+
+                </div>
+
+
               </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+            </div>
+
+
+            <div class="card py-4 mt-6 px-2">
+
+              <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2" id="pills-tab" role="tablist">
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#selfReg" type="button"
+                    role="tab">
+                    Self Registered
+                  </button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#enumRegs" type="button" role="tab">
+                    Enumerated
+                  </button>
+                </li>
+
+              </ul>
+
+
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="selfReg" role="tabpanel">
+
+                  <div class="table-responsive">
+                    <table class="table txTable" id="dataTable">
+                      <thead>
+                        <tr class="text-center">
+                          <th></th>
+                          <th>Picture</th>
+                          <th>Payer ID</th>
+                          <th>Name of Tax payer</th>
+                          <th>Category</th>
+                          <th>TIN</th>
+                          <th>Email</th>
+                          <th>TIN Status</th>
+                          <th>Date created</th>
+                          <th>Manage</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="showreport">
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="flex justify-center items-center mt-4" id="loader">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                  </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="enumRegs" role="tabpanel">
+
+                  <div class="table-responsive">
+                    <table class="table txTable2" id="dataTable2">
+                      <thead>
+                        <tr class="text-center">
+                          <th>S/N</th>
+                          <th></th>
+                          <th>Payer ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Category</th>
+                          <th>Field Agent</th>
+                          <th>TIN</th>
+                          <th>TIN Status</th>
+
+                          <th>Date created</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-border-bottom-0" id="showreport2">
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+
               </div>
+
+
+
+
+
             </div>
 
           </div>
@@ -170,8 +279,8 @@
 
             <select name="" id="selectInput" class="form-select mt-5">
               <option disabled selected>update status</option>
-              <option value="0">Un-verfied</option>
               <option value="1">Verified</option>
+              <option value="2">Unverified</option>
             </select>
 
             <button class="btn btn-primary mt-4 w-full" id="updateStatus">Update Status</button>
@@ -267,6 +376,7 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->
   <script src="./assets/js/taxes.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/main.js"></script>
 
   <!-- Page JS -->

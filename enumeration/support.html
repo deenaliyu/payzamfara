@@ -65,36 +65,37 @@
         <!-- Navbar -->
 
         <nav
-        class="layout-navbar  container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-        id="layout-navbar">
-        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-          <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
-          </a>
-        </div>
-
-        <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
-          <div class="">
-            <p class="text-sm text-black" id="datei">-</p>
-            <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Help & Support</h1>
+          class="layout-navbar  container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
           </div>
 
-          <div class="mt-4 flex gap-x-5 ms-auto">
-            <div class="input-group input-group-merge md:w-72 hidden md:flex">
-              <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                aria-describedby="basic-addon-search31">
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+
+            <div class="flex-1">
+              <p class="text-sm text-black datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Help & Support</h1>
             </div>
 
-            <a class="button" href="complain.html">
-              <iconify-icon icon="ic:baseline-plus"></iconify-icon> Register a complaint</a>
+            <div class="mt-4 flex flex-1 gap-x-5 ms-auto">
 
-            <div class="avatar avatar-online flex gap-x-2 items-center">
-              <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-              <p class="adminName">-</p>
+
+              <a class="button" href="complain.html">
+                <iconify-icon icon="ic:baseline-plus"></iconify-icon> Register a complaint
+              </a>
+
+              <div class="avatar avatar-online flex gap-x-2 items-center">
+                <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+                <p class="adminName flex-1">-</p>
+              </div>
+
             </div>
+
           </div>
-        </div>
-      </nav>
+        </nav>
 
         <!-- / Navbar -->
 
@@ -109,50 +110,16 @@
 
                 <table class="table theTable" id="dataTable">
                   <thead>
+                    <th class="fontBold text-gray-500">S/N</th>
                     <th class="fontBold text-gray-500">Ticket Number</th>
-                    <th class="fontBold text-sm text-gray-500">Category</th>
                     <th class="fontBold text-gray-500">Subject</th>
                     <th class="fontBold text-gray-500">Date sent</th>
-                    <th class="fontBold text-gray-500">Supporting document</th>
                     <th class="fontBold text-gray-500">Status</th>
+                    <th></th>
                   </thead>
-                  <tbody id="">
-                    <tr class="relative">
-                      <td>6105349728</td>
-                      <td>Biometric</td>
-                      <td>Biometric error</td>
-                      <td>08/03/2023</td>
-                      <td class="flex justify-center">
-                        <a href="complain.html" class="btn btn-primary btn-sm" >View</a>
-                      </td>
-                      <td id="" class="checking">
-                        <p class='text-success'>Answered</p>
-                      </td>
-                    </tr>
-                    <tr class="relative">
-                      <td>6105349728</td>
-                      <td>Download/Print</td>
-                      <td>Download error</td>
-                      <td>08/03/2023</td>
-                      <td class="flex justify-center">
-                        <a href="complain.html" class="btn btn-primary btn-sm" >View</a>
-                      </td>
-                      <td id="" class="checking">
-                        <p class='text-danger'>Pending</p>
-                      </td>
-                    </tr>
-                    <tr class="relative">
-                      <td>6105349728</td>
-                      <td>Download/Print</td>
-                      <td>Download error</td>
-                      <td>08/03/2023</td>
-                      <td class="flex justify-center">
-                        <a href="complain.html" class="btn btn-primary btn-sm" >View</a>
-                      </td>
-                      <td id="" class="checking">
-                        <p class='text-success'>Pending</p>
-                      </td>
-                    </tr>
+                  <tbody id="theSupport">
+
+
                   </tbody>
                 </table>
 
@@ -191,21 +158,6 @@
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <!-- endbuild -->
-
-  <script>
-    $('#searching').keyup(function () {
-      var table = $('.table').DataTable();
-      table.search($(this).val()).draw();
-    });
-  </script>
-  <script>
-    tinymce.init({
-      selector: '#textarea',
-      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-    });
-  </script>
   <script>
     let theAtivo = document.querySelector(`.daso`)
     theAtivo.parentElement.classList.add("active")

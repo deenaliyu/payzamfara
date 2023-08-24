@@ -1,32 +1,33 @@
-// let HOST = "http://localhost:8080/primeGuage/php/index.php"
+// let HOST = "http://localhost/payzamfaranew/php/index.php"
 // let HOST = "https://steamledge.com/primeguage/php/index.php";
 // let HOST = "http://localhost/primeguagenew/php/index.php";
 let HOST = "https://useibs.com/php/index.php";
+let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
 
 $(".aside").html(`
-    <div class="app-brand demo">
-    <div class="flex gap-x-2">
-    <div class="pt-2">
-    <a href="../index.html">
-    <img src="./assets/img/logo.png" class="w-[120px] -ml-2" alt="" />
+<div class="app-brand demo">
+<div class="flex gap-x-2">
+<div class="pt-2">
+<a href="../index.html">
+<img src="./assets/img/logo.png" class="w-[120px] -ml-2" alt="" />
+</a>
+</div>
+  <div class="pt-3 -ml-4 w-full">
+  <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
+  <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
+  </div>
+  </div>
+  <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+    <i class="bx bx-chevron-left bx-sm align-middle"></i>
   </a>
-    </div>
-      <div class="pt-3 -ml-4 w-full">
-      <h5 class="text-[#005826] text-[16px]">Pay Zamfara</h5>
-      <p class="text-[#005826] text-[12px] pt-2">Future of tax payment</p>
-      </div>
-      </div>
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-      </a>
-    </div>
+</div>
 
 
     <ul class="menu-inner">
       <!-- Dashboard -->
       <h4 class="menu-link pl-8 pt-5">MENU</h4>
       <li class="menu-item">
-        <a href="index.html"  class="menu-link dass">
+        <a href="dashboard.html"  class="menu-link dass">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
         </a>
@@ -55,16 +56,24 @@ $(".aside").html(`
               <div data-i18n="Basic Inputs">Invoice Report</div>
             </a>
           </li>
+
           <li class="menu-item">
             <a href="collection.html" class="menu-link">
               <div data-i18n="Input groups">Collection Report</div>
             </a>
           </li>
-          <li class="menu-item">
-          <a href="settlement.html" class="menu-link">
-            <div data-i18n="Input groups">Settlement Report</div>
-          </a>
-        </li>
+
+          ${userInfo2.email === "primeguage@gmail.com" ? 
+          `
+            <li class="menu-item">
+              <a href="settlement.html" class="menu-link">
+                <div data-i18n="Input groups">Settlement Report</div>
+              </a>
+            </li>
+          ` 
+          : ''}
+          
+          
         </ul>
       </li>
 
@@ -81,43 +90,12 @@ $(".aside").html(`
           <div data-i18n="Basic">Enumeration</div>
         </a>
       </li>
-
       <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle auditt">
-          <iconify-icon icon="mdi:report-bell-curve-cumulative" class="menu-icon"></iconify-icon>
-          <div data-i18n="Form Elements">Audit Trail</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="enduseraudit.html" class="menu-link">
-              <div data-i18n="Basic Inputs">End Users Audit</div>
-            </a>
-          </li>
-
-          <li class="menu-item">
-            <a href="fieldagentaudit.html" class="menu-link">
-              <div data-i18n="Basic Inputs">Field Agents Audit</div>
-            </a>
-          </li>
-
-          <li class="menu-item">
-            <a href="mdasaudit.html" class="menu-link">
-              <div data-i18n="Basic Inputs">MDAs Audit</div>
-            </a>
-          </li>
-
-          <li class="menu-item">
-            <a href="adminaudit.html" class="menu-link">
-              <div data-i18n="Basic Inputs">Admin Audit</div>
-            </a>
-          </li>
-          
-        </ul>
-      </li>
-      
-
-
-
+      <a href="enduseraudit.html" class="menu-link auditt">
+      <i class='menu-icon tf-icons bx bxs-group' ></i>
+        <div data-i18n="Basic">Audit Trail</div>
+      </a>
+    </li>
       <li class="menu-item">
         <a href="cms.html" class="menu-link mdo">
         <i class='menu-icon tf-icons bx bxs-group' ></i>
@@ -133,7 +111,7 @@ $(".aside").html(`
     <li class="menu-item">
     <a href="user.html" class="menu-link mdoc">
     <i class='menu-icon tf-icons bx bxs-group' ></i>
-      <div data-i18n="Basic">Admin Users</div>
+      <div data-i18n="Basic">User Management</div>
     </a>
   </li>
 
@@ -154,7 +132,7 @@ $(".aside").html(`
     </ul>
 
 `);
-let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
+
 
 // $(".navi")
 //   .html(`
@@ -191,7 +169,7 @@ async function fetchUserDetails2() {
 fetchUserDetails2()
 
 $(".footer").html(`
-<div class="flex justify-between flex-wrap md:flex-nowrap ">
+<div class="flex justify-between">
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px]">Copyright 2023 Primegauge</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
@@ -199,13 +177,41 @@ $(".footer").html(`
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="material-symbols:mail-outline-rounded" width="28" height="28"></iconify-icon> Info@primegauge.com</p>
 <h4>|</h4>
-  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 0800 101 5555</p>
+  <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 07007746348243 </p>
 </div>
 </div>
 `);
 const currentDate = new Date();
 $(".datei").html(currentDate.toLocaleDateString());
 $(".datem").html(currentDate.toLocaleDateString());
+
+
+
+
+let logoutTimeout;
+
+function startLogoutTimer() {
+    // Set the timeout to 10 minutes (600,000 milliseconds)
+    logoutTimeout = setTimeout(logout, 600000);
+}
+
+function resetLogoutTimer() {
+    clearTimeout(logoutTimeout);
+    startLogoutTimer();
+}
+
+function logout() {
+  localStorage.removeItem("adminDataPrime");
+    // alert('You have been logged out due to inactivity.');
+    window.location.href = "./index.html";
+}
+
+// Attach event listeners to reset the logout timer on user activity
+document.addEventListener('mousemove', resetLogoutTimer);
+document.addEventListener('keydown', resetLogoutTimer);
+
+// Start the logout timer when the page loads
+startLogoutTimer();
 
 $("#logout").on("click", function (e) {
   e.preventDefault();
@@ -221,7 +227,7 @@ $("#logout").on("click", function (e) {
     if (result.isConfirmed) {
       Swal.fire("Your Account have been successfully Logged out.", "success");
       localStorage.removeItem("adminDataPrime");
-      window.location.href = "../index.html";
+      window.location.href = "./index.html";
     }
   });
 });
@@ -1165,6 +1171,33 @@ if (stateSelect) {
 
     finalarrState.forEach((opt, ii) => {
       lgaSelect.innerHTML += `
+        <option value="${opt}">${opt}</option>
+      `
+    })
+
+
+  })
+
+}
+
+let stateSelect2 = document.querySelector("#STATE")
+let lgaSelect2 = document.querySelector('#LGAs2')
+if (stateSelect2) {
+  lgaList["AkwaIbom"].forEach(lga => {
+    lgaSelect2.innerHTML += `
+      <option value="${lga}">${lga}</option>
+    `
+  })
+  stateSelect2.addEventListener('change', function () {
+    let selectedState = $(this).val()
+
+    let arrStates = Object.values(lgaList)
+    let finalarrState = arrStates[stateSelect2.selectedIndex - 1]
+
+    lgaSelect2.innerHTML = ''
+
+    finalarrState.forEach((opt, ii) => {
+      lgaSelect2.innerHTML += `
         <option value="${opt}">${opt}</option>
       `
     })

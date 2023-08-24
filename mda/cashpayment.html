@@ -1,248 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PrimeGuage</title>
 
-    <!-- FAVION ICON -->
-    <link
-      rel="shortcut icon"
-      href="../assets/img/favicon.png"
-      type="image/x-icon"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <link rel="stylesheet" href="../assets/css/responsive.css" />
-    <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
-    <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://html2canvas.hertzen.com/dist/html2canvas.js"
-    ></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
 
-    <style>
-      .formTabs {
-        display: none;
-      }
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
-      .imgTabs {
-        display: none;
-      }
+  <style>
+    .formTabs {
+      display: none;
+    }
 
-      .invTa tr td {
-        padding-left: 0;
-        padding-bottom: 0px;
-        font-size: 14px;
-      }
-    </style>
-  </head>
+    .imgTabs {
+      display: none;
+    }
 
-  <body>
-    <!-- <header
-      class="flex justify-between px-10 bg-white py-3"
-      id="theHeader"
-    ></header> -->
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+  </style>
+</head>
 
-    <section class="flex h-[100vh] ">
-      <div class="md:block hidden w-3/12 bg-[#F9FAFB] p-3">
-        <div class=" h-full">
-            <div class="flex gap-x-1 justify-content-center">
-                <a href="../index.html">
-                  <img src="./assets/img/logo.png" class="w-[70px] -ml-2" alt="" />
-                </a>
-                <div class="pt-[6vh]">
-                <h5 class="text-[#00000] font-semibold text-[16px]">Pay Zamfara</h5>
-                <!-- <p class="text-[#727283] text-[12px] pt-2">Future of tax payment</p> -->
-                </div>
-                </div>
+<body>
 
-                <!-- <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                  <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                </a> -->
-                <div class=" flex mr-auto ml-auto w-75">
-                    <div class="mt-5 imgTabs">
-                        <img src="../assets/img/ImageSet1.png" />
-                      </div>
-                      <div class="mt-5 imgTabs">
-                        <img src="../assets/img/ImageSet3.png" />
-                        
-                      </div>
-                      <div class="mt-5 imgTabs">
-                        <img src="../assets/img/ImageSet4.png" />
-                      </div>
-                      <!--  -->
-                </div>
-
-              </div>
-              
-          <!-- <div class="mt-5 imgTabs">
-            <img src="../assets/img/geninv5.png" />
-          </div> -->
+  <section class="flex h-[100vh] ">
+    <div class="md:block hidden w-3/12 bg-[#F9FAFB] p-3">
+      <div class="px-2 h-full">
+        <div class="flex gap-x-1 items-center">
+          <a href="../index.html">
+            <img src="./assets/img/logo.png" class="w-[70px] -ml-2" alt="" />
+          </a>
+          <h5 class="text-[#00000] fontBold text-[16px]">Primegauge IBS</h5>
         </div>
-        
-      <!-- </div> -->
 
-      <div
-        class="md:w-9/12 w-full bg-[white] bg-center overflow-y-scroll"
-      >
+
+        <div class="">
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/payment1.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/payment2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/payment3.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/payment4.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/payment4.png" />
+          </div>
+          <!--  -->
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- </div> -->
+
+    <div class="md:w-9/12 w-full bg-[white] bg-center overflow-y-scroll">
       <hr class="mt-[9vh] ">
 
 
 
-
-      <!-- <section class="formTabs">
-        <p>1</p>
-        <button onclick="nextPrev(1)">next</button>
-  
-      </section>
-      <section class="formTabs">
-        <p>2</p>
-        <button onclick="nextPrev(1)">next</button>
-  
-      </section>
-      <section class="formTabs">
-        <p>3</p>
-        <button onclick="nextPrev(1)">next</button>
-  
-      </section>
-      <section class="formTabs">
-        <button onclick="nextPrev(1)">next</button>
-  
-      </section>
-      <section class="formTabs">
-        <button onclick="nextPrev(1)">next</button>
-  
-      </section> -->
-
-
       <section class="formTabs h-full ">
         <div class="my-3 mx-4">
-          
-          <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2" onclick="history.back()"
-            ><iconify-icon
-            icon="material-symbols:arrow-back-rounded"
-          ></iconify-icon>Go Back</a
-          >
+          <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2"
+            onclick="history.back()"><iconify-icon icon="material-symbols:arrow-back-rounded"></iconify-icon>Go Back</a>
         </div>
 
-        <!-- <div class="grid grid-cols-4 mr-auto ml-auto border-2 border-red-500 "> -->
-            
-            <!-- <div class="col-span-2 border-2 border-blue-500"> -->
-          <!-- <form action="" class="md:w-[60%] w-[80%] mt-[10vh]"> -->
-            <div class="px-5 md:px-0 md:mx-[15vh] md:pt-[7vh] ">
-            <h1 class="fontBold mb-3 text-2xl">Cash Payment</h1>
-            <h1 class="mb-1 mt-1 text-[2.4vh]">Basic Information</h1>
+        <div class="px-5 md:px-0 md:mx-[15vh] md:pt-[7vh] ">
+          <h1 class="fontBold mb-3 text-2xl">Cash Payment</h1>
+          <h1 class="mb-1 mt-1 text-[2.4vh]">Basic Information</h1>
 
 
-            <form class="grid md:grid-cols-4 gap-3 grid-cols-1">
-                <div class="col-span-2">
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >What do you want to pay for?<span class="text-[red]">*</span></label
-                    >
-                    
-                    <select
-                      class="form-select"
-                      id="Payment for"
-                      aria-label="Default select example"
-                    >
-                    <option selected>--select</option>
-                    <option value="Full access">Full access</option>
-                    <option value="View only">View only</option>
-                    </select>
-                  </div>
+          <form class="grid md:grid-cols-4 gap-3 grid-cols-1">
+            <div class="col-span-2">
+              <div class="my-[2vh]">
+                <label for="defaultSelect" class="my-0 text-[2vh]">What do you want to pay for?<span
+                    class="text-[red]">*</span></label>
 
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >First name<span class="text-[red]">*</span></label
-                    >
-                    <input type="text" name="firstname"  class = "form-control" id="" placeholder="Enter your first name">
-                  </div>
+                <select class="form-select cashInputs" data-name="revenue_head" id="revSelect">
 
+                </select>
+              </div>
 
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >TIN<span class="text-[red]">*</span></label
-                    >
-                    <input type="text" name="firstname"  class = "form-control" id="" placeholder="Enter your TIN number">
-                  </div>
-
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >State<span class="text-[red]">*</span></label
-                    >
-                    
-                    <select
-                      class="form-select"
-                      id="State"
-                      aria-label="Default select example"
-                    >
-                    <option selected>--select</option>
-                    <option value="Full access">Akwa ibom</option>
-                    <option value="View only">Anambra</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-span-2">
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >Amount to be paid<span class="text-[red]">*</span></label
-                    >
-                    <input type="number" class="form-control" placeholder="100000">
-                  </div>
-
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >Surname<span class="text-[red]">*</span></label
-                    >
-                    <input type="text" class="form-control" placeholder="Enter your surname">
-                  </div>
-
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >Phone Number<span class="text-[red]">*</span></label
-                    >
-                    <input type="tel" class="form-control" placeholder="+234">
-                  </div>
-
-                  <div class="my-[2vh]">
-                    <label for="defaultSelect" class="my-0 text-[2vh]"
-                      >LGA<span class="text-[red]">*</span></label
-                    >
-                    <select
-                      class="form-select"
-                      id="LGA"
-                      aria-label="Default select example"
-                    >
-                    <option value="akwa ibom">Awka ibom</option>
-                    <option value="Anambra">Anambra</option>
-                   
-                    </select>
-                  </div>
-                </div>
-
-
-                <!-- <div class="flex justify-center items-center"> -->
-                <div class=" text-center">
-                    <button class="text-justify md:my-0 my-2 py-2 lg:px-[25vh] px-[15vh]  rounded-3xl bg-[#005826] text-white hover:text-white" onclick="nextPrev(1)" type="button">
-                        Continue
-                    </button>
-                </div>
-            <!-- </div> -->
+              <div class="my-[2vh]">
+                <label class="my-0 text-[2vh]">First name<span class="text-[red]">*</span></label>
+                <input type="text" class="form-control cashInputs" data-name="first_name">
               </div>
 
 
-  
+              <div class="my-[2vh]">
+                <label class="my-0 text-[2vh]">TIN<span class="text-[red]">*</span></label>
+                <input type="text" class="form-control cashInputs" data-name="tin">
+              </div>
 
-        </form>
+              <div class="my-[2vh]">
+                <label for="defaultSelect" class="my-0 text-[2vh]">State<span class="text-[red]">*</span></label>
+
+                <select class="form-select cashInputs" data-name="state" id="selectState">
+
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-2">
+              <div class="my-[2vh]">
+                <label class="my-0 text-[2vh]">Amount to be paid<span class="text-[red]">*</span></label>
+                <input type="number" class="form-control cashInputs" id="amountToPay" data-name="amount" readonly>
+              </div>
+
+              <div class="my-[2vh]">
+                <label class="my-0 text-[2vh]">Surname<span class="text-[red]">*</span></label>
+                <input type="text" class="form-control cashInputs" data-name="surname">
+              </div>
+
+              <div class="my-[2vh]">
+                <label class="my-0 text-[2vh]">Phone Number<span class="text-[red]">*</span></label>
+                <input type="tel" class="form-control cashInputs" data-name="phone">
+              </div>
+
+              <div class="my-[2vh]">
+                <label for="defaultSelect" class="my-0 text-[2vh]">LGA<span class="text-[red]">*</span></label>
+                <select class="form-select cashInputs" data-name="lga" id="selectLGA">
+
+                </select>
+              </div>
+            </div>
+
+            <button class="button w-full" onclick="continueReg()" type="button">
+              Continue
+            </button>
+          </form>
+        </div>
+
+
       </section>
 
 
@@ -250,20 +159,11 @@
       <!-- </section> -->
 
       <section class="formTabs pb-5">
-        <!-- <div class="pt-10 px-10">
-          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
-            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-            <span>Go back</span>
-          </button>
-        </div> -->
 
         <div class="my-3 mx-4">
-          
-          <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2" onclick="nextPrev(-1)"
-            ><iconify-icon
-            icon="material-symbols:arrow-back-rounded"
-          ></iconify-icon>Go Back</a
-          >
+
+          <!-- <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2"
+            onclick="nextPrev(-1)"><iconify-icon icon="material-symbols:arrow-back-rounded"></iconify-icon>Go Back</a> -->
         </div>
         <div id="makePayment">
 
@@ -275,12 +175,9 @@
 
       <section class="formTabs pb-5">
         <div class="my-3 mx-4">
-          
-          <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2" onclick="nextPrev(-1)"
-            ><iconify-icon
-            icon="material-symbols:arrow-back-rounded"
-          ></iconify-icon>Go Back</a
-          >
+
+          <a type="button" class="text-[2vh] flex align-items-center gap-1 my-2 mx-2"
+            onclick="nextPrev(-1)"><iconify-icon icon="material-symbols:arrow-back-rounded"></iconify-icon>Go Back</a>
         </div>
 
         <div class="invoiceContainer flex justify-center md:pr-10">
@@ -291,23 +188,23 @@
 
         <div class="flex justify-center pr-10">
           <div class="md:w-[70%]">
-            
+
             <div class="flex flex-row gap-4 justify-between mt-4">
-              <button class="outline-btn flex gap-3 items-center md:px-10" onclick="downloadInvoice('receiptCard')">
+              <button class="outline-btn flex gap-3 items-center md:px-10" onclick="printInvoice('receiptCard')">
                 <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
                 <span>Print Receipt</span>
               </button>
 
-              <a href="index.html" class="button flex gap-3 items-center md:px-10">
+              <a href="dashboard.html" class="button flex gap-3 items-center md:px-10">
                 <span>Return to home page</span>
                 <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
               </a>
             </div>
 
 
-            </div>
           </div>
         </div>
+
 
 
 
@@ -317,20 +214,20 @@
 
   </section>
 
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="../assets/js/aos-master/dist/aos.js"></script>
-    <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <script>
-      AOS.init();
-    </script>
-    <script src="../assets/js/nav.js"></script>
-    <script src="../assets/js/payment.js"></script>
-    <script src="../assets/js/tabHandler.js"></script>
-    <script src="../assets/js/generateinvoice.js"></script>
-    <script src="../assets/js/invoice.js"></script>
-    <script src="../assets/js/landing.js"></script>
-    <script src="assets/js/landingcms.js"></script>
-  </body>
+  <script src="./assets/js/jquery.js"></script>
+  <script src="./assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="./assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#revSelect").select2();
+    });
+  </script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/js/cashpay.js"></script>
+  <script src="./assets/js/payment.js"></script>
+  <script src="./assets/js/tabHandler.js"></script>
+</body>
+
 </html>

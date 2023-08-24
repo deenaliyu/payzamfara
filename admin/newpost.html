@@ -73,17 +73,12 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
+              <p class="text-sm text-black" class="datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">CMS</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex ">
-                <span class="input-group-text rounded-full" id="basic-addon-search31"><i
-                    class="bx bx-search"></i></span>
-                <input type="text" class="form-control rounded-full" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
+
               <a href="newpost.html" class="button">New Post</a>
 
 
@@ -92,7 +87,7 @@
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
 
               </div>
-              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">-</h4>
             </div>
 
           </div>
@@ -112,7 +107,8 @@
 
                   <div class="form-group mt-4">
                     <label for="">Select Page*</label>
-                    <select class="form-select w-6/12 taxReqInput " id="page" data-name="page" onchange="getpost(this)">
+                    <select class="form-select w-6/12 taxReqInput selPage" id="page" data-name="page"
+                      onchange="getpost(this)">
                       <option value="" disabled selected>Select --</option>
                       <option value="news">News</option>
                       <option value="gallery">Gallery</option>
@@ -244,6 +240,7 @@
     });
   </script>
   <script src="./assets/js/nav.js"></script>
+  <script src="assets/js/accessLevel.js"></script>
   <script src="./assets/js/newpost.js"></script>
   <script src="../assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>

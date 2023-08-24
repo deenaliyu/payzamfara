@@ -96,30 +96,20 @@
 
               <button onclick="history.go(-1)" class="textPrimary">Back to Activity list</button>
 
-              <h1 class="text-xl fontBold text-[#000]">Miro Steaven</h1>
+              <h1 class="text-xl fontBold text-[#000]" id="theName">-</h1>
 
               <div class="card card-body mt-4">
                 <div class="table-responsiveness">
                   <table class="table auditTable auditTable2">
                     <thead>
+                      <th>S/N</th>
                       <th scope="col">Date and time</th>
+                      <th>Email</th>
                       <th scope="col">Activity Description</th>
                       <th scope="col"></th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>Just now</td>
-                        <td>Miro registered a new field agent</td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#viewActivity" class="btn btn-primary">View
-                            Activity</button></td>
-                      </tr>
+                    <tbody id="showThem2">
 
-                      <tr>
-                        <td>14/02/2023, 2.50PM</td>
-                        <td>Miro Steaven logged in</td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#viewActivity" class="btn btn-primary">View
-                            Activity</button></td>
-                      </tr>
 
                     </tbody>
                   </table>
@@ -148,26 +138,28 @@
                 <div class="row gap-y-5">
                   <div class="col-sm-6">
                     <p>User name</p>
-                    <p class="text-[#000]">Miro Steaven</p>
+                    <p class="text-[#000]" id="theName2">-</p>
                   </div>
                   <div class="col-sm-6">
                     <p>Email</p>
-                    <p class="text-[#000]">MiroSteaven@gmail.com</p>
+                    <p class="text-[#000]" id="theEm">-</p>
                   </div>
 
                   <div class="col-sm-6">
                     <p>Activity</p>
-                    <p class="text-[#000]">Miro Steaven Downloaded invoice Report</p>
+                    <p class="text-[#000]" id="theRe">-</p>
                   </div>
                   <div class="col-sm-6">
                     <p>Date and time</p>
-                    <p class="text-[#000]">14/02/2023, 2.50PM</p>
+                    <p class="text-[#000]" id="time">-</p>
                   </div>
                 </div>
 
               </div>
             </div>
           </div>
+
+
       </div>
 
       <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
@@ -209,6 +201,8 @@
 
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/mdaDetails.js"></script>
+
   <!-- <script src="../assets/js/invoicess.js"></script> -->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
 

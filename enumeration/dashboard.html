@@ -122,10 +122,8 @@
                   </div>
 
                   <div class="flex items-center justify-between gap-4">
-                    <select class="form-select form-select-sm">
-                      <option value="Individual">Individual</option>
-                      <option value="Corporate">Corporate</option>
-                      <option value="Properties">Properties</option>
+                    <select class="form-select form-select-sm" onchange="fetchCateg(this)" id="categgg">
+
                     </select>
 
                     <p class="zanumbers" id="totalRegCateg">-</p>
@@ -137,8 +135,8 @@
                   <p class="headder text-gray-500">TOTAL MONTHLY REGISTRATION</p>
 
                   <div class="flex items-center justify-between gap-4">
-                    <select class="form-select form-select-sm">
-                      <option value="June">June</option>
+                    <select class="form-select form-select-sm" onchange="fetchCateg2(this)" id="categgg2">
+
                     </select>
 
                     <p class="zanumbers" id="totalRegCategRege">-</p>
@@ -148,45 +146,12 @@
 
               </div>
 
-              <section class="row mt-4">
+              <section class="mt-4">
+                <div class="card card-body h-full">
+                  <h1 class="font-bold uppercase text-[#000]">% Of Taxpayers Registered(By Category)</h1>
 
-                <div class="col-md-6">
-                  <div class="card card-body h-full">
-                    <h1 class="font-bold uppercase text-[#000]">% Of Taxpayers Registered(By Category)</h1>
-
-                    <div id="dashbordChart" class="theChart"></div>
-                  </div>
+                  <div id="dashbordChart" class="theChart"></div>
                 </div>
-
-                <div class="col-md-6">
-                  <div class="card card-body h-full">
-                    <h1 class="font-bold uppercase text-[#000]">My Activity Report</h1>
-
-                    <table class="table">
-                      <thead>
-                        <th>Date and time</th>
-                        <th>Description</th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>14/02/2023 4:05pm</td>
-                          <td>Logged Out</td>
-                        </tr>
-                        <tr>
-                          <td>14/02/2023 4:05pm</td>
-                          <td>Edited Tax payer Information</td>
-                        </tr>
-                        <tr>
-                          <td>14/02/2023 4:05pm</td>
-                          <td>Register new Tax payer</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-
-                  </div>
-                </div>
-
               </section>
 
               <section class="mt-4">
@@ -214,7 +179,7 @@
                     <tbody id="showTaxPayers">
 
 
-                      
+
 
                     </tbody>
                   </table>
@@ -301,6 +266,8 @@
   <script src="./assets/vendor/js/bootstrap.js"></script>
   <script src="./assets/vendor/libs/echarts/echarts.js"></script>
   <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>

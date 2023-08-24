@@ -10,10 +10,10 @@ let THE_SESSION = localStorage.getItem("userDataPrime")
 let heeaderr = ""
 heeaderr += `
   <a href="index.html" class="flex gap-2 items-center">
-  <div class="w-[80px] h-[50px]">
+  <div class="w-[40px] h-[40px]">
     <img src="./assets/img/logo.png" class="" />
   </div>
-  <p class="text-black fontBold">Pay Zamfara</p>
+  <p class="text-black fontBold">Pay Ibom</p>
   </a>
 `
 if (THE_SESSION) {
@@ -1108,7 +1108,7 @@ if (stateSelect2) {
     let selectedState = $(this).val()
 
     let arrStates = Object.values(lgaList2)
-    let finalarrState = arrStates[stateSelect2.selectedIndex - 1]
+    let finalarrState = arrStates[stateSelect2.selectedIndex]
 
     lgaSelect2.innerHTML = ''
 

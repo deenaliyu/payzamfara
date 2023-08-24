@@ -74,7 +74,7 @@
 
           <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
+              <p class="text-sm text-black">Date: <span class="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
             </div>
 
@@ -117,39 +117,31 @@
                       placeholder="John Doe" />
                   </div>
 
-                  <div class="form-group mb-4  w-full">
-                    <label class="mb-2">ID Number *</label>
-                    <input class="form-control suppInput tin" data-name="tin"
-                      placeholder="123456789-1111" />
+                  <div class="form-group mb-4 w-full">
+                    <label class="mb-2">Email *</label>
+                    <input class="form-control suppInput email" type="email" required data-name="email"
+                      placeholder="Enter your Email" />
                   </div>
+
                 </div>
                 <div class="flex items-center space-x-2">
-                <div class="form-group mb-4 w-full">
-                  <label class="mb-2">Email *</label>
-                  <input class="form-control suppInput email" type="email" required data-name="email"
-                    placeholder="Enter your Email" />
+                  <div class="form-group mb-4 w-full">
+                    <label class="mb-2">Subject *</label>
+                    <input class="form-control suppInput" required type="text" data-name="subject"
+                      placeholder="Subject" />
+                  </div>
+
+                  <div class="form-group mb-4 w-6/12">
+                    <label class="mb-2">Category *</label>
+                    <select class="form-select suppInput" required data-name="category">
+                      <option class="Biometric">Biometric</option>
+                      <option class="Gislocation">Gis Location</option>
+                      <option class="Profilepicture">Profile Picture</option>
+                      <option class="Downloadprint">Download/Print</option>
+
+                    </select>
+                  </div>
                 </div>
-
-                <div class="form-group mb-4 w-full">
-                  <label class="mb-2">Subject *</label>
-                  <input class="form-control suppInput" required type="text" data-name="subject"
-                    placeholder="Subject" />
-                </div>
-</div>
-                <div class="form-group mb-4 w-6/12">
-                  <label class="mb-2">Category *</label>
-                  <select class="form-select suppInput" required data-name="category">
-                    <option class="Biometric">Biometric</option>
-                    <option class="Gislocation">Gis Location</option>
-                    <option class="Profilepicture">Profile Picture</option>
-                    <option class="Downloadprint">Download/Print</option>
-                    
-                  </select>
-                </div>
-
-               
-
-
 
 
                 <textarea id="textarea" class="mt-4" data-name="content"></textarea>
@@ -165,10 +157,6 @@
                   </div>
                 </div>
 
-                <div class="mt-3">
-                  <p class="text-gray-500">Message  *</p>
-                  <textarea  class="mt-2 w-full border border-gray-200 p-3 rounded-lg" data-name="message"></textarea>
-                </div>
                 <div class="flex justify-end">
                   <button class="button mt-3" id="Submitcomplain">Submit</button>
                   <div id="msg_box"></div>
@@ -220,7 +208,7 @@
     let theAtivo = document.querySelector(`.daso`)
     theAtivo.parentElement.classList.add("active")
   </script>
-  <!-- <script src="./assets/js/complain.js"></script> -->
+  <script src="./assets/js/complain.js"></script>
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->

@@ -1,2 +1,2 @@
-mda_id,fullname,amount,category
-name of the mda of the revenue head,,,revenue head category
+mda_id,fullname,frequency,amount,category
+name of the mda of the revenue head,revenue_head name,its frequency,amont,revenue head category

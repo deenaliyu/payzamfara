@@ -1,34 +1,105 @@
-let userInfo = JSON.parse(localStorage.getItem("userDataPrime"))
+let userInfo = JSON.parse(localStorage.getItem("userDataPrime"));
+// console.log(userInfo);
+let tax_numberP = userInfo.tax_number;
 
-async function getTaxes() {
-  const response = await fetch(`${HOST}?getAllRevenueHeads`)
-  const revenueHeads = await response.json()
+async function getApplicableTaxes() {
+  const response = await fetch(
+    `${HOST}?getApplicableTaxes&tax_number=${tax_numberP}`
+  );
+  const revenueHeads = await response.json();
 
-  console.log(revenueHeads)
-  $("#loaderr").remove()
-  let ii = 0
-  revenueHeads.message.forEach((revenuehead, i) => {
-    if (revenuehead.COL_5 === userInfo.category) {
-      ii++
-      $("#showTaxes").append(`
-        <tr>
-          <td>
-            <input class="form-check-input taxChecks" type="checkbox" value="" onchange="checkTax(this)">
-          </td>
-          <td>${ii}</td>
-          <td>${revenuehead["COL_4"]}</td>
-          <td>Monthly</td>
-          <td>${revenuehead["COL_6"]}</td>
-          <td><button class="button text-sm" onclick="generateInv(${revenuehead.id})">Generate Invoice</button></td>
-        </tr>
-      `)
+  // console.log(revenueHeads);
+  $("#loaderr").remove();
+  for (const item of revenueHeads) {
+
+    let aa = ""
+
+    aa += `
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${item.business_type_id}" aria-expanded="true" aria-controls="collapseOne">
+          ${item.business_type}
+      </button>
+    </h2>
+     <div id="collapse${item.business_type_id}" class="accordion-collapse collapse mee" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+     <div class="accordion-body">
+     <div class="table-responsive mt-4">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <td></th>
+                        <td>Description</th>
+                        <td>Frequency</th>
+                        <td>Amount</th>
+                        <td></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+    `
+
+    for(const key in item) {
+
+      if(item[key].id) {
+        let i = key
+        aa += `
+
+                      <tr>
+                       <td><input class="form-check-input taxChecks" data-theidd="${item[key].id}" type="checkbox" value="" onchange="checkTax(this)"></td>
+                       <td>${item[key].COL_4}</td>
+                       <td>Monthly</td>
+                       <td>${item[key].COL_6}</td>
+                       <td><button class="button text-sm" onclick="generateInv(${item[key].id})">Generate Invoice</button></td>
+                       </tr>
+      `
+      }else{
+        aa += `
+
+       
+`
+      }
+      
     }
-  });
-  {/* <td>
+    
+
+    aa +=`
+    </tbody>
+    </table>
+  </div>
+
+</div>
+      </div>
+      </div>
+    `
+
+    $(".apt").append(aa)
+  }
+}
+
+getApplicableTaxes().then((res) => {
+  // $("#dataTable3").DataTable({
+  //   'processing': true,
+  //   'paging': false,
+  //   'serverSide': false,
+  // });
+  // $("#dataTable3").DataTable();
+});
+
+// console.log(tax_numberP)
+async function getTaxes() {
+  const response = await fetch(`${HOST}?getAllRevenueHeads`);
+  const revenueHeads = await response.json();
+
+  // console.log(revenueHeads)
+  $("#loaderr").remove();
+  let ii = 0;
+
+  {
+    /* <td>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="">
           </div>
-        </td> */}
+        </td> */
+  }
   revenueHeads.message.forEach((revenuehead, i) => {
     $("#showAllTaxes").append(`
       <tr>
@@ -47,60 +118,147 @@ async function getTaxes() {
               <iconify-icon icon="iwwa:option-horizontal" style="font-size: 24px"></iconify-icon>
             </button>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-              <button class="dropdown-item" onclick="generateInv(${revenuehead.id})">Generate Invoice</button>
+              <button class="dropdown-item" onclick="generateInv(${
+                revenuehead.id
+              })">Generate Invoice</button>
             </div>
           </div>
         </td>
       </tr>
-    `)
-  })
-
+    `);
+  });
 }
 
-getTaxes().then(res => {
-  $("#dataTable").DataTable();
+getTaxes().then((res) => {
+  $("#dataTable").DataTable({
+    processing: true,
+    paging: false,
+    serverSide: false,
+  });
   $("#dataTable2").DataTable();
-})
+});
+
+async function getPresumptiveTaxes() {
+  const response = await fetch(
+    `${HOST}?getPresumptiveTaxId&tax_number=${tax_numberP}`
+  );
+  const revenueHeads = await response.json();
+
+  console.log(revenueHeads);
+
+  $("#loaderr").remove();
+  for (const item of revenueHeads) {
+
+    let aa = ""
+
+    for(const key in item) {
+console.log(item[key].id);
+      if(item[key].id) {
+        aa += `
+
+                      <tr>
+         <td></td>
+       <td>${item[key].id}</td>
+      <td>${item[key].business_type}</td>
+      <td>${item.category}</td>
+      <td>${item[key].frequency}</td>
+      <td>${item[key].minimum}</td>
+      <td>
+        <div class="dropdown">
+          <button class="flex gap-1 align-items-center" type="button" id="filtermda"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <iconify-icon icon="iwwa:option-horizontal" style="font-size: 24px"></iconify-icon>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
+            <button class="dropdown-item" onclick="generateInv(${item[key].id})">Generate Invoice</button>
+          </div>
+        </div>
+      </td>
+      `
+      }
+      
+    }
+    
+
+    $("#showPresumptiveTax").append(aa)
+  }
+  // if (revenueHeads.status === 1) {
+  //   $("#showPresumptiveTax").append(`
+  //   <tr>
+  //     <td></td>
+  //      <td>${revenueHeads.message.id}</td>
+  //     <td>${revenueHeads.message.business_type}</td>
+  //     <td>${revenueHeads.message.category}</td>
+  //     <td>${revenueHeads.message.frequency}</td>
+  //     <td>${revenueHeads.message.minimum}</td>
+  //     <td>
+  //       <div class="dropdown">
+  //         <button class="flex gap-1 align-items-center" type="button" id="filtermda"
+  //           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  //           <iconify-icon icon="iwwa:option-horizontal" style="font-size: 24px"></iconify-icon>
+  //         </button>
+  //         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
+  //           <button class="dropdown-item" onclick="generateInv(${revenueHeads.message.id})">Generate Invoice</button>
+  //         </div>
+  //       </div>
+  //     </td>
+  //   </tr>
+  // `);
+  // } else {
+  //   $("#showPresumptiveTax").append(`
+  //   <td>No Presumtive Taxes</td>
+  //   `);
+  // }
+}
+
+getPresumptiveTaxes().then((res) => {
+  $("#dataTable3").DataTable({
+    processing: true,
+    paging: false,
+    serverSide: false,
+  });
+  $("#dataTable3").DataTable();
+});
 
 function generateInv(revid) {
-  let taxNumber = userInfo.tax_number
+  let taxNumber = userInfo.tax_number;
 
   Swal.fire({
-    title: 'Generating Invoice',
-    icon: 'info',
+    title: "Generating Invoice",
+    icon: "info",
     backdrop: true,
     allowOutsideClick: false,
     showCancelButton: true,
-    confirmButtonText: 'Generate Invoice',
+    confirmButtonText: "Generate Invoice",
     showLoaderOnConfirm: true,
     preConfirm: async () => {
       try {
-        const response = await fetch(`${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${revid}`)
+        const response = await fetch(
+          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${revid}`
+        );
         if (!response.ok) {
-          throw new Error(response.statusText)
+          throw new Error(response.statusText);
         }
-        return await response.json()
+        return await response.json();
       } catch (error) {
-        Swal.showValidationMessage(
-          `Request failed: ${error}`
-        )
+        Swal.showValidationMessage(`Request failed: ${error}`);
       }
     },
-    allowOutsideClick: () => !Swal.isLoading()
+    allowOutsideClick: () => !Swal.isLoading(),
   }).then((result) => {
-    console.log(result.value)
+    console.log(result.value);
     if (result.isConfirmed) {
       Swal.fire({
         icon: "success",
         title: `Invoice Generated successfully !`,
-        confirmButtonText: 'Open Invoice',
+        confirmButtonText: "Open Invoice",
       }).then((result3) => {
         if (result.isConfirmed) {
-          window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`
+          window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
         }
-      })
+      });
     }
-  })
+  });
 
   // $.ajax({
   //   type: "GET",
@@ -109,7 +267,6 @@ function generateInv(revid) {
   //   success: function (data) {
   //     console.log(data)
   //     if (data.status === 2) {
-
 
   //     } else if (data.status === 1) {
   //       $("#generating_inv").removeClass("hidden")
@@ -131,7 +288,6 @@ function generateInv(revid) {
   //         }
   //       })
 
-
   //     }
   //   },
   //   error: function (request, error) {
@@ -144,17 +300,30 @@ function generateInv(revid) {
   // });
 }
 
+// let theTaxs = []
 function checkTax(input) {
-  let selectedCheck = document.querySelector(".taxChecks:checked")
+  let selectedCheck = document.querySelector(".taxChecks:checked");
   if (selectedCheck) {
-    // showButton 
-    $("#genInv").removeClass("hidden")
+    // showButton
+    $("#genInv").removeClass("hidden");
   } else {
     // hideButton
-    $("#genInv").addClass("hidden")
+    $("#genInv").addClass("hidden");
   }
 }
 
 $("#genInv").on("click", function () {
-  window.location.href = "../multipleinvoice.html?invnumber=7426359108&load=true"
-})
+  let allSelected = document.querySelectorAll(".taxChecks");
+
+  // let  = document.querySelectorAll(".")
+  let theArray = [];
+  allSelected.forEach((slt) => {
+    if (slt.checked) {
+      theArray.push(slt.dataset.theidd);
+      // console.log(slt)
+    }
+  });
+  // console.log()
+
+  generateInv(theArray.join(","));
+});

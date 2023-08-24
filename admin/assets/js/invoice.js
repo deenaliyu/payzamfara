@@ -1,108 +1,108 @@
 function convertNumberToWords(number) {
-    const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-    const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-    const teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  
-    if (number === 0) {
-      return 'zero';
-    }
-  
-    if (number < 0) {
-      return 'minus ' + convertNumberToWords(Math.abs(number));
-    }
-  
-    let words = '';
-  
-    if (Math.floor(number / 1000000) > 0) {
-      words += convertNumberToWords(Math.floor(number / 1000000)) + ' million ';
-      number %= 1000000;
-    }
-  
-    if (Math.floor(number / 1000) > 0) {
-      words += convertNumberToWords(Math.floor(number / 1000)) + ' thousand ';
-      number %= 1000;
-    }
-  
-    if (Math.floor(number / 100) > 0) {
-      words += convertNumberToWords(Math.floor(number / 100)) + ' hundred ';
-      number %= 100;
-    }
-  
-    if (number > 0) {
-      if (words !== '') {
-        words += 'and ';
-      }
-  
-      if (number < 10) {
-        words += ones[number];
-      } else if (number < 20) {
-        words += teens[number - 11];
-      } else {
-        words += tens[Math.floor(number / 10)];
-        if (number % 10 > 0) {
-          words += '-' + ones[number % 10];
-        }
-      }
-    }
-  
-    return words.trim();
+  const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+  if (number === 0) {
+    return 'zero';
   }
-  
-  function editoo() {
-    let theBal = $(".theBal").text();
-  
-    $(".showEorAp").html(`
+
+  if (number < 0) {
+    return 'minus ' + convertNumberToWords(Math.abs(number));
+  }
+
+  let words = '';
+
+  if (Math.floor(number / 1000000) > 0) {
+    words += convertNumberToWords(Math.floor(number / 1000000)) + ' million ';
+    number %= 1000000;
+  }
+
+  if (Math.floor(number / 1000) > 0) {
+    words += convertNumberToWords(Math.floor(number / 1000)) + ' thousand ';
+    number %= 1000;
+  }
+
+  if (Math.floor(number / 100) > 0) {
+    words += convertNumberToWords(Math.floor(number / 100)) + ' hundred ';
+    number %= 100;
+  }
+
+  if (number > 0) {
+    if (words !== '') {
+      words += 'and ';
+    }
+
+    if (number < 10) {
+      words += ones[number];
+    } else if (number < 20) {
+      words += teens[number - 11];
+    } else {
+      words += tens[Math.floor(number / 10)];
+      if (number % 10 > 0) {
+        words += '-' + ones[number % 10];
+      }
+    }
+  }
+
+  return words.trim();
+}
+
+function editoo() {
+  let theBal = $(".theBal").text();
+
+  $(".showEorAp").html(`
       <button class="textPrimary gap-2 flex items-center" id="applyBtn">
         <i class="fas fa-check"></i>
         <span>Apply</span>
       </button>
     `);
-  
-    $("#showBal").html(`
+
+  $("#showBal").html(`
         <input type="number" id="inpBal" class="p-[5px] outline-none w-[100px] rounded-lg border border-gray-500" value="${theBal}" />
       `);
-  
-    $("#applyBtn").on("click", function () {
-      $(".showEorAp").html(`
+
+  $("#applyBtn").on("click", function () {
+    $(".showEorAp").html(`
           <button class="textPrimary gap-2 flex items-center" id="editBtn">
             <i class="fas fa-pen"></i>
             <span>Edit</span>
           </button>
         `);
-      $("#editBtn").on("click", function () {
-        editoo();
-      });
-      let theFBal = $("#inpBal").val();
-  
-      $("#showBal").html(`
+    $("#editBtn").on("click", function () {
+      editoo();
+    });
+    let theFBal = $("#inpBal").val();
+
+    $("#showBal").html(`
           &#8358; <span class="theBal">${theFBal}</span>
         `);
-      $("#amword").html(convertNumberToWords(theFBal))
-      $("#balancing").html("N" + (theBal - theFBal))
-      $("#balancing").removeClass("hidden")
-      $("#balancingBB").removeClass("hidden")
-    });
-  }
-  
-  async function openInvoice(invoicenum) {
-    console.log(invoicenum)
-  
-    const response = await fetch(
-      `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-    );
-    const userInvoices = await response.json();
-    console.log(userInvoices);
-  
-    if (userInvoices.status === 1) {
-  
-      userInvoices.message.forEach((invoice_info, i) => {
-        // let address = ""
-        // if (user_session) {
-        //   address = `${user_session.lga}, ${user_session.state}, Nigeria`
-        // } else {
-        //   address = "Akwa Ibom, Nigeria"
-        // }
-        $("#invoiceCard").html(`
+    $("#amword").html(convertNumberToWords(theFBal))
+    $("#balancing").html("N" + (theBal - theFBal))
+    $("#balancing").removeClass("hidden")
+    $("#balancingBB").removeClass("hidden")
+  });
+}
+
+async function openInvoice(invoicenum) {
+  console.log(invoicenum)
+
+  const response = await fetch(
+    `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+  );
+  const userInvoices = await response.json();
+  console.log(userInvoices);
+
+  if (userInvoices.status === 1) {
+
+    userInvoices.message.forEach((invoice_info, i) => {
+      // let address = ""
+      // if (user_session) {
+      //   address = `${user_session.lga}, ${user_session.state}, Nigeria`
+      // } else {
+      //   address = "Akwa Ibom, Nigeria"
+      // }
+      $("#invoiceCard").html(`
             <div class="invoicetop"></div>
   
             <div class="flex px-6 pt-3 items-center justify-between">
@@ -219,10 +219,10 @@ function convertNumberToWords(number) {
               <div class="flex items-center justify-center">
                 <img src="./assets/img/akwaimage.png" alt="">
                 <div>
-                  <p class="text-xl fontBold pb-0">Pay Zamfara</p>
+                  <p class="text-xl fontBold pb-0">Pay Ibom</p>
                   <div class="flex items-center gap-x-3 flex-wrap">
-                    <p class="text-sm text-[#6F6F84]">www.payzamfara.ng</p>
-                    <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
+                    <p class="text-sm text-[#6F6F84]">www.akwaibompay.ng</p>
+                    <p class="text-sm text-[#6F6F84]">Info@akwaibompay.com</p>
                     <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
                     <img src="./assets/img/logo1.png" class="h-[30px] w-[50px]" alt="">
                   </div>
@@ -231,24 +231,24 @@ function convertNumberToWords(number) {
   
             </div>
         `)
-  
-      })
-  
-      $("#editBtn").on("click", function () {
-        editoo();
-      });
-    } else {
-      $("#invoiceCard").html(`Invalid Invoice, or expired invoice`)
-    }
+
+    })
+
+    $("#editBtn").on("click", function () {
+      editoo();
+    });
+  } else {
+    $("#invoiceCard").html(`Invalid Invoice, or expired invoice`)
   }
-  
-  
-  
-  let urlParams = new URLSearchParams(window.location.search);
-  const load = urlParams.get('load')
-  const invoicenumber = urlParams.get('invnumber')
-  
+}
 
-    openInvoice(invoicenumber)
 
-  
+
+let urlParams = new URLSearchParams(window.location.search);
+const load = urlParams.get('load')
+const invoicenumber = urlParams.get('invnumber')
+
+
+openInvoice(invoicenumber)
+
+

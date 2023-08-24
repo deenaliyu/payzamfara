@@ -1,21 +1,18 @@
-let USER_SESSION = localStorage.getItem("MDAINFO")
-  let finalUSER_SESSION = JSON.parse(USER_SESSION)
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  // let mdaID = finalUSER_SESSION.fullname;
-  // const mdaId = urlParams.get('id');
-// const mdaName = urlParams.get('name');
+let USER_SESSION = localStorage.getItem("mdaDataPrime")
 
-// const mdaId = urlParams.get('id');
-// const mdn = urlParams.get('name');
-  let ALLREV = ""
+let finalUSER_SESSION = JSON.parse(USER_SESSION)
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+let ALLREV = ""
+let THEMDAINFO = JSON.parse(localStorage.getItem("MDAINFO"))
 
 async function fetchRevenueHeads() {
 
-  const response = await fetch(`${HOST}/?getMDAsRevenueHeads&mdaName=AKIRS`)
+  const response = await fetch(`${HOST}/?getMDAsRevenueHeads&mdName=${THEMDAINFO.fullname}`)
   const revenues = await response.json();
 
-  // console.log(revenues);
+  console.log(revenues);
 
   $("#loader").remove()
 
@@ -26,8 +23,8 @@ async function fetchRevenueHeads() {
   } else {
 
 
-    revenues.message.forEach((revenueHead, i) => {
-      console.log(revenues)
+    revenues.message.reverse().forEach((revenueHead, i) => {
+      // console.log(revenues)
       $("#showPayment").append(`
       <tr>
         <td>${i + 1}</td>
@@ -40,8 +37,8 @@ async function fetchRevenueHeads() {
         
 
         <td>
-        <div class="bg-orange-200 rounded-2xl py-1 px-3">
-          <p class="text-[orange]">Pending</p>
+        <div class="bg-green-200 rounded-2xl py-1 px-3">
+          <p class=${revenueHead.status == 'approved' ? 'text-[green]' : 'text-[orange]'}>${revenueHead.status}</p>
         </div>
       </td>
       
@@ -77,15 +74,6 @@ async function fetchRevenueHeads() {
 }
 
 fetchRevenueHeads();
-//  fetchRevenueHeads().then(res => {
-//   $('#dataTable').DataTable();
-
-
-
-
-// })
-
-
 
 $("#createRevenue").on("click", () => {
 
@@ -97,17 +85,30 @@ $("#createRevenue").on("click", () => {
   $("#createRevenue").addClass("hidden")
 
   let allInputs = document.querySelectorAll(".revInput")
+  let categInputs = document.querySelectorAll(".form-check-input")
+
   let obj = {
     "endpoint": "createMDArHead",
     data: {
-      mda_id: 'AKIRS',
+      mda_id: THEMDAINFO.fullname,
       "economicCode": "045RF",
       "adminCode": "22",
+      "date": "",
+      "category": ""
     }
   }
   allInputs.forEach(allInput => {
     obj.data[allInput.dataset.name] = allInput.value
   })
+
+  let categga = []
+  categInputs.forEach(catego => {
+    if (catego.checked) {
+      categga.push(catego.value)
+    }
+  })
+  obj.data["category"] = categga.join(",")
+
   let stringedOBJ = JSON.stringify(obj)
   console.log(stringedOBJ)
 
@@ -118,23 +119,29 @@ $("#createRevenue").on("click", () => {
     data: stringedOBJ,
     success: function (data) {
       console.log(data)
-      if (data.status === 2) {
-        $("#msg_box").html(`
-          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#createRevenue").removeClass("hidden")
+      $("#msg_box").html("")
 
-      } else if (data.status === 1) {
-        $("#msg_box").html(`
-          <p class="text-success text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#createRevenue").removeClass("hidden")
-        setTimeout(() => {
-          $('#createRevenueHead').modal('hide');
-          window.location.reload()
-        }, 1000);
+      for (const key in data) {
+        const element = data[key];
+
+        if (element.status === 1) {
+          $("#msg_box").append(`
+            <p class="text-success text-center mt-4 text-lg">${key}: ${element.message}</p>
+          `)
+        } else {
+          $("#msg_box").append(`
+            <p class="text-warning text-center mt-4 text-lg">${key}: ${element.message}</p>
+          `)
+        }
+
 
       }
+      // $("#createRevenue").removeClass("hidden")
+      setTimeout(() => {
+        $('#createRevenueHead').modal('hide');
+        window.location.reload()
+      }, 1000);
+
     },
     error: function (request, error) {
       $("#msg_box").html(`
@@ -204,12 +211,13 @@ function editRevFunc(e) {
   console.log(editaID)
   sessionStorage.setItem("revUpdate", editaID)
 
-  let theREV = ALLREV.message.filter(dd => dd.id === editaID)[0]
-
+  let theREV = ALLREV.message.find(dd => dd.id === editaID)
+  console.log(theREV)
   let allInputss = document.querySelectorAll(".revInput2")
-  allInputss[0].value = theREV["COL_4"]
-  allInputss[1].value = theREV["COL_5"]
-  allInputss[2].value = theREV["COL_6"]
+  allInputss.forEach(inn => {
+    inn.value = theREV[inn.dataset.name]
+  })
+
 }
 
 // edit revenue data

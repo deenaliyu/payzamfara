@@ -34,7 +34,6 @@
   <link rel="stylesheet" href="./assets/css/style.css" />
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
   <script src="https://cdn.tiny.cloud/1/a2nnryhuz1r1qtqf4ap5nkr1msakmeqobebopr1d2o3nfx1h/tinymce/6/tinymce.min.js"
     referrerpolicy="origin"></script>
 
@@ -77,13 +76,6 @@
               </h1>
             </div>
 
-            <div class="mt-4 flex gap-x-2">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31" />
-              </div>
-            </div>
 
             <a href="./complain.html">
               <button
@@ -91,19 +83,12 @@
                 Register a complaint
               </button></a>
 
-            <div class="mt-4 flex flex-row gap-2">
-              <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
-                class="hidden md:flex cursor-pointer text-[#005826]"
-                style="font-size: 3vh; margin-top: 1.2vh"></iconify-icon>
-            </div>
             <a class="mt-4 flex flex-row gap-2" href="./profile.html">
               <div class="">
                 <img src="./assets/img/avatars/1.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle" />
               </div>
 
-              <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]">
-                Ministry of Agriculture
-              </div>
+              <div class="md:mt-[1vh] text-black text-[2vh] md:text-[2.3vh]" id="mdName">-</div>
             </a>
           </div>
         </nav>
@@ -117,28 +102,79 @@
             <div class="card px-4">
               <h1 class="text-2xl text-[#282828] fontBold mt-4">Support</h1>
               <hr class="text-[#F4F4F4] my-3">
-              <div class="table-responsive p-3">
 
-                <table class="table theTable" id="dataTable">
-                  <thead>
-                    <th class="fontBold text-sm text-gray-500">S/N</th>
-                    <th class="fontBold text-gray-500">Name of User</th>
-                    <th class="fontBold text-gray-500">Email</th>
-                    <th class="fontBold text-gray-500">Subject</th>
-                    <th class="fontBold text-gray-500">Ticket Number</th>
-                    <th class="fontBold text-gray-500">Date sent</th>
-                    <th class="fontBold text-gray-500">Status</th>
-                    <th class="fontBold text-gray-500"></th>
-                  </thead>
-                  <tbody id="showThem">
+              <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2" id="pills-tab" role="tablist">
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#userTicket" type="button"
+                    role="tab">
+                    Users Ticket
+                  </button>
+                </li>
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#mdasTicket" type="button" role="tab">
+                    MDAs Ticket
+                  </button>
+                </li>
 
-                  </tbody>
-                </table>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="userTicket" role="tabpanel">
+
+                  <div class="table-responsive p-3">
+
+                    <table class="table theTable" id="dataTable">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">S/N</th>
+                        <th class="fontBold text-gray-500">Name of User</th>
+                        <th class="fontBold text-gray-500">Email</th>
+                        <th class="fontBold text-gray-500">Subject</th>
+                        <th class="fontBold text-gray-500">Ticket Number</th>
+                        <th class="fontBold text-gray-500">Date sent</th>
+                        <th class="fontBold text-gray-500">Status</th>
+                        <th class="fontBold text-gray-500"></th>
+                      </thead>
+                      <tbody id="showThem">
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="flex justify-center items-center mt-4" id="loader">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                  </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="mdasTicket" role="tabpanel">
+
+                  <div class="table-responsive p-3">
+
+                    <table class="table theTable" id="dataTable2">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">S/N</th>
+                        <th class="fontBold text-gray-500">Name of User</th>
+                        <th class="fontBold text-gray-500">Email</th>
+                        <th class="fontBold text-gray-500">Subject</th>
+                        <th class="fontBold text-gray-500">Ticket Number</th>
+                        <th class="fontBold text-gray-500">Date sent</th>
+                        <th class="fontBold text-gray-500">Status</th>
+                        <th class="fontBold text-gray-500"></th>
+                      </thead>
+                      <tbody id="showThem2">
+
+                      </tbody>
+                    </table>
+
+                  </div>
+
+
+                </div>
 
               </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-              </div>
+
+
             </div>
 
 
@@ -167,7 +203,7 @@
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/session.js"></script>
   <!-- endbuild -->
   <script>

@@ -22,7 +22,7 @@
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <!-- <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" /> -->
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
@@ -113,6 +113,7 @@
 
 
                     <form action="">
+
                       <div class="row md:w-[800px]">
                         <div class="col mb-3">
                           <label for="defaultSelect" class="form-label">Name of User <span
@@ -121,6 +122,7 @@
                             placeholder="Enter Full Name.." />
                         </div>
                       </div>
+
                       <div class="row md:w-[800px]">
                         <div class="col mb-3">
                           <label for="defaultSelect" class="form-label">Email Address <span
@@ -130,6 +132,7 @@
                         </div>
                         <span id="emailValid"></span>
                       </div>
+
                       <div class="row md:w-[800px]">
                         <div class="col mb-3">
                           <label for="defaultSelect" class="form-label">Phone Number <span
@@ -139,172 +142,163 @@
                         </div>
                       </div>
 
-                      <div class="mt-3 md:w-[800px]">
-                        <p class="text-[#555555]">Access Level</p>
-                        <div class="grid grid-cols-4 gap-3 mt-3 flex-wrap">
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="material-symbols:dashboard"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Dashboard</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="dashboard_access" value="0"
-                                  id="flacces">
-                                <label class="form-check-label text-[#005826]" for="flacces">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="dashboard_access" type="radio" value="1"
-                                  id="vlaccess">
-                                <label class="form-check-label text-[#005826]" for="vlaccess">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="uil:analytics"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Analytics</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="mt-3">
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="analytics_access" value="0"
-                                    id="flacces2">
-                                  <label class="form-check-label text-[#005826]" for="flacces2">Full Access</label>
-                                </div>
-                                <div class="form-check">
-                                  <input class="form-check-input" name="analytics_access" type="radio" value="1"
-                                    id="vlaccess2">
-                                  <label class="form-check-label text-[#005826]" for="vlaccess2">View only</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="mdi:building"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">MDAs</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mda_access" value="0" id="flacces3">
-                                <label class="form-check-label text-[#005826]" for="flacces3">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="mda_access" type="radio" value="1" id="vlaccess3">
-                                <label class="form-check-label text-[#005826]" for="vlaccess3">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="mdi:report-bell-curve-cumulative"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Reports</p>
-                            </div>
-
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="reports_access" value="0"
-                                  id="flacces4">
-                                <label class="form-check-label text-[#005826]" for="flacces4">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="reports_access" type="radio" value="1"
-                                  id="vlaccess4">
-                                <label class="form-check-label text-[#005826]" for="vlaccess4">View only</label>
-                              </div>
-                            </div>
-
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="mdi:account-payment-outline"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Tax Payer</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="tax_payer_access" value="0"
-                                  id="flacces5">
-                                <label class="form-check-label text-[#005826]" for="flacces5">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="tax_payer_access" type="radio" value="1"
-                                  id="vlaccess5">
-                                <label class="form-check-label text-[#005826]" for="vlaccess5">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="mdi:user-group"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Users</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="users_access" value="0"
-                                  id="flacces6">
-                                <label class="form-check-label text-[#005826]" for="flacces6">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="users_access" type="radio" value="1"
-                                  id="vlaccess6">
-                                <label class="form-check-label text-[#005826]" for="vlaccess6">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="material-symbols:upload-file-rounded"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">CMS</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="cms_access" value="0" id="flacces7">
-                                <label class="form-check-label text-[#005826]" for="flacces7">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="cms_access" type="radio" value="1" id="vlaccess7">
-                                <label class="form-check-label text-[#005826]" for="vlaccess7">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="">
-                            <div class="border border-[#005826] flex align-items-center md:w-[148px] rounded-xl p-1">
-                              <iconify-icon icon="teenyicons:headset-solid"
-                                class="menu-icon text-[#005826] text-[30px]"></iconify-icon>
-                              <p class="text-[#005826] text-[16px]">Support</p>
-                            </div>
-                            <div class="mt-3">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="support" value="0" id="flacces8">
-                                <label class="form-check-label text-[#005826]" for="flacces8">Full Access</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" name="support" type="radio" value="1" id="vlaccess8">
-                                <label class="form-check-label text-[#005826]" for="vlaccess8">View only</label>
-                              </div>
-                            </div>
-                          </div>
-
+                      <div class="row md:w-[800px]">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label">Role<span class="text-[red]">*</span></label>
+                          <select required class="form-select userInputs" data-name="role">
+                            <option value="Support Admin">Support Admin</option>
+                            <option value="Admin">Admin</option>
+                          </select>
                         </div>
                       </div>
 
+                      <div class="mt-3 md:w-[800px]">
+                        <p class="text-[#555555] mb-4">Access Level</p>
+
+                        <div class="row gy-4">
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="">Dashboard</label>
+                              <div class="checkbox-group">
+                                <label><input type="checkbox" class="userInputsSel" data-name="dashboard_access" value="full"> Full Access</label>
+                                <label><input type="checkbox" class="userInputsSel" data-name="dashboard_access" value="no_access"> No Access</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Analytics</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="analytics_access" value="view_revenue"> View Revenue Performance</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="analytics_access" value="view_invoice"> View Invoice Manager</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="analytics_access" value="view_taxpayer"> View Taxpayer Relations</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="analytics_access" value="view_tin"> View TIN requests manager</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="analytics_access" value="view_impressions"> View Impressions</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- MDAs Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">MDAs</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="view_mda"> View MDA list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="create_mda"> Create MDA</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="activate_mda"> Activate/Deactivate MDA</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="create_revenue"> Create revenue head</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="update_revenue"> Update revenue head</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="approve_revenue"> Approve revenue head</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="mda_access" value="activate_revenue"> Activate/Deactivate revenue head</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Reports Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Reports</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="view_inv_list"> View Invoice list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="generate_inv_report"> Generate Invoice Report</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="view_coll_list"> View Collection list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="generate_coll_report"> Generate Collection Report</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="view_settle_list"> View Settlement list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="reports_access" value="generate_settle_report"> Generate Settlement Report</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Tax Payers Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Tax Payers</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="tax_payer_access" value="view_tax_list"> View Tax Payer list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="tax_payer_access" value="view_tax_detail"> Edit Tax Payer details</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="tax_payer_access" value="acti_taxpayer"> Activate/deactivate Taxpayer</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="tax_payer_access" value="allocate_appli"> Allocate applicable taxes</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="tax_payer_access" value="download_report"> Download report</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Enumeration Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Enumeration</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="enumeration_access" value="reg_user"> Register new user</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="enumeration_access" value="view_enum_list"> View the general enumeration list</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="enumeration_access" value="updt_taxpayer"> Update taxpayer details</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="enumeration_access" value="download_report"> Download report</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="enumeration_access" value="access_enum"> Access Enumeration dashboard</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Audit Trails Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Audit Trails</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="audit_trail_access" value="view_audit"> View the audit trail module</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="audit_trail_access" value="analyze_audit"> Analyze audit logs (by use of filters and maneuvering the data)</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="audit_trail_access" value="generate_reports"> Generate reports</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="audit_trail_access" value="manage_logs"> Manage Logs</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- User Management Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">User Management</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="users_access" value="view_admin"> View Admin User List</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="users_access" value="create_new_user"> Create a new user and Assign a Role</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="users_access" value="update_user"> Update user role</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="users_access" value="activate_users"> Activate/deactivate users</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- CMS Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">CMS</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="cms_access" value="create_gallery"> Create a new post - Gallery</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="cms_access" value="create_news"> Create a new post - News</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="cms_access" value="manage_publication_gallery"> Manage publication - Gallery</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="cms_access" value="manage_publication_news"> Manage publication - News</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Support Access -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Support</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="support" value="view_support"> View support Module</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="support" value="respond_ticket"> Respond to tickets</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="support" value="escalate_issues"> Escalate issues</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="support" value="export_support"> Export support data</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input" data-name="support" value="generate_report"> Generate report</label>
+                              </div>
+                            </div>
+                          </div>
+                          
+
+                        </div>
+
+                      </div>
+
                       <div class="flex justify-center mt-4">
-                        <button id="createUser" class="btn btn-primary rounded-xl mt-2 w-4/12">Create
+                        <button id="createUser" style="background: #005826;" type="button" class="btn btn-primary rounded-xl mt-2 w-4/12">Create
                           User</button>
                       </div>
 
@@ -333,54 +327,6 @@
 
   <!-- / Layout wrapper -->
 
-  <div class="modal fade" id="notiModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Notifications</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
-        <div class="modal-body relative">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your TIN has been verified</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your complaint has been answered</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is due</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
@@ -393,11 +339,13 @@
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/vendor/js/menu.js"></script>
   <script>
-    
+
   </script>
   <script src="assets/js/users.js"></script>
   <script src="./assets/js/main.js"></script>

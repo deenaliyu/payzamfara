@@ -22,10 +22,10 @@
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <!-- <link rel="stylesheet" href="assets/ve" /> -->
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
-
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
   <!-- Core CSS -->
   <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
@@ -71,15 +71,13 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
+              <p class="text-sm text-black datei" id="datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Users</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5">
               <div class="flex items-center gap-x-5" id="userAccessor">
-
-
-                
+                <a href="createuser.html" class="button">Create new User</a>
               </div>
 
 
@@ -105,25 +103,24 @@
 
                   <h1 class="fontBold text-xl">Admin Users</h1>
                   <div class="card-body card mt-4">
-                    <table class="table table-sm">
-                      <thead>
-                        <tr>
-                          <th>S/N</th>
-                          <th>Name</th>
-                          <th>Last Login</th>
-                          <th>Email</th>
-                          <th>Contact</th>
-                          <th>Date Created</th>
-                          <!-- <th>Created by</th> -->
-                          <!-- <th>Date Activated</th> -->
-                          <!-- <th>Access Level</th> -->
-                          <th>Manage</th>
-                        </tr>
-                      </thead>
-                      <tbody class="table-border-bottom-0" id="showUsers">
 
-                      </tbody>
-                    </table>
+                    <div class="table-responsive">
+                      <table class="table table-sm userTable" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Last Login</th>
+                            <th>Email</th>
+                            <th>Manage</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0" id="showUsers">
+
+                        </tbody>
+                      </table>
+                    </div>
 
                   </div>
 
@@ -203,14 +200,17 @@
   <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/nav.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="./assets/js/accessLevel.js"></script>
+  
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="assets/js/users.js"></script>
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script>
     let theAtivo = document.querySelector(".mdoc")
     theAtivo.parentElement.classList.add("active")

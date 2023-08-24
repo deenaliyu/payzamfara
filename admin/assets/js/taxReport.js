@@ -1,18 +1,13 @@
 let adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"))
 
 let ALLTaxP = ""
+let numberOfAll = 0
+let numberOfAll2 = 0
+
 async function fetchTaxPayers() {
   $("#showreport").html("")
   $("#loader").css("display", "flex")
 
-  let config = {
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "*"
-    }
-  }
   const response = await fetch(`${HOST}/?getTaxPayer`)
   const taxPayers = await response.json()
   ALLTaxP = taxPayers
@@ -23,7 +18,12 @@ async function fetchTaxPayers() {
   if (taxPayers.status === 0) {
     $("#showreport").html("<tr></tr>")
     $('#dataTable').DataTable();
+
+    $("#selfRegis").html(0)
+    numberOfAll = 0
   } else {
+    $("#selfRegis").html(taxPayers.message.length)
+    numberOfAll = taxPayers.message.length
     taxPayers.message.reverse().forEach((taxPayer, i) => {
       let theimg = taxPayer.img
       if (theimg === "") {
@@ -54,7 +54,7 @@ async function fetchTaxPayers() {
         <td>${taxPayer.first_name} ${taxPayer.surname}</td>
         <td>${taxPayer.category}</td>
         <td>${taxPayer.tin}</td>
-        <td>${taxPayer.phone}</td>
+        <td>${taxPayer.email}</td>
       `
       if (taxPayer.tin_status === "Unverified") {
         showRe += `
@@ -72,20 +72,15 @@ async function fetchTaxPayers() {
           <td>
           <div class="flex items-center gap-3">
        `
-      if (adminInfo2.tax_payer_access === "view") {
-
-      } else {
-        showRe += `
-          <button data-theid="${taxPayer.id}" onclick="editThis(this)" class="EditUser"><iconify-icon
-          icon="material-symbols:edit-square-outline"></iconify-icon></button>
-        `
-      }
-
       showRe += `
-      <a href="./taxpayerlist.html?id=${taxPayer.id}" class="btn btn-primary btn-sm viewUser" >View</a>
-          </div >
+        <button data-theid="${taxPayer.id}" onclick="editThis(this)" data-usertype="payer_user" class="EditUser txView"><iconify-icon
+        icon="material-symbols:edit-square-outline"></iconify-icon></button>
+      `
+      showRe += `
+      <a href="./taxpayerlist.html?id=${taxPayer.id}" class="btn btn-primary btn-sm viewUser txView">View</a>
+          </div>
       
-        </tr >
+        </tr>
         `
 
       $("#showreport").append(showRe)
@@ -99,7 +94,64 @@ async function fetchTaxPayers() {
 
 }
 
-fetchTaxPayers()
+fetchTaxPayers().then(ee => {
+  $("#registered").html(numberOfAll + numberOfAll2)
+})
+
+async function fetchEnutaxP() {
+  $("#showreport2").html("")
+  const response = await fetch(`${HOST}/?getEnumerationTaxPayer`)
+  const taxPayers = await response.json()
+
+
+  if (taxPayers.status === 0) {
+    $('#dataTable2').DataTable();
+    $("#enumRegs").html(0)
+
+  } else {
+    $("#enumRegs").html(taxPayers.message.length)
+    numberOfAll2 = taxPayers.message.length
+    taxPayers.message.reverse().forEach((txpayer, i) => {
+      $("#showreport2").append(`
+        <tr>
+          <td>${i + 1}</td>
+          <td>
+            <img src="${txpayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
+          </td>
+          <td><a class="text-primary" href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true">${txpayer.tax_number}</a></td>
+          <td>${txpayer.first_name} ${txpayer.last_name}</td>
+          <td>${txpayer.email}</td>
+          <td>${txpayer.account_type}</td>
+          <td>${txpayer.fullname}</td>
+          <td>${txpayer.tin}</td>
+          <td>
+          ${txpayer.tin_status === "Verified" ? `
+           <div class="badge bg-success">${txpayer.tin_status}</div>
+          ` : `
+            <div class="badge bg-danger">${txpayer.tin_status}</div>
+          `}
+            
+          </td>
+          <td>${txpayer.timeIn.split(" ")[0]}</td>
+          <td>
+            <div class="flex gap-3 items-center">
+              <button data-theid="${txpayer.id}" onclick="editThis(this)" data-usertype="enumerator_tax_payers" class="txView EditUser"><iconify-icon
+              icon="material-symbols:edit-square-outline"></iconify-icon></button>
+
+                <a href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true" class="btn txView btn-primary btn-sm viewUser">View</a>
+            </div>
+          </td>
+          </tr>
+      `)
+    });
+
+  }
+
+}
+
+fetchEnutaxP().then(dd => {
+  $('#dataTable2').DataTable();
+})
 
 
 $("#Individual").on('click', () => {
@@ -152,12 +204,15 @@ $("#Corporate").on('click', () => {
 
 
 // id=1&status=0&UpdateTaxPayersTINStatus
+let userType = ""
 
 function editThis(e) {
   let theid = e.dataset.theid
   sessionStorage.setItem("editID", theid)
 
   $("#editMod").modal("show")
+  console.log(e.dataset.usertype)
+  userType = e.dataset.usertype
 }
 
 $("#updateStatus").on("click", function (e) {
@@ -165,9 +220,9 @@ $("#updateStatus").on("click", function (e) {
 
   let theeiidd = sessionStorage.getItem("editID")
   $("#msg_box").html(`
-        < div class="flex justify-center items-center mt-4" >
+        <div class="flex justify-center items-center mt-4">
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div >
+    </div>
         `)
   $("#updateStatus").addClass("hidden")
   let stts = $("#selectInput").val()
@@ -175,7 +230,7 @@ $("#updateStatus").on("click", function (e) {
   console.log()
   $.ajax({
     type: "GET",
-    url: `${HOST} /?UpdateTaxPayersTINStatus&id=${theeiidd}&status=${stts}`,
+    url: `${HOST}?UpdateTaxPayersTINStatus&id=${theeiidd}&status=${stts}&userType=${userType}`,
     dataType: 'json',
     // data: StringedData,
     success: function (data) {
@@ -187,9 +242,11 @@ $("#updateStatus").on("click", function (e) {
         `)
 
         setTimeout(() => {
+          $("#updateStatus").removeClass("hidden")
           $("#editMod").modal("hide")
-          fetchTaxPayers()
-          // window.location.reload()
+          // $("#msg_box").html(``)
+          // fetchTaxPayers()
+          window.location.reload()
         }, 1000);
       }
     },
