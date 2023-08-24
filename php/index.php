@@ -15,14 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $username = (string) $_GET['email'];
     $password = (string) $_GET['password'];
     loginAdmin($username, $password);
+  } elseif (isset($_GET['enumerator_users_login'])) {
+    $username = (string) $_GET['email'];
+    $password = (string) $_GET['password'];
+    enumerator_users_login($username, $password);
   } elseif (isset($_GET['loginMda'])) {
     $username = (string) $_GET['email'];
     $password = (string) $_GET['password'];
     loginMda($username, $password);
   } elseif (isset($_GET['getMDAs'])) {
     getMDAs();
+  } elseif (isset($_GET['getEnumerationAgent'])) {
+    getEnumerationAgent($_GET['id']);
   } elseif (isset($_GET['getAllRevenueHeads'])) {
     getRevenueHead();
+  } elseif (isset($_GET['getEnumerationAgentDashboard'])) {
+    getEnumerationAgentDashboard();
+  } elseif (isset($_GET['getEnumerationSpecificAgentDashboard'])) {
+    getEnumerationSpecificAgentDashboard();
+  } elseif (isset($_GET['getEnumerationCategoryDashboard'])) {
+    getEnumerationCategoryDashboard();
   } elseif (isset($_GET['getMDAsRevenueHeads'])) {
     getMDAsRevenueHead($_GET['mdName']);
   } elseif (isset($_GET['getMDAsRevenueHeadId'])) {
@@ -68,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } elseif (isset($_GET['userInvoices'])) {
     userInvoices($_GET['payer_id']);
   } elseif (isset($_GET['sendSMS'])) {
-    sendSMS($_GET['number'], $_GET['message']);
+    sendSMS($_GET['number'], $_GET['msg']);
   } elseif (isset($_GET['getSingleInvoice'])) {
     userInvoiceSingle($_GET['invoiceNumber']);
   } elseif (isset($_GET['getDashboardAnalytics'])) {
@@ -152,7 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   getAllTinRequest();
   // print_r($data['data']);
 }elseif (isset($_GET['getActivityLogs'])) {
-  getActivityLogs($_GET['userId']);
+  getActivityLogs($_GET['userId'], $_GET['user_category']);
+  // print_r($data['data']);
+}elseif (isset($_GET['getAllActivityLogs'])) {
+  getAllActivityLogs();
   // print_r($data['data']);
 }elseif (isset($_GET['getTaxFilingByUser'])) {
   getTaxFilingByUser($_GET['id']);
@@ -168,6 +183,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // print_r($data['data']);
 }elseif (isset($_GET['getSupportByMdaId'])) {
   getSupportByMdaId($_GET['mda_id']);
+  // print_r($data['data']);
+}elseif (isset($_GET['getSupportByEnumId'])) {
+  getSupportByEnumId($_GET['id']);
   // print_r($data['data']);
 }elseif (isset($_GET['getSupportById'])) {
   getSupportById($_GET['id']);
@@ -208,15 +226,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }elseif (isset($_GET['updateRevenueHeadStatus'])) {
   approveRevenueHead($_GET['id']);
 }elseif (isset($_GET['getRevenueHeadByStatus'])) {
-  getMDAsRevenueHeadByStatus($_GET['status']);
+  getMDAsRevenueHeadByStatus($_GET);
 }elseif (isset($_GET['getEnumUser'])) {
   getEnumerators();
 }elseif (isset($_GET['getEnumerationTaxPayer'])) {
   getEnumerationTaxPayer();
-}
-
-//Enumeration
-
+}elseif (isset($_GET['getEnumerationTaxPayerById'])) {
+  getEnumerationUserId($_GET['id']);
+}elseif (isset($_GET['getMDAById'])) {
+  getMDAById($_GET['id']);
+}elseif (isset($_GET['getOffice'])) {
+  getOffice($_GET['office_type']);
+}elseif (isset($_GET['getPaymentByMda'])) {
+  getPaymentByMdaName($_GET['mda_name']);
+}elseif (isset($_GET['changePasswordEnum'])) {
+  changePasswordEnumerator($_GET);
+  // print_r($data['data']);
+}elseif (isset($_GET['sendEmailEnum'])) {
+    verifyEmailEnum($_GET['id']);
+  } elseif (isset($_GET['activateAcountEnum'])) {
+    UpdateAccountStatusEnum($_GET);
+  } elseif (isset($_GET['smsVerifyEnum'])) {
+    verifySmsEnum($_GET);
+  } elseif (isset($_GET['smsUpdateAccountEnum'])) {
+    UpdateAccountStatusSmsEnum($_GET);
+  }elseif (isset($_GET['getcashPayment'])) {
+    getcashPayment($_GET['mda_id']);
+  }elseif (isset($_GET['getInvoiceByMda'])) {
+    getInvoiceByMdaName($_GET['mda_name']);
+  }elseif (isset($_GET['getMDALGAPerformance'])) {
+    getMDALGAPerformance($_GET);
+  }elseif (isset($_GET['getMDAPerformance'])) {
+    getMDAPerformance($_GET);
+  }elseif (isset($_GET['getAdminRoles'])) {
+    getRolesAdmin($_GET['id']);
+  }elseif (isset($_GET['getMdaRoles'])) {
+    getMdaRoles($_GET['id']);
+  }elseif (isset($_GET['getTotalUserLogins'])) {
+    getTotalUserLogins();
+  }elseif (isset($_GET['getTotalUserActivity'])) {
+    getTotalUserActivity();
+  }elseif (isset($_GET['getPresumptiveTax'])) {
+    getPresumptiveTax();
+  }elseif (isset($_GET['getPresumptiveTaxId'])) {
+    getPresumptiveTaxId($_GET['tax_number']);
+  }elseif (isset($_GET['getTotalUserError'])) {
+    getTotalUserError();
+  }
 
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -283,7 +339,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       createEnumerator($data['data']);
     } elseif ($data['endpoint'] == "createEnumTaxPayer") {
     //   print_r($data['data']);
-      createEnumerationTax($data);
+      createEnumerationTax($data['data']);
+    }elseif ($data['endpoint'] == "createOffices") {
+      //   print_r($data['data']);
+      createOffice($data['data']);
+      } elseif ($data['endpoint'] == "updatePixEnum") {
+      updatePixEnum($data['data']);
+    }elseif ($data['endpoint'] == "createCashPayment") {
+      // print_r($data['data']);
+      createCashPayment($data['data']);
     }
   }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -307,4 +371,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
   }
 }
- 
