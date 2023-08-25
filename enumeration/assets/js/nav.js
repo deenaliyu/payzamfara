@@ -1,7 +1,5 @@
-// let HOST = "http://localhost:8080/primeGuage/php/index.php"
-// let HOST = "https://steamledge.com/primeguage/php/index.php";
-// let HOST = "http://localhost/primeguagenew/php/index.php";
-let HOST = "https://useibs.com/php/index.php";
+
+let HOST = "https://payzamfara.com/php/index.php";
 
 $(".aside").html(`
 <div class="app-brand demo">
