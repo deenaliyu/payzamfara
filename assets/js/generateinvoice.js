@@ -92,81 +92,154 @@ async function fetchRevHeads(categ) {
   }
 }
 let userInfo = JSON.parse(localStorage.getItem("userDataPrime"));
-console.log(userInfo)
+// console.log(userInfo)
 function continuePage() {
   let genInv = document.querySelectorAll(".firstDiv .genInv")
 
   let theVal = document.querySelector(".selCateg").value
-  if (theVal === "2") {
+  if(userInfo === null){
+    if (theVal === "2") {
 
-    $("#theName").html(`
+      $("#theName").html(`
+        <div class="form-group w-full">
+          <label for="">First name *</label>
+          <input type="text" class="form-control payInputs" required data-name="first_name"
+            placeholder="" value="">
+        </div>
+  
+        <div class="form-group w-full">
+          <label for="">Surname *</label>
+          <input type="text" class="form-control payInputs" required data-name="surname"
+          placeholder="" value="">
+        </div>
+      `)
+    } else if (theVal === "1") {
+      $("#theName").html(`
+        <div class="form-group w-full">
+          <label for="">Company Name *</label>
+          <input type="text" class="form-control payInputs" required data-name="first_name"
+          placeholder="" value="">
+        </div>
+  
+        <div class="form-group w-full hidden">
+          <label for="">Surname *</label>
+          <input type="text" class="form-control payInputs" value="&nbsp;" required data-name="surname"
+          placeholder="" value="">
+        </div>
+      `)
+    } else if (theVal === "3" || theVal === "4") {
+      $("#theName").html(`
       <div class="form-group w-full">
-        <label for="">First name *</label>
+        <label for="">Name of Agency *</label>
         <input type="text" class="form-control payInputs" required data-name="first_name"
-          placeholder="${userInfo.first_name}" value="${userInfo.first_name}">
+        placeholder="" value="">
       </div>
-
-      <div class="form-group w-full">
+  
+      <div class="form-group w-full hidden">
         <label for="">Surname *</label>
-        <input type="text" class="form-control payInputs" required data-name="surname"
-        placeholder="${userInfo.surname}" value="${userInfo.surname}">
+        <input type="text" class="form-control payInputs" value="&nbsp;" required data-name="surname"
+        placeholder="" value="">
       </div>
     `)
-  } else if (theVal === "1") {
-    $("#theName").html(`
+    } else {
+  
+    }
+  
+    $("#theEmail").html(`
+    <div class="form-group w-full">
+    <label for="">Email *</label>
+    <input type="text" class="form-control payInputs" required data-name="email"
+    placeholder="Enter your Email Address" value="
+  
+  <div class="form-group w-full">
+    <label for="">Phone number *</label>
+    <input type="number" class="form-control payInputs" minlength="11" maxlength="11" required
+      data-name="phone" placeholder="Your 11-digits phone number" value="">
+  </div>
+    `)
+  
+    $("#theTin").html(`
+    <label for="">TIN (Optional)</label>
+    <input type="text" class="form-control payInputs" id="tin" data-name="tin" placeholder="Enter your TIN" value="">
+    `)
+  
+    $("#theLga").html(`
+    <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
+    placeholder=" Enter your address" value="">
+    `)
+  }else{
+    if (theVal === "2") {
+
+      $("#theName").html(`
+        <div class="form-group w-full">
+          <label for="">First name *</label>
+          <input type="text" class="form-control payInputs" required data-name="first_name"
+            placeholder="${userInfo.first_name}" value="${userInfo.first_name}">
+        </div>
+  
+        <div class="form-group w-full">
+          <label for="">Surname *</label>
+          <input type="text" class="form-control payInputs" required data-name="surname"
+          placeholder="${userInfo.surname}" value="${userInfo.surname}">
+        </div>
+      `)
+    } else if (theVal === "1") {
+      $("#theName").html(`
+        <div class="form-group w-full">
+          <label for="">Company Name *</label>
+          <input type="text" class="form-control payInputs" required data-name="first_name"
+          placeholder="${userInfo.first_name}" value="${userInfo.first_name}">
+        </div>
+  
+        <div class="form-group w-full hidden">
+          <label for="">Surname *</label>
+          <input type="text" class="form-control payInputs" value="&nbsp;" required data-name="surname"
+          placeholder="${userInfo.surname}" value="${userInfo.surname}">
+        </div>
+      `)
+    } else if (theVal === "3" || theVal === "4") {
+      $("#theName").html(`
       <div class="form-group w-full">
-        <label for="">Company Name *</label>
+        <label for="">Name of Agency *</label>
         <input type="text" class="form-control payInputs" required data-name="first_name"
         placeholder="${userInfo.first_name}" value="${userInfo.first_name}">
       </div>
-
+  
       <div class="form-group w-full hidden">
         <label for="">Surname *</label>
         <input type="text" class="form-control payInputs" value="&nbsp;" required data-name="surname"
         placeholder="${userInfo.surname}" value="${userInfo.surname}">
       </div>
     `)
-  } else if (theVal === "3" || theVal === "4") {
-    $("#theName").html(`
+    } else {
+  
+    }
+  
+    $("#theEmail").html(`
     <div class="form-group w-full">
-      <label for="">Name of Agency *</label>
-      <input type="text" class="form-control payInputs" required data-name="first_name"
-      placeholder="${userInfo.first_name}" value="${userInfo.first_name}">
-    </div>
-
-    <div class="form-group w-full hidden">
-      <label for="">Surname *</label>
-      <input type="text" class="form-control payInputs" value="&nbsp;" required data-name="surname"
-      placeholder="${userInfo.surname}" value="${userInfo.surname}">
-    </div>
-  `)
-  } else {
-
-  }
-
-  $("#theEmail").html(`
+    <label for="">Email *</label>
+    <input type="text" class="form-control payInputs" required data-name="email"
+    placeholder="Enter your Email Address" value="${userInfo.email}">
+  </div>
+  
   <div class="form-group w-full">
-  <label for="">Email *</label>
-  <input type="text" class="form-control payInputs" required data-name="email"
-  placeholder="Enter your Email Address" value="${userInfo.email}">
-</div>
-
-<div class="form-group w-full">
-  <label for="">Phone number *</label>
-  <input type="number" class="form-control payInputs" minlength="11" maxlength="11" required
-    data-name="phone" placeholder="Your 11-digits phone number" value="${userInfo.phone}">
-</div>
-  `)
-
-  $("#theTin").html(`
-  <label for="">TIN (Optional)</label>
-  <input type="text" class="form-control payInputs" id="tin" data-name="tin" placeholder="Enter your TIN" value="${userInfo.tin}">
-  `)
-
-  $("#theLga").html(`
-  <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
-  placeholder=" Enter your address" value="${userInfo.address}">
-  `)
+    <label for="">Phone number *</label>
+    <input type="number" class="form-control payInputs" minlength="11" maxlength="11" required
+      data-name="phone" placeholder="Your 11-digits phone number" value="${userInfo.phone}">
+  </div>
+    `)
+  
+    $("#theTin").html(`
+    <label for="">TIN (Optional)</label>
+    <input type="text" class="form-control payInputs" id="tin" data-name="tin" placeholder="Enter your TIN" value="${userInfo.tin}">
+    `)
+  
+    $("#theLga").html(`
+    <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
+    placeholder=" Enter your address" value="${userInfo.address}">
+    `)
+  }
+  
 
   for (let i = 0; i < genInv.length; i++) {
     const genn = genInv[i];

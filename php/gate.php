@@ -1131,7 +1131,7 @@ function createPayerUser($data)
     } else if ($category == 4) {
         $category1 = "F";
     }
-    $tax_number = "AKW" . $category1 . "-" . generatePayerID();
+    $tax_number = "ZA" . $category1 . "-" . generatePayerID();
     $phone = $data->phone;
     $state = $data->state;
     $employment_status = $data->employment_status;
@@ -1458,7 +1458,7 @@ function generateSignleInvoice($data)
             <p>Your invoice number is $invoice_number  and this invoice expires on $due_date. </p>
             <p>Please click https://useibs.com/viewinvoice.html?load=true&invnumber=$invoice_number to make your payment.</p>
             <p>Yoursâ€™</p>
-            <p>Akwa Ibom Inland Revenue Service</p>
+            <p>ZAa Ibom Inland Revenue Service</p>
             </body></html>
             ";
             //    $message .= "<b>Contact Number : </b>".$contact."<br>";
@@ -1477,7 +1477,7 @@ function generateSignleInvoice($data)
             Your invoice number is $invoice_number  and this invoice expires on $due_date.
             Please click https://useibs.com/viewinvoice.html?load=true&invnumber=$invoice_number to make your payment.
             Yours
-            Akwa Ibom Inland Revenue Service
+            ZAa Ibom Inland Revenue Service
             ";
 
             sendSMS($destination, $msg);
@@ -1684,7 +1684,7 @@ function sendSMS($destination, $msg)
 
     $apiKey = "5Img2CELv9EZRZCHrEKHN1N7aRl28e7l1ZxYA1WykaF7wozSxeiDbkOiO0qO"; // Your BulkSMS Nigeria API key
 
-    $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=AKW-IBS&to=" . $destination . "&body=" . urlencode($msg) . "&dnd=6";
+    $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=ZA-IBS&to=" . $destination . "&body=" . urlencode($msg) . "&dnd=6";
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -2319,7 +2319,7 @@ function verifySms($data)
         $destination = $row_User_re['phone'];
         $apiKey = "5Img2CELv9EZRZCHrEKHN1N7aRl28e7l1ZxYA1WykaF7wozSxeiDbkOiO0qO"; // Your BulkSMS Nigeria API key
 
-        $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=AKW-IBS&to=" . $destination . "&body=" . urlencode($message) . "&dnd=" . $numbere;
+        $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=ZA-IBS&to=" . $destination . "&body=" . urlencode($message) . "&dnd=" . $numbere;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -2365,7 +2365,7 @@ function verifySmsEnum($data)
         $destination = $row_User_re['phone'];
         $apiKey = "5Img2CELv9EZRZCHrEKHN1N7aRl28e7l1ZxYA1WykaF7wozSxeiDbkOiO0qO"; // Your BulkSMS Nigeria API key
 
-        $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=AKW-IBS&to=" . $destination . "&body=" . urlencode($message) . "&dnd=" . $numbere;
+        $url = "https://www.bulksmsnigeria.com/api/v1/sms/create?api_token=" . $apiKey . "&from=ZA-IBS&to=" . $destination . "&body=" . urlencode($message) . "&dnd=" . $numbere;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -3820,39 +3820,22 @@ function generatePassword($length = 8) {
 
 function generateSerialCode($lga) {
     $states = [
-        "AkwaIbom" => [
-            "Abak",
-            "Eastern Obolo",
-            "Eket",
-            "Esit Eket",
-            "Essien Udim",
-            "Etim Ekpo",
-            "Etinan",
-            "Ibeno",
-            "Ibesikpo Asutan",
-            "Ibiono-Ibom",
-            "Ika",
-            "Ikono",
-            "Ikot Abasi",
-            "Ikot Ekpene",
-            "Ini",
-            "Itu",
-            "Mbo",
-            "Mkpat-Enin",
-            "Nsit-Atai",
-            "Nsit-Ibom",
-            "Nsit-Ubium",
-            "Obot Akara",
-            "Okobo",
-            "Onna",
-            "Oron",
-            "Oruk Anam",
-            "Udung-Uko",
-            "Ukanafun",
-            "Uruan",
-            "Urue-Offong Oruko",
-            "Uyo"
-        ]
+        "Zamfara" => [
+            "Anka",
+            "Bakura",
+            "Birnin Magaji Kiyaw",
+            "Bukkuyum",
+            "Bungudu",
+            "Gummi",
+            "Gusau",
+            "Kaura Namoda",
+            "Maradun",
+            "Maru",
+            "Shinkafi",
+            "Talata Mafara",
+            "Chafe",
+            "Zurmi"
+          ]
         // Add more states and their cities here
     ];
 
@@ -3881,7 +3864,7 @@ function createEnumerator($data)
     $lga = $data->lga;
     $address = $data->address;
     $password = generatePassword(10);
-    $agent_id = "AKW" . generatePayerID();
+    $agent_id = "ZA" . generatePayerID();
     $query_User_re = sprintf("INSERT INTO `enumerator_users`(`email`, `fullname`, `state`, `phone`, `lga`, `address`,`status`,`password`, `agent_id`)
                 VALUES ('$email', '$fullname', '$state', '$phone', '$lga', '$address','1', '$password', '$agent_id')");
     $check_exist = check_db_query_staus("SELECT `email` FROM enumerator_users WHERE `email`='{$email}'", "CHK");
@@ -3965,7 +3948,7 @@ function createEnumerationTax($data1)
         } else if ($account_type == 3) {
             $category1 = "P";
         } 
-        $payer_id = "AKW" . $category1 . "-" . generatePayerID();
+        $payer_id = "ZA" . $category1 . "-" . generatePayerID();
         $verification = encripted_data($email . "Â£" . "2990" . "_");
         $verification_code = substr(str_shuffle(str_repeat("0123456789", 6)), 0, 6);
         // $password = generatePassword(10);
@@ -4017,7 +4000,7 @@ function createEnumerationTax($data1)
             $revenue_return = $data1[0]->revenue_return;
             $valuation = $data1[0]->valuation;
             $img = $data1[0]->img;
-            $payer_id = "AKW" . $category1 . "-" . generatePayerID();
+            $payer_id = "ZA" . $category1 . "-" . generatePayerID();
             // $password = generatePassword(10);
             $query_User_re = sprintf("INSERT INTO `enumerator_corperate_info`(`user_tax_number`, `category`, `name`, `industry`, `staff_quota`, `tin`, `email`, `state`, `lga`, `address`, `area`, `tax_category`, `business_type`, `revenue_return`, `valuation`,`img`)
                         VALUES ('$payer_id', $category','$name', '$industry', '$staff_quota', '$tin', '$email','$state', '$lga', '$address', '$area', '$tax_category', '$business_type', '$revenue_return', '$valuation','$img')");
@@ -4105,9 +4088,9 @@ function createEnumerationTax($data1)
             $area = $data1[0]->area;
             $tax_category = $data1[0]->tax_category;
             $serialCode = generateSerialCode($lga);
-            $property_id = "AKW" . $serialCode . generatePayerID();
+            $property_id = "ZA" . $serialCode . generatePayerID();
             $img = $data1[0]->img;
-            $payer_id = "AKW" . $category1 . "-" . generatePayerID();
+            $payer_id = "ZA" . $category1 . "-" . generatePayerID();
             // $password = generatePassword(10);
             $query_User_re = sprintf("INSERT INTO `enumerator_property_info`(`user_tax_number`,`property_id`,`property_file`, `property_type`, `property_area`, `latitude`, `longitude`, `state`, `lga`, `address`, `area`, `tax_category`,`img`)
                         VALUES ('$payer_id',$property_id','$property_file','$property_type', '$property_area', '$latitude', '$longitude', '$state', '$lga', '$address', '$area', '$tax_category','$img')");
