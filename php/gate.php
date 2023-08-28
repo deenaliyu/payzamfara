@@ -1,12 +1,5 @@
 <?php
 session_start();
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
-require 'phpmailer/src/Exception.php';
-require 'phpmailer/src/PHPMailer.php';
-require 'phpmailer/src/SMTP.php';
 
 function generateUniqueID() {
     // Generate a unique ID based on the current time in microseconds
@@ -1166,7 +1159,7 @@ function createPayerUser($data)
                           $user_category = "Payer User";
              $user_id = $last_id;
              $comment = "User Registration";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
                     exit(json_encode($returnResponse));
@@ -1175,7 +1168,7 @@ function createPayerUser($data)
                     $user_category = "Payer User";
              $user_id = $email;
              $comment = "User Registration Failed";
-             $session_id = $_SESSION['session_id'];
+             $session_id ="0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
                     exit(json_encode($returnResponse));
@@ -1191,7 +1184,7 @@ function createPayerUser($data)
              $user_category = "Payer User";
              $user_id = $tax_number;
              $comment = "Payer User Registration";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
             exit(json_encode($returnResponse));
@@ -1200,7 +1193,7 @@ function createPayerUser($data)
             $user_category = "Payer User";
              $user_id = $tax_number;
              $comment = "Payer User Registration Failed";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
             exit(json_encode($returnResponse));
@@ -1491,7 +1484,7 @@ function generateSignleInvoice($data)
                  $user_category = "Payer User";
              $user_id = $tax_number;
              $comment = "Invoice generated successfully";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
             } else {
@@ -1499,7 +1492,7 @@ function generateSignleInvoice($data)
                  $user_category = "Payer User";
              $user_id = $tax_number;
              $comment = "Error generating Invoice";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
             }
@@ -1542,7 +1535,7 @@ function verifyInvoice($data)
                          $user_category = "Payer User";
              $user_id = $data;
              $comment = "Verification of Invoice";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
         exit(json_encode($check_exist));
@@ -1550,7 +1543,7 @@ function verifyInvoice($data)
              $user_category = "Payer User";
              $user_id = $data;
              $comment = "Error Verifiying Invoice";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
         exit(json_encode($check_exist));
@@ -2170,7 +2163,7 @@ function verifyEmail($id)
         $user_category = "Payer User";
              $user_id = $id;
              $comment = "Payer user Email verification";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
         exit(json_encode($arr));
@@ -2179,7 +2172,7 @@ function verifyEmail($id)
         $user_category = "Payer User";
              $user_id = $id;
              $comment = "Payer user Email verification failed";
-             $session_id = $_SESSION['session_id'];
+             $session_id = "0";
              $ipAddress = $_SERVER['REMOTE_ADDR'];
              activityLogs($user_category, $user_id, $comment, $session_id, $ipAddress);
         exit(json_encode($arr));

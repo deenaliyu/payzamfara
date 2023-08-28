@@ -149,7 +149,8 @@ function continuePage() {
     <div class="form-group w-full">
     <label for="">Email *</label>
     <input type="text" class="form-control payInputs" required data-name="email"
-    placeholder="Enter your Email Address" value="
+    placeholder="Enter your Email Address" value="">
+    </div>
   
   <div class="form-group w-full">
     <label for="">Phone number *</label>

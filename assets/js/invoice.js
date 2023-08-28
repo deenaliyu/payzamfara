@@ -117,8 +117,8 @@ async function openInvoice(invoicenum) {
         </div>
 
       </div>
-      <div class="mt-2 px-6 ">
-      <img src="./assets/img/akwaimage.png" alt="">
+      <div class="mt-2 px-2 ">
+      <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
       </div>
 `
 if (userInvoices.message.length > 1) {
@@ -126,13 +126,13 @@ if (userInvoices.message.length > 1) {
       <div class="flex  justify-between px-6 mt-4">
         <div class="w-full">
           <p class="text-[#555555]">FROM :</p>
-          <p class="fontBold">Akwa Ibom Sate</p>
+          <p class="fontBold">Zamfara Sate</p>
         </div>
 
         <div class="w-full md:mr-[-10%]">
           <p class="text-[#555555]">TO :</p>
           <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
-          <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Akwa Ibom</p>
+          <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
         </div>
 
       </div>
@@ -143,13 +143,13 @@ if (userInvoices.message.length > 1) {
     <div class="w-full">
       <p class="text-[#555555]">FROM :</p>
       <p class="fontBold">${invoice_info.COL_3}</p>
-      <p class="text-[#222234] w-[60%] text-sm">Uyo, Akwa Ibom</p>
+      <p class="text-[#222234] w-[60%] text-sm">Zamfara Sate</p>
     </div>
 
     <div class="w-full md:mr-[-10%]">
       <p class="text-[#555555]">TO :</p>
       <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
-      <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Akwa Ibom</p>
+      <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
     </div>
 
   </div>
@@ -332,16 +332,20 @@ if (userInvoices.message.length > 1) {
 
       <div class="md:px-10 px-2 pb-6">
         <div class="flex items-center justify-center">
-          <img src="./assets/img/akwaimage.png" alt="">
+        <div class="">
+        <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
+        </div>
+         
           <div>
-            <p class="text-xl fontBold pb-0">Pay Ibom</p>
+            <p class="text-xl fontBold pb-0">Pay Zamfara</p>
             <div class="flex items-center gap-x-3 flex-wrap">
-              <p class="text-sm text-[#6F6F84]">www.akwaibompay.ng</p>
-              <p class="text-sm text-[#6F6F84]">Info@akwaibompay.com</p>
+              <p class="text-sm text-[#6F6F84]">www.payzamfara.com</p>
+              <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
               <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
               <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
             </div>
           </div>
+          
         </div>
 
       </div>
