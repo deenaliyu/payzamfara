@@ -73,11 +73,11 @@
 
             <div class="mt-4 flex gap-x-5 absolute right-24">
     
-              <!-- <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
+              <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
                 data-bs-target="#filterInvoice">
                 <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
                 Filter
-              </button> -->
+              </button>
               <button class="button flex gap-x-1 items-center" id="collReportd" onclick="exportData()">
                 <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                 Report</button>
@@ -140,7 +140,62 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
 
-
+  <div class="modal fade" id="filterInvoice" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header ">
+          <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Filter</h5>
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col mb-3" id="mdass">
+              <label for="defaultSelect" class="form-label">MDA</label>
+              <div class="form-group">
+                <select name="" id="getMDAs" class="form-select">
+                  <option disabled selected>--- Select MDA ---</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-0" id="the_rev">
+              <label for="defaultSelect" class="form-label">Revenue Head</label>
+              <div class="form-group">
+                <select name="" id="getMDAs" class="form-select">
+                  <option disabled selected>--- Select RevHead ---</option>
+                </select>
+              </div>
+            </div>
+            <div class="col mb-0">
+              <label for="dobLarge" class="form-label">Payment status</label>
+              <select id="defaultSelect" class="form-select">
+                <option>All</option>
+                <option value="Due">Due</option>
+                <option value="Paid">Paid</option>
+                <option value="Installment">Installment</option>
+              </select>
+            </div>
+          </div>
+          <div class="row g-2">
+            <label for="" class="mt-3">Date</label>
+            <div class="col mb-0">
+              <label for="emailLarge" class="form-label">From</label>
+              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+            </div>
+            <div class="col mb-0">
+              <label for="dobLarge" class="form-label">To</label>
+              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-prime w-full" id="filterMda">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- build:js assets/vendor/js/core.js -->
   
