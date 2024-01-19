@@ -5,13 +5,18 @@ declare(strict_types=1);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header('Content-Type: application/json');
+date_default_timezone_set('Africa/Lagos');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include 'gate.php';
   if (isset($_GET['login'])) {
     $username = (string) $_GET['email'];
     $password = (string) $_GET['password'];
     login($username, $password);
-  } elseif (isset($_GET['loginAdmin'])) {
+  }  elseif (isset($_GET['test'])) {
+    hi();
+  }  elseif (isset($_GET['invoicesPaidBeforeDue'])) {
+    invoicesPaidBeforeDue();
+  }elseif (isset($_GET['loginAdmin'])) {
     $username = (string) $_GET['email'];
     $password = (string) $_GET['password'];
     loginAdmin($username, $password);
@@ -52,13 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } elseif (isset($_GET['updateRevenueHead'])) {
     updateRevenueHead($_GET);
   } elseif (isset($_GET['generateInvoices'])) {
-    generateInvoice($_GET['taxPayerNumber']);
+    generateInvoice($_GET);
   } elseif (isset($_GET['generateSingleInvoices'])) {
     generateSignleInvoice($_GET);
   } elseif (isset($_GET['updateTaxPayer'])) {
     updateTaxPayer($_GET);
   } elseif (isset($_GET['getTaxPayer'])) {
-    getTaxPayerList($_GET);
+    getTaxPayerList();
   } elseif (isset($_GET['getSingleTaxPayer'])) {
     getSingleTaxPayerList($_GET['id']);
   } elseif (isset($_GET['fetchPayment'])) {
@@ -82,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } elseif (isset($_GET['sendSMS'])) {
     sendSMS($_GET['number'], $_GET['msg']);
   } elseif (isset($_GET['getSingleInvoice'])) {
-    userInvoiceSingle($_GET['invoiceNumber']);
+     userInvoiceSingle($_GET['invoiceNumber'], $_GET['source']);
   } elseif (isset($_GET['getDashboardAnalytics'])) {
     dashboardAnalyticsEndUser($_GET['user_id']);
   } elseif (isset($_GET['UpdateTaxPayersTINStatus'])) {
@@ -272,7 +277,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     getPresumptiveTaxId($_GET['tax_number']);
   }elseif (isset($_GET['getTotalUserError'])) {
     getTotalUserError();
+  }elseif (isset($_GET['getApplicableTaxes'])) {
+    getApplicableTaxes($_GET['tax_number']);
+  }elseif (isset($_GET['ApproveRevenueHeadStatus'])) {
+    ApproveRevenueHeadStatus($_GET['$id']);
+  }elseif (isset($_GET['dashboardAnalyticsMda'])) {
+    dashboardAnalyticsMda($_GET['id']);
+  }elseif (isset($_GET['TELLER_ID'])) {
+        if (isset($_GET['TELLER_ID'])) {
+    //   print_r($data['data']);
+        $newData = [
+            "endpoint" => "createInvidualPayment",
+            "data" => [
+                "invoice_number" => $_GET["CUSTOMER_ID"],
+                "payment_channel" => $_GET["BANK_NAME"],
+                "payment_reference_number" => $_GET["PAYMENT_CODE"],
+                "receipt_number" => $_GET["CUSTOMER_ID"],
+                "amount_paid" => (float) $_GET["TRANS_AMOUNT"]
+            ]
+        ];
+        
+        if (empty($_GET["CUSTOMER_ID"]) || empty($_GET["BANK_NAME"]) || empty($_GET["PAYMENT_CODE"]) || empty($_GET["TRANS_AMOUNT"])) {
+            // Set Transaction Status to false 3
+            // $transactionStatus = false;
+            $errorMessage = "false 3";
+            echo $errorMessage;
+        }else{
+            if (!is_numeric($_GET["TRANS_AMOUNT"])) {
+                // Set Transaction Status to false 4
+                // $transactionStatus = false;
+                $errorMessage = "false 4";
+                echo $errorMessage;
+            }else{
+                $newJsonData = json_encode($newData);
+                // echo $newJsonData;
+                $newJsonData = (array) json_decode($newJsonData);
+                $responseData = paymentToMDARevenueHeads1($newJsonData['data']);
+                // echo($responseData);
+                // Check if status is 3
+                if ($responseData && isset($responseData['status']) && $responseData['status'] === 2) {
+                    // Transform to "false 2"
+                    $transformedResult = "false 1";
+                    echo $transformedResult;
+                } elseif ($responseData && isset($responseData['status']) && $responseData['status'] === 1) {
+                    // Handle other cases or perform additional actions
+                    $transformedResult = "true";
+                    echo $transformedResult;
+                } elseif ($responseData && isset($responseData['status']) && $responseData['status'] === 0) {
+                    // Handle other cases or perform additional actions
+                    $transformedResult = "false 2";
+                    echo $transformedResult;
+                }
+            }
+
+        }
+
+        
+    }
+  }elseif (isset($_GET['getMonthlyRevenue'])) {
+    getMonthlyRevenue($_GET['sort']);
+  } elseif (isset($_GET['getYearlyRevenue'])) {
+    getYearlyRevenue($_GET['year']);
   }
+  
 
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -302,8 +369,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       createMultpleMDARevenueHeads($data['data']);
       // print_r($data['data']);
     } elseif ($data['endpoint'] == "createInvidualPayment") {
-      // print_r($data['data']);
+    //   print_r($data['data']);
       paymentToMDARevenueHeads($data['data']);
+    }elseif (isset($data['TELLER_ID'])) {
+    //   print_r($data['data']);
+        $newData = [
+            "endpoint" => "createInvidualPayment",
+            "data" => [
+                "invoice_number" => $data["CUSTOMER_ID"],
+                "payment_channel" => $data["BANK_NAME"],
+                "payment_reference_number" => $data["PAYMENT_CODE"],
+                "receipt_number" => $data["CUSTOMER_ID"],
+                "amount_paid" => (float) $data["TRANS_AMOUNT"]
+            ]
+        ];
+        
+        if (empty($data["CUSTOMER_ID"]) || empty($data["BANK_NAME"]) || empty($data["PAYMENT_CODE"]) || empty($data["TRANS_AMOUNT"])) {
+            // Set Transaction Status to false 3
+            // $transactionStatus = false;
+            $errorMessage = "false 3";
+            echo $errorMessage;
+        }else{
+            if (!is_numeric($data["TRANS_AMOUNT"])) {
+                // Set Transaction Status to false 4
+                // $transactionStatus = false;
+                $errorMessage = "false 4";
+                echo $errorMessage;
+            }else{
+                $newJsonData = json_encode($newData);
+                // echo $newJsonData;
+                $newJsonData = (array) json_decode($newJsonData);
+                $responseData = paymentToMDARevenueHeads1($newJsonData['data']);
+                // echo($responseData);
+                // Check if status is 3
+                if ($responseData && isset($responseData['status']) && $responseData['status'] === 2) {
+                    // Transform to "false 2"
+                    $transformedResult = "false 1";
+                    echo $transformedResult;
+                } elseif ($responseData && isset($responseData['status']) && $responseData['status'] === 1) {
+                    // Handle other cases or perform additional actions
+                    $transformedResult = "true";
+                    echo $transformedResult;
+                } elseif ($responseData && isset($responseData['status']) && $responseData['status'] === 0) {
+                    // Handle other cases or perform additional actions
+                    $transformedResult = "false 2";
+                    echo $transformedResult;
+                }
+            }
+
+        }
+
+        
     } elseif ($data['endpoint'] == "createPayerAccount") {
       createPayerUser($data['data']);
     }elseif ($data['endpoint'] == "chat") {

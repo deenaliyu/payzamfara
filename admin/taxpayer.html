@@ -63,30 +63,30 @@
             </a>
           </div>
 
-          <div class="navbar-nav-right relative flex items-center gap-x-5" id="navbar-collapse">
+           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Payer</h1>
+              <p class="text-sm text-black datei" id="datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Users</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5 absolute right-24">
-
-
-              <div class="flex items-center gap-2">
-                <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
+            <div class="mt-4 flex gap-x-5">
+              <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
                   onclick="tableToCSV()" id="txdReport">
 
                   <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                   Report</button>
 
-                <div class="avatar avatar-online flex gap-x-5 items-center">
-                  <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                  <p class="adminName">-</p>
-                </div>
+
+              <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
               </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
             </div>
 
           </div>
+          
+            
         </nav>
 
         <!-- / Navbar -->
@@ -109,7 +109,7 @@
                     <p class="text-[#000] text-[15px]">Registered Taxpayers</p>
                   </div>
 
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="registered">-</span></p>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4 registered">-</span></p>
                 </div>
 
                 <div class="dashCards card md:w-[180px]">
@@ -143,7 +143,7 @@
                     </div>
                     <p class="text-[#000] text-[15px]">Active users</p>
                   </div>
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">2670</span></p>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4 registered">0</span></p>
 
                 </div>
 
@@ -154,7 +154,7 @@
                     </div>
                     <p class="text-[#000] text-[15px]">Inactive users</p>
                   </div>
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">270</span></p>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">0</span></p>
 
                 </div>
 
@@ -173,7 +173,7 @@
                   </button>
                 </li>
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#enumRegs" type="button" role="tab">
+                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-enumRegs" type="button" role="tab">
                     Enumerated
                   </button>
                 </li>
@@ -189,7 +189,7 @@
                       <thead>
                         <tr class="text-center">
                           <th></th>
-                          <th>Picture</th>
+                          <!-- <th>Picture</th> -->
                           <th>Payer ID</th>
                           <th>Name of Tax payer</th>
                           <th>Category</th>
@@ -210,15 +210,13 @@
                   </div>
 
                 </div>
-
-                <div class="tab-pane fade" id="enumRegs" role="tabpanel">
-
+                <div class="tab-pane fade" id="pills-enumRegs" role="tabpanel" aria-labelledby="pills-app-tab">
                   <div class="table-responsive">
                     <table class="table txTable2" id="dataTable2">
                       <thead>
                         <tr class="text-center">
                           <th>S/N</th>
-                          <th></th>
+                          <!-- <th></th> -->
                           <th>Payer ID</th>
                           <th>Name</th>
                           <th>Email</th>
@@ -236,14 +234,13 @@
                       </tbody>
                     </table>
                   </div>
-
+                  <div class="flex justify-center items-center mt-4" id="loader1">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                  </div>
                 </div>
 
+                
               </div>
-
-
-
-
 
             </div>
 

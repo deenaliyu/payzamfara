@@ -1,5 +1,14 @@
 let userDATA = JSON.parse(localStorage.getItem("userDataPrime"))
 
+
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
+
 async function fetchMDAs() {
   let config = {
     mode: 'cors',
@@ -156,7 +165,7 @@ async function fetchInvoices() {
   // console.log(userInfo.id);
   let userID = ""
   if (userInfo) {
-    userID = userInfo.id;
+    userID = userInfo.tax_number;
   }
   $(".showInvoice").html("");
   $(".showInvoice2").html("");
@@ -187,9 +196,8 @@ async function fetchInvoices() {
         <td>${userInvoice.tax_number}</td>
         <td>${userInvoice.invoice_number}</td>
         <td>${userInvoice.COL_4}</td>
-        <td>${userInvoice.COL_6}</td>
-        <td>${userInvoice.COL_6}</td>
-        <td>${userInvoice.COL_6 - userInvoice.COL_6}</td>
+        <td>${formatMoney(parseFloat(userInvoice.amount_paid))}</td>
+        <td>${formatMoney(parseFloat(userInvoice.amount_paid))}</td>
         <td>${userInvoice["due_date"]}</td>
         <td>${userInvoice["due_date"]}</td>
         `
@@ -209,7 +217,7 @@ async function fetchInvoices() {
           <td>${userInvoice.tax_number}</td>
           <td>${userInvoice.invoice_number}</td>
           <td>${userInvoice.COL_4}</td>
-          <td>${userInvoice.COL_6}</td>
+          <td>${formatMoney(parseFloat(userInvoice.amount_paid))}</td>
           <td>${userInvoice["due_date"]}</td>
           <td>${userInvoice["due_date"]}</td>
           <td id="" class="checking">
@@ -249,7 +257,7 @@ async function fetchInvoices() {
             <td>${userInvoice.tax_number}</td>
             <td>${userInvoice.invoice_number}</td>
             <td>${userInvoice.COL_4}</td>
-            <td>${userInvoice.COL_6}</td>
+            <td>${formatMoney(parseFloat(userInvoice.amount_paid))}</td>
             <td>${userInvoice["due_date"]}</td>
             <td>${userInvoice["due_date"]}</td>
             <td id="" class="checking">

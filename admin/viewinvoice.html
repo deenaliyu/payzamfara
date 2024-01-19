@@ -62,7 +62,11 @@
           <div class="flex justify-between mt-4 gap-3">
             <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
               <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-              <span>Print Invoice</span>
+              <span>Download Invoice</span>
+            </button>
+            <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+              <span>Print Receipt</span>
             </button>
           </div>
         </div>
@@ -89,8 +93,8 @@
     AOS.init();
   </script>
   <!-- <script src="assets/js/payment.js"></script> -->
-  <script src="assets/js/viewinvoice.js"></script>
-  <script src="assets/js/invoice.js"></script>
+  <script src="assets/js/viewinvoice.js?v=1.2"></script>
+  <script src="assets/js/invoice.js?v=1.2"></script>
 </body>
 
 </html>

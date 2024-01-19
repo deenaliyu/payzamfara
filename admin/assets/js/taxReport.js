@@ -24,30 +24,31 @@ async function fetchTaxPayers() {
   } else {
     $("#selfRegis").html(taxPayers.message.length)
     numberOfAll = taxPayers.message.length
+    sessionStorage.setItem('numberOfAll', numberOfAll);
     taxPayers.message.reverse().forEach((taxPayer, i) => {
-      let theimg = taxPayer.img
-      if (theimg === "") {
-        theimg = "./assets/img/avatars/1.png"
-      }
+      // let theimg = taxPayer.img
+      // if (theimg === "") {
+      //   theimg = "./assets/img/avatars/1.png"
+      // }
       let showRe = ""
 
       showRe += `
         <tr class="relative">
           <td>${i + 1}</td>
         `
-      if (taxPayer.img === "") {
-        showRe += `   
-        <td>
-          <img src="./assets/img/avatars/1.png" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-        </td>
-        `
-      } else {
-        showRe += ` 
-        <td> 
-          <img src="${taxPayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-        </td>
-        `
-      }
+      // if (taxPayer.img === "") {
+      //   showRe += `   
+      //   <td>
+      //     <img src="./assets/img/avatars/1.png" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
+      //   </td>
+      //   `
+      // } else {
+      //   showRe += ` 
+      //   <td> 
+      //     <img src="${taxPayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
+      //   </td>
+      //   `
+      // }
 
       showRe += `
         <td><a class="text-primary" href="./taxpayerlist.html?id=${taxPayer.id}">${taxPayer.tax_number}</a></td>
@@ -95,64 +96,77 @@ async function fetchTaxPayers() {
 }
 
 fetchTaxPayers().then(ee => {
-  $("#registered").html(numberOfAll + numberOfAll2)
+ 
 })
 
 async function fetchEnutaxP() {
   $("#showreport2").html("")
+  $("#loader1").css("display", "flex")
   const response = await fetch(`${HOST}/?getEnumerationTaxPayer`)
   const taxPayers = await response.json()
 
+  $("#loader1").css("display", "none")
 
   if (taxPayers.status === 0) {
-    $('#dataTable2').DataTable();
-    $("#enumRegs").html(0)
+    $("#showreport2").html(``)
 
+    $("#enumRegs").html(0)
+    numberOfAll2 = 0
   } else {
     $("#enumRegs").html(taxPayers.message.length)
+  
     numberOfAll2 = taxPayers.message.length
+    sessionStorage.setItem('numberOfAll2', numberOfAll2);
     taxPayers.message.reverse().forEach((txpayer, i) => {
-      $("#showreport2").append(`
-        <tr>
-          <td>${i + 1}</td>
-          <td>
-            <img src="${txpayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-          </td>
-          <td><a class="text-primary" href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true">${txpayer.tax_number}</a></td>
-          <td>${txpayer.first_name} ${txpayer.last_name}</td>
-          <td>${txpayer.email}</td>
-          <td>${txpayer.account_type}</td>
-          <td>${txpayer.fullname}</td>
-          <td>${txpayer.tin}</td>
-          <td>
-          ${txpayer.tin_status === "Verified" ? `
-           <div class="badge bg-success">${txpayer.tin_status}</div>
-          ` : `
-            <div class="badge bg-danger">${txpayer.tin_status}</div>
-          `}
-            
-          </td>
-          <td>${txpayer.timeIn.split(" ")[0]}</td>
-          <td>
-            <div class="flex gap-3 items-center">
-              <button data-theid="${txpayer.id}" onclick="editThis(this)" data-usertype="enumerator_tax_payers" class="txView EditUser"><iconify-icon
-              icon="material-symbols:edit-square-outline"></iconify-icon></button>
 
-                <a href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true" class="btn txView btn-primary btn-sm viewUser">View</a>
-            </div>
-          </td>
-          </tr>
-      `)
+      let showRe1 = ""
+
+      showRe1 += `<tr>
+      <td>${i + 1}</td>
+     
+      <td><a class="text-primary" href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true">${txpayer.tax_number}</a></td>
+      <td>${txpayer.first_name} ${txpayer.last_name}</td>
+      <td>${txpayer.email}</td>
+      <td>${txpayer.account_type}</td>
+      <td>${txpayer.fullname}</td>
+      <td>${txpayer.tin}</td>
+      <td>
+      ${txpayer.tin_status === "Verified" ? `
+       <div class="badge bg-success">${txpayer.tin_status}</div>
+      ` : `
+        <div class="badge bg-danger">${txpayer.tin_status}</div>
+      `}
+        
+      </td>
+      <td>${txpayer.timeIn.split(" ")[0]}</td>
+      <td>
+        <div class="flex gap-3 items-center">
+          <button data-theid="${txpayer.id}" onclick="editThis(this)" data-usertype="enumerator_tax_payers" class="txView EditUser"><iconify-icon
+          icon="material-symbols:edit-square-outline"></iconify-icon></button>
+
+            <a href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true" class="btn txView btn-primary btn-sm viewUser">View</a>
+        </div>
+      </td>
+      </tr>`
+
+
+      $("#showreport2").append(showRe1)
     });
 
   }
 
 }
+ // <td>
+          //   <img src="${txpayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
+          // </td>
 
 fetchEnutaxP().then(dd => {
   $('#dataTable2').DataTable();
 })
 
+numberOfAll = JSON.parse(sessionStorage.getItem("numberOfAll"))
+numberOfAll2 = JSON.parse(sessionStorage.getItem("numberOfAll2"))
+$(".registered").html(numberOfAll + numberOfAll2)
 
 $("#Individual").on('click', () => {
   var input, filter, table, tr, td, i;

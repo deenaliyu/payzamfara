@@ -1,7 +1,13 @@
-
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php"
 
 let THE_SESSION = localStorage.getItem("userDataPrime")
+
+document.title="Payzamfara";
 
 
 // if (THE_SESSION) {
@@ -11,7 +17,7 @@ heeaderr += `
   <div class="w-[70px] h-[40px]">
     <img src="./assets/img/logo.png" class="" />
   </div>
-  <p class="text-black fontBold">Pay Ibom</p>
+  <p class="text-black fontBold">Pay Zamfara</p>
   </a>
 `
 if (THE_SESSION) {
@@ -23,6 +29,7 @@ if (THE_SESSION) {
         <a href="about.html">About Us</a>
         <a href="eservices.html">E-Services</a>
         <a href="offer.html">What we offer</a>
+        <a  href="taxcategory.html">tax category</a>
         <a href="howtopay.html">How to pay</a>
         <a class="button" href="./dashboard/index.html">Dashboard</a>
       </div>
@@ -38,6 +45,7 @@ if (THE_SESSION) {
         <a href="about.html">About Us</a>
         <a href="eservices.html">E-Services</a>
         <a href="offer.html">What we offer</a>
+        <a  href="taxcategory.html">tax category</a>
         <a href="howtopay.html">How to pay</a>
       </div>
 
@@ -59,6 +67,7 @@ if (THE_SESSION) {
     <a class="text-xl" href="about.html">About Us</a>
     <a class="text-xl" href="eservices.html">E-Services</a>
     <a class="text-xl" href="offer.html">What we offer</a>
+    <a class="text-xl" href="taxcategory.html">tax category</a>
     <a class="text-xl" href="howtopay.html">How to pay</a>
   </div>
 
@@ -98,6 +107,7 @@ if (THE_SESSION) {
     <a class="text-xl" href="about.html">About Us</a>
     <a class="text-xl" href="eservices.html">E-Services</a>
     <a class="text-xl" href="offer.html">What we offer</a>
+    <a class="text-xl" href="taxcategory.html">tax category</a>
     <a class="text-xl" href="howtopay.html">How to pay</a>
   </div>
 
@@ -1121,7 +1131,20 @@ if (stateSelect2) {
 
 }
 
-window.$crisp = []; window.CRISP_WEBSITE_ID = "c669b149-3ed9-4ff4-b7f2-2c76a219eee3"; (function () {
-  d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js";
-  s.async = 1; d.getElementsByTagName("head")[0].appendChild(s);
+// window.$crisp = []; window.CRISP_WEBSITE_ID = "c669b149-3ed9-4ff4-b7f2-2c76a219eee3"; (function () {
+//   d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js";
+//   s.async = 1; d.getElementsByTagName("head")[0].appendChild(s);
+// })();
+
+
+
+
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/65644e0326949f7911351576/1hg7t1ggk';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();

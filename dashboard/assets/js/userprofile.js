@@ -1066,6 +1066,10 @@ $("#updateProfile").on("click", function (e) {
   delete obj.img
   delete obj.password
 
+  let finalObj = {
+
+  }
+
   allInputs.forEach(allInput => {
     if (allInput.value === "") {
 
@@ -1198,7 +1202,9 @@ $("#updatePass").on("click", function (e) {
 
 
           setTimeout(() => {
+            localStorage.removeItem('userDataPrime');
             window.location.href = "../signin.html"
+
           }, 1000);
 
         }

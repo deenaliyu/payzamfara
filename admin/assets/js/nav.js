@@ -1,6 +1,13 @@
-
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php";
+// let HOST = "https://useibs.com/payzamfara/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
+
+document.title="Payzamfara";
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -63,13 +70,13 @@ $(".aside").html(`
 
           ${userInfo2.email === "primeguage@gmail.com" ? 
           `
-            <li class="menu-item">
+            <!--<li class="menu-item">
               <a href="settlement.html" class="menu-link">
                 <div data-i18n="Input groups">Settlement Report</div>
               </a>
-            </li>
+            </li>-->
           ` 
-          : ''}
+          : ''} 
           
           
         </ul>
@@ -167,12 +174,12 @@ async function fetchUserDetails2() {
 fetchUserDetails2()
 
 $(".footer").html(`
-<div class="flex justify-between">
+<div class="flex justify-between lg:flex-nowrap flex-wrap">
 <div class="flex items-center gap-x-3">
   <p class="text-[#1E1E1E] text-[16px]">Copyright 2023 Primegauge</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
 </div>
-<div class="flex items-center gap-x-3">
+<div class="flex items-center gap-x-3 lg:flex-nowrap flex-wrap">
   <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="material-symbols:mail-outline-rounded" width="28" height="28"></iconify-icon> Info@primegauge.com</p>
 <h4>|</h4>
   <p class="text-[#1E1E1E] text-[16px] flex items-center gap-x-3"><iconify-icon icon="ic:baseline-phone-android" width="28" height="28"></iconify-icon> 07007746348243 </p>

@@ -6,7 +6,7 @@ async function getRolesAdmin() {
   const response = await fetch(`${HOST}?getAdminRoles&id=${adminInfo.id}`);
   const userRoles = await response.json();
 
-  console.log(userRoles)
+//   console.log(userRoles)
 
   let currentPage = splitted_url[splitted_url.length - 1]
 
@@ -35,7 +35,7 @@ async function getRolesAdmin() {
     let viewMda = analyticsRoles.find(ff => ff === "view_mda")
     let create_mda = analyticsRoles.find(ff => ff === "create_mda")
 
-    console.log(analyticsRoles, viewMda)
+    // console.log(analyticsRoles, viewMda)
 
     if (viewMda === undefined) {
       $(".theTable").html(`
@@ -113,8 +113,6 @@ async function getRolesAdmin() {
     if (generate_settle_report === undefined) {
       $("#settlReportD").addClass("disabled")
     }
-
-    settlReportD
 
 
   } else if (currentPage.includes("taxpayer.html")) {

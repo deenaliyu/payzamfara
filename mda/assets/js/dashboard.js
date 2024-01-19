@@ -48,14 +48,14 @@ let totalInv = null
 
 async function getDashboardAnalyticsAdmin() {
 
-  const response = await fetch(`${HOST}/php/index.php?getDashboardAnalyticsAdmin`);
+  const response = await fetch(`${HOST}/php/index.php?dashboardAnalyticsMda&id=${mdaID}`);
   const dashboardAnalytics = await response.json();
 
   const tttt = document.getElementById("dashboardPie")
 
 
-  $("#totalRem").html("₦" + dashboardAnalytics.total_amount_paid.toLocaleString())
-  ttRem = dashboardAnalytics.total_amount_paid
+  $("#totalRem").html("₦" + dashboardAnalytics.total_amount.toLocaleString())
+  ttRem = dashboardAnalytics.total_amount
 
   var chartDom = document.getElementById('dashboardPie');
   var myChart = echarts.init(chartDom);
@@ -89,8 +89,8 @@ async function getDashboardAnalyticsAdmin() {
           show: false
         },
         data: [
-          { value: dashboardAnalytics.total_amount_invoiced, name: 'Total Amount Invoiced' },
-          { value: dashboardAnalytics.total_amount_paid, name: 'Total Amount Paid' },
+          { value: dashboardAnalytics.total_amount, name: 'Total Amount Invoiced' },
+          { value: dashboardAnalytics.total_amount, name: 'Total Amount Paid' },
           { value: dashboardAnalytics.due_invoices, name: 'Due Invoices' },
           { value: dashboardAnalytics.due_amount, name: 'Due Amount' },
         ]
@@ -146,7 +146,7 @@ async function fetchInvoicess() {
             show: false
           },
           data: [
-            { value: theMDAInv.length, name: 'Total Invoices' },
+            { value: theMDAInv.length, name: 'Total Invoice' },
             { value: ttRem, name: 'Total Remittance' }
           ]
         }

@@ -63,8 +63,13 @@
             <!-- <div class="mt-4">
               <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
             </div> -->
-            <div class="flex justify-between mt-4">
+            <div class="flex justify-between mt-4 space-x-3">
               <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('receiptCard')">
+                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                <span>Download Receipt</span>
+              </button>
+
+              <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('receiptCard')">
                 <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
                 <span>Print Receipt</span>
               </button>

@@ -1,3 +1,13 @@
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
+
+let AllInvoiceData = {}
+
 async function fetchInvoice() {
 
   $("#showThem").html("");
@@ -18,7 +28,19 @@ async function fetchInvoice() {
   console.log(userInvoices);
   $("#loader").css("display", "none");
   if (userInvoices.status === 1) {
-    userInvoices.message.reverse().forEach((userInvoice, i) => {
+    
+    AllInvoiceData =  userInvoices.message
+    
+    displayData(userInvoices.message.reverse())
+      
+  } else {
+    // $("#showInvoice").html("<tr></tr>");
+    $("#dataTable").DataTable();
+  }
+}
+
+function displayData(userInvoices) {
+    userInvoices.forEach((userInvoice, i) => {
       let addd = ""
       addd += `
         <tr class="relative">
@@ -28,10 +50,10 @@ async function fetchInvoice() {
         <td>${userInvoice.first_name} ${userInvoice.surname}</td>
         <td>${userInvoice.tax_number}</td>
         <td>${userInvoice.invoice_number}</td>
-        <td>${userInvoice.COL_6}</td>
+        <td>${formatMoney(parseFloat(userInvoice.amount_paid))}</td>
         <td>${userInvoice.payment_channel}</td>
         <td>${userInvoice.payment_reference_number}</td>
-        <td>${userInvoice.receipt_number}</td>
+        <td>${userInvoice.invoice_number}</td>
         <td>${userInvoice.timeIn}</td>
         
           `
@@ -42,11 +64,22 @@ async function fetchInvoice() {
         </tr>
         `
       $("#showThem").append(addd);
+      $("#showThem2").append(`
+        <tr class="relative">
+            <td>${i + 1}</td>
+            <td>${userInvoice.mda_id}</td>
+            <td>${userInvoice.COL_4}</td>
+            <td>${userInvoice.first_name?.replace(/,/g, '')} ${userInvoice.surname?.replace(/,/g, '')}</td>
+            <td>${userInvoice.tax_number}</td>
+            <td>${userInvoice.invoice_number}</td>
+            <td>&#8358; ${(parseFloat(userInvoice.amount_paid))}</td>
+            <td>${userInvoice.payment_channel}</td>
+            <td>${userInvoice.payment_reference_number}</td>
+            <td>${userInvoice.invoice_number}</td>
+            <td>${userInvoice.timeIn}</td>
+        </tr>
+      `)
     });
-  } else {
-    // $("#showInvoice").html("<tr></tr>");
-    $("#dataTable").DataTable();
-  }
 }
 
 fetchInvoice().then((uu) => {

@@ -293,8 +293,8 @@ async function getAnalytics() {
   try {
     let userInfo = JSON.parse(localStorage.getItem("singleUser"))
     const userTax = userInfo.tax_number;
- 
-    const response = await fetch(`${HOST}?getActivityLoge&userId=${userTax}`)
+    let cat = "Payer User";
+    const response = await fetch(`${HOST}?getActivityLogs&user_id=${userTax}&user_category=${cat}`)
     const data = await response.json()
 console.log(data)
     if (data.status === 0) {
@@ -308,6 +308,7 @@ console.log(data)
         <tr>
           <td>${notification.timeIn}</td>
           <td>${notification.comment}</td>
+          <td>${notification.ip_address}</td>
         </tr>
       `)
 

@@ -124,9 +124,63 @@ async function fetchInvoices() {
   });
 }
 
-fetchInvoices().then(rr => {
-  // $("#dataTable").DataTable();
-})
+// fetchInvoices().then(rr => {
+//   // $("#dataTable").DataTable();
+// })
+
+
+async function fetchInvoicess() {
+  const response = await fetch(
+    `${HOST}/php/index.php?AllInvoices`
+  );
+  const userInvoices = await response.json();
+    
+  if (userInvoices.status === 1) {
+    let theMDAInv = userInvoices.message.filter(inv => inv.COL_3 === userIn.fullname)
+    
+    console.log(theMDAInv)
+    
+    theMDAInv.forEach((invoice, i) => {
+      $('#totalInv').text(userInvoices.message.length);
+      // const userInvoice = paymentHistory.message[i];
+      $("#showInvoices").append(`
+              <tr>
+              <td>${i + 1}</td>
+              <td>${invoice.COL_4}</td>
+              <td>${invoice.first_name} ${invoice.surname} </td>
+              <td>${invoice.invoice_number} </td>
+               <td>&#8358 ${invoice.COL_6} </td>
+              <td>${invoice.due_date} </td>
+              <td>
+             
+              ${invoice.payment_status === 'paid' ? `<div class="bg-[#ECFDF3] rounded-2xl py-1 px-3">
+              <p class="text-[#027A48] font-bold">${invoice.payment_status}</p>
+            </div>`
+          : `<div class="bg-orange-100 rounded-2xl py-1 px-3">
+              <p class="text-[#125826] font-bold">${invoice.payment_status}</p>
+            </div>`}
+              </td>
+              
+              <td>
+              <a href="./viewinvoice.html?invnumber=${invoice.invoice_number}&load=true" target="_blank" class="btn btn-primary btn-sm viewUser" >View Invoice</a>
+            </td>
+             
+              
+             
+              </tr>
+              `);
+
+
+
+    })
+  
+  } else {
+
+  }
+}
+fetchInvoicess()
+
+
 
 
 

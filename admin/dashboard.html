@@ -74,23 +74,24 @@
             </a>
           </div>
 
-          <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5 ms-auto">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
-              </div>
+              </div> -->
 
-              <div class="avatar avatar-online flex gap-x-2 items-center">
-                <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">-</p>
+              <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
               </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
             </div>
 
           </div>
@@ -111,21 +112,17 @@
                         <div class="icoCont bg-[#1c315c1f] mr-auto">
                           <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
                         </div>
-                        <p class=" text-gray-500 text-xs impMetrics ">TOTAL MONTHLY REVENUE</p>
+                        <p class=" text-gray-500 text-xs impMetrics">TOTAL MONTHLY REVENUE</p>
                       </div>
 
 
-                      <div class="form-group w-1/2 ml-auto">
-                        <select class="form-select " required name="" id="">
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="April">April</option>
-                        </select>
-                      </div>
+                       <div class="form-group  ml-auto" style="margin-top: 52px;">
+                            <select class="form-select" id="monthlyYear" onchange="refreshTheCards2()">
+                            </select>
+                        </div>
 
                       <p class="zanumbers text-end">
-                        &#8358;<span id="total_amount_invoiced">-</span>
+                        <span id="total_amount_invoiced">-</span>
                       </p>
                     </div>
 
@@ -134,18 +131,17 @@
                         <div class="icoCont bg-[#1c315c1f] mr-auto">
                           <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
                         </div>
-                        <p class=" text-gray-500 text-xs impMetrics ">TOTAL ANNUAL REVENUE</p>
+                        <p class=" text-gray-500 text-xs impMetrics">TOTAL ANNUAL REVENUE</p>
                       </div>
 
 
-                      <div class="form-group w-1/2 ml-auto">
-                        <select class="form-select " required name="" id="">
-                          <option value="2023">2023</option>
+                       <div class="form-group w-1/2 ml-auto" style="margin-top: 52px;">
+                        <select class="form-select" id="annualYear" onchange="refreshTheCards()">
                         </select>
                       </div>
 
-                      <p class="zanumbers text-end">
-                        &#8358; <span id="total_amount_invoiced2">-</span>
+                      <p class="zanumbers text-end" >
+                        <span id="total_amount_invoiced2">-</span>
                       </p>
                     </div>
 
@@ -158,17 +154,13 @@
                       </div>
 
 
-                      <div class="form-group w-1/2 ml-auto">
-                        <select class="form-select " required name="" id="">
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="April">April</option>
-                        </select>
-                      </div>
+                        <div class="form-group  ml-auto" style="margin-top: 52px;">
+                            <select class="form-select" id="monthlyYear2" onchange="refreshTheCards3()">
+                            </select>
+                        </div>
 
                       <p class="zanumbers text-end">
-                        &#8358;<span id="due_amount">-</span>
+                        <span id="due_amount">-</span>
                       </p>
                     </div>
 
@@ -180,7 +172,7 @@
                         <p class=" text-gray-500 text-xs impMetrics">REGISTERED TAX PAYER</p>
                       </div>
 
-                      <p class="zanumbers text-end">
+                      <p class="zanumbers text-end" style="margin-top: 52px;">
                         <span id="reg_taxP">-</span>
                       </p>
                     </div>
@@ -208,7 +200,7 @@
                             TOTAL NUMBER OF INVOICE
                           </p>
                         </div>
-                        <p class="zanumbers text-end" id="total_invoices">-</p>
+                        <p class="zanumbers text-end" id="total_invoice">-</p>
                       </div>
 
                       <div class="dashCards card card-hidden w-full flex-col space-y-2">
@@ -236,7 +228,7 @@
                           </p>
                         </div>
                         <p class="zanumbers text-end">
-                          <span id="due_amoun">100</span>
+                          <span id="due_invoices">100</span>
                         </p>
                       </div>
 
@@ -250,7 +242,7 @@
                           </p>
                         </div>
                         <p class="zanumbers text-end">
-                          <span id="total_amoun">200</span>
+                          <span id="total_amount">200</span>
                         </p>
                       </div>
 
@@ -326,39 +318,14 @@
 
                   <div class="row mt-4 gap-y-6">
                     <div class="col-md-6">
-                      <div class="card h-full">
-                        <div class="border-1 p-2 flex">
-                          <h2 class="mr-auto">Tax Performance</h2>
-                          <div class="flex space-x-2">
-                            <button class=" text-[10px]  button-3">
-                              1 D
-                            </button>
-
-                            <button class=" text-[10px]  button-3">
-                              1 W
-                            </button>
-                            <button class=" text-[10px]  button-3">
-                              1 M
-                            </button>
-                          </div>
-                        </div>
-
-
-                        <div class="p-4 h-full flex justify-center items-center">
-                          <div>
-                            <div class="flex text-[#039855] items-center">
-                              <iconify-icon icon="mdi:arrow-up-thin" class="text-xl"></iconify-icon>
-                              <p class="text-xl">(+38.92%)</p>
-                            </div>
-                            <img src="./assets/img/taxperformance.png" alt="">
-                          </div>
-                        </div>
+                      <div class="card h-[350px]">
+                          <div id="Compliance" class="theChart"></div>
 
                       </div>
                     </div>
 
                     <div class="col-md-6 md:mt-0">
-                      <div class="card">
+                      <div class="card h-[350px]">
                         <div id="gauge-graph" class="theChart"></div>
 
                         <p class="text-center -mt-20 mb-2 text-black">% of number of invoices paid on time</p>
@@ -467,7 +434,7 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="assets/js/adminDash.js"></script>
+  <script src="assets/js/adminDash.js?v=1.2"></script>
   <script>
     let theAtivo = document.querySelector(`.dass`);
     theAtivo.parentElement.classList.add("active");

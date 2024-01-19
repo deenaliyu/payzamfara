@@ -137,6 +137,7 @@
                       <!-- <th>TIN</th> -->
                       <th>Invoice Number</th>
                       <th>Amount</th>
+                      <th>Date Created</th>
                       <th>Due Date</th>
                       <th>Payment Status</th>
                       <th></th>
@@ -146,6 +147,8 @@
 
                   </tbody>
                 </table>
+                
+                
               </div>
               <div class="flex justify-center items-center mt-4" id="loader">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
@@ -153,6 +156,26 @@
             </div>
 
           </div>
+          
+            <table class="table invoiceTable hidden" id="invoiceTableFull">
+              <thead>
+                <tr class="text-center">
+                  <th></th>
+                  <th>Payer ID</th>
+                  <th>MDA</th>
+                  <th>Revenue Head</th>
+                  <th>Name</th>
+                  <th>Invoice Number</th>
+                  <th>Amount</th>
+                  <th>Date Created</th>
+                  <th>Due Date</th>
+                  <th>Payment Status</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0" id="showThem2">
+
+              </tbody>
+            </table>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
 
           </section>
@@ -207,12 +230,15 @@
             aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
         </div>
         <div class="modal-body">
+          <div class="flex justify-end">
+              <button class="btn btn-primary btn-sm" onclick="clearfilter()">clear filter</button>
+          </div>
           <div class="row">
             <div class="col mb-3" id="mdass">
               <label for="defaultSelect" class="form-label">MDA</label>
               <div class="form-group">
                 <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select MDA ---</option>
+                  <option disabled selected value="">--- Select MDA ---</option>
                 </select>
               </div>
             </div>
@@ -221,18 +247,17 @@
             <div class="col mb-0" id="the_rev">
               <label for="defaultSelect" class="form-label">Revenue Head</label>
               <div class="form-group">
-                <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select RevHead ---</option>
+                <select name="" id="getRevs" class="form-select">
+                  <option disabled selected value="">--- Select RevHead ---</option>
                 </select>
               </div>
             </div>
             <div class="col mb-0">
-              <label for="dobLarge" class="form-label">Payment status</label>
-              <select id="defaultSelect" class="form-select">
-                <option>All</option>
-                <option value="Due">Due</option>
-                <option value="Paid">Paid</option>
-                <option value="Installment">Installment</option>
+              <label for="paymentStatusSelect" class="form-label">Payment status</label>
+              <select id="paymentStatusSelect" class="form-select">
+                <option value="">All</option>
+                <option value="paid">Paid</option>
+                <option value="unpaid">Un-paid</option>
               </select>
             </div>
           </div>
@@ -240,11 +265,11 @@
             <label for="" class="mt-3">Date</label>
             <div class="col mb-0">
               <label for="emailLarge" class="form-label">From</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+              <input class="form-control" type="date" value="" id="fromDateInput">
             </div>
             <div class="col mb-0">
               <label for="dobLarge" class="form-label">To</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+              <input class="form-control" type="date" value="" id="toDateInput">
             </div>
           </div>
         </div>
@@ -275,93 +300,38 @@
     theAtivo.parentElement.classList.add("active")
   </script>
   <script>
-    //     function tableToCSV() {
 
-    //  // Variable to store the final csv data
-    //  var csv_data = [];
-
-    //  // Get each row data
-    //  var rows = document.getElementsByTagName('tr');
-    //  for (var i = 0; i < rows.length; i++) {
-
-    //      // Get each column data
-    //      var cols = rows[i].querySelectorAll('td,th');
-
-    //      // Stores each csv row data
-    //      var csvrow = [];
-    //      for (var j = 0; j < cols.length; j++) {
-
-    //          // Get the text data of each cell
-    //          // of a row and push it to csvrow
-    //          csvrow.push(cols[j].textContent);
-    //      }
-
-    //      // Combine each column value with comma
-    //      csv_data.push(csvrow.join(","));
-    //  }
-
-    //  // Combine each row data with new line character
-    //  csv_data = csv_data.join('\n');
-
-    //  // Call this function to download csv file 
-    //  downloadCSVFile(csv_data);
-
-    // }
 
     function exportData() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".invoiceTable");
+        var csv = [];
+        var table = document.getElementById("invoiceTableFull");
+        
+        // Add header to CSV
+        var header = [];
+        for (var h = 0; h < table.rows[0].cells.length; h++) {
+            header.push(table.rows[0].cells[h].innerText);
+        }
+        csv.push(header.join(','));
 
-      /* Declaring array variable */
-      var rows = [];
+        // Add rows to CSV
+        for (var i = 1; i < table.rows.length; i++) {
+            var row = [], cols = table.rows[i].querySelectorAll('td, th');
 
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-        column8 = row.cells[7].innerText;
-        column9 = row.cells[8].innerText;
-        column10 = row.cells[9].innerText;
+            for (var j = 0; j < cols.length; j++) {
+                row.push(cols[j].innerText);
+            }
 
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7,
-            column8,
-            column9,
-            column10
-          ]
-        );
+            csv.push(row.join(','));
+        }
 
-      }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
-
-      /* create a hidden <a> DOM node and set its download attribute */
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Invoice.csv");
-      document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
-      link.click();
+        // Download CSV file
+        var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'invoice_report');
+        document.body.appendChild(link);
+        link.click();
     }
   </script>
 
@@ -376,8 +346,8 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->
   <script src="./assets/js/accessLevel.js"></script>
-  <script src="./assets/js/invoices.js"></script>
-  <script src="./assets/js/filterInv.js"></script>
+  <script src="./assets/js/invoices.js?v=1.4"></script>
+  <script src="./assets/js/filterInv.js?v=2.0"></script>
   <script src="./assets/js/main.js"></script>
 
   <!-- Page JS -->

@@ -1,4 +1,8 @@
-
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php"
 
 $(".aside").html(`

@@ -373,3 +373,20 @@ label {
   margin-top: 20px;
   text-align: center;
 }
+
+.crisp-client .cc-tlyw .cc-qfnu {
+  background-color: #005826 !important;
+}
+
+.crisp-client .cc-tlyw .cc-kxkl .cc-nsge .cc-imbb {
+  width: 60px!important;
+  height: 60px!important;
+  display: block!important;
+  position: absolute !important;
+  bottom: 60px !important;
+  right: 10px !important;
+  border-radius: 100%!important;
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,.05)!important;
+  transition: transform .15s ease-in-out!important;
+  background-color: #005826 !important;
+}

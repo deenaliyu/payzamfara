@@ -2,7 +2,13 @@ $("#STATES").html(STATES)
 $("#STATE").html(STATES)
 let adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"))
 
-
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
 let ALLMDA = ""
 async function fetchMDAs() {
   $("#showThem").html("")
@@ -34,7 +40,7 @@ async function fetchMDAs() {
           <td><a class="text-primary" href="./mdadetails.html?id=${MDA.id}&name=${MDA.fullname}">${MDA.fullname}</a></td>
           <td>${MDA.state}</td>
           <td>${MDA["COUNT(*)"]}</td>
-          <td>&#8358; ${(MDA.total_gen_revenue === "" ? 0 : MDA.total_gen_revenue.toLocaleString())}</td>
+          <td> ${(MDA.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(MDA.total_gen_revenue)))}</td>
           <td>${MDA.time_in}</td>
           `;
       if (MDA.status === "active") {
@@ -111,7 +117,7 @@ async function getAllRevH() {
   } else {
     let pendingRevs = revHeads.message.filter(rr => rr.status === "pending")
 
-    pendingRevs.forEach((revHd, i) => {
+    pendingRevs.reverse().forEach((revHd, i) => {
 
       $("#revHeadsShow2").append(`
         <tr class="relative">
@@ -137,7 +143,7 @@ getAllRevH()
 
 function arroveRev(e) {
   let theRevId = e.dataset.revid
-  // console.log(theRevId)
+   console.log(theRevId)
   Swal.fire({
     title: 'Request Approval',
     text: "Do you want to approve this request",
