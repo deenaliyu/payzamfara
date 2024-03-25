@@ -183,6 +183,7 @@ $("#makePayment").html(`
         <div class="flex justify-center mt-2">
           <img src="./assets/img/linebig.png" alt="">
         </div>
+<<<<<<< HEAD
     
         <div class="mt-2">
             <div class="mb-2">
@@ -216,6 +217,41 @@ $("#makePayment").html(`
             </div>
         </div>
     
+=======
+    
+        <div class="mt-2">
+            <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 1</h1>
+                <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 2</h1>
+                <p>Select your preferred payment method from the options provided.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 3</h1>
+                <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 4</h1>
+                <p>Confirm the payment amount.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 5</h1>
+                <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+              </div>
+              
+              
+              <div class="flex justify-center">
+              <button class="button w-[60%] mt-3" onclick="makePayment()">Proceed</button>
+            </div>
+        </div>
+    
+>>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
         
 
     </div>
@@ -599,7 +635,11 @@ async function openReceipt(invoicenum) {
   
             </div>
             <div class="mt-2 px-2 ">
+<<<<<<< HEAD
             <img src="./assets/img/logo.png" alt="" class="w-[70px] h-[70px]">
+=======
+            <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
+>>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
             </div>
             <div class="flex  justify-between px-6 mt-4">
               <div class="w-full">
@@ -694,11 +734,19 @@ async function openReceipt(invoicenum) {
   
             <hr class="my-4 md:mx-10 mx-4">
   
+<<<<<<< HEAD
             <div class="md:px-10 px-2 pb-6" id="invtopp">
                 <div class="flex items-center justify-center">
                 <div class="">
                     <img src="./assets/img/logo.png" alt="" class="w-[70px] h-[70px]">
                 </div>
+=======
+            <div class="md:px-10 px-2 pb-6">
+            <div class="flex items-center justify-center">
+            <div class="">
+            <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
+            </div>
+>>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
              
               <div>
                 <p class="text-xl fontBold pb-0">Pay Zamfara</p>

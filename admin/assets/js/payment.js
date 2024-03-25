@@ -167,7 +167,11 @@ async function openReceipt(invoicenumber) {
                     <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
                   </tr>
                   <tr>
+<<<<<<< HEAD
                     <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(invoice_info.amount_paid)} Only</td>
+=======
+                    <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(invoice_info.amount_paid)} Naira Only</td>
+>>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
                   </tr>
 
                 </table>

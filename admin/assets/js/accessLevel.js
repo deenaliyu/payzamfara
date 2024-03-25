@@ -6,7 +6,7 @@ async function getRolesAdmin() {
   const response = await fetch(`${HOST}?getAdminRoles&id=${adminInfo.id}`);
   const userRoles = await response.json();
 
-  console.log(userRoles)
+//   console.log(userRoles)
 
   let currentPage = splitted_url[splitted_url.length - 1]
 

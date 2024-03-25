@@ -6,6 +6,14 @@ function formatMoney(amount) {
   });
 }
 
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
+
 function sumArray(numbers) {
   return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 }

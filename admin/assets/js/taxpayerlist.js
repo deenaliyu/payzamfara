@@ -261,6 +261,7 @@ async function getAnalytics() {
         <tr>
           <td>${notification.timeIn}</td>
           <td>${notification.comment}</td>
+          <td>${notification.ip_address}</td>
         </tr>
       `);
       });

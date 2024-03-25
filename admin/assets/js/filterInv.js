@@ -86,6 +86,10 @@ async function fetchRevHeads(mdn) {
   }
 }
 
+function removeDoubleSpaces(inputText) {
+    return inputText.replace(/ {2,}/g, ' ');
+}
+
 
 async function fetchPayment() {
   let config = {
