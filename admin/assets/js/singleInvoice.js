@@ -30,10 +30,7 @@ async function fetchInvoices() {
           <td>${userInvoice.tax_number}</td>
           <td>${userInvoice.invoice_number}</td>
           <td>${userInvoice.COL_4}</td>
-          <td>${userInvoice.COL_6}</td>
-          <td>${userInvoice.COL_6}</td>
-          <td>${userInvoice.COL_6 - userInvoice.COL_6}</td>
-          <td>${userInvoice["due_date"]}</td>
+          <td>${userInvoice.amount_paid}</td>
           <td>${userInvoice["due_date"]}</td>
           `
       if (userInvoice.payment_status === "paid") {
@@ -52,8 +49,7 @@ async function fetchInvoices() {
             <td>${userInvoice.tax_number}</td>
             <td><a class="textPrimary" href="../viewinvoice.html?invnumber=${userInvoice.invoice_number}&load=true">${userInvoice.invoice_number}</a></td>
             <td>${userInvoice.COL_4}</td>
-            <td>${userInvoice.COL_6}</td>
-            <td>${userInvoice["due_date"]}</td>
+            <td>${userInvoice.amount_paid}</td>
             <td>${userInvoice["due_date"]}</td>
             <td id="" class="checking">
               <p class='text-success'>${userInvoice.payment_status}</p>
@@ -72,7 +68,7 @@ async function fetchInvoices() {
             </td>
             <td>
               <div class="flex gap-2 check-bt" id="">
-                <a href="./viewinvoice.html?invnumber=${userInvoice.invoice_number}&load=true" class="px-3 py-1 rounded-lg bgPrimary text-white block">View</a>
+                <a href="./viewinvoice.html?invnumber=${userInvoice.invoice_number}&load=true" class="px-3 py-1 rounded-lg bgPrimary text-white block">Pay</a>
               </div>
             </td>
             `
@@ -93,17 +89,14 @@ async function fetchInvoices() {
               <td>${userInvoice.tax_number}</td>
               <td>${userInvoice.invoice_number}</td>
               <td>${userInvoice.COL_4}</td>
-              <td>${userInvoice.COL_6}</td>
-              <td>${userInvoice.COL_6}</td>
-              <td>${userInvoice.COL_6 - userInvoice.COL_6}</td>
-              <td>${userInvoice["due_date"]}</td>
+              <td>${userInvoice.amount_paid}</td>
               <td>${userInvoice["due_date"]}</td>
               <td id="" class="checking">
                 <p class='text-success'>${userInvoice.payment_status}</p>
               </td>
               <td>
               <div class="flex gap-2 check-bt" id="">
-                <a class="px-3 py-1 rounded-lg bgPrimary text-white diasbled">Pay</a>
+                <a class="px-3 py-1 rounded-lg bgPrimary text-white diasbled">View</a>
               </div>
               </td>
             </tr>

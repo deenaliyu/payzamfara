@@ -32,12 +32,14 @@
   <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="./assets/css/demo.css" />
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/style.css?v=1.2">
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <script src="./assets/vendor/js/helpers.js"></script>
   <script src="./assets/js/config.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/polyfills.umd.js"></script> -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  
 
 </head>
 
@@ -94,17 +96,23 @@
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>    
 
-          <div class="container-xxl flex-grow-1 container-p-y taxes">
+          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="reportDisplay">
             <p class="font-bold text-2xl text-black">Collection report</p>
+            
             <div class="card px-2 py-4 mt-6 table-responsive">
-              <table class="table invoiceTable colet table-sm myTable collTab" id="dataTable">
+              
+              <table class="table table-sm myTable collTab" id="dataTable">
                 <thead>
                   <tr class="text-center">
                     <th></th>
                     <th>MDAS</th>
                     <th>Revenue Head</th>
                     <th>Name</th>
+                    <th>Office</th>
                     <th>TIN</th>
                     <th>Invoice Number</th>
                     <th>Amount Paid</th>
@@ -119,12 +127,37 @@
 
                 </tbody>
               </table>
+              
             </div>
+            
             <div class="flex justify-center items-center mt-4" id="loader">
               <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
             </div>
 
           </div>
+          
+           <table class="table invoiceTable hidden" id="invoiceTableFull">
+              <thead>
+                <tr class="text-center">
+                  <th></th>
+                    <th>MDAS</th>
+                    <th>Revenue Head</th>
+                    <th>Name</th>
+                    <th>Office</th>
+                    <th>TIN</th>
+                    <th>Invoice Number</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Channel</th>
+                    <th>Payment Refrence Number</th>
+                    <th>Receipt Number</th>
+                    <th>Payment Date</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0" id="showThem2">
+
+              </tbody>
+            </table>
+          
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
 
           </section>
@@ -149,56 +182,61 @@
             aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
         </div>
         <div class="modal-body">
+            
+            <div class="flex justify-end">
+              <button class="btn btn-primary btn-sm" onclick="clearfilter2()">clear filter</button>
+          </div>
           <div class="row">
             <div class="col mb-3" id="mdass">
               <label for="defaultSelect" class="form-label">MDA</label>
               <div class="form-group">
                 <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select MDA ---</option>
+                  <option disabled selected>--- All ---</option>
                 </select>
               </div>
             </div>
           </div>
+          
           <div class="row">
             <div class="col mb-0" id="the_rev">
               <label for="defaultSelect" class="form-label">Revenue Head</label>
               <div class="form-group">
                 <select name="" id="getMDAs" class="form-select">
-                  <option disabled selected>--- Select RevHead ---</option>
+                  <option disabled selected>--- All ---</option>
                 </select>
               </div>
             </div>
-            <div class="col mb-0">
-              <label for="dobLarge" class="form-label">Payment status</label>
-              <select id="defaultSelect" class="form-select">
-                <option>All</option>
-                <option value="Due">Due</option>
-                <option value="Paid">Paid</option>
-                <option value="Installment">Installment</option>
-              </select>
+             <div class="col mb-0" id="payment_channel">
+              <label for="defaultSelect" class="form-label">Payment Channel</label>
+              <div class="form-group">
+                <select name="" id="getPayment" class="form-select ">
+                  <option  selected>--- All---</option>
+                </select>
+              </div>
             </div>
+            
           </div>
+          
           <div class="row g-2">
             <label for="" class="mt-3">Date</label>
             <div class="col mb-0">
               <label for="emailLarge" class="form-label">From</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+              <input class="form-control" type="date" value="" id="fromDateInput">
             </div>
             <div class="col mb-0">
               <label for="dobLarge" class="form-label">To</label>
-              <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
+              <input class="form-control" type="date" value="" id="toDateInput">
             </div>
           </div>
+          
         </div>
         <div class="modal-footer ">
-          <button type="button" class="btn btn-prime w-full" id="filterMda">Apply</button>
+          <button type="button" class="btn btn-prime w-full" id="filterMda2">Apply</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- build:js assets/vendor/js/core.js -->
-  
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -212,93 +250,39 @@
       table.search($(this).val()).draw();
     });
   </script>
-<!-- <script>
-  function downloadTableAsPDF() {
-      // Create a new jsPDF instance
-      var doc =  new jsPDF('p', 'pt', 'letter');
 
-      // Get the table element by its ID
-      var table = document.getElementsByClassName("myTable");
-
-      // Convert the table HTML to a canvas element
-      var canvas = document.createElement("canvas");
-      canvas.width = table.offsetWidth;
-      canvas.height = table.offsetHeight;
-      var ctx = canvas.getContext("2d");
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      var tableData = table.outerHTML;
-      var tableBlob = new Blob([tableData], {type: "text/html"});
-      var tableUrl = URL.createObjectURL(tableBlob);
-      var img = new Image();
-      img.onload = function() {
-          ctx.drawImage(img, 0, 0);
-          URL.revokeObjectURL(tableUrl);
-
-          // Add the canvas image to the PDF
-          doc.addImage(canvas.toDataURL("image/jpeg"), "JPEG", 10, 10, table.offsetWidth * 0.2, table.offsetHeight * 0.2);
-
-          // Save the PDF file
-          doc.save("table.pdf");
-      };
-      img.src = tableUrl;
-  }
-  
-</script> -->
   <script>
+
+
     function exportData() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".invoiceTable");
+      var csv = [];
+      var table = document.getElementById("invoiceTableFull");
 
-      /* Declaring array variable */
-      var rows = [];
-
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-        column8 = row.cells[7].innerText;
-        column9 = row.cells[8].innerText;
-        column10 = row.cells[9].innerText;
-
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7,
-            column8,
-            column9,
-            column10
-          ]
-        );
-
+      // Add header to CSV
+      var header = [];
+      for (var h = 0; h < table.rows[0].cells.length; h++) {
+        header.push(table.rows[0].cells[h].innerText);
       }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
+      csv.push(header.join(','));
 
-      /* create a hidden <a> DOM node and set its download attribute */
+      // Add rows to CSV
+      for (var i = 1; i < table.rows.length; i++) {
+        var row = [], cols = table.rows[i].querySelectorAll('td, th');
+
+        for (var j = 0; j < cols.length; j++) {
+          row.push(cols[j].innerText);
+        }
+
+        csv.push(row.join(','));
+      }
+
+      // Download CSV file
+      var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
       var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Collection.csv");
+      var link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'payment_report');
       document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
       link.click();
     }
   </script>
@@ -309,14 +293,28 @@
     theAtivo.parentElement.classList.add("active")
   </script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="./assets/js/accessLevel.js"></script>
+  <script src="./assets/js/accessLevel.js?v=1.2"></script>
   <script src="./assets/vendor/js/menu.js"></script>
-  <script src="./assets/js/collection.js"></script>
-  <script src="./assets/js/filterInv.js"></script>
+  <script src="./assets/js/collection.js?v=1.4"></script>
+  <script src="./assets/js/filterInv.js?v=2.1"></script>
   <!-- endbuild -->
 
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#getMDAs").select2({
+        dropdownParent: $("#filterInvoice")
+      })
+      $("#listOfpayable").select2({
+        dropdownParent: $("#filterInvoice")
+      })
+      $("#listOfchannel").select2({
+        dropdownParent: $("#filterInvoice")
+      })
+    })
+  </script>
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
 

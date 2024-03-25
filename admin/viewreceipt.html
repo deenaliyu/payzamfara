@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../assets/css/responsive.css" />
   <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
   <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+  
+  <link rel="stylesheet" href="./assets/css/print.css" media="print" type="text/css">
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
   <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -34,12 +36,21 @@
     .imgTabs {
       display: none;
     }
+    .theheaders {
+      color: #fff !important;
+      background: #125826 !important;
+  }
   </style>
 </head>
 
 <body>
+    
+  <div class="invoice bg-white w-[789.921px] shadow-md py-6 hidden" id="receiptHardCopy">
 
-  <section class="flex h-[89vh] overflow-y-scroll flex justify-center ">
+
+  </div>
+
+  <section class="flex h-[100vh] overflow-y-scroll flex justify-center ">
 
 
       <section class="pb-5">
@@ -50,7 +61,11 @@
           </div>
         <div class="invoiceContainer flex justify-center mt-5 pr-10">
           <div class="invoice bg-white w-[100%] shadow-md -mt-12" id="receiptCard">
-
+                
+            <div class="flex justify-center items-center mt-4" id="loader">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+            </div>
+            
           </div>
           <!-- RECEIPT -->
           <!-- RECEIPT WILL BE HERE -->
@@ -59,15 +74,25 @@
         </div>
 
         <div class="flex justify-center pr-10">
-          <div class="w-[100%]">
+          <div class="w-[100%] mb-4">
             <!-- <div class="mt-4">
               <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
             </div> -->
-            <div class="flex justify-between mt-4">
+            <div class="flex justify-between mt-4 space-x-3">
               <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('receiptCard')">
-                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-                <span>Print Receipt</span>
+                <iconify-icon icon="fa6-solid:download" class="text-xl"></iconify-icon>
+                <span>Download Receipt</span>
               </button>
+
+              <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('receiptCard')">
+                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                <span>Print E-Receipt</span>
+              </button>
+              
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoiceHard('receiptHardCopy')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Hard Copy</span>
+                </button>
             </div>
           </div>
         </div>
@@ -86,14 +111,13 @@
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/vendor/js/bootstrap.js"></script>
-  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/js/nav.js?v=1.2"></script>
   <script src="../assets/js/aos-master/dist/aos.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script>
     AOS.init();
   </script>
-  <script src="assets/js/payment.js"></script>
-  <script src="assets/js/viewinvoice.js"></script>
+  <script src="../assets/js/payment.js?v=1.6"></script>
 </body>
 
 </html>

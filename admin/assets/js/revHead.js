@@ -4,7 +4,13 @@ const mdaId = urlParams.get('id');
 const mdn = urlParams.get('name');
 let ALLREV = ""
 let adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"))
-
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
 async function fetchRevHeads() {
   $("#revHeadsShow").html("")
   $("#loader").css("display", "flex")
@@ -28,9 +34,8 @@ async function fetchRevHeads() {
           <td>${revHd["COL_4"]}</td>
           <td>${revHd["COL_5"]}</td>
           <td>${revHd["frequency"]}</td>
-          <td>&#8358; ${revHd["COL_6"]}</td>
-          
-          <td>&#8358; ${(revHd.total_gen_revenue === "" ? 0 : revHd.total_gen_revenue.toLocaleString())}</td>
+          <td>${ formatMoney(parseInt(revHd["COL_6"]))}</td>
+          <td> ${(revHd.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(revHd.total_gen_revenue)))}</td>
           <td>
             <div class="flex items-center gap-3" id="updtCont">
             `
@@ -82,9 +87,8 @@ async function fetchRevHeadsPending() {
           <td>${revHd["COL_4"]}</td>
           <td>${revHd["COL_5"]}</td>
           <td>${revHd["frequency"]}</td>
-          <td>&#8358; ${revHd["COL_6"]}</td>
-          
-          <td>&#8358; ${(revHd.total_gen_revenue === "" ? 0 : revHd.total_gen_revenue.toLocaleString())}</td>
+          <td>${ formatMoney(parseInt(revHd["COL_6"]))}</td>
+          <td> ${(revHd.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(revHd.total_gen_revenue)))}</td>
           <td>
             <div class="flex items-center gap-3">
             `

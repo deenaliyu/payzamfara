@@ -27,7 +27,7 @@ async function fetchPayment() {
         <td>${userInvoice.user_id}</td>
         <td>${userInvoice.payment_reference_number}</td>
           <td>${userInvoice["COL_4"]}</td>
-          <td>&#8358;${userInvoice["COL_6"]}</td>
+          <td>&#8358;${userInvoice.amount_paid}</td>
           <td>${userInvoice.payment_channel}</td>
           <td>
             <p class="text-success">Successful</p>

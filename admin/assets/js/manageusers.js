@@ -4,6 +4,7 @@ const theUserID = urlParams.get("id");
 
 let definition = {
   full: "Full Access",
+  full_access: "Full Access",
   no_access: "No Access",
   view_revenue: "View Revenue Performance",
   view_invoice: "View Invoice Manager",
@@ -54,6 +55,8 @@ let definition = {
 };
 
 
+
+
 $("#createUser").on("click", function () {
   let allInputs = document.querySelectorAll(".userInputs");
   const checkboxGroups = document.querySelectorAll('.checkbox-group');
@@ -97,6 +100,8 @@ $("#createUser").on("click", function () {
 
         if (selectedValues.length > 0) {
           obj[checkboxes[0].dataset.name] = selectedValues.join('~');
+        } else {
+          obj[checkboxes[0].dataset.name] = "";
         }
       }
 

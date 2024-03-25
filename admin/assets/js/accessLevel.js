@@ -11,8 +11,14 @@ async function getRolesAdmin() {
   let currentPage = splitted_url[splitted_url.length - 1]
 
   if (currentPage === "dashboard.html") {
+    
+    $('.main_section').removeClass('hidden')
+    $('#theLoader').remove()  
+    
+    myCharter.resize();
+      
     if (userRoles.dashboard_access[0] === "no_access") {
-      $(".main_section").html(`<p class="text-center text-xl fontBold">No Access</p>`)
+      $(".main_section").html(`<p class="text-center text-xl fontBold">No Access !</p>`)
     }
   } else if (currentPage === "analytics.html") {
     let analyticsRoles = userRoles.analytics_access
@@ -24,7 +30,7 @@ async function getRolesAdmin() {
       if (findHim) {
 
       } else {
-        navItem.classList.add("disabled")
+        navItem.remove()
       }
     });
 
@@ -35,10 +41,17 @@ async function getRolesAdmin() {
     let viewMda = analyticsRoles.find(ff => ff === "view_mda")
     let create_mda = analyticsRoles.find(ff => ff === "create_mda")
 
-    console.log(analyticsRoles, viewMda)
+    // console.log(analyticsRoles, viewMda)
+    
+    $('#mdaContainer').removeClass('hidden')
+    $('#theLoader').remove()
 
     if (viewMda === undefined) {
       $(".theTable").html(`
+        <p class="text-center text-xl fontBold">No Access to view list !</p>
+      `)
+      
+      $(".theTable2").html(`
         <p class="text-center text-xl fontBold">No Access to view list !</p>
       `)
     }
@@ -46,7 +59,7 @@ async function getRolesAdmin() {
     if (create_mda === undefined) {
       let creareMdaCont = document.querySelectorAll("#creareMdaCont button")
       creareMdaCont.forEach(creCon => {
-        creCon.classList.add("disabled")
+        creCon.classList.add("hidden")
       });
     }
 
@@ -75,7 +88,9 @@ async function getRolesAdmin() {
     }
   } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html")) {
     let ReportRoles = userRoles.reports_access
-
+    
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
 
     let view_inv_list = ReportRoles.find(ff => ff === "view_inv_list")
     let generate_inv_report = ReportRoles.find(ff => ff === "generate_inv_report")
@@ -93,8 +108,9 @@ async function getRolesAdmin() {
     if (generate_inv_report === undefined) {
       $("#invReportd").addClass("disabled")
     }
-
+    
     if (view_coll_list === undefined) {
+        
       $(".collTab").html(`
         <p class="text-center text-xl fontBold">No Access to view list !</p>
       `)
@@ -114,20 +130,24 @@ async function getRolesAdmin() {
       $("#settlReportD").addClass("disabled")
     }
 
-    settlReportD
-
 
   } else if (currentPage.includes("taxpayer.html")) {
     let taxPayers = userRoles.tax_payer_access
 
+    $('#taxpContainer').removeClass('hidden')
+    $('#theLoader').remove()
+    
     let view_tax_list = taxPayers.find(ff => ff === "view_tax_list")
     let view_tax_detail = taxPayers.find(ff => ff === "view_tax_detail")
     let acti_taxpayer = taxPayers.find(ff => ff === "acti_taxpayer")
     let allocate_appli = taxPayers.find(ff => ff === "allocate_appli")
     let download_report = taxPayers.find(ff => ff === "download_report")
+    
+    $('#taxpContainer').removeClass('hidden')
+    $('#theLoader').remove()
 
     if (download_report === undefined) {
-      $("#txdReport").addClass("disabled")
+      $("#txdReport").remove()
     }
 
     if (view_tax_list === undefined) {
@@ -142,12 +162,15 @@ async function getRolesAdmin() {
     if (view_tax_detail === undefined) {
       let txViews = document.querySelectorAll(".txView")
       txViews.forEach(dd => {
-        dd.classList.add("disabled")
+        dd.remove()
       })
     }
 
   } else if (currentPage.includes("enumeration.html")) {
     let enumPayers = userRoles.enumeration_access
+    
+    $('#enummContainer').removeClass('hidden')
+    $('#theLoader').remove()
 
     let reg_user = enumPayers.find(ff => ff === "reg_user")
     let view_enum_list = enumPayers.find(ff => ff === "view_enum_list")
@@ -156,7 +179,7 @@ async function getRolesAdmin() {
     let access_enum = enumPayers.find(ff => ff === "access_enum")
 
     if (reg_user === undefined) {
-      $("#crFieldAg").addClass("disabled")
+      $("#crrrCont").remove("")
     }
 
     if (view_enum_list === undefined) {
@@ -168,17 +191,20 @@ async function getRolesAdmin() {
     if (updt_taxpayer === undefined) {
       let updtFF = document.querySelectorAll(".updtFF")
       updtFF.forEach(updt => {
-        updt.classList.add("disabled")
+        updt.remove()
       });
     }
     if (access_enum === undefined) {
       document.querySelector("#listtEnum").click()
-      $("#theEnumDas").addClass("disabled")
+      $("#theEnumDas").remove()
     }
 
 
   } else if (currentPage.includes("user.html")) {
     let userorles = userRoles.users_access
+
+    $('#usersContainer').removeClass('hidden')
+    $('#theLoader').remove()
 
     let view_admin = userorles.find(ff => ff === "view_admin")
     let create_new_user = userorles.find(ff => ff === "create_new_user")
@@ -192,13 +218,13 @@ async function getRolesAdmin() {
     }
 
     if (create_new_user === undefined) {
-      $("#userAccessor").addClass("disabled")
+      $("#userAccessor").remove()
     }
 
     if (update_user === undefined) {
       let updateSec = document.querySelectorAll(".updateSec")
       updateSec.forEach(updateS => {
-        updateS.classList.add("disabled")
+        updateS.remove()
       });
     }
   } else if (currentPage.includes("cms.html") || currentPage.includes("newpost.html")) {
@@ -228,13 +254,16 @@ async function getRolesAdmin() {
     if ((manage_publication_gallery === undefined) || (manage_publication_news === undefined)) {
       let cmsBtns = document.querySelectorAll(".cmsBtns")
       cmsBtns.forEach(cmsBtn => {
-        cmsBtn.classList.add('disabled')
+        cmsBtn.remove()
       })
     }
 
   } else if (currentPage.includes("support.html") || currentPage.includes("complain.html")) {
     let supportRoles = userRoles.cms_access
-
+        
+    $('#supportContainer').removeClass('hidden')
+    $('#theLoader').remove()
+    
     let view_support = supportRoles.find(ff => ff === "view_support")
     let respond_ticket = supportRoles.find(ff => ff === "respond_ticket")
     let escalate_issues = supportRoles.find(ff => ff === "escalate_issues")
@@ -243,7 +272,7 @@ async function getRolesAdmin() {
 
 
     if (view_support === undefined) {
-      $(".main_section").html(`<p class="text-center text-xl fontBold">No Access</p>`)
+      $("#supportContainer").html(`<p class="text-center text-xl fontBold">No Access !</p>`)
     }
 
     if ((respond_ticket === undefined) || escalate_issues === undefined) {
@@ -251,7 +280,47 @@ async function getRolesAdmin() {
       $(".message-container").addClass("hidden")
     }
 
+  } else if(currentPage.includes("enduseraudit.html")) {
+    let auditRoles = userRoles.audit_trail_access
+        
+    $('#auditContainer').removeClass('hidden')
+    $('#theLoader').remove()
+    
+    let view_audit = auditRoles?.find(ff => ff === "view_audit")
+    let analyze_audit = auditRoles?.find(ff => ff === "analyze_audit")
+    let generate_reports = auditRoles?.find(ff => ff === "generate_reports")
+    let manage_logs = auditRoles?.find(ff => ff === "manage_logs")
+
+    if (view_audit === undefined) {
+      $("#auditContainer").html(`
+        <p class="m-5 text-2xl fontBold text-center">No Access !!</p>
+      `)
+    }
+    
+  } else if(currentPage.includes("service.html")) {
+        let eservicePayers = userRoles.eservices_access
+    
+        $('#serviceContainer').removeClass('hidden')
+        $('#theLoader').remove()
+
+        let no_access = eservicePayers?.find(ff => ff === "no_access")
+        let full_access = eservicePayers?.find(ff => ff === "full_access")
+        
+        if (full_access === undefined && no_access === undefined) {
+          $("#serviceContainer").html(`
+            <p class="text-2xl m-5 text-center">No Access !!</p>
+          `)
+    
+        } else if (full_access) {
+    
+        } else if (no_access) {
+          $("#serviceContainer").html(`
+            <p class="text-2xl m-5 text-center">No Access !!</p>
+          `)
+    
+        }
   }
+  
 }
 
 getRolesAdmin()

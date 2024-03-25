@@ -202,8 +202,13 @@ $("#CreateAccountBtn").on("click", (e) => {
         "numberofstaff": ""
       }
     }
+    
     allInputs.forEach(allInput => {
-      obj.data[allInput.dataset.name] = allInput.value
+      if(allInput.dataset.name === "email") {
+        obj.data[allInput.dataset.name] = allInput.value.trim()
+      } else {
+        obj.data[allInput.dataset.name] = allInput.value
+      }
     })
 
     let StringedData = JSON.stringify(obj)
@@ -220,14 +225,14 @@ $("#CreateAccountBtn").on("click", (e) => {
           `)
           $("#CreateAccountBtn").removeClass("hidden")
 
-        } else if (data.status === 1) {
+        } else {
           $("#msg_box").html(`
             <p class="text-success text-center mt-4 text-lg">${data.message}</p>
           `)
           setTimeout(() => {
             window.location.href = `verification.html?id=${data.id}&email=${obj.data.email}&phone=${obj.data.phone}`
           }, 1000);
-        }
+        } 
       },
       error: function (request, error) {
         console.log(error);
@@ -245,7 +250,7 @@ let STATES = `
   <option disabled selected>--Select State--</option>
   <option value="Abia">Abia</option>
   <option value="Adamawa">Adamawa</option>
-  <option value="Akwa Ibom" selected>Akwa Ibom</option>
+  <option value="Akwa Ibom">Akwa Ibom</option>
   <option value="Anambra">Anambra</option>
   <option value="Bauchi">Bauchi</option>
   <option value="Bayelsa">Bayelsa</option>
@@ -279,7 +284,7 @@ let STATES = `
   <option value="Sokoto">Sokoto</option>
   <option value="Taraba">Taraba</option>
   <option value="Yobe">Yobe</option>
-  <option value="Zamfara">Zamfara</option>
+  <option value="Zamfara" selected>Zamfara</option>
 `
 let lgaList = {
   Abia: [
@@ -1144,7 +1149,8 @@ let lgaSelect = document.querySelector('#selectLGA')
 if (stateSelect) {
 
   stateSelect.innerHTML = STATES
-  lgaList["AkwaIbom"].forEach(lga => {
+  lgaSelect.innerHTML = ""
+  lgaList["Zamfara"].forEach(lga => {
     lgaSelect.innerHTML += `
       <option value="${lga}">${lga}</option>
     `

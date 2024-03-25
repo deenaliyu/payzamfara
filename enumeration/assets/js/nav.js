@@ -1,5 +1,11 @@
-
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php";
+
+document.title="Payzamfara";
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -130,11 +136,11 @@ async function fetchUserDetails2() {
 
 }
 // fetchUserDetails2()
-
+const currentYear = new Date().getFullYear();
 $(".footer").html(`
 <div class="flex justify-between">
 <div class="flex items-center gap-x-3">
-  <p class="text-[#1E1E1E] text-[16px]">Copyright 2023 Primegauge</p>
+  <p class="text-[#1E1E1E] text-[16px]">Copyright 2021 - ${currentYear} Primeguage Solutions Limited</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
 </div>
 <div class="flex items-center gap-x-3">

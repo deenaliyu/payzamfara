@@ -75,22 +75,24 @@
               <i class="bx bx-menu bx-sm"></i>
             </a>
           </div>
-
-          <div class="navbar-nav-right flex items-center gap-x-10 mr-28" id="navbar-collapse">
+            <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black">Date: <span class="datei"> </span></p>
+              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Analytics</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5 absolute right-24">
-              <div class="">
-                
-              </div>
+            <div class="mt-4 flex gap-x-5 ms-auto">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                  aria-describedby="basic-addon-search31">
+              </div> -->
 
-              <div class="avatar avatar-online flex gap-x-5">
+              <div class="avatar avatar-online">
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">-</p>
+
               </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
             </div>
 
           </div>
@@ -103,323 +105,9 @@
           <div class="container-xxl flex-grow-1 container-p-y">
             <section class="w-12/12 main_section bg-white">
 
-              <ul class="nav nav-pills mb-3 md:gap-[26px] gap-6" role="tablist">
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-name="view_revenue" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#revPer">Revenue
-                    Performance</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-name="view_invoice" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#invmanager">Invoice
-                    Manager</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-name="view_taxpayer" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#paxprela">Taxpayer
-                    relations</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-name="view_tin" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#tinreqman">TIN
-                    Request Manager</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-name="view_impressions" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#impressions">Impressions</button>
-                </li>
-
-                <!-- <li class="nav-item">
-                  <button class="nav-link" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#enumeration">Enumeration</button>
-                </li> -->
-
-              </ul>
-
-              <!-- TAB CONTENT  -->
-              <section class="tab-content">
-
-                <!-- Revenue Performance -->
-                <div class="tab-pane fade active show" id="revPer" role="tabpanel">
-
-                  <div class="flex gap-3 w-4/12">
-                    <select class="form-select">
-                      <option value="Monthly">Monthly</option>
-                    </select>
-                    <button class="btn btn-primary">Apply</button>
-                  </div>
-
-                  <div class="row mt-10 gy-4">
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">LGA Performance</div>
-
-                        <div class="theChart" id="lgaChart"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">MDA Performance</div>
-
-                        <div class="theChart" id="mdaChart"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">Revenue Heads Performance</div>
-
-                        <div class="theChart" id="revHeads"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">People's preferred Payment Method</div>
-
-                        <div class="theChart" id="payment"></div>
-                      </div>
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-                <!-- Invoice Manager -->
-                <div class="tab-pane fade" id="invmanager" role="tabpanel">
-
-                  <div class="row gy-4">
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">No. OF INVOICE GENERATED BASED CATEGORY</div>
-
-                        <div class="theChart">
-                          <canvas id="invgenerated"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">No. OF INVOICE PAID BASED CATEGORY</div>
-
-                        <div class="theChart">
-                          <canvas id="invpaid"></canvas>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">AVERAGE PAYMENT TIME FOR GENERATED INVOICE</div>
-
-                        <div class="theChart">
-                          <canvas id="avgpayment"></canvas>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">Monthly invoice verification count</div>
-
-                        <div class="theChart">
-                          <canvas id="monthver"></canvas>
-                        </div>
-                      </div>
-                    </div>
-
-
-                  </div>
-
-
-                </div>
-
-                <!-- Taxpayer relations -->
-                <div class="tab-pane fade" id="paxprela" role="tabpanel">
-
-                  <div class="row gy-4">
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">Most common support issues raised
-                          (5 most common subjects )</div>
-
-                        <div class="theChart">
-                          <canvas id="commonsubject"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">SUPPORT CLOSURE RATE</div>
-
-                        <div class="theChart">
-                          <canvas id="supporClosure"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">SUPPORT TICKET AVERAGE RESOLUTION TIME</div>
-
-                        <div class="theChart">
-                          <canvas id="supportResolu"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">PEOPLE’S PREFERRED PAYMENT METHOD</div>
-
-                        <div class="theChart">
-                          <canvas id="peoplePref"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <!-- TIN Request Manager -->
-                <div class="tab-pane fade" id="tinreqman" role="tabpanel">
-
-                  <div class="row gy-4">
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">NUMBER OF TIN REQUEST</div>
-
-                        <div class="theChart">
-                          <canvas id="tinReqNumber"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">MONTHLY TIN REQUEST</div>
-
-                        <div class="theChart">
-                          <canvas id="MonthWeeklyDaily"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-                <!-- Impressions -->
-                <div class="tab-pane fade" id="impressions" role="tabpanel">
-
-                  <div class="row gy-4">
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">TRAFFIC (Number of visitor that visit the site)</div>
-
-                        <div class="theChart">
-                          <canvas id="traffic"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">Bounce (% of users that leaves after visiting one page)
-                        </div>
-
-                        <div class="theChart">
-                          <canvas id="bounceChart"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">AVERAGE SESSION DURATION AND PAGES PER SESSION</div>
-
-                        <div class="theChart">
-                          <canvas id="AverageSession"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">ENGAGEMENT RATE</div>
-
-                        <div class="theChart">
-                          <canvas id="ENGAGEMENTRATE"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-                <!-- Impressions -->
-                <div class="tab-pane fade" id="enumeration" role="tabpanel">
-
-                  <div class="row gy-4">
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)</div>
-
-                        <div class="theChart">
-                          <canvas id="totalTaxPayer"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="card card-body">
-                        <div class="card-title text-[#000]">% of TAXPAYERS REGISTERED(BY CATEGORY)
-                        </div>
-
-                        <div class="theChart">
-                          <canvas id="totalRegis"></canvas>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-
-
-                </div>
-
-
-              </section>
+              <div class="flex justify-center items-center">
+                  <img src="./assets/img/maintenance.png" alt='under construction' />
+              </div>
 
 
 
@@ -467,7 +155,7 @@
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/dashboard.js"></script>
-  <script src="./assets/js/analyticsCharts.js"></script>
+  <!--<script src="./assets/js/analyticsCharts.js"></script>-->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
 
   <!-- Page JS -->

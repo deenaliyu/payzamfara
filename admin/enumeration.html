@@ -80,22 +80,23 @@
             </a>
           </div>
 
-          <div class="navbar-nav-right relative flex items-center gap-x-10 mr-28" id="navbar-collapse">
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Enumeration</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5 ms-auto absolute -right-24">
+            <div class="mt-4 flex gap-x-5 ms-auto items-center">
 
               <div id="crrrCont">
                 <a href="newagent.html" class="button crFieldAg">Create Field Agent</a>
               </div>
 
-              <div class="avatar avatar-online flex gap-x-2 items-center">
-                <img src="" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
-                <p class="adminName">-</p>
+             <div class="avatar avatar-online">
+                <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
               </div>
+              <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
             </div>
 
           </div>
@@ -105,7 +106,11 @@
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
-          <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>    
+            
+          <div class="container-xxl flex-grow-1 container-p-y hidden" id="enummContainer">
             <ul class="nav nav-pills md:gap-[26px] gap-6" role="tablist">
 
               <li class="nav-item" id="theEnumDas">
@@ -407,7 +412,7 @@
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/dashboard.js"></script>
   <script src="./assets/js/enumerationCharts.js"></script>
-  <script src="./assets/js/accessLevel.js"></script>
+  <script src="./assets/js/accessLevel.js?v=1.2"></script>
 
   <!-- <script src="../assets/js/invoicess.js"></script> -->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->

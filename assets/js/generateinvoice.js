@@ -1,5 +1,5 @@
 let theRevs = {}
-let theCateg = ["", "Corporate", "Individual", "State Agency", "Federal Agency"]
+let theCateg = ["", "Individual", "Individual", "Individual", "Individual"]
 let AllRevs;
 
 function generateRandomString() {
@@ -69,6 +69,41 @@ async function getAllRevH() {
 
 getAllRevH()
 
+let allZonalOffice = null;
+
+async function fetchZonalOffice(categ) {
+  const response = await fetch(`${HOST}?tax_offices`)
+  const revHeads = await response.json()
+
+  if (revHeads.status === 0) {
+  } else {
+    allZonalOffice = revHeads.message
+    
+  }
+}
+
+fetchZonalOffice()
+
+const lgaSelector = document.getElementById('LGAaas');
+const zonalOfficeSelect = document.getElementById('zonalOff');
+
+lgaSelector.addEventListener('change', (event) => {
+    const selectedLga = event.target.value;
+      // Clear previous options
+    zonalOfficeSelect.innerHTML = '';
+
+    if (selectedLga && allZonalOffice) {
+        const filteredZonalOffices = allZonalOffice.filter(office => office.lga.includes(selectedLga));
+        filteredZonalOffices.forEach(office => {
+          const option = document.createElement('option');
+          option.value = office.id;
+          option.textContent = office.office_name;
+          zonalOfficeSelect.appendChild(option);
+        });
+    }
+    
+});
+
 async function fetchRevHeads(categ) {
   const response = await fetch(`${HOST}/?getAllRevenueHeads`)
   const revHeads = await response.json()
@@ -83,7 +118,7 @@ async function fetchRevHeads(categ) {
     revHeads.message.forEach((revHd, i) => {
       if (revHd.COL_5 === categ) {
         $("#rev_heads").append(`
-        <option value="${revHd["id"]}">${revHd["COL_4"]}</option>
+        <option value="${revHd["id"]}">${revHd["COL_4"]} (${revHd["COL_3"]})</option>
       `)
       }
 
@@ -165,6 +200,7 @@ function continuePage() {
     `)
   
     $("#theLga").html(`
+    <label for="">Address</label>
     <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
     placeholder=" Enter your address" value="">
     `)
@@ -236,6 +272,7 @@ function continuePage() {
     `)
   
     $("#theLga").html(`
+    <label for="">Address</label>
     <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
     placeholder=" Enter your address" value="${userInfo.address}">
     `)
@@ -245,7 +282,7 @@ function continuePage() {
   for (let i = 0; i < genInv.length; i++) {
     const genn = genInv[i];
 
-    if (genn.value === "") {
+    if (genn.value === "" || genn.value === "Select--") {
       alert("Please fill all required field");
       break;
     }
@@ -266,11 +303,12 @@ $("#rev_heads").on("change", function () {
   let val = $(this).val()
   setPrice(val)
 })
+
 let aa = [];
 function setPrice(val) {
   let theRevenue = theRevs.filter(rr => rr.id === val)
   console.log(val, theRevenue)
-  $("#amountTopay").val(theRevenue[0]["COL_6"])
+  $("#amountTopay").val()
   the_id = theRevenue[0].id
   aa["message"] = theRevenue;
 }
@@ -278,24 +316,50 @@ function setPrice(val) {
 
 function goToPreviewPage() {
   let payInputs = document.querySelectorAll(".payInputs")
-  aa.message.forEach((items, i)=> {
-   $("#bill").append(`
-   <div class="flex space-x-4">
-   <p>Category of Tax:</p>
-   <p>${items.COL_5}</p>
- </div>
-   <div class="flex space-x-3">
-   <p>Name of Tax:</p>
-   <p>${items.COL_4}</p>
- </div>
- <div class="flex space-x-3">
-   <p>Amount to be Paid:</p>
-   <p>${items.COL_6}</p>
- </div>
-
+  amountto =  $("#amountTopay").val()
+  let categOfTax = document.querySelector(".selCateg option:checked").textContent
+  let RevHeadss = document.querySelector("#rev_heads option:checked").textContent
+  
+  
+   $("#bill").html(`
+    <div class="flex space-x-4">
+       <p>Category of Tax:</p>
+       <p>${categOfTax}</p>
+    </div>
+    <div class="flex space-x-3">
+       <p>Name of Tax:</p>
+       <p>${RevHeadss}</p>
+    </div>
+    <div class="flex space-x-3">
+       <p>Amount to be Paid:</p>
+       <p>${amountto}</p>
+    </div>
    `)
-  })
-  console.log(aa)
+  
+//   console.log(aa)
+  if(categOfTax === "Individual") {
+    $('#userTheName').html(`
+        <div class="flex items-center mb-4 gap-2" id="theName">
+          <div class="form-group w-full">
+            <label for="">First name</label>
+            <input type="text" class="form-control payInputs2" readonly data-name="first_name">
+          </div>
+
+          <div class="form-group w-full">
+            <label for="">Surname</label>
+            <input type="text" class="form-control payInputs2" readonly data-name="surname">
+          </div>
+        </div>
+    `)     
+  } else {
+    $('#userTheName').html(`
+        <div class="form-group w-full mb-4">
+            <label for="">Company Name</label>
+            <input type="text" class="form-control payInputs2" readonly data-name="first_name">
+        </div>
+    `)       
+  }
+  
   for (let i = 0; i < payInputs.length; i++) {
     const payinput = payInputs[i];
 
@@ -319,6 +383,7 @@ function goToPreviewPage() {
   }
 
 }
+
 async function generateInvoiceNon() {
 
   let payInputs = document.querySelectorAll(".payInputs")
@@ -361,7 +426,7 @@ async function generateInvoiceNon() {
       let obj = {
         "endpoint": "createPayerAccount",
         "data": {
-          "state": "Akwa Ibom",
+          "state": "Zamfara",
           "category": categ,
           "employment_status": "",
           "business_type": "",
@@ -392,13 +457,13 @@ async function generateInvoiceNon() {
           if (data.status === 2) {
 
             let taxNumber = data.data.tax_number
-            console.log(taxNumber)
+            // console.log(taxNumber)
             generateInvoiceNum(taxNumber)
 
-          } else if (data.status === 1) {
+          } else {
 
             let taxNumber = data.data.tax_number
-            console.log(data)
+            // console.log(data)
             generateInvoiceNum(taxNumber)
 
           }
@@ -418,10 +483,16 @@ async function generateInvoiceNon() {
 }
 
 async function generateInvoiceNum(taxNumber) {
-  console.log(taxNumber)
+  amountto =  $("#amountTopay").val()
+//   console.log(taxNumber)
+  let description = document.querySelector("#thedescripInput").value
+  
+  let lga = $("#LGAaas").val()
+  let zonalOff = $("#zonalOff").val()
+  
   $.ajax({
     type: "GET",
-    url: `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${the_id}`,
+    url: `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${the_id}&price=${amountto}&description=${description}&lga=${lga}&zonalOffice=${zonalOff}`,
     dataType: 'json',
     success: function (data) {
       console.log(data)
@@ -443,7 +514,7 @@ async function generateInvoiceNum(taxNumber) {
         }).then((result) => {
           if (result.isConfirmed) {
             nextPrev(1)
-            openInvoice(data.invoice_number)
+            openInvoice(data.invoice_number, data.price)
             // window.location.href = `invoice.html?invnum=${data.invoice_number}`
           }
         })

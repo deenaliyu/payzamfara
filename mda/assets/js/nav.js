@@ -1,9 +1,16 @@
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 
 let HOST = "https://payzamfara.com/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("mdaDataPrime"));
-
+// console.log(userInfo2)
 let MDAINFO = ""
 let REVHEADS = null
+
+document.title="Payzamfara";
 
 async function fetchMDAs() {
 
@@ -456,14 +463,6 @@ $(".navi")
 <h1 class="md:text-[26px] text-[18px] text-[#151515] pt-2 s">Dashboard</h1>
 </div>
 
-                  <div class="mt-4 flex gap-x-2">
-                  <div class="input-group input-group-merge md:w-72 hidden md:flex ">
-<span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-<input type="text" class="form-control rounded-2xl " placeholder="Search..." aria-label="Search..."
-  aria-describedby="basic-addon-search31">
-</div>
-</div>
-
 
 
 
@@ -514,10 +513,11 @@ if (profImg) {
   }
 }
 
+const currentYear = new Date().getFullYear()
 $(".footer").html(`
 <div class="flex justify-between">
 <div class="flex items-center gap-x-3">
-  <p class="text-[#1E1E1E] text-[2vh]">Copyright 2023 Primegauge</p>
+  <p class="text-[#1E1E1E] text-[2vh]">Copyright 2021 - ${currentYear} Primeguage Solutions Limited</p>
   <img src="../assets/img/logo1.png" width="50px" alt="">
 </div>
 <div class="flex items-center gap-x-3">

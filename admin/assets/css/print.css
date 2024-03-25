@@ -1,0 +1,20 @@
+@media print {
+  body {
+    -webkit-print-color-adjust: exact; /* For Chrome and Safari */
+    color-adjust: exact; /* For Firefox */
+  }
+  
+  @page {
+    width: 210mm;
+  }
+
+ 
+  .hardReceiptCopy {
+    width: 789.921px !important;
+  }
+    .theheaders {
+      color: #fff !important;
+      background: #125826 !important;
+    }
+
+}

@@ -1,7 +1,13 @@
-
+function hardRefresh() {
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
+}
+// hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php"
 
 let THE_SESSION = localStorage.getItem("userDataPrime")
+
+document.title="Payzamfara";
 
 
 // if (THE_SESSION) {
@@ -11,7 +17,7 @@ heeaderr += `
   <div class="w-[70px] h-[40px]">
     <img src="./assets/img/logo.png" class="" />
   </div>
-  <p class="text-black fontBold">Pay Ibom</p>
+  <p class="text-black fontBold">Pay Zamfara</p>
   </a>
 `
 if (THE_SESSION) {
@@ -23,6 +29,7 @@ if (THE_SESSION) {
         <a href="about.html">About Us</a>
         <a href="eservices.html">E-Services</a>
         <a href="offer.html">What we offer</a>
+        <a  href="taxcategory.html">tax category</a>
         <a href="howtopay.html">How to pay</a>
         <a class="button" href="./dashboard/index.html">Dashboard</a>
       </div>
@@ -38,6 +45,7 @@ if (THE_SESSION) {
         <a href="about.html">About Us</a>
         <a href="eservices.html">E-Services</a>
         <a href="offer.html">What we offer</a>
+        <a  href="taxcategory.html">tax category</a>
         <a href="howtopay.html">How to pay</a>
       </div>
 
@@ -59,6 +67,7 @@ if (THE_SESSION) {
     <a class="text-xl" href="about.html">About Us</a>
     <a class="text-xl" href="eservices.html">E-Services</a>
     <a class="text-xl" href="offer.html">What we offer</a>
+    <a class="text-xl" href="taxcategory.html">tax category</a>
     <a class="text-xl" href="howtopay.html">How to pay</a>
   </div>
 
@@ -98,6 +107,7 @@ if (THE_SESSION) {
     <a class="text-xl" href="about.html">About Us</a>
     <a class="text-xl" href="eservices.html">E-Services</a>
     <a class="text-xl" href="offer.html">What we offer</a>
+    <a class="text-xl" href="taxcategory.html">tax category</a>
     <a class="text-xl" href="howtopay.html">How to pay</a>
   </div>
 
@@ -151,11 +161,11 @@ if (hamburger) {
 
   });
 }
-
+const currentYear = new Date().getFullYear();
 $("#footer").html(`
     <footer class="bg-white flex justify-between items-center md:px-10 px-3 py-2 landingFooter border-t border-gray-200">
       <div class="flex items-center gap-2">
-          <p class="text-[#555555] md:text-sm text-xs">Copyright 2023 Primegauge LTD</p>
+          <p class="text-[#555555] md:text-sm text-xs">Copyright 2021 - ${currentYear} Primeguage Solutions Limited</p>
           <img src="./assets/img/logo1.png" class="w-[60px] h-[30px]" alt="">
       </div>
 
@@ -1121,7 +1131,256 @@ if (stateSelect2) {
 
 }
 
-window.$crisp = []; window.CRISP_WEBSITE_ID = "c669b149-3ed9-4ff4-b7f2-2c76a219eee3"; (function () {
-  d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js";
-  s.async = 1; d.getElementsByTagName("head")[0].appendChild(s);
+function convertNumberToWords(number) {
+  let [integer, fraction] = String(number).split('.');
+  let output = "";
+
+  if (integer[0] === "-") {
+    output = "negative ";
+    integer = integer.substring(1);
+  } else if (integer[0] === "+") {
+    output = "positive ";
+    integer = integer.substring(1);
+  }
+
+  if (integer[0] === "0") {
+    output += "zero";
+  } else {
+    integer = integer.padStart(36, "0");
+    let group = integer.match(/.{1,3}/g);
+    let groups2 = group.map(g => convertThreeDigit(g[0], g[1], g[2]));
+
+    for (let z = 0; z < groups2.length; z++) {
+      if (groups2[z] !== "") {
+        output += groups2[z] + convertGroup(11 - z) +
+          (z < 11 && !groups2.slice(z + 1, -1).includes('') &&
+            groups2[11] !== '' && group[11][0] === '0' ? " and " : ", ");
+      }
+    }
+
+    output = output.replace(/, $/, "");
+  }
+
+  if (fraction > 0) {
+    output += " naira and";
+    output += " " + numberToWords(fraction);
+    
+    output += " Kobo"
+  }
+
+  return output;
+}
+
+function convertGroup(index) {
+  switch (index) {
+    case 11:
+      return " decillion";
+    case 10:
+      return " nonillion";
+    case 9:
+      return " octillion";
+    case 8:
+      return " septillion";
+    case 7:
+      return " sextillion";
+    case 6:
+      return " quintrillion";
+    case 5:
+      return " quadrillion";
+    case 4:
+      return " trillion";
+    case 3:
+      return " billion";
+    case 2:
+      return " million";
+    case 1:
+      return " thousand";
+    case 0:
+      return "";
+  }
+}
+
+function convertThreeDigit(digit1, digit2, digit3) {
+  let buffer = "";
+
+  if (digit1 === "0" && digit2 === "0" && digit3 === "0") {
+    return "";
+  }
+
+  if (digit1 !== "0") {
+    buffer += convertDigit(digit1) + " hundred";
+    if (digit2 !== "0" || digit3 !== "0") {
+      buffer += " and ";
+    }
+  }
+
+  if (digit2 !== "0") {
+    buffer += convertTwoDigit(digit2, digit3);
+  } else {
+    if (digit3 !== "0") {
+      buffer += convertDigit(digit3);
+    }
+  }
+
+  return buffer;
+}
+
+function convertTwoDigit(digit1, digit2) {
+  if (digit2 === "0") {
+    switch (digit1) {
+      case "1":
+        return "ten";
+      case "2":
+        return "twenty";
+      case "3":
+        return "thirty";
+      case "4":
+        return "forty";
+      case "5":
+        return "fifty";
+      case "6":
+        return "sixty";
+      case "7":
+        return "seventy";
+      case "8":
+        return "eighty";
+      case "9":
+        return "ninety";
+    }
+  } else {
+    if (digit1 === "1") {
+      switch (digit2) {
+        case "1":
+          return "eleven";
+        case "2":
+          return "twelve";
+        case "3":
+          return "thirteen";
+        case "4":
+          return "fourteen";
+        case "5":
+          return "fifteen";
+        case "6":
+          return "sixteen";
+        case "7":
+          return "seventeen";
+        case "8":
+          return "eighteen";
+        case "9":
+          return "nineteen";
+      }
+    } else {
+      let temp = convertDigit(digit2);
+      switch (digit1) {
+        case "2":
+          return "twenty-" + temp;
+        case "3":
+          return "thirty-" + temp;
+        case "4":
+          return "forty-" + temp;
+        case "5":
+          return "fifty-" + temp;
+        case "6":
+          return "sixty-" + temp;
+        case "7":
+          return "seventy-" + temp;
+        case "8":
+          return "eighty-" + temp;
+        case "9":
+          return "ninety-" + temp;
+      }
+    }
+  }
+}
+
+function convertDigit(digit) {
+  switch (digit) {
+    case "0":
+      return "zero";
+    case "1":
+      return "one";
+    case "2":
+      return "two";
+    case "3":
+      return "three";
+    case "4":
+      return "four";
+    case "5":
+      return "five";
+    case "6":
+      return "six";
+    case "7":
+      return "seven";
+    case "8":
+      return "eight";
+    case "9":
+      return "nine";
+  }
+}
+
+function numberToWords(num) {
+  const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+  function convertLessThanOneThousand(n) {
+      let word = '';
+      if (n >= 100) {
+          word += ones[Math.floor(n / 100)] + ' hundred ';
+          n %= 100;
+      }
+      if (n >= 20) {
+          word += tens[Math.floor(n / 10)] + ' ';
+          n %= 10;
+      }
+      if (n > 0) {
+          if (n < 10) word += ones[n] + ' ';
+          else word += teens[n - 10] + ' ';
+      }
+      return word.trim();
+  }
+
+  if (num === 0) return 'zero';
+
+  let words = '';
+  if (num < 0) {
+      words += 'negative ';
+      num = Math.abs(num);
+  }
+
+  if (num >= 1000000000) {
+      words += convertLessThanOneThousand(Math.floor(num / 1000000000)) + ' billion ';
+      num %= 1000000000;
+  }
+  if (num >= 1000000) {
+      words += convertLessThanOneThousand(Math.floor(num / 1000000)) + ' million ';
+      num %= 1000000;
+  }
+  if (num >= 1000) {
+      words += convertLessThanOneThousand(Math.floor(num / 1000)) + ' thousand ';
+      num %= 1000;
+  }
+  if (num > 0) {
+      words += convertLessThanOneThousand(num);
+  }
+
+  return words.trim();
+}
+
+// window.$crisp = []; window.CRISP_WEBSITE_ID = "c669b149-3ed9-4ff4-b7f2-2c76a219eee3"; (function () {
+//   d = document; s = d.createElement("script"); s.src = "https://client.crisp.chat/l.js";
+//   s.async = 1; d.getElementsByTagName("head")[0].appendChild(s);
+// })();
+
+
+
+
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/65644e0326949f7911351576/1hg7t1ggk';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();

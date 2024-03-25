@@ -1,7 +1,9 @@
 let userInfo = JSON.parse(window.localStorage.getItem("userDataPrime"));
 
-let userID = userInfo.id;
-$('#theUser').html(`<span>${userInfo.surname} ${userInfo.first_name}</span></h1>`)
+let userID = userInfo.tax_number;
+$("#theUser").html(
+  `<span>${userInfo.surname} ${userInfo.first_name}</span></h1>`
+);
 
 async function fetchInvoice() {
   $("#showInvoice").html("");
@@ -18,22 +20,25 @@ async function fetchInvoice() {
   const response = await fetch(
     `${HOST}/php/index.php?userInvoices&payer_id=${userID}`
   );
-  let gg = []
+  let gg = [];
   const userInvoices = await response.json();
   // console.log(userInvoices);
   $("#loader").css("display", "none");
   if (userInvoices.status === 1) {
     let NumberOFInvoices = userInvoices.message.length;
-    $(".invNumbers").html(userInvoices.message.length)
+    $(".invNumbers").html(userInvoices.message.length);
 
     for (let i = 0; i < userInvoices.message.length; i++) {
       const userInvoice = userInvoices.message[i];
+      // console.log(userInvoice)
       $("#showInvoice2").append(`
         <tr class="relative">
           <td>${i + 1}</td>
-          <td><a class="text-primary" href="../viewinvoice.html?invnumber=${userInvoice.invoice_number}&load=true">${userInvoice.tax_number}</a></td>
+          <td><a class="text-primary" href="../viewinvoice.html?invnumber=${
+            userInvoice.invoice_number
+          }&load=true">${userInvoice.tax_number}</a></td>
           <td>${userInvoice.invoice_number}</td>
-          <td>&#8358; ${userInvoice.COL_6}</td>
+          <td>&#8358; ${userInvoice.amount_paid}</td>
           <td>${userInvoice.due_date}</td>            
         </tr>
       `);
@@ -41,37 +46,7 @@ async function fetchInvoice() {
       if (i === 4) {
         break;
       }
-      if (userInvoice.payment_status == "paid") {
-        gg.push("g")
-      }
-
     }
-    let NumberOfPaid = gg.length
-    $("#paid_invoices").html(NumberOfPaid)
-    console.log(NumberOfPaid)
-    const ctx = document.getElementById('dashboardGuage');
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Invoice Generated', 'Invoice Paid'],
-        datasets: [{
-          label: 'Invoice',
-          data: [NumberOFInvoices, NumberOfPaid],
-          borderWidth: 0,
-          borderRadius: 5,
-          barThickness: 40,
-          backgroundColor: '#005826',
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
   } else {
     $("#showInvoice").html(`
       <tr>
@@ -83,7 +58,7 @@ async function fetchInvoice() {
 }
 
 async function fetchTaxes() {
-  let userInfo = JSON.parse(localStorage.getItem("userDataPrime"))
+  let userInfo = JSON.parse(localStorage.getItem("userDataPrime"));
 
   const response = await fetch(
     `${HOST}?getApplicableTaxes&tax_number=${userInfo.tax_number}`
@@ -93,8 +68,7 @@ async function fetchTaxes() {
   // console.log(revenueHeads);
   $("#loaderr").remove();
   for (const item of revenueHeads) {
-
-    let aa = ""
+    let aa = "";
 
     aa += `
                       <tr>
@@ -103,30 +77,25 @@ async function fetchTaxes() {
                         <td>Monthly</th>
                        
                     
-    `
+    `;
 
-    for(const key in item) {
-
-      if(item[key].id) {
-        let i = key
-      
-      }else{
+    for (const key in item) {
+      if (item[key].id) {
+        let i = key;
+      } else {
         aa += `
 
        
-`
+`;
       }
-      
     }
-    
 
-    aa +=`
+    aa += `
     </tr>
-    `
+    `;
 
-    $("#showTaxes").append(aa)
+    $("#showTaxes").append(aa);
   }
-
 
   // for (let i = 0; i < revenueHeads.message.length; i++) {
   //   const revenuehead = revenueHeads.message[i];
@@ -136,7 +105,7 @@ async function fetchTaxes() {
   //       <tr>
   //         <td>${ii}</td>
   //         <td>Monthly</td>
-  //         <td>${revenuehead["COL_4"]}</td>          
+  //         <td>${revenuehead["COL_4"]}</td>
   //       </tr>
   //     `)
   //   }
@@ -146,9 +115,9 @@ async function fetchTaxes() {
   // }
 }
 
-fetchTaxes()
+fetchTaxes();
 
-fetchInvoice()
+fetchInvoice();
 
 async function fetchPayment() {
   $("#showPayment").html("");
@@ -176,7 +145,7 @@ async function fetchPayment() {
           <td>${i + 1}</td>
           <td>${userInvoice["COL_4"]}</td>
           <td>${userInvoice["receipt_number"]}</td>
-          <td>&#8358;${userInvoice["COL_6"]}</td>
+          <td>&#8358;${userInvoice["amount_paid"]}</td>
           <td>${userInvoice.timeIn}</td>            
         </tr>
       `);
@@ -195,11 +164,9 @@ async function fetchPayment() {
   }
 }
 
-fetchPayment()
-
+fetchPayment();
 
 async function fetchAnalytics() {
-
   let config = {
     mode: "cors",
     headers: {
@@ -214,16 +181,44 @@ async function fetchAnalytics() {
     );
 
     const userAnalytics = await response.json();
-    $("#due_amount").html(userAnalytics.due_amount)
-    $("#due_invoices").html(userAnalytics.due_invoices)
-    $("#total_amount").html(userAnalytics.total_amount_invoiced)
-    $("#total_amountP").html(userAnalytics.total_amount_paid)
+    $("#due_amount").html(userAnalytics.due_amount);
+    $("#due_invoices").html(userAnalytics.due_invoices);
+    $("#total_amount").html(userAnalytics.total_amount_invoiced);
+    $("#total_amountP").html(userAnalytics.total_amount_paid);
     // console.log(userAnalytics)
+    let NumberOfPaid = userAnalytics.total_invoice_paid;
+
+    let NumberOFInvoices = document.getElementById("invNumber").textContent;
+    $("#paid_invoices").html(NumberOfPaid);
+    console.log(NumberOFInvoices);
+    const ctx = document.getElementById("dashboardGuage");
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Invoice Generated", "Invoice Paid"],
+        datasets: [
+          {
+            label: "Invoice",
+            data: [NumberOFInvoices, NumberOfPaid],
+            borderWidth: 0,
+            borderRadius: 5,
+            barThickness: 40,
+            backgroundColor: "#005826",
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-
 }
 
-fetchAnalytics()
+fetchAnalytics();

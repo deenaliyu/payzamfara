@@ -80,17 +80,17 @@ fieldset[disabled] a {
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
+              <p class="text-sm text-black datei" id="datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">E-services</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex ">
-                <span class="input-group-text rounded-full" id="basic-addon-search31"><i
-                    class="bx bx-search"></i></span>
-                <input type="text" class="form-control rounded-full" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div>
+              <!--<div class="input-group input-group-merge md:w-72 hidden md:flex ">-->
+              <!--  <span class="input-group-text rounded-full" id="basic-addon-search31"><i-->
+              <!--      class="bx bx-search"></i></span>-->
+              <!--  <input type="text" class="form-control rounded-full" placeholder="Search..." aria-label="Search..."-->
+              <!--    aria-describedby="basic-addon-search31">-->
+              <!--</div>-->
 
 
 
@@ -109,8 +109,12 @@ fieldset[disabled] a {
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div> 
+            
           <div class="container-xxl flex-grow-1 container-p-y">
-            <section class="w-12/12 main_section">
+            <section class="w-12/12 main_section hidden" id="serviceContainer">
               <div class="p-2">
                 <div class="w-full">
 
@@ -254,6 +258,7 @@ fieldset[disabled] a {
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/service.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script>
     let theAtivo = document.querySelector(".mdol")
     theAtivo.parentElement.classList.add("active")

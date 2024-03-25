@@ -83,8 +83,8 @@ getMDALGAPerformance("MDAPerformance", "getMDAPerformance", "mdaChart", "Revenue
 
 // barCharts(['Agric', 'Edu', 'Works', 'Finance', 'VIO', 'Lands', 'Transport'], [2900, 2800, 2600, 900, 700, 200, 150], "mdaChart")
 
-barCharts(['PAYE', 'Stamp Duties', 'Laboratory', 'Pool', 'VIO', 'Lands', 'Transport'], [2900, 2800, 2600, 900, 700, 200, 150], "revHeads")
-barCharts(['Online Payment', 'Remita', 'Bank Branch', 'POS', 'USSD', 'E-naira', 'ATM'], [300, 200, 100, 400, 100, 40, 150], "payment")
+barCharts(['PAYE', 'Stamp Duties', 'Laboratory', 'Pool', 'VIO', 'Lands', 'Transport'], [0, 0, 0, 0, 0, 0, 0], "revHeads")
+barCharts(['Online Payment', 'Remita', 'Bank Branch', 'POS', 'USSD', 'E-naira', 'ATM'], [0, 0, 0, 0, 0, 0, 0], "payment")
 
 
 let InvoiceChart = ""

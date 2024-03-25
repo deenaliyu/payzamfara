@@ -62,7 +62,11 @@
           <div class="flex justify-between mt-4 gap-3">
             <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
               <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-              <span>Print Invoice</span>
+              <span>Download Invoice</span>
+            </button>
+            <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+              <span>Print Receipt</span>
             </button>
           </div>
         </div>
@@ -82,15 +86,15 @@
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/vendor/js/bootstrap.js"></script>
-  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/js/nav.js?v=1.2"></script>
   <script src="../assets/js/aos-master/dist/aos.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script>
     AOS.init();
   </script>
   <!-- <script src="assets/js/payment.js"></script> -->
-  <script src="assets/js/viewinvoice.js"></script>
-  <script src="assets/js/invoice.js"></script>
+  <script src="assets/js/viewinvoice.js?v=1.2"></script>
+  <script src="assets/js/invoice.js?v=1.2"></script>
 </body>
 
 </html>

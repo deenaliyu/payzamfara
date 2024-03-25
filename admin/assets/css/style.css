@@ -432,6 +432,10 @@ ul {
   text-decoration: none !important;
 }
 
+.select2.select2-container {
+    width: 100% !important;
+}
+
 .stretched-link {
   text-decoration: none;
   color: #005826 !important;

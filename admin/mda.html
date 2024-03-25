@@ -94,8 +94,12 @@
 
         <!-- Content wrapper -->
         <div class="content-wrapper">
-
-          <div class="container-xxl flex-grow-1 container-p-y service">
+            
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>
+                  
+          <div class="container-xxl flex-grow-1 container-p-y service hidden" id="mdaContainer">
             <div class="card p-4">
 
               <div class="mt-4" id="createCard">
@@ -165,7 +169,7 @@
 
                 <div class="tab-pane fade" id="approvlreq" role="tabpanel">
                   <div class="table-responsive">
-                    <table class="table table-sm" id="dataTable1">
+                    <table class="table table-sm theTable2" id="dataTable1">
                       <thead>
                         <tr>
                           <th>S/N</th>
@@ -523,8 +527,8 @@
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->
-  <script src="./assets/js/mdas.js"></script>
-  <script src="./assets/js/accessLevel.js"></script>
+  <script src="./assets/js/mdas.js?v=1.2"></script>
+  <script src="./assets/js/accessLevel.js?v=1.2"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
 
   <script src="./assets/js/filterMdas.js"></script>
