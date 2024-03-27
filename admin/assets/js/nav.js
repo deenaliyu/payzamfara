@@ -90,6 +90,13 @@ $(".aside").html(`
       </li>
 
       <li class="menu-item">
+        <a href="tax-office.html" class="menu-link txxOffice">
+        <i class='menu-icon tf-icons bx bxs-buildings' ></i>
+          <div data-i18n="Basic">Tax Office Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
         <a href="enumeration.html" class="menu-link enu">
         <i class='menu-icon tf-icons bx bxs-group' ></i>
           <div data-i18n="Basic">Enumeration</div>
