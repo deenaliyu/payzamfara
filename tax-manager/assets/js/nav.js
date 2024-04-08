@@ -4,6 +4,7 @@ function hardRefresh() {
 }
 // hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php"
+let userInfo2 = JSON.parse(window.localStorage.getItem("taxManagerDataPrime"));
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -32,12 +33,16 @@ $(".aside").html(`
           <div data-i18n="Analytics">Dashboard</div>
         </a>
       </li>
-      <li class="menu-item">
-        <a href="revenueofficers.html" class="menu-link revoffice">
-          <i class="menu-icon tf-icons bx bx-group"></i>
-          <div data-i18n="Analytics">Revenue Officers</div>
-        </a>
-      </li>
+
+      ${userInfo2.role === "Admin" ? `
+        <li class="menu-item">
+          <a href="revenueofficers.html" class="menu-link revoffice">
+            <i class="menu-icon tf-icons bx bx-group"></i>
+            <div data-i18n="Analytics">Revenue Officers</div>
+          </a>
+        </li>
+      ` : ''}
+      
       <li class="menu-item">
         <a href="invoice.html" class="menu-link dae">
           <i class='menu-icon tf-icons bx bxs-credit-card'></i>
@@ -73,7 +78,7 @@ $(".aside").html(`
     </ul>
 
 `);
-let userInfo2 = JSON.parse(window.localStorage.getItem("taxManagerDataPrime"));
+
 
 $(".navi")
   .html(`<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
