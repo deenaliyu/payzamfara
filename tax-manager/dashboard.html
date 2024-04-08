@@ -75,16 +75,8 @@
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
-              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
-                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                  aria-describedby="basic-addon-search31">
-              </div> -->
-
-
-              <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
-                class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
+            <div class="mt-4 flex gap-x-5 items-center">
+              <p id="taxName" class="capitalize"></p>
 
               <div class="avatar avatar-online">
                 <img src="./assets/img/avatars/1.png" alt class="h-[70px] w-[70px] rounded-circle" />
@@ -125,11 +117,10 @@
                       <p class="text-gray-500">TOTAL INVOICES</p>
                     </div>
 
-                    <select class="form-select form-sm mt-4">
-                      <option value="february">February</option>
+                    <select class="form-select form-sm mt-4" style="visibility: hidden;">
                     </select>
 
-                    <p class="zanumbers mt-2">2143</p>
+                    <p class="zanumbers mt-2" id="totalInvoices">-</p>
                   </div>
 
                   <div class="dashCards card w-full">
@@ -142,11 +133,11 @@
                       <p class="text-gray-500">AMOUNT INVOICED</p>
                     </div>
 
-                    <select class="form-select form-sm mt-4">
-                      <option value="february">February</option>
+                    <select class="form-select form-sm mt-4" id="monthlyYear" onchange="refreshTheCards2()">
+                      <!-- <option value="february">February</option> -->
                     </select>
 
-                    <p class="zanumbers mt-2">1,030,536,124</p>
+                    <p class="zanumbers mt-2" id="total_amount_invoiced">-</p>
                   </div>
 
                   <div class="dashCards card w-full">
@@ -159,11 +150,11 @@
                       <p class="text-gray-500">PAID</p>
                     </div>
 
-                    <select class="form-select form-sm mt-4">
-                      <option value="february">February</option>
+                    <select class="form-select form-sm mt-4" id="monthlyYear2" onchange="refreshTheCards3()">
+                      <!-- <option value="february">February</option> -->
                     </select>
 
-                    <p class="zanumbers mt-2">₦366,431,939</p>
+                    <p class="zanumbers mt-2" id="due_amount">-</p>
                   </div>
 
                   <div class="dashCards card w-full">
@@ -182,22 +173,23 @@
 
                 <div class="mt-4">
                   <h1 class="text-2xl font-bold">Recent Invoices</h1>
-                  <div class="card mt-2">
+                  <div class="card card-body mt-2">
                     <div class="table-responsive">
-                      <table class="table theTable invoiceeTable dataTable">
+                      <table class="table theTable invoiceeTable" id="dataTable">
                         <thead>
+                          <th>S/N</th>
                           <th class="fontBold text-sm text-gray-500">Payer ID</th>
                           <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                          <th class="fontBold text-sm text-gray-500">Revenue Head</th>
                           <th class="fontBold text-sm text-gray-500">Office</th>
                           <th class="fontBold text-sm text-gray-500">Description</th>
-                          <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
                           <th class="fontBold text-sm text-gray-500">Amount paid</th>
                           <th class="fontBold text-sm text-gray-500">Invoice date</th>
                           <th class="fontBold text-sm text-gray-500">Due date</th>
                           <th class="fontBold text-sm text-gray-500">status</th>
                           <th></th>
                         </thead>
-                        <tbody id="showInvoice">
+                        <tbody id="showThem3">
 
 
                         </tbody>
@@ -266,16 +258,10 @@
     theAtivo.parentElement.classList.add("active")
   </script>
   <script src="./assets/vendor/js/menu.js"></script>
-  <!-- endbuild -->
 
-  <!-- Vendors JS -->
-
-  <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="./assets/js/dashboard.js"></script>
+  <script src="./assets/js/invoices.js"></script>
 </body>
 
 </html>

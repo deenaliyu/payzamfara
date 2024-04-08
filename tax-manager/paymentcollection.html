@@ -76,11 +76,20 @@
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Payment Collection</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
+            <div class="mt-4 flex gap-x-5 items-center">
+              <button class="button items-center flex gap-x-1" id="invReportd" onclick="exportData()">
+                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
+                Report</button>
 
-              <div class="avatar avatar-online">
-                <img src="./assets/img/avatars/1.png" alt class="h-[70px] w-[70px] rounded-circle" />
+
+              <div class="flex gap-x-5 items-center">
+                <p id="taxName" class="capitalize"></p>
+
+                <div class="avatar avatar-online">
+                  <img src="./assets/img/avatars/1.png" alt class="h-[70px] w-[70px] rounded-circle" />
+                </div>
               </div>
+
             </div>
 
           </div>
@@ -95,30 +104,62 @@
             <div class="card px-4">
               <h1 class="text-2xl text-[#282828] fontBold mt-4">Collection Report</h1>
               <hr class="text-[#F4F4F4] my-3">
+
               <div class="table-responsive p-3">
 
                 <table class="table theTable" id="dataTable">
                   <thead>
-                    <th class="fontBold text-sm text-gray-500">Payer ID</th>
-                    <th class="fontBold text-gray-500">Payment reference no.</th>
-                    <th class="fontBold text-gray-500">Payment for</th>
-                    <th class="fontBold text-gray-500">Amount paid</th>
-                    <th class="fontBold text-gray-500">Payment method</th>
-                    <th class="fontBold text-gray-500">Payment status</th>
-                    <th class="fontBold text-gray-500">Download</th>
+                    <tr class="text-center">
+                      <th></th>
+                      <th>MDAS</th>
+                      <th>Revenue Head</th>
+                      <th>Name</th>
+                      <th>Office</th>
+                      <th>Invoice Number</th>
+                      <th>Amount Paid</th>
+                      <th>Payment Channel</th>
+                      <th>Payment Refrence Number</th>
+                      <th>Receipt Number</th>
+                      <th>Payment Date</th>
+                      <th></th>
+                    </tr>
                   </thead>
-                  <tbody id="showPayment">
+                  <tbody id="showThem">
 
                   </tbody>
                 </table>
 
               </div>
+
               <div class="flex justify-center items-center mt-4" id="loader">
-                <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
               </div>
             </div>
 
           </div>
+
+
+          <table class="table invoiceTable hidden" id="invoiceTableFull">
+            <thead>
+              <tr class="text-center">
+                <th></th>
+                <th>MDAS</th>
+                <th>Revenue Head</th>
+                <th>Name</th>
+                <th>Office</th>
+                <th>Invoice Number</th>
+                <th>Amount Paid</th>
+                <th>Payment Channel</th>
+                <th>Payment Refrence Number</th>
+                <th>Receipt Number</th>
+                <th>Payment Date</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0" id="showThem2">
+
+            </tbody>
+          </table>
+
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
 
           </section>
@@ -134,46 +175,6 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
 
-  <div class="modal fade" id="notiModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Notifications</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
-        <div class="modal-body relative">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your TIN has been verified</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your complaint has been answered</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is due</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">clear</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- / Layout wrapper -->
-  <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
@@ -187,7 +188,6 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/session.js"></script>
   <!-- endbuild -->
-  <script src="../assets/js/paymentHistory.js"></script>
   <script>
     let theAtivo = document.querySelector(`.mdp`)
     theAtivo.parentElement.classList.add("active")
@@ -197,11 +197,7 @@
   <!-- Main JS -->
 
   <script src="./assets/js/main.js"></script>
-
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="./assets/js/paymentHistory.js"></script>
 </body>
 
 </html>

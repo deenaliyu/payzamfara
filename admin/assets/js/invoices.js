@@ -89,10 +89,7 @@ function displayData(userInvoices) {
             <td>${userInvoice.COL_3.replace(/,/g, '')}</td>
             <td>${userInvoice.COL_4}</td>
             <td>${userInvoice.first_name.replace(/,/g, '')} ${userInvoice.surname.replace(/,/g, '')}</td>
-<<<<<<< HEAD
             <td>${userInvoice.office_name}</td>
-=======
->>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
             <td>${userInvoice.invoice_number}</td>
             <td>&#8358; ${userInvoice.amount_paid}</td>
             <td>${userInvoice.date_created.split(" ")[0]}</td>

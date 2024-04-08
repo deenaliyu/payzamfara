@@ -165,52 +165,28 @@
           <form action="">
             <div class="form-group mb-3">
               <label>Name of Officer*</label>
-              <input type="text" class="form-control" placeholder="Enter the name of the Officer" />
+              <input type="text" class="form-control taxInput" data-name="fullname" required
+                placeholder="Enter the name of the Officer" />
             </div>
 
             <div class="form-group mb-3">
               <label>Email Address*</label>
-              <input type="email" class="form-control" placeholder="Enter the email address" />
+              <input type="email" class="form-control taxInput" data-name="email" required
+                placeholder="Enter the email address" />
             </div>
 
             <div class="form-group mb-3">
               <label>Contact*</label>
-              <input type="email" class="form-control" placeholder="+234 000 000 0000" />
+              <input type="email" class="form-control taxInput" data-name="phone" required
+                placeholder="+234 000 000 0000" />
             </div>
 
-            <div class="form-group mb-3">
-              <label>State *</label>
-              <select class="form-select"></select>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>LGA *</label>
-                  <select class="form-select"></select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label>ZONE *</label>
-                  <select class="form-select"></select>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="form-group mb-3">
-              <label>Address *</label>
-              <input type="text" class="form-control" placeholder="Enter the name of the Officer" />
-            </div>
           </form>
 
         </div>
         <div class="modal-footer ">
-          <button type="button" class="btn btn-prime w-full" id="bulkCreate">Create</button>
-          <div id="msg_box22" class="w-full">
-
-          </div>
+          <button type="button" class="btn btn-prime w-full" id="createTaxOfficers">Create</button>
+          <div id="msg_box" class="w-full"></div>
         </div>
       </div>
     </div>
@@ -229,7 +205,7 @@
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/session.js"></script>
   <!-- endbuild -->
   <script>
@@ -239,13 +215,9 @@
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->
-
   <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/revenueofficers.js"></script>
 
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

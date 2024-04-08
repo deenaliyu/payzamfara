@@ -157,3 +157,54 @@ $("#LoginMda").on("click", (e) => {
   });
 
 })
+
+$("#LoginTax").on("click", (e) => {
+
+  let emailAdd = document.querySelector("#emailtax").value
+  let password = document.querySelector("#passwordtax").value
+  e.preventDefault()
+  $("#msg_box1").html(`
+    <div class="flex justify-center items-center mt-4">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  `)
+
+  $("#LoginTax").addClass("hidden")
+  $.ajax({
+    type: "GET",
+    url: `${HOST}/?loginTaxManager&email=${emailAdd}&password=${password}`,
+    dataType: 'json',
+    success: function (data) {
+      console.log(data);
+      if (data.status === 2) {
+        $("#msg_box1").html(`
+          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
+        `)
+        $("#LoginTax").removeClass("hidden")
+
+      } else if (data.status === 1) {
+        $("#msg_box1").html(`
+          <p class="text-success text-center mt-4 text-lg">${data.message}</p>
+        `)
+        localStorage.setItem("taxManagerDataPrime", JSON.stringify(data.user))
+        setTimeout(() => {
+          window.location.href = "./dashboard.html"
+        }, 1000);
+
+      } else if (data.status === 0) {
+        $("#msg_box1").html(`
+          <p class="text-warning text-center mt-4 text-base">${data.message}</p>
+        `)
+        $("#LoginTax").removeClass("hidden")
+      }
+    },
+    error: function (request, error) {
+      console.log(error);
+      $("#msg_box1").html(`
+        <p class="text-danger text-center mt-4 text-lg">An error occured !</p>
+      `)
+      $("#LoginTax").removeClass("hidden")
+    }
+  });
+
+})

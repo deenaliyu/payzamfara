@@ -1,4 +1,4 @@
-let userDATA = JSON.parse(localStorage.getItem("userDataPrime"))
+let userDATA = JSON.parse(localStorage.getItem("taxManagerDataPrime"))
 let lgaList = {
   Abia: [
     "Aba North",
@@ -856,43 +856,12 @@ let lgaList = {
 }
 
 function Profile() {
-  let userInfo = JSON.parse(window.localStorage.getItem("userDataPrime"));
+  let userInfo = JSON.parse(window.localStorage.getItem("taxManagerDataPrime"));
 
   $(".mainInfo").html(`
-    <h4 class="text-[18px] text-[#2E2F5B]">${userInfo.first_name} ${userInfo.surname}</h4>
-    <p class="text-[14px] text-[#667085] pt-2">Payer ID: ${userInfo.tax_number}</p>
+    <h4 class="text-[18px] text-[#2E2F5B]">${userInfo.office_name}</h4>
+    <p class="text-[14px] text-[#667085] pt-2">Zone: ${userInfo.office_type}</p>
   `)
-  $(".prof").html(`
-    <div class="flex justify-between md:w-[550px]">
-      <label class="w-[195px]">Tax Identification Number</label>
-      <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.tin}"
-          maxlength="15" />
-      </div>
-    </div>
-    <div class="flex justify-between md:w-[550px] mt-2 items-center">
-      <label class="w-[195px]">Category</label>
-      <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.category}"
-          maxlength="15" />
-      </div>
-    </div>
-    <div class="flex justify-between md:w-[550px] mt-2 items-center">
-      <label class="w-[195px]">Employment status</label>
-      <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.employment_status}"
-        maxlength="15" />
-      </div>
-    </div>
-
-    <div class="flex justify-between md:w-[550px] mt-2 items-center">
-      <label class="w-[195px]">Type of business</label>
-      <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.business_type}"
-        maxlength="15" />
-      </div>
-    </div>
-      `)
 
   $(".contactInfo").html(`
     <div class="flex justify-between md:w-[550px]">
@@ -905,14 +874,14 @@ function Profile() {
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
       <label class="w-[195px]">Phone number</label>
       <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.phone}"
+        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.contact}"
           maxlength="15" />
       </div>
     </div>
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
       <label class="w-[195px]">State</label>
       <select class="form-select mt-1 regInputs md:w-[454px]" id="selectState" data-name="state" required>
-        <option value="Akwa Ibom">Akwa Ibom</option>
+        <option value="Zamfara">Zamfara</option>
       </select>
     </div>
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
@@ -928,55 +897,13 @@ function Profile() {
       </div>
     </div>
   `)
+
   let profilo = ""
-  if (userInfo.tin === "") {
 
-    profilo += `
-      <div class="flex justify-between">
-        <label class="w-4/12">Tax Identification Number</label>
-        <div class="form-group w-8/12">
-          <input class="form-control mt-1 regInputs" type="text" value="${userInfo.tin}" maxlength="15" />
-        </div>
-      </div>
-    `
-
-  } else {
-
-  }
 
   profilo += `
-    
 
-    <div class="flex justify-between mt-2 items-center">
-      <label class="w-4/12">Employment status</label>
-      <select class="form-select mt-1 w-8/12 updtProf" data-name="employment_status" required>
-        <option value="" selected>-Select--</option>
-        <option value="Selfemployed">Self-employed</option>
-        <option value="Employee">Employee</option>
-        <option value="Worker">Worker</option>
-        <option value="Unemployed">Unemployed</option>
-      </select>
-    </div>
 
-    <div class="flex gap-x-10 mt-3 md:flex-nowrap sm:flex-wrap">
-      <p>Are you a business owner?</p>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="yes" name="flexRadioDefault" id="flexRadioDefault1">
-        <label class="form-check-label" for="flexRadioDefault1">Yes</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="no" name="flexRadioDefault" id="flexRadioDefault2"
-          checked>
-        <label class="form-check-label" for="flexRadioDefault2">No</label>
-      </div>
-    </div>
-    <div class="flex justify-between mt-2 items-center">
-      <label class="w-4/12">Type of business</label>
-      <select class="form-select mt-1 w-8/12 updtProf" data-name="business_type"  required>
-        <option value="" selected>-Select--</option>
-        <option value="Poultry">Poultry farming</option>
-      </select>
-    </div>
 
     <div class="flex justify-between mt-2">
       <label class="w-4/12">Email</label>
@@ -988,14 +915,14 @@ function Profile() {
     <div class="flex justify-between mt-2 items-center">
       <label class="w-4/12">Phone number</label>
       <div class="form-group w-8/12">
-        <input class="form-control mt-1 updtProf" data-name="phone" type="text" value="${userInfo.phone}" maxlength="15" />
+        <input class="form-control mt-1 updtProf" data-name="contact" type="text" value="${userInfo.contact}" maxlength="15" />
       </div>
     </div>
 
     <div class="flex justify-between mt-2 items-center">
       <label class="w-4/12">State</label>
       <select class="form-select mt-1 w-8/12 updtProf" id="selectState" data-name="state" required>
-        <option value="Akwa Ibom">Akwa Ibom</option>
+        <option value="Zamfara">Zamfara</option>
       </select>
     </div>
 
@@ -1023,22 +950,7 @@ function Profile() {
       <option value="${stst}">${stst}</option>
     `
   })
-  // stateSelect.addEventListener('change', function () {
-  //   let selectedState = $(this).val()
 
-  //   let arrStates = Object.values(lgaList)
-  //   let finalarrState = arrStates["AkwaIbom"]
-
-  //   lgaSelect.innerHTML = ''
-
-  //   finalarrState.forEach((opt, ii) => {
-  //     lgaSelect.innerHTML += `
-  //       <option value="${opt}">${opt}</option>
-  //     `
-  //   })
-
-
-  // })
 
 }
 
@@ -1056,38 +968,31 @@ $("#updateProfile").on("click", function (e) {
   $("#updateProfile").addClass("hidden")
 
   let obj = {
-    // id: userDATA.id,
-    ...userDATA
-  }
-  delete obj.verification_code;
-  delete obj.verification_status
-  delete obj.timeIn
-  delete obj.industry
-  delete obj.img
-  delete obj.password
-
-  let finalObj = {
+    endpoint: "updateTaxOffices",
+    data: {
+      "id": userDATA.id,
+      ...userDATA
+    }
 
   }
+  delete obj.id;
+  delete obj.time_in
 
   allInputs.forEach(allInput => {
     if (allInput.value === "") {
 
     } else {
-      obj[allInput.dataset.name] = allInput.value
-      finalObj[allInput.dataset.name] = allInput.value
+      obj.data[allInput.dataset.name] = allInput.value
     }
 
   })
-
-  console.log(finalObj)
-  let queryString = new URLSearchParams(obj).toString();
-  console.log(queryString)
+  // console.log(obj)
 
   $.ajax({
-    type: "GET",
-    url: `${HOST}?updateTaxPayer&${queryString}`,
+    type: "POST",
+    url: HOST,
     dataType: 'json',
+    data: JSON.stringify(obj),
     success: function (data) {
       console.log(data)
       if (data.status === 2) {
@@ -1098,13 +1003,12 @@ $("#updateProfile").on("click", function (e) {
 
       } else if (data.status === 1) {
         $("#msg_box").html(`
-          <p class="text-success text-center mt-4 text-lg">${data.message}</p>
+          <p class="text-success text-center mt-4 text-lg">${data.message} please Log In Again.</p>
         `)
-        let newObj = obj
-        localStorage.setItem("userDataPrime", JSON.stringify(obj))
+        localStorage.removeItem("taxManagerDataPrime")
 
         setTimeout(() => {
-          // window.location.reload()
+          window.location.href = "./index.html"
         }, 1000);
 
       }
@@ -1122,11 +1026,11 @@ $("#updateProfile").on("click", function (e) {
 
 let userDetails
 async function fetchUserDetails() {
-  const response = await fetch(`${HOST}?userProfile&id=${userDATA.id}`)
+  const response = await fetch(`${HOST}?getSingleTaxOffice&id=${userDATA.id}`)
   const userPrf = await response.json()
 
   // console.log(userPrf.user)
-  userDetails = userPrf.user
+  userDetails = userPrf.message[0]
 
   // $("#theProfImg").attr("src", userPrf.user.img)
   // $("#theProfImg2").attr("src", userPrf.user.img)
@@ -1185,7 +1089,7 @@ $("#updatePass").on("click", function (e) {
 
     $.ajax({
       type: "GET",
-      url: `${HOST}?userPassword&id=${userDATA.id}&password=${passField}`,
+      url: `${HOST}?updatePassTaxOfficer&id=${userDATA.id}&password=${passField}`,
       dataType: 'json',
       success: function (data) {
         console.log(data)
@@ -1202,8 +1106,8 @@ $("#updatePass").on("click", function (e) {
 
 
           setTimeout(() => {
-            localStorage.removeItem('userDataPrime');
-            window.location.href = "../signin.html"
+            localStorage.removeItem('taxManagerDataPrime');
+            window.location.href = "./index.html"
 
           }, 1000);
 
@@ -1249,7 +1153,7 @@ function profileChanged() {
 
 $("#updatePic").on("click", function () {
   let obj = {
-    "endpoint": "updatePix",
+    "endpoint": "updatePixTaxManager",
     "data": {
       "id": userDATA.id,
       "img": thePicUrl

@@ -58,12 +58,12 @@ $(".aside").html(`
         </a>
       </li>
       <h4 class="menu-link pl-8 mt-5">YOUR ACCOUNT</h4>
-      <li class="menu-item">
+      <!-- <li class="menu-item">
         <a href="support.html"  class="menu-link daso">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Help & Support</div>
         </a>
-      </li>
+      </li> -->
       <li class="menu-item">
         <a href="" id="logout" class="menu-link">
           <i class='menu-icon tf-icons bx bx-buildings' ></i>
@@ -73,7 +73,7 @@ $(".aside").html(`
     </ul>
 
 `);
-let userInfo2 = JSON.parse(window.localStorage.getItem("userDataPrime"));
+let userInfo2 = JSON.parse(window.localStorage.getItem("taxManagerDataPrime"));
 
 $(".navi")
   .html(`<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -110,31 +110,6 @@ if (profImg) {
     window.location.href = "profile.html"
   })
 }
-async function fetchUserDetails2() {
-
-
-  // console.log(userPrf.user)
-  try {
-    const response = await fetch(`${HOST}?userProfile&id=${userInfo2.id}`)
-    const userPrf = await response.json()
-    userDetails = userPrf.user
-    if (profImg) {
-      if (userInfo2.img === "") {
-        profImg.src = "./assets/img/userprofile.png"
-      } else {
-        profImg.src = userPrf.user.img
-      }
-    }
-    $("#theProfImg").attr("src", userPrf.user.img)
-    $("#theProfImg2").attr("src", userPrf.user.img)
-  } catch (error) {
-
-    console.log(error)
-  }
-
-}
-
-fetchUserDetails2()
 
 const currentYear = new Date().getFullYear();
 
@@ -179,7 +154,12 @@ $("#logout").on("click", function (e) {
 })
 
 function Profile() {
-  let userInfo = JSON.parse(window.localStorage.getItem("mdaDataPrime"));
+  let userInfo = JSON.parse(window.localStorage.getItem("taxManagerDataPrime"));
+
+  if(userInfo) {
+    $("#taxName").html(userInfo.office_name)
+  }
+
   let allProf = document.querySelector("#profilead");
   if (allProf) {
     allProf.innerHTML = `
