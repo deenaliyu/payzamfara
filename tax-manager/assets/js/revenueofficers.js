@@ -114,11 +114,11 @@ $("#createTaxOfficers").on("click", () => {
 
 function editMdaFunc(e) {
   let editaID = e.dataset.userid
-  sessionStorage.setItem("taxUpdate", editaID)
+  sessionStorage.setItem("taxUpdateOff", editaID)
 
   let theMDA = ALLMDA.message.filter(dd => dd.id === editaID)[0]
 
-  console.log(theMDA)
+  // console.log(theMDA)
   let allInputss = document.querySelectorAll(".taxInput3")
 
   allInputss.forEach((inpu) => {
@@ -127,20 +127,20 @@ function editMdaFunc(e) {
   })
 }
 
-$("#updateTaxOffice").on("click", () => {
+$("#updateTaxOfficer").on("click", () => {
 
-  let theMdaId = sessionStorage.getItem("taxUpdate")
+  let theMdaId = sessionStorage.getItem("taxUpdateOff")
 
   $("#msg_box2").html(`
       <div class="flex justify-center items-center mt-4">
         <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
       </div>
     `)
-  $("#updateTaxOffice").addClass("hidden")
+  $("#updateTaxOfficer").addClass("hidden")
 
   let allInputs = document.querySelectorAll(".taxInput3")
   let obj = {
-    endpoint: "updateTaxOffices",
+    endpoint: "updateTaxOfficer",
     data: {
       "id": theMdaId
     }
@@ -161,15 +161,15 @@ $("#updateTaxOffice").on("click", () => {
         $("#msg_box2").html(`
             <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
           `)
-        $("#updateTaxOffice").removeClass("hidden")
+        $("#updateTaxOfficer").removeClass("hidden")
 
       } else if (data.status === 1) {
         $("#msg_box2").html(`
             <p class="text-success text-center mt-4 text-lg">${data.message}</p>
           `)
-        $("#updateTaxOffice").removeClass("hidden")
+        $("#updateTaxOfficer").removeClass("hidden")
         setTimeout(() => {
-          $('#updateTaxOffice').modal('hide');
+          $('#updateTaxOfficer').modal('hide');
           window.location.reload()
         }, 1000);
 
@@ -179,7 +179,7 @@ $("#updateTaxOffice").on("click", () => {
       $("#msg_box2").html(`
           <p class="text-danger text-center mt-4 text-lg">An error occured !</p>
         `)
-      $("#updateTaxOffice").removeClass("hidden")
+      $("#updateTaxOfficer").removeClass("hidden")
       console.log(error);
     }
   });
