@@ -24,12 +24,15 @@ async function fetchInvoice() {
   $("#loader").css("display", "none");
   if (userInvoices.status === 1) {
     AllInvoiceData = userInvoices.message
+    $("#totalInvoices").html(userInvoices.message.length)
 
     displayData(userInvoices.message.reverse())
     displayData2(getFirstNItems(userInvoices.message.reverse(), 20))
+    
   } else {
     // $("#showInvoice").html("<tr></tr>");
     $("#dataTable").DataTable();
+    $("#totalInvoices").html(0)
   }
 }
 

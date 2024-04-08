@@ -79,3 +79,34 @@ fetchInvoice().then((uu) => {
   $("#dataTable").DataTable();
 });
 
+function exportData() {
+  var csv = [];
+  var table = document.getElementById("invoiceTableFull");
+
+  // Add header to CSV
+  var header = [];
+  for (var h = 0; h < table.rows[0].cells.length; h++) {
+    header.push(table.rows[0].cells[h].innerText);
+  }
+  csv.push(header.join(','));
+
+  // Add rows to CSV
+  for (var i = 1; i < table.rows.length; i++) {
+    var row = [], cols = table.rows[i].querySelectorAll('td, th');
+
+    for (var j = 0; j < cols.length; j++) {
+      row.push(cols[j].innerText);
+    }
+
+    csv.push(row.join(','));
+  }
+
+  // Download CSV file
+  var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', 'collection_report');
+  document.body.appendChild(link);
+  link.click();
+}

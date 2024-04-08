@@ -181,22 +181,21 @@ async function getExpectedMonthlyRevenue() {
 
 getExpectedMonthlyRevenue()
 
-async function getAllInvoces() {
+async function fetchTaxOfficers() {
 
-  try {
-    const response = await fetch(`${HOST}/?getInvoiceByTaxOffice&id=${USERINFO.id}`)
-    const MDAs = await response.json()
-    // console.log(MDAs.message[0].total)
+  const response = await fetch(`${HOST}/?getAllTaxOfficers`)
+  const taxPayers = await response.json()
 
-    $("#totalInvoices").html(MDAs.message.length)
 
-  } catch (error) {
-    $("#totalInvoices").html(0)
-    console.log(error)
+  $("#loader").css("display", "none")
+
+  if (taxPayers.status === 0) {
+    $("#revOfficers").html(0)
+  } else {
+    $("#revOfficers").html(taxPayers.message.length)
+
   }
-
-
 
 }
 
-getAllInvoces()
+fetchTaxOfficers()

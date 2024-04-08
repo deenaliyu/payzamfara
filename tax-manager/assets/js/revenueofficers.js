@@ -10,11 +10,11 @@ function formatMoney(amount) {
 
 let ALLMDA = ""
 
-async function fetchTsxOfficers() {
+async function fetchTaxOfficers() {
   $("#showreport").html("")
   $("#loader").css("display", "flex")
 
-  const response = await fetch(`${HOST}/?getAllTaxOffices`)
+  const response = await fetch(`${HOST}/?getAllTaxOfficers`)
   const taxPayers = await response.json()
 
   ALLMDA = taxPayers
@@ -27,22 +27,19 @@ async function fetchTsxOfficers() {
   } else {
     taxPayers.message.reverse().forEach((taxPayer, i) => {
 
-      $("#showTheList").append(`
-          <tr>
-            <td>${i + 1}</td>
-            <td>${taxPayer.office_name}</td>
-            <td>${taxPayer.number_of_invoices}</td>
-            <td>${formatMoney(taxPayer.value_of_invoices)}</td>
-            <td>${taxPayer.time_in.split(' '[0])}</td>
-            <td>${taxPayer.number_of_invoices_paid}</td>
-            <td>${formatMoney(taxPayer.value_of_invoices_paid)}</td>
-            <td>${taxPayer.status === "approved" ? '<span class="badge bg-primary">Active</span>' : '<span class="badge bg-warning">Pending</span>'}</td>
-            <td>
-              <div>
-                <button data-bs-toggle="modal" data-bs-target="#editRev" data-userid="${taxPayer.id}" onclick="editMdaFunc(this)"><iconify-icon class="cursor-pointer" icon="fa6-regular:pen-to-square"></iconify-icon></button>
-              </div>
-            </td>
-          </tr>
+      $("#showreport").append(`
+        <tr>
+          <td>${i+1}</td>
+          <td>${taxPayer.fullname}</td>
+          <td>${USERINFO.office_name}</td>
+          <td>${taxPayer.phone}</td>
+          <td>${taxPayer.email}</td>
+          <td>
+            <button data-bs-toggle="modal" data-bs-target="#editRev" data-userid="${taxPayer.id}" onclick="editMdaFunc(this)">
+              <iconify-icon class="cursor-pointer" icon="fa6-regular:pen-to-square"></iconify-icon>
+            </button>
+          </td>
+        </tr>
         `)
 
     });
@@ -51,7 +48,7 @@ async function fetchTsxOfficers() {
 
 }
 
-fetchTsxOfficers().then(ee => {
+fetchTaxOfficers().then(ee => {
   $("#dataTable").DataTable();
 })
 

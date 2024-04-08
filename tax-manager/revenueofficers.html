@@ -76,7 +76,8 @@
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Revenue Officers</h1>
             </div>
 
-            <div class="mt-4 flex gap-x-5">
+            <div class="flex gap-x-5 items-center">
+              <p id="taxName" class="capitalize"></p>
 
               <div class="avatar avatar-online">
                 <img src="./assets/img/avatars/1.png" alt class="h-[70px] w-[70px] rounded-circle" />
@@ -103,35 +104,18 @@
                     <th class="fontBold text-sm text-gray-500"></th>
                     <th class="fontBold text-gray-500">officer Name</th>
                     <th class="fontBold text-gray-500">Zone</th>
-                    <th class="fontBold text-gray-500">LGA</th>
                     <th class="fontBold text-gray-500">Phone</th>
                     <th class="fontBold text-gray-500">Email</th>
-                    <th class="fontBold text-gray-500">Status</th>
                     <th class="fontBold text-gray-500">Manage</th>
                   </thead>
-                  <tbody id="showPayment">
-                    <tr>
-                      <td>1</td>
-                      <td>Shinkafi LGA Officer</td>
-                      <td>Kaura Namoda Zonal</td>
-                      <td>Shinkafi</td>
-                      <td>08012345678</td>
-                      <td>info@shikafilgaofficer.com</td>
-                      <td><span class="badge bg-primary">Active</span></td>
-                      <td>
-                        <div>
-                          <iconify-icon class="cursor-pointer" icon="fa6-regular:pen-to-square"></iconify-icon>
-                          <iconify-icon class="cursor-pointer"
-                            icon="material-symbols:delete-outline-sharp"></iconify-icon>
-                        </div>
-                      </td>
-                    </tr>
+                  <tbody id="showreport">
+                    
                   </tbody>
                 </table>
 
               </div>
               <div class="flex justify-center items-center mt-4" id="loader">
-                <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
               </div>
             </div>
 
@@ -218,7 +202,7 @@
             <div class="form-group mb-3">
               <label>Contact*</label>
               <input type="email" class="form-control taxInput3" data-name="phone" required
-                placeholder="+234 000 000 0000" />
+                placeholder="080 000 0000" />
             </div>
 
           </form>
