@@ -15,7 +15,7 @@ async function fetchInvoice() {
   $("#loader").css("display", "flex");
 
   const response = await fetch(
-    `${HOST}?getInvoiceByTaxOffice&id=${USERINFO2.id}`
+    `${HOST}?getInvoiceByTaxOffice&id=${USERINFO2.tax_office_id}`
   );
   const userInvoices = await response.json();
   // console.log(userInvoices);

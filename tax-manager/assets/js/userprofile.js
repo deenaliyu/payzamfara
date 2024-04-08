@@ -970,7 +970,7 @@ $("#updateProfile").on("click", function (e) {
   let obj = {
     endpoint: "updateTaxOffices",
     data: {
-      "id": userDATA.id,
+      "id": userDATA.tax_office_id,
       ...userDATA
     }
 
@@ -1026,7 +1026,7 @@ $("#updateProfile").on("click", function (e) {
 
 let userDetails
 async function fetchUserDetails() {
-  const response = await fetch(`${HOST}?getSingleTaxOffice&id=${userDATA.id}`)
+  const response = await fetch(`${HOST}?getSingleTaxOffice&id=${userDATA.tax_office_id}`)
   const userPrf = await response.json()
 
   // console.log(userPrf.user)
@@ -1089,7 +1089,7 @@ $("#updatePass").on("click", function (e) {
 
     $.ajax({
       type: "GET",
-      url: `${HOST}?updatePassTaxOfficer&id=${userDATA.id}&password=${passField}`,
+      url: `${HOST}?updatePassTaxOfficer&id=${userDATA.tax_office_id}&password=${passField}`,
       dataType: 'json',
       success: function (data) {
         console.log(data)
@@ -1155,7 +1155,7 @@ $("#updatePic").on("click", function () {
   let obj = {
     "endpoint": "updatePixTaxManager",
     "data": {
-      "id": userDATA.id,
+      "id": userDATA.tax_office_id,
       "img": thePicUrl
     }
 

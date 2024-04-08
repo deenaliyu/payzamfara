@@ -75,7 +75,7 @@ async function getMonthlyRevenue() {
   `)
 
   try {
-    const response = await fetch(`${HOST}?getMonthlyRevenueTaxManager&id=${USERINFO.id}&sort=expected`);
+    const response = await fetch(`${HOST}?getMonthlyRevenueTaxManager&id=${USERINFO.tax_office_id}&sort=expected`);
     const userAnalytics = await response.json();
 
     // console.log(userAnalytics)
@@ -138,7 +138,7 @@ async function getExpectedMonthlyRevenue() {
       `)
 
   try {
-    const response = await fetch(`${HOST}?getMonthlyRevenueTaxManager&id=${USERINFO.id}`);
+    const response = await fetch(`${HOST}?getMonthlyRevenueTaxManager&id=${USERINFO.tax_office_id}`);
     const userAnalytics = await response.json();
 
     // console.log(userAnalytics)
@@ -183,7 +183,7 @@ getExpectedMonthlyRevenue()
 
 async function fetchTaxOfficers() {
 
-  const response = await fetch(`${HOST}/?getAllTaxOfficers`)
+  const response = await fetch(`${HOST}/?getAllTaxOfficers&id=${USERINFO.tax_office_id}`)
   const taxPayers = await response.json()
 
 
