@@ -146,8 +146,8 @@ $("#logout").on("click", function (e) {
         'Your Account have been successfully Logged out.',
         'success'
       )
-      localStorage.removeItem('userDataPrime');
-      window.location.href = "../index.html"
+      localStorage.removeItem('taxManagerDataPrime');
+      window.location.href = "./index.html"
     }
   })
 
