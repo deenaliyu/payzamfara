@@ -14,7 +14,7 @@ async function fetchTaxOfficers() {
   $("#showreport").html("")
   $("#loader").css("display", "flex")
 
-  const response = await fetch(`${HOST}/?getAllTaxOfficers`)
+  const response = await fetch(`${HOST}/?getAllTaxOfficers&id=${USERINFO.id}`)
   const taxPayers = await response.json()
 
   ALLMDA = taxPayers
