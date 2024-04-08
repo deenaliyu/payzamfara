@@ -137,7 +137,7 @@ $("#updateTaxOfficer").on("click", () => {
 
   let allInputs = document.querySelectorAll(".taxInput3")
   let obj = {
-    endpoint: "updateTaxOfficer",
+    endpoint: "updateTaxOfficers",
     data: {
       "id": theMdaId
     }
