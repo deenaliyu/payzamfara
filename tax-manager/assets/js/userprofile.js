@@ -860,7 +860,7 @@ function Profile() {
 
   $(".mainInfo").html(`
     <h4 class="text-[18px] text-[#2E2F5B]">${userInfo.office_name}</h4>
-    <p class="text-[14px] text-[#667085] pt-2">Zone: ${userInfo.office_type}</p>
+    <p class="text-[14px] text-[#667085] pt-2">Zone: ${userInfo.office_name}</p>
   `)
 
   $(".contactInfo").html(`
@@ -874,7 +874,7 @@ function Profile() {
     <div class="flex justify-between md:w-[550px] mt-2 items-center">
       <label class="w-[195px]">Phone number</label>
       <div class="form-group md:w-[454px] w-full">
-        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.contact}"
+        <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.phone}"
           maxlength="15" />
       </div>
     </div>
@@ -915,7 +915,7 @@ function Profile() {
     <div class="flex justify-between mt-2 items-center">
       <label class="w-4/12">Phone number</label>
       <div class="form-group w-8/12">
-        <input class="form-control mt-1 updtProf" data-name="contact" type="text" value="${userInfo.contact}" maxlength="15" />
+        <input class="form-control mt-1 updtProf" data-name="contact" type="text" value="${userInfo.phone}" maxlength="15" />
       </div>
     </div>
 
