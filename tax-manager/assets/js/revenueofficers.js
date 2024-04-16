@@ -35,7 +35,7 @@ async function fetchTaxOfficers() {
           <td>${taxPayer.phone}</td>
           <td>${taxPayer.email}</td>
           <td>
-            <button data-bs-toggle="modal" data-bs-target="#editRev" data-userid="${taxPayer.tax_office_id}" onclick="editMdaFunc(this)">
+            <button data-bs-toggle="modal" data-bs-target="#editRev" data-userid="${taxPayer.id}" onclick="editMdaFunc(this)">
               <iconify-icon class="cursor-pointer" icon="fa6-regular:pen-to-square"></iconify-icon>
             </button>
           </td>
