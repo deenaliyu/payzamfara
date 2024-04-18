@@ -5,6 +5,8 @@ $("#LGAaas").select2({
   dropdownParent: $('#createRev')
 });
 
+
+
 function formatMoney(amount) {
 return parseFloat(amount).toLocaleString('en-US', {
   style: 'currency',
@@ -127,13 +129,26 @@ sessionStorage.setItem("taxUpdate", editaID)
 
 let theMDA = ALLMDA.message.filter(dd => dd.id === editaID)[0]
 
-console.log(theMDA)
+//   console.log(theMDA)
 let allInputss = document.querySelectorAll(".taxInput3")
 
 allInputss.forEach((inpu) => {
   let ddset = inpu.dataset.name
   inpu.value = theMDA[ddset]
 })
+
+$(".LGAaas2").select2({
+  placeholder: "Select LGA",
+  allowClear: true,
+  maximumSelectionLength: 14,
+  dropdownParent: $('#editRev')
+})
+
+var optionsToSelect = theMDA.lga.split('~');
+optionsToSelect.forEach(function(option) {
+  $('.LGAaas2').append('<option value="' + option + '" selected="selected">' + option + '</option>');
+});
+$('.LGAaas2').trigger('change');
 }
 
 $("#updateTaxOffice").on("click", () => {
@@ -157,7 +172,14 @@ let obj = {
 allInputs.forEach(allInput => {
   obj.data[allInput.dataset.name] = allInput.value
 })
-console.log(obj)
+
+let lgasssData = $('.LGAaas2').select2('data');
+let lgaArr = []
+lgasssData.forEach(lgg => {
+  lgaArr.push(lgg.text)
+})
+obj.data['lga'] = lgaArr.join('~') 
+//   console.log(obj)
 
 $.ajax({
   type: "POST",
