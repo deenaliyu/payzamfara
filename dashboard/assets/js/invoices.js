@@ -1,6 +1,6 @@
 let USER_SESSION = localStorage.getItem("MDAINFO")
-  finalUSER_SESSION = JSON.parse(USER_SESSION)
-  let mdaID = finalUSER_SESSION.fullname
+finalUSER_SESSION = JSON.parse(USER_SESSION)
+let mdaID = finalUSER_SESSION.fullname
 
 async function fetchInvoice() {
 
@@ -89,3 +89,4 @@ function exportData() {
   /* download the data file named "Stock_Price_Report.csv" */
   link.click();
 }
+

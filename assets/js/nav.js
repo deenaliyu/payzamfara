@@ -3,7 +3,7 @@ function hardRefresh() {
     window.location.reload(true);
 }
 // hardRefresh();
-let HOST = "https://payzamfara.com/php/index.php"
+let HOST = "https://test.payzamfara.com/php/index.php"
 
 let THE_SESSION = localStorage.getItem("userDataPrime")
 

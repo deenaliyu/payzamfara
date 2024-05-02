@@ -114,6 +114,15 @@
                     Paid Invoice
                   </button>
                 </li>
+
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="expired-invoice-tab" data-bs-toggle="pill"
+                    data-bs-target="#expired-invoice" type="button" role="tab" aria-controls="expired-invoice"
+                    aria-selected="false">
+                    Expired Invoice
+                  </button>
+                </li>
+
               </ul>
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -138,9 +147,10 @@
                     </table>
                   </div>
                   <div class="flex justify-center items-center mt-4" id="loader">
-                    <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
                   </div>
                 </div>
+
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                   <div class="table-responsive">
                     <table class="table theTable invoiceeTable dataTable">
@@ -188,6 +198,36 @@
                     <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
                   </div>
                 </div>
+
+
+                <!-- EXPIRED INVOICE -->
+
+                <div class="tab-pane fade" id="expired-invoice" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="table-responsive">
+                    <table class="table theTable invoiceeTable" id="dataTable4">
+                      <thead>
+                        <th class="fontBold text-sm text-gray-500">Payer ID</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice No.</th>
+                        <th class="fontBold text-sm text-gray-500">Office</th>
+                        <th class="fontBold text-sm text-gray-500">Description</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice Amount</th>
+                        <th class="fontBold text-sm text-gray-500">Amount paid</th>
+                        <th class="fontBold text-sm text-gray-500">Invoice date</th>
+                        <th class="fontBold text-sm text-gray-500">Due date</th>
+                        <th class="fontBold text-sm text-gray-500">status</th>
+                      </thead>
+                      <tbody id="showInvoiceExpired">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="flex justify-center items-center mt-4" id="loader2">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -299,7 +339,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
   <!-- endbuild -->
-  <script src="../assets/js/invoicess.js?v=1.1"></script>
+  <script src="../assets/js/invoicess.js"></script>
   <script>
     let theAtivo = document.querySelector(`.dae`)
     theAtivo.parentElement.classList.add("active")
@@ -309,11 +349,6 @@
   <!-- Main JS -->
 
   <script src="./assets/js/main.js"></script>
-
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>
