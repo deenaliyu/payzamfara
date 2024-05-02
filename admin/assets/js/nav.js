@@ -3,7 +3,7 @@ function hardRefresh() {
     window.location.reload(true);
 }
 // hardRefresh();
-let HOST = "https://payzamfara.com/php/index.php";
+let HOST = "https://test.payzamfara.com/php/index.php";
 // let HOST = "https://useibs.com/payzamfara/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
 
@@ -59,6 +59,12 @@ $(".aside").html(`
           <li class="menu-item">
             <a href="invoice.html" class="menu-link">
               <div data-i18n="Basic Inputs">Invoice Report</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="expiredinvoice.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Expired Invoice</div>
             </a>
           </li>
 

@@ -248,6 +248,9 @@ async function fetchAnalytics() {
     $("#total_amount").html(userAnalytics.total_invoice_paid.toLocaleString())
     $("#reg_taxP").html(userAnalytics.total_user.toLocaleString())
 
+    $("#total_numberE").html(userAnalytics.total_expired_invoice.toLocaleString())
+    $("#total_amountE").html(userAnalytics.total_expired_invoice_amount.toLocaleString())
+
     let tt = parseFloat(userAnalytics.total_amount_paid);
     let ti = parseFloat(userAnalytics.total_amount_invoiced);
    

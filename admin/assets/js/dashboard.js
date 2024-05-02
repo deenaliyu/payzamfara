@@ -14,10 +14,10 @@ async function fetchGraph() {
 
   const response = await fetch(`${HOST}/?invoicesPaidBeforeDue`)
   const MDAs = await response.json()
-console.log(MDAs.message.on_time_percentage)
-let value2 = parseInt(MDAs.message.on_time_percentage)
-let valuei = value2/100
-// console.log(valuei)
+  console.log(MDAs.message.on_time_percentage)
+  let value2 = parseInt(MDAs.message.on_time_percentage)
+  let valuei = value2 / 100
+  // console.log(valuei)
 
   var chartDom = document.getElementById('gauge-graph');
   var myChart = echarts.init(chartDom);
@@ -118,7 +118,7 @@ fetchGraph()
 
 function createGuageGraph() {
 
-  
+
 
 }
 
