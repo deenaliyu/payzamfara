@@ -124,6 +124,27 @@ $(".aside").html(`
       </li>
 
       <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link paye-manager-nav menu-toggle dggg">
+          <iconify-icon icon="mdi:account-payment-outline" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">PAYE Manager</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="paye-assessments.html?type=private" class="menu-link">
+              <div data-i18n="Basic Inputs">Generated Assessments</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="paye-manager.html?type=private" class="menu-link">
+              <div data-i18n="Basic Inputs">Organizations</div>
+            </a>
+          </li>
+        </ul>  
+      </li>
+
+      <li class="menu-item">
         <a href="enumeration.html" class="menu-link enu">
         <i class='menu-icon tf-icons bx bxs-group' ></i>
           <div data-i18n="Basic">Enumeration</div>
