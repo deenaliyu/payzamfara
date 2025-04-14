@@ -1,13 +1,13 @@
 function hardRefresh() {
-    // This will reload the page and bypass the cache, similar to a hard refresh
-    window.location.reload(true);
+  // This will reload the page and bypass the cache, similar to a hard refresh
+  window.location.reload(true);
 }
 // hardRefresh();
-let HOST = "https://test.payzamfara.com/php/index.php";
-// let HOST = "https://useibs.com/payzamfara/php/index.php";
+// let HOST = "https://test.payzamfara.com/php/index.php";
+let HOST = "https://payzamfara.com/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
 
-document.title="Payzamfara";
+document.title = "Payzamfara";
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -74,15 +74,15 @@ $(".aside").html(`
             </a>
           </li>
 
-          ${userInfo2.email === "primeguage@gmail.com" ? 
-          `
+          ${userInfo2.email === "primeguage@gmail.com" ?
+    `
             <!--<li class="menu-item">
               <a href="settlement.html" class="menu-link">
                 <div data-i18n="Input groups">Settlement Report</div>
               </a>
             </li>-->
-          ` 
-          : ''} 
+          `
+    : ''} 
           
           
         </ul>
@@ -100,6 +100,27 @@ $(".aside").html(`
         <i class='menu-icon tf-icons bx bxs-buildings' ></i>
           <div data-i18n="Basic">Tax Office Manager</div>
         </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link direct-assessment menu-toggle dggg">
+          <iconify-icon icon="fluent-mdl2:assessment-group" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">Direct Assessment</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="direct-assessment.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Direct Assessment</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="direct-invoices.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Direct Assessment Invoices</div>
+            </a>
+          </li>
+        </ul>  
       </li>
 
       <li class="menu-item">
@@ -209,19 +230,19 @@ $(".datem").html(currentDate.toLocaleDateString());
 let logoutTimeout;
 
 function startLogoutTimer() {
-    // Set the timeout to 10 minutes (600,000 milliseconds)
-    logoutTimeout = setTimeout(logout, 600000);
+  // Set the timeout to 10 minutes (600,000 milliseconds)
+  logoutTimeout = setTimeout(logout, 600000);
 }
 
 function resetLogoutTimer() {
-    clearTimeout(logoutTimeout);
-    startLogoutTimer();
+  clearTimeout(logoutTimeout);
+  startLogoutTimer();
 }
 
 function logout() {
   localStorage.removeItem("adminDataPrime");
-    // alert('You have been logged out due to inactivity.');
-    window.location.href = "./index.html";
+  // alert('You have been logged out due to inactivity.');
+  window.location.href = "./index.html";
 }
 
 // Attach event listeners to reset the logout timer on user activity
@@ -1258,7 +1279,7 @@ function convertNumberToWords(number) {
   if (fraction > 0) {
     output += " naira and";
     output += " " + numberToWords(fraction);
-    
+
     output += " Kobo"
   }
 
@@ -1418,44 +1439,44 @@ function numberToWords(num) {
   const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 
   function convertLessThanOneThousand(n) {
-      let word = '';
-      if (n >= 100) {
-          word += ones[Math.floor(n / 100)] + ' hundred ';
-          n %= 100;
-      }
-      if (n >= 20) {
-          word += tens[Math.floor(n / 10)] + ' ';
-          n %= 10;
-      }
-      if (n > 0) {
-          if (n < 10) word += ones[n] + ' ';
-          else word += teens[n - 10] + ' ';
-      }
-      return word.trim();
+    let word = '';
+    if (n >= 100) {
+      word += ones[Math.floor(n / 100)] + ' hundred ';
+      n %= 100;
+    }
+    if (n >= 20) {
+      word += tens[Math.floor(n / 10)] + ' ';
+      n %= 10;
+    }
+    if (n > 0) {
+      if (n < 10) word += ones[n] + ' ';
+      else word += teens[n - 10] + ' ';
+    }
+    return word.trim();
   }
 
   if (num === 0) return 'zero';
 
   let words = '';
   if (num < 0) {
-      words += 'negative ';
-      num = Math.abs(num);
+    words += 'negative ';
+    num = Math.abs(num);
   }
 
   if (num >= 1000000000) {
-      words += convertLessThanOneThousand(Math.floor(num / 1000000000)) + ' billion ';
-      num %= 1000000000;
+    words += convertLessThanOneThousand(Math.floor(num / 1000000000)) + ' billion ';
+    num %= 1000000000;
   }
   if (num >= 1000000) {
-      words += convertLessThanOneThousand(Math.floor(num / 1000000)) + ' million ';
-      num %= 1000000;
+    words += convertLessThanOneThousand(Math.floor(num / 1000000)) + ' million ';
+    num %= 1000000;
   }
   if (num >= 1000) {
-      words += convertLessThanOneThousand(Math.floor(num / 1000)) + ' thousand ';
-      num %= 1000;
+    words += convertLessThanOneThousand(Math.floor(num / 1000)) + ' thousand ';
+    num %= 1000;
   }
   if (num > 0) {
-      words += convertLessThanOneThousand(num);
+    words += convertLessThanOneThousand(num);
   }
 
   return words.trim();
