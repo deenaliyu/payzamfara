@@ -1,328 +1,327 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
-    data-template="vertical-menu-template-free">
+  data-template="vertical-menu-template-free">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>PlateauIGR</title>
+  <title>Payzamfara</title>
 
-    <meta name="description" content="" />
+  <meta name="description" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css" />
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/css/dataTable.css">
-    <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="./assets/css/demo.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <!-- Page CSS -->
+  <!-- Page CSS -->
 
-    <!-- Helpers -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Helpers -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="./assets/vendor/js/helpers.js"></script>
+  <script src="./assets/vendor/js/helpers.js"></script>
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="./assets/js/config.js"></script>
-    <script src="https://cdn.tiny.cloud/1/a2nnryhuz1r1qtqf4ap5nkr1msakmeqobebopr1d2o3nfx1h/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="./assets/js/config.js"></script>
+  <script src="https://cdn.tiny.cloud/1/a2nnryhuz1r1qtqf4ap5nkr1msakmeqobebopr1d2o3nfx1h/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"></script>
 
-    <style>
-        #last-button {
-            background: white;
-            width: 380px;
-            color: #000;
-            border: 3px solid #CDA545;
-            border-radius: 100px;
-            padding: 10px 20px;
-            text-align: center;
-        }
+  <style>
+    #last-button {
+      background: white;
+      width: 380px;
+      color: #025826;
+      border: 3px solid #025826;
+      border-radius: 100px;
+      padding: 10px 20px;
+      text-align: center;
+    }
 
-        #lastly-button {
-            background-color: #CDA545;
-            width: 380px;
-            color: #000 !important;
-            border: 3px solid var(--primaryCol);
-            border-radius: 100px;
-            padding: 10px 20px;
-            text-align: center;
-        }
-    </style>
+    #lastly-button {
+      background-color: #025826;
+      width: 380px;
+      color: #fff !important;
+      border: 3px solid var(--primaryCol);
+      border-radius: 100px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
 
 
-    <header>
-        <div class="flex gap-2 items-center p-3 border-b">
-            <img src="./assets/img/logo.png" class="w-[50px]" alt="">
-            <p class="text-md fontBold">Plateau IGR Portal</p>
+  <header>
+    <div class="flex gap-2 items-center p-3 border-b">
+      <img src="./assets/img/logo.png" class="w-[50px]" alt="">
+      <p class="text-md fontBold">Plateau IGR Portal</p>
+    </div>
+
+  </header>
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="w-3/12 md:block hidden bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="flex px-1 h-full">
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/bodyscr1.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/bodyscr2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/bodyscr3.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/bodyscr3.png" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-center overflow-y-scroll md:px-10 px-4">
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="history.go(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
         </div>
 
-    </header>
-    <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+        <form action="" class="md:w-[60%] w-[80%]">
+          <div id="text-color">
+            <h1 class="fontBold text-3xl">Register</h1>
+            <h1 class="mb-10 mt-3">Personal Details</h1>
+          </div>
 
-        <div class="w-3/12 md:block hidden bg-[#F9FAFB] p-3">
+          <div class="form-group mb-3">
+            <label for="tin/email">Enter Tin or Email*</label>
+            <input type="text" class="form-control" id="tinOrEmail" required>
+          </div>
 
-            <div class="flex px-1 h-full">
-                <div class="flex px-1 h-full">
-                    <div class="mt-5 imgTabs">
-                        <img src="./assets/img/bodyscr1.png" />
-                    </div>
-                    <div class="mt-5 imgTabs">
-                        <img src="./assets/img/bodyscr2.png" />
-                    </div>
-                    <div class="mt-5 imgTabs">
-                        <img src="./assets/img/bodyscr3.png" />
-                    </div>
-                    <div class="mt-5 imgTabs">
-                        <img src="./assets/img/bodyscr3.png" />
-                    </div>
+          <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
+            <button type="button" id="last-button" onclick="fillManually()">Fill Manually</button>
+            <button id="lastly-button" onclick="nextPrev(1)" class="btn-only" type="button">Fetch
+              Details</button>
+          </div>
+          <div id="msg_box001"></div>
 
-                </div>
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="history.go(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 w-8/12">
+
+          <h1 class="fontBold text-xl">Register</h1>
+          <p class="mt-2 mb-4">Basic Information</p>
+
+          <div class="form-group mb-3">
+            <label for="">Name of Organization*</label>
+            <input type="text" class="form-control w-full enumInput" data-name="fullname" required>
+          </div>
+
+          <div class="flex mb-4 gap-2">
+            <div class="form-group w-full">
+              <label for="">Sector*</label>
+              <select class="form-select payInputs enumInput" id="sectorSelect" data-name="sector">
+                <option value="" selected>Select</option>
+              </select>
             </div>
+
+            <div class="form-group w-full">
+              <label for="">Industry*</label>
+              <select name="" class="form-select payInputs enumInput" id="industrySelect" data-name="industry">
+                <option value="" selected>Select</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">No. Of Staff*</label>
+            <input type="text" class="form-control w-full enumInput" data-name="staff" required>
+
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">Tax Identification Number(TIN) (Optional)</label>
+            <input type="text" class="form-control w-full enumInput" data-name="tin">
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">CAC</label>
+            <input type="text" class="form-control w-full enumInput" data-name="cac">
+          </div>
+
+          <button class="button w-full mb-4" type="button" onclick="nextPrev(1)">Continue</button>
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
         </div>
 
+        <form action="" class="mt-4 w-8/12">
+
+          <h1 class="fontBold text-xl">Register</h1>
+          <p class="mt-2 mb-4">Contact Information</p>
+
+          <div class="form-group mb-3">
+            <label for="">Email*</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="email" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">Phone number*</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="phone" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">State*</label>
+            <select class="form-select w-full enumInputB" data-name="state" id="STATES" required>
+              <option value="Plateau" selected>Plateau</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">Local Government Area*</label>
+            <select class="form-select w-full enumInputB" data-name="lga" id="LGAs" required>
+
+            </select>
+          </div>
+
+
+          <div class="form-group mb-3">
+            <label for="">Address*</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="address" required>
+          </div>
+
+          <button class="button w-full mb-4" type="button" onclick="nextPrev(1)">Continue</button>
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-between mt-4">
+          <button class="btn-prime-outline" onclick="nextPrev(-2)">Edit Profile</button>
+
+          <button class="button flex items-center gap-3" onclick="printPreview('printView')">
+            <iconify-icon icon="uit:print"></iconify-icon>
+            <span> Print</span>
+          </button>
         </div>
 
-        <div class="md:w-9/12 w-full bg-center overflow-y-scroll md:px-10 px-4">
+        <div class="border rounded-md p-3 mt-4 bg-white" id="printView">
+          <p class="mt-3 fontBold text-black">Company Information</p>
 
-            <section class="formTabs h-full">
+          <form action="" class="mt-4 w-8/12" id="thePrForm">
 
-                <div class="md:pt-4 pt-3">
-                    <button class="flex items-center gap-2" onclick="history.go(-1)">
-                        <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-                        <span>Go back</span>
-                    </button>
-                </div>
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
 
-                <form action="" class="md:w-[60%] w-[80%]">
-                    <div id="text-color">
-                        <h1 class="fontBold text-3xl">Register</h1>
-                        <h1 class="mb-10 mt-3">Personal Details</h1>
-                    </div>
+              <div class="form-group md:w-6/12">
+                <label for="">Name of Organisation</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="fullname" readonly>
+              </div>
 
-                    <div class="form-group mb-3">
-                        <label for="tin/email">Enter Tin or Email*</label>
-                        <input type="text" class="form-control" id="tinOrEmail" required>
-                    </div>
+              <div class="form-group md:w-6/12">
+                <label for="">Industry</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="industry" readonly>
+              </div>
 
-                    <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
-                        <button type="button" id="last-button" onclick="fillManually()">Fill Manually</button>
-                        <button id="lastly-button" onclick="fetchUserDetails()" class="btn-only" type="button">Fetch
-                            Details</button>
-                    </div>
-                    <div id="msg_box001"></div>
+            </div>
 
-                </form>
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
 
-            </section>
+              <div class="form-group md:w-6/12">
+                <label for="">No of Staff</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="staff" readonly>
+              </div>
 
-            <section class="formTabs h-full">
+              <div class="form-group md:w-6/12">
+                <label for="">JTB TIN (Optional)</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="tin" readonly>
+              </div>
 
-                <div class="md:pt-4 pt-3">
-                    <button class="flex items-center gap-2" onclick="history.go(-1)">
-                        <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-                        <span>Go back</span>
-                    </button>
-                </div>
+            </div>
 
-                <form action="" class="mt-4 w-8/12">
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
 
-                    <h1 class="fontBold text-xl">Register</h1>
-                    <p class="mt-2 mb-4">Basic Information</p>
+              <div class="form-group md:w-6/12">
+                <label for="">Email</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="email" readonly>
+              </div>
 
-                    <div class="form-group mb-3">
-                        <label for="">Name of Organization*</label>
-                        <input type="text" class="form-control w-full enumInput" data-name="fullname" required>
-                    </div>
+              <div class="form-group md:w-6/12">
+                <label for="">State</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="state" readonly>
+              </div>
 
-                    <div class="flex mb-4 gap-2">
-                        <div class="form-group w-full">
-                            <label for="">Sector*</label>
-                            <select class="form-select payInputs enumInput" id="sectorSelect" data-name="sector">
-                                <option value="" selected>Select</option>
-                            </select>
-                        </div>
+            </div>
 
-                        <div class="form-group w-full">
-                            <label for="">Industry*</label>
-                            <select name="" class="form-select payInputs enumInput" id="industrySelect"
-                                data-name="industry">
-                                <option value="" selected>Select</option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
 
-                    <div class="form-group mb-3">
-                        <label for="">No. Of Staff*</label>
-                        <input type="text" class="form-control w-full enumInput" data-name="staff" required>
+              <div class="form-group md:w-6/12">
+                <label for="">LGA</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="lga" readonly>
+              </div>
 
-                    </div>
+              <div class="form-group mb-3">
+                <label for="">Address</label>
+                <input type="text" class="form-control w-full enumInput2" data-name="address" readonly>
+              </div>
 
-                    <div class="form-group mb-3">
-                        <label for="">Tax Identification Number(TIN) (Optional)</label>
-                        <input type="text" class="form-control w-full enumInput" data-name="tin">
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="">CAC</label>
-                        <input type="text" class="form-control w-full enumInput" data-name="cac">
-                    </div>
-
-                    <button class="button w-full mb-4" type="button" onclick="continueReg()">Continue</button>
-
-                </form>
-
-            </section>
-
-            <section class="formTabs h-full">
-
-                <div class="md:pt-4 pt-3">
-                    <button class="flex items-center gap-2" onclick="nextPrev(-1)">
-                        <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-                        <span>Go back</span>
-                    </button>
-                </div>
-
-                <form action="" class="mt-4 w-8/12">
-
-                    <h1 class="fontBold text-xl">Register</h1>
-                    <p class="mt-2 mb-4">Contact Information</p>
-
-                    <div class="form-group mb-3">
-                        <label for="">Email*</label>
-                        <input type="text" class="form-control w-full enumInputB" data-name="email" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="">Phone number*</label>
-                        <input type="text" class="form-control w-full enumInputB" data-name="phone" required>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="">State*</label>
-                        <select class="form-select w-full enumInputB" data-name="state" id="STATES" required>
-                            <option value="Plateau" selected>Plateau</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="">Local Government Area*</label>
-                        <select class="form-select w-full enumInputB" data-name="lga" id="LGAs" required>
-
-                        </select>
-                    </div>
-
-
-                    <div class="form-group mb-3">
-                        <label for="">Address*</label>
-                        <input type="text" class="form-control w-full enumInputB" data-name="address" required>
-                    </div>
-
-                    <button class="button w-full mb-4" type="button" onclick="continueReg2()">Continue</button>
-
-                </form>
-
-            </section>
-
-            <section class="formTabs h-full">
-
-                <div class="flex justify-between mt-4">
-                    <button class="btn-prime-outline" onclick="nextPrev(-2)">Edit Profile</button>
-
-                    <button class="button flex items-center gap-3" onclick="printPreview('printView')">
-                        <iconify-icon icon="uit:print"></iconify-icon>
-                        <span> Print</span>
-                    </button>
-                </div>
-
-                <div class="border rounded-md p-3 mt-4 bg-white" id="printView">
-                    <p class="mt-3 fontBold text-black">Company Information</p>
-
-                    <form action="" class="mt-4 w-8/12" id="thePrForm">
-
-                        <div class="flex gap-3 md:flex-row flex-col mb-3">
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">Name of Organisation</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="fullname" readonly>
-                            </div>
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">Industry</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="industry" readonly>
-                            </div>
-
-                        </div>
-
-                        <div class="flex gap-3 md:flex-row flex-col mb-3">
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">No of Staff</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="staff" readonly>
-                            </div>
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">JTB TIN (Optional)</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="tin" readonly>
-                            </div>
-
-                        </div>
-
-                        <div class="flex gap-3 md:flex-row flex-col mb-3">
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">Email</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="email" readonly>
-                            </div>
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">State</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="state" readonly>
-                            </div>
-
-                        </div>
-
-                        <div class="flex gap-3 md:flex-row flex-col mb-3">
-
-                            <div class="form-group md:w-6/12">
-                                <label for="">LGA</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="lga" readonly>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="">Address</label>
-                                <input type="text" class="form-control w-full enumInput2" data-name="address" readonly>
-                            </div>
-
-                        </div>
+            </div>
 
 
 
 
-                        <!-- <p class="fontBold text-black">Account Credentials</p>
+            <!-- <p class="fontBold text-black">Account Credentials</p>
 
             <div class="flex gap-3 md:flex-row flex-col mb-3">
 
@@ -340,53 +339,52 @@
 
 
 
-                        <!-- <button class="button w-full mb-4" id="theButton" type="button" onclick="registerUser()">Verify</button> -->
-                        <button class="button w-full mb-4" id="theButton" type="button"
-                            onclick="createUserFirst()">Verify</button>
+            <!-- <button class="button w-full mb-4" id="theButton" type="button" onclick="registerUser()">Verify</button> -->
+            <button class="button w-full mb-4" id="theButton" type="button" onclick="alert('created successfully')">Verify</button>
 
 
 
-                        <div id="msg_box"></div>
-                    </form>
-
-                </div>
-
-
-            </section>
-
-
-
-
-
-
-
+            <div id="msg_box"></div>
+          </form>
 
         </div>
 
-    </section>
+
+      </section>
 
 
 
 
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="./assets/vendor/libs/popper/popper.js"></script>
-    <script src="./assets/vendor/js/bootstrap.js"></script>
-    <script src="./assets/js/jquery.datatables.min.js"></script>
-    <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
-    <script src="./assets/vendor/libs/echarts/echarts.js"></script>
-    <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
-    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <script src="./assets/js/nav.js"></script>
-    <!-- <script src="./assets/js/session.js"></script> -->
-    <script src="./assets/vendor/js/menu.js"></script>
-    <script src="./assets/js/accessLevel.js"></script>
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/tabHandler.js"></script>
-    <script src="./assets/js/body-reg.js"></script>
+
+
+
+    </div>
+
+  </section>
+
+
+
+
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/js/jquery.datatables.min.js"></script>
+  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+  <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="./assets/js/accessLevel.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="./assets/js/tabHandler.js"></script>
+  <script src="./assets/js/body-reg.js"></script>
 </body>
 
 </html>

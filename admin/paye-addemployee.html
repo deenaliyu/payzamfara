@@ -110,7 +110,8 @@
                   <h1 class="fontBold text-xl">Add employee</h1>
 
                   <div class="flex gap-3">
-                    <a href="#" id="singleLinking" class="button">Single Linking</a>
+                    <button data-bs-toggle="modal" data-bs-target="#addEmployeeModal" id="singleLinking"
+                      class="button">Single Linking</button>
 
                     <button class="button btn-prime-outline" id="downloadTemplate">Download Template</button>
                   </div>
@@ -149,41 +150,147 @@
       <!-- / Layout page -->
     </div>
 
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-header ">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Create Employee</h5>
+
+            <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+              aria-label="Close"><iconify-icon icon="fa6-solid:x"></iconify-icon></button>
+          </div>
+          <div class="modal-body">
+            <form action="" class="mt-4 w-full">
+
+              <h1 class="fontBold text-xl">Add New Employee</h1>
+              <p class="mt-2 mb-4">Basic Information</p>
+
+
+              <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Full Name*</label>
+                  <input type="text" class="form-control w-full enumInput" data-name="fullname" required>
+                </div>
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Email*</label>
+                  <input type="email" class="form-control w-full enumInput" data-name="email" required>
+                </div>
+
+              </div>
+
+              <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Phone*</label>
+                  <input type="tel" class="form-control w-full enumInput" data-name="phone" required>
+                </div>
+
+                <div class="form-group md:w-6/12">
+                  <label for="">TIN</label>
+                  <input type="text" class="form-control w-full enumInput" data-name="tin">
+                </div>
+
+              </div>
+
+              <div class="form-group w-full mb-3">
+                <label for="">Annual Gross Income*</label>
+                <input type="text" class="form-control w-full enumInput" data-name="annual_gross_income" required>
+              </div>
+
+              <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Basic Salary*</label>
+                  <input type="text" class="form-control w-full enumInput" data-name="basic_salary" required>
+                </div>
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Date Employed*</label>
+                  <input type="date" class="form-control w-full enumInput" data-name="date_employed" required>
+                </div>
+
+              </div>
+
+              <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Housing</label>
+                  <input type="number" class="form-control w-full enumInput" data-name="housing">
+                </div>
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Transport</label>
+                  <input type="number" class="form-control w-full enumInput" data-name="transport">
+                </div>
+
+                <div class="form-group md:w-6/12">
+                  <label for="">Others</label>
+                  <input type="number" class="form-control w-full enumInput" data-name="others">
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-check form-check-inline col-md-3">
+                  <input class="form-check-input" type="checkbox" id="Pension" value="pension">
+                  <label class="form-check-label font-bold" for="Pension">Pension</label>
+                </div>
+                <div class="form-check form-check-inline col-md-3">
+                  <input class="form-check-input" type="checkbox" id="NHF" value="nhf">
+                  <label class="form-check-label font-bold" for="NHF">NHF</label>
+                </div>
+                <div class="form-check form-check-inline col-md-3">
+                  <input class="form-check-input" type="checkbox" onchange="nhisSelect(this)" id="NHIS" value="nhis">
+                  <label class="form-check-label font-bold" for="NHIS">NHIS</label>
+                </div>
+              </div>
+
+              <div class="mb-4" id="employeeNhis"></div>
+
+
+              <button class="button w-full my-4" type="button" id="theButton" onclick="continueReg()">Continue</button>
+              <div id="msg_box"></div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
 
 
 
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="./assets/vendor/libs/popper/popper.js"></script>
+    <script src="./assets/vendor/js/bootstrap.js"></script>
+    <script src="./assets/js/jquery.datatables.min.js"></script>
+    <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+    <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+    <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <script src="./assets/js/nav.js"></script>
+    <!-- <script src="./assets/js/session.js"></script> -->
+    <script src="./assets/vendor/js/menu.js"></script>
+    <script src="./assets/js/accessLevel.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/add-employee.js"></script>
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-  </div>
-  <!-- / Layout wrapper -->
-  <!-- Core JS -->
-  <!-- build:js assets/vendor/js/core.js -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
-  <script src="./assets/vendor/libs/popper/popper.js"></script>
-  <script src="./assets/vendor/js/bootstrap.js"></script>
-  <script src="./assets/js/jquery.datatables.min.js"></script>
-  <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
-  <script src="./assets/vendor/libs/echarts/echarts.js"></script>
-  <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
-  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script src="./assets/js/nav.js"></script>
-  <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="./assets/vendor/js/menu.js"></script>
-  <script src="./assets/js/accessLevel.js"></script>
-  <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/add-employee.js"></script>
-
-  <script>
+    <script>
 
 
-    let theAtivo = document.querySelector(".mdoo")
-    theAtivo.parentElement.classList.add("active")
+      let theAtivo = document.querySelector(".mdoo")
+      theAtivo.parentElement.classList.add("active")
 
-  </script>
+    </script>
 </body>
 
 </html>

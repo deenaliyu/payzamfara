@@ -90,7 +90,7 @@
           <div class="navbar-nav-right relative flex items-center gap-x-5" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Direct Assessment</h1>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">PAYE MANAGER</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5 absolute right-24">
@@ -124,9 +124,9 @@
           <!--</div>-->
 
           <div class="container-xxl flex-grow-1 container-p-y taxes" id="reportDisplay">
-            <button onclick="history.go(-1)" class="text-[#025826]">Back to Direct Assessment</button>
+            <button onclick="history.go(-1)" class="text-[#025826]">Back to PAYE manager</button>
             <div class="flex justify-between  items-center mb-5">
-              <p class="font-bold text-2xl text-black">Direct Assessment</p>
+              <p class="font-bold text-2xl text-black">PAYE Assessment</p>
             </div>
 
 
@@ -142,7 +142,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
-                      <div class="info-label">Name</div>
+                      <div class="info-label">Organization Name</div>
                       <div class="info-value">John Doe</div>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
                 <div class="row mb-4">
                   <div class="col-md-6">
                     <div class="info-card">
-                      <div class="info-label">Annual Gross Income</div>
+                      <div class="info-label">Gross Income</div>
                       <div class="info-value currency">₦ 2,400,000.00</div>
                     </div>
                   </div>
@@ -180,31 +180,46 @@
                   </div>
                 </div>
 
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Taxable Income</div>
-                      <div class="info-value currency">₦ 2,200,000.00</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Monthly Tax Liability</div>
-                      <div class="info-value currency">₦ 20,000.00</div>
-                    </div>
-                  </div>
-                </div>
 
                 <div class="row">
                   <div class="col-md-6">
                     <div class="info-card">
-                      <div class="info-label">Annual Tax Liability</div>
+                      <div class="info-label">Total Amount Payable</div>
                       <div class="info-value currency">₦ 240,000.00</div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="modal-footer">
+
+              <h2 class="text-xl fontBold">Staff List</h2>
+              <table class="table staff_table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>TIN</th>
+                    <th>Name</th>
+                    <th>Annual Gross Income</th>
+                    <th>Basic Salary</th>
+                    <th>Annual Tax Payable</th>
+                    <th>Monthly Tax Payable</th>
+                    <th>Date Added</th>
+                  </tr>
+                </thead>
+                <tbody id="staffListInvoices">
+                  <tr>
+                    <td>1</td>
+                    <td>123456789</td>
+                    <td>John Doe</td>
+                    <td>₦ 2,400,000.00</td>
+                    <td>₦ 1,200,000.00</td>
+                    <td>₦ 240,000.00</td>
+                    <td>₦ 20,000.00</td>
+                    <td>2023-10-01</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="modal-footer mt-10">
                 <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1">
                   <iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>
                 </button>

@@ -32,35 +32,13 @@
   <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="./assets/css/demo.css" />
-  <link rel="stylesheet" href="./assets/css/style.css?v=1.2">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <script src="./assets/vendor/js/helpers.js"></script>
   <script src="./assets/js/config.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-
-  <style>
-    .info-card {
-      background-color: #f8fafc;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 10px;
-      border-left: 4px solid #025826;
-    }
-
-    .info-label {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-    }
-
-    .info-value {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #1e293b;
-    }
-  </style>
 </head>
 
 <body class="taxpayer">
@@ -90,7 +68,7 @@
           <div class="navbar-nav-right relative flex items-center gap-x-5" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Direct Assessment</h1>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">PAYE Assessments</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5 absolute right-24">
@@ -124,95 +102,189 @@
           <!--</div>-->
 
           <div class="container-xxl flex-grow-1 container-p-y taxes" id="reportDisplay">
-            <button onclick="history.go(-1)" class="text-[#025826]">Back to Direct Assessment</button>
-            <div class="flex justify-between  items-center mb-5">
-              <p class="font-bold text-2xl text-black">Direct Assessment</p>
-            </div>
 
+            <section class="w-full main_section">
+              <h1 class="text-xl mb-3 fontBold text-black">Overview</h1>
+              <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
 
+                <div class="dashCards card w-full flex-col space-y-2  ">
 
-            <div class="card card-body mt-5">
-              <div class="modal-body">
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Payer ID</div>
-                      <div class="info-value">1234567890</div>
+                  <div class="flex items-center gap-2">
+                    <div class="icoCont bg-[#1c315c1f]">
+                      <iconify-icon class="text-[#1C315C]" icon="solar:documents-broken"></iconify-icon>
                     </div>
+                    <p class="text-gray-500 impMetrics text-xs">GENERATED ASSESSMENTS</p>
                   </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Name</div>
-                      <div class="info-value">John Doe</div>
-                    </div>
-                  </div>
+
+                  <p class="zanumbers text-end" style="margin-top: 30px;">
+                    <span id="reg_bodies">200</span>
+                  </p>
                 </div>
 
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Status</div>
-                      <div class="info-value">
-                        <span class="status-badge">SECOND REVIEW</span>
-                      </div>
+                <div class="dashCards card w-full flex-col space-y-2  ">
+
+                  <div class="flex items-center gap-2">
+                    <div class="icoCont bg-[#1c315c1f]">
+                      <iconify-icon class="text-warning" icon="solar:documents-broken"></iconify-icon>
                     </div>
+                    <p class="text-gray-500 impMetrics text-xs">PENDING ASSESSMENTS</p>
                   </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Date Created</div>
-                      <div class="info-value">2023-10-01</div>
-                    </div>
-                  </div>
+
+                  <p class="zanumbers text-end" style="margin-top: 30px;">
+                    <span id="reg_bodies">100</span>
+                  </p>
                 </div>
 
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Annual Gross Income</div>
-                      <div class="info-value currency">₦ 2,400,000.00</div>
+                <div class="dashCards card w-full flex-col space-y-2  ">
+
+                  <div class="flex items-center gap-2">
+                    <div class="icoCont bg-[#1c315c1f]">
+                      <iconify-icon class="text-success" icon="solar:documents-broken"></iconify-icon>
                     </div>
+                    <p class="text-gray-500 impMetrics text-xs">APPROVED ASSESSMENTS</p>
                   </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Consolidated Tax Relief</div>
-                      <div class="info-value currency">₦ 200,000.00</div>
-                    </div>
-                  </div>
+
+                  <p class="zanumbers text-end" style="margin-top: 30px;">
+                    <span id="reg_bodies">100</span>
+                  </p>
                 </div>
 
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Taxable Income</div>
-                      <div class="info-value currency">₦ 2,200,000.00</div>
+                <div class="dashCards card w-full flex-col space-y-2  ">
+
+                  <div class="flex items-center gap-2">
+                    <div class="icoCont bg-[#1c315c1f]">
+                      <iconify-icon class="text-danger" icon="solar:documents-broken"></iconify-icon>
                     </div>
+                    <p class="text-gray-500 impMetrics text-xs">Declined ASSESSMENTS</p>
                   </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Monthly Tax Liability</div>
-                      <div class="info-value currency">₦ 20,000.00</div>
-                    </div>
-                  </div>
+
+                  <p class="zanumbers text-end" style="margin-top: 30px;">
+                    <span id="reg_bodies">100</span>
+                  </p>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Annual Tax Liability</div>
-                      <div class="info-value currency">₦ 240,000.00</div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1">
-                  <iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>
-                </button>
-                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1">
-                  <iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>
-                </button>
-              </div>
-            </div>
+
+
+              <section class="mt-4 card px-2">
+                <div class="flex justify-end mt-4">
+                  <div class="flex gap-4">
+                    <button class="button btn-prime-outline rounded-md flex items-center gap-3" onclick="exportData()">
+                      <iconify-icon icon="humbleicons:download" class="text-xl"></iconify-icon>
+                      <span>Download</span>
+                    </button>
+                    <!-- <select class="form-select form-select-sm">
+                      <option value="January">January</option>
+                    </select>
+                    <button class="button">Apply</button> -->
+                  </div>
+                </div>
+
+                <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2 border-b" id="pills-tab" role="tablist">
+
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#allPaye" type="button"
+                      role="tab">
+                      First Reviewer
+                    </button>
+                  </li>
+
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#allPaye" type="button" role="tab">
+                      Second Reviewer
+                    </button>
+                  </li>
+
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#allPaye" type="button" role="tab">
+                      Third Reviewer
+                    </button>
+                  </li>
+
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#allPaye" type="button" role="tab">
+                      Approved
+                    </button>
+                  </li>
+
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#allPaye" type="button" role="tab">
+                      Declined
+                    </button>
+                  </li>
+
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="allPaye" role="tabpanel">
+
+                    <div class="table-responsive">
+                      <table class="table payeTable" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>TIN</th>
+                            <th>Organization Name</th>
+                            <th>Email</th>
+                            <th>Gross Income</th>
+                            <th>Annual Tax Payable</th>
+                            <th>Monthly Tax Payable</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="payeMTabAll">
+                          <tr>
+                            <td>1</td>
+                            <td>IRP-576383</td>
+                            <td>John Doe</td>
+                            <td>jogn@gmail.com</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td><span class="badge bg-warning">Pending</span></td>
+                            <td>26/09/2023</td>
+                            <td>
+                              <a href="paye-assview.html" class="btn btn-primary">View</a>
+                            </td>
+                          </tr>
+
+
+                          <tr>
+                            <td>1</td>
+                            <td>IRP-576383</td>
+                            <td>Mark Kabiru</td>
+                            <td>kabiru@gmail.com</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td><span class="badge bg-success">Approved</span></td>
+                            <td>26/09/2023</td>
+                            <td>
+                              <a href="paye-assview.html" class="btn btn-primary">View</a>
+                            </td>
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+
+
+                      <!-- <div class="flex justify-center items-center mt-4" id="loader">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                      </div> -->
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+
+            </section>
 
 
             <div class="content-backdrop fade"></div>
@@ -343,7 +415,7 @@
   <script src="https://cdn.jsdelivr.net/gh/Joe12387/detectIncognito@main/dist/es5/detectIncognito.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script>
-    let theAtivo = document.querySelector(".direct-assessment")
+    let theAtivo = document.querySelector(".paye-manager-nav")
     theAtivo.parentElement.classList.add("active")
   </script>
 

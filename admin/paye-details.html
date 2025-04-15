@@ -178,6 +178,13 @@
                   </li>
 
                   <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#generatedAssessments" type="button"
+                      role="tab">
+                      Generated Assessments
+                    </button>
+                  </li>
+
+                  <li class="nav-item text-center" role="presentation">
                     <button class="nav-link" data-bs-toggle="pill" data-bs-target="#invoiceHistory" type="button"
                       role="tab">
                       Invoices
@@ -198,7 +205,7 @@
                   <div class="tab-pane fade show active" id="stafflist" role="tabpanel">
 
                     <div class="mb-4">
-                      <button class="button mt-3" type="button" id="generating_inv">Generate Invoice</button>
+                      <button class="button mt-3" type="button" id="generating_inv">Generate Assessment</button>
                       <div id="msg_box2"></div>
                     </div>
 
@@ -258,6 +265,71 @@
 
                   </div>
 
+                  <div class="tab-pane fade" id="generatedAssessments" role="tabpanel">
+
+                    <div class="table-responsive">
+                      <table class="table payeTable" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>TIN</th>
+                            <th>Name</th>
+                            <th>Gross Income</th>
+                            <th>Annual Tax Payable</th>
+                            <th>Monthly Tax Payable</th>
+                            <th>Status</th>
+                            <th>Date Created</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+
+                        <tbody id="stafflistTable">
+
+                          <tr>
+                            <td>1</td>
+                            <td>IRP-576383</td>
+                            <td>John Doe</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td><span class="badge bg-warning">Pending</span></td>
+                            <td>26/09/2023</td>
+
+                            <td>
+                              <button class="btn btn-primary"> Staff</button>
+                            </td>
+                          </tr>
+
+
+                          <tr>
+                            <td>1</td>
+                            <td>IRP-576383</td>
+                            <td>Mark Kabiru</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td>NGN 1,500,000</td>
+                            <td><span class="badge bg-success">Approved</span></td>
+                            <td>26/09/2023</td>
+
+                            <td>
+                              <button class="btn btn-primary"> Staff</button>
+                            </td>
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+
+
+
+                    </div>
+
+                    <!-- <div class="flex justify-center items-center mt-4" id="loader">
+                      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                    </div> -->
+
+                  </div>
+
                   <div class="tab-pane fade" id="invoiceHistory" role="tabpanel">
 
                     <div class="table-responsive">
@@ -292,7 +364,8 @@
                               <div class="flex gap-2 items-center">
                                 <a href="./viewinvoice.html?invnumber=8765456789&load=true"
                                   class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal" data-bs-target="#invoiceStaffModal">Staffs</button>
+                                <button class="button rounded-md" data-bs-toggle="modal"
+                                  data-bs-target="#invoiceStaffModal">Staffs</button>
                               </div>
                             </td>
                           </tr>
@@ -336,7 +409,8 @@
                               <div class="flex gap-2 items-center">
                                 <a href="./viewreceipt.html?invnumber=8765456789&load=true"
                                   class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal" data-bs-target="#invoiceStaffModal">Staffs</button>
+                                <button class="button rounded-md" data-bs-toggle="modal"
+                                  data-bs-target="#invoiceStaffModal">Staffs</button>
                               </div>
                             </td>
                           </tr>
@@ -354,7 +428,8 @@
                               <div class="flex gap-2 items-center">
                                 <a href="./viewreceipt.html?invnumber=8765456789&load=true"
                                   class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal" data-bs-target="#invoiceStaffModal">Staffs</button>
+                                <button class="button rounded-md" data-bs-toggle="modal"
+                                  data-bs-target="#invoiceStaffModal">Staffs</button>
                               </div>
                             </td>
                           </tr>
