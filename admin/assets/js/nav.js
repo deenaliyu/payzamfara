@@ -111,7 +111,7 @@ $(".aside").html(`
         <ul class="menu-sub">
           <li class="menu-item">
             <a href="direct-assessment.html" class="menu-link">
-              <div data-i18n="Basic Inputs">Direct Assessment</div>
+              <div data-i18n="Basic Inputs">Generated Assessments</div>
             </a>
           </li>
 
