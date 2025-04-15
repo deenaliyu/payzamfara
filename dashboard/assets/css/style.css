@@ -356,6 +356,15 @@ ul {
 
 }
 
+.nav.nav-pills .nav-link.active {
+  background: transparent !important;
+  border-bottom: 3px solid #005826;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: #005826;
+  font-weight: bolder;
+}
+
 .taxes .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   color: #005826;
   background-color: none;

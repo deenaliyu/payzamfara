@@ -3,7 +3,7 @@ function hardRefresh() {
     window.location.reload(true);
 }
 // hardRefresh();
-let HOST = "https://test.payzamfara.com/php/index.php"
+let HOST = "https://payzamfara.com/php/index.php"
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -51,6 +51,12 @@ $(".aside").html(`
           <div data-i18n="Basic">Payment history</div>
         </a>
       </li>
+      <li class="menu-item">
+        <a href="paye-manager.html" class="menu-link paye-manager-nav dggg">
+          <iconify-icon icon="mdi:account-payment-outline" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">PAYE Manager</div>
+        </a>
+      </li> 
       <li class="menu-item">
         <a href="eservice.html" class="menu-link mdd">
         <i class='menu-icon tf-icons bx bxs-group' ></i>
