@@ -63,31 +63,37 @@ async function updateStatus(id, status) {
         `<iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>`
       );
 
-    if (thenextstat === "Approval") {
-      Swal.fire({
-        icon: 'success',
-        title: 'Status Updated',
-        text: 'The status has been successfully updated.',
-        confirmButtonText: 'Generate Invoice',
-        showCancelButton: false,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Logic to generate the invoice
-          generateInvoiceNum(detailss.tax_number, detailss.monthly_tax_payable);
-        }
-      });
+    if (data.status === 1) {
+      if (thenextstat === "Approval") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Status Updated',
+          text: 'The status has been successfully updated.',
+          confirmButtonText: 'Generate Invoice',
+          showCancelButton: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Logic to generate the invoice
+            generateInvoiceNum(detailss.tax_number, detailss.monthly_tax_payable);
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Status Updated',
+          text: 'The status has been successfully updated.',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "direct-assessment.html";
+          }
+        });
+      }
     } else {
-      Swal.fire({
-        icon: 'success',
-        title: 'Status Updated',
-        text: 'The status has been successfully updated.',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "direct-assessment.html";
-        }
-      });
+      throw new Error('Failed to update status');
     }
+
+
 
 
   } catch (error) {
@@ -135,15 +141,22 @@ async function declineStatus(id) {
         `<iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>`
       );
     const data = await response.json();
-    console.log('Status Update Response:', data);
 
+    if (data.status === 1) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Status Updated',
+        text: 'The status has been successfully updated.',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "direct-assessment.html";
+        }
+      });
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Status Updated',
-      text: 'The status has been successfully updated.',
-      confirmButtonText: 'OK'
-    });
+    } else {
+      throw new Error('Failed to update status');
+    }
 
 
   } catch (error) {
