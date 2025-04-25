@@ -180,12 +180,12 @@ async function fetchForSpecificLevels(level) {
       },
       { data: 'tax_number' },
       { data: 'fullname' },
-      {
-        data: 'level',
-        render: function (data, type, row) {
-          return getStatusBadge(data);
-        }
-      },
+      // {
+      //   data: 'level',
+      //   render: function (data, type, row) {
+      //     return getStatusBadge(data);
+      //   }
+      // },
       {
         data: null,
         render: function (data, type, row) {
