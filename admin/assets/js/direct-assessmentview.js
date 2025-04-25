@@ -127,7 +127,7 @@ async function declineStatus(id) {
     );
   try {
 
-    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=${Disapproved}`);
+    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=Disapproved`);
     if (!response.ok) throw new Error('Failed to update status');
 
     $("#disapproveButton").prop('disabled', false)
