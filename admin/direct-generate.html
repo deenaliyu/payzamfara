@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlateauIGR</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+  <link ref="stylesheet" href="./assets/css/print2.css" media="print" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+
+    table.invTable {
+      border-collapse: collapse;
+    }
+
+    table.invTable th,
+    table.invTable td {
+      border: 1px solid #000;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+
+    #lastly-button {
+      background-color: #fff;
+      width: 380px;
+      color: #025826 !important;
+      border: 3px solid #025826;
+      border-radius: 100px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    #last-button {
+      background-color: #025826;
+      width: 380px;
+      color: #fff !important;
+      border: 3px solid #025826;
+      border-radius: 100px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    /* .demanInvoiceBody {
+      background: url('./assets/img/demandbg.png');
+      background-size: cover;
+      background-position: center;
+    } */
+
+    .select2.select2-container {
+      width: 100% !important;
+    }
+
+    #myTab .nav-link.active {
+      background: #025826 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <section class="flex h-[100vh] overflow-y-scroll">
+
+    <div class="md:block hidden w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg1.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg2.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg3.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg4.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg5.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg5.png" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-[url('../assets/img/slideimg.png')] bg-center overflow-y-scroll">
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[80%]">
+            <div id="text-color">
+              <h1 class="fontBold text-3xl">Generate Direct Assessment</h1>
+              <h1 class="mb-10 mt-3">Personal Details</h1>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="tin/email">Enter Tin or Email*</label>
+              <input type="text" class="form-control" id="tinOrEmail" required>
+            </div>
+
+            <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
+              <button type="button" id="last-button" onclick="fillManually()">Fill Manually</button>
+              <button id="lastly-button" onclick="fetchUserDetails()" class="btn-only" type="button">Fetch
+                Details</button>
+            </div>
+            <div id="msg_box001"></div>
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[80%] ">
+            <h1 class="fontBold text-2xl">Generate Direct Assessment</h1>
+            <h1 class="mb-3 mt-3">Personal Details</h1>
+
+            <div class="form-group mb-2">
+              <label for="">Select your category*</label>
+              <select class="form-select payInputs payInputsSec selCateg" required id="category">
+                <option disabled selected>Select--</option>
+                <option value="2">Individual</option>
+                <option value="1">Corporate</option>
+                <option value="3">State Agency</option>
+                <option value="4">Federal Agency</option>
+              </select>
+            </div>
+
+            <div class="flex items-center mb-2 gap-2" id="theName">
+              <div class="form-group w-full">
+                <label for="">First name *</label>
+                <input type="text" class="form-control payInputs payInputsSec" required data-name="first_name"
+                  placeholder="Enter your first name">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Surname *</label>
+                <input type="text" class="form-control payInputs payInputsSec" required data-name="surname"
+                  placeholder="Enter your surname">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-2 gap-2" id="theEmail">
+              <div class="form-group w-full">
+                <label for="">Email *</label>
+                <input type="text" class="form-control payInputs payInputsSec" required data-name="email"
+                  placeholder="Enter your Email Address">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Phone number *</label>
+                <input type="number" class="form-control payInputs payInputsSec" id="phonenumber" minlength="11"
+                  maxlength="11" required data-name="phone" placeholder="Your 11-digits phone number">
+              </div>
+            </div>
+
+            <div class="form-group w-full mb-2" id="theTin">
+              <label for="">TIN </label>
+              <input type="text" class="form-control payInputs payInputsSec" id="tin" data-name="tin"
+                placeholder="Enter your TIN">
+
+
+            </div>
+
+            <div class="flex items-center mb-2 gap-2">
+              <div class="form-group w-full">
+                <label for="">State*</label>
+                <select name="" id="STATES" class="form-select payInputs payInputsSec" data-name="state">
+                  <option disabled selected>--Select State--</option>
+                  <option value="Abia">Abia</option>
+                  <option value="Adamawa">Adamawa</option>
+                  <option value="Akwa Ibom" >Akwa Ibom</option>
+                  <option value="Anambra">Anambra</option>
+                  <option value="Bauchi">Bauchi</option>
+                  <option value="Bayelsa">Bayelsa</option>
+                  <option value="Benue">Benue</option>
+                  <option value="Borno">Borno</option>
+                  <option value="Cross River">Cross River</option>
+                  <option value="Delta">Delta</option>
+                  <option value="Ebonyi">Ebonyi</option>
+                  <option value="Edo">Edo</option>
+                  <option value="Ekiti">Ekiti</option>
+                  <option value="Enugu">Enugu</option>
+                  <option value="FCT">Federal Capital Territory</option>
+                  <option value="Gombe">Gombe</option>
+                  <option value="Imo">Imo</option>
+                  <option value="Jigawa">Jigawa</option>
+                  <option value="Kaduna">Kaduna</option>
+                  <option value="Kano">Kano</option>
+                  <option value="Katsina">Katsina</option>
+                  <option value="Kebbi">Kebbi</option>
+                  <option value="Kogi">Kogi</option>
+                  <option value="Kwara">Kwara</option>
+                  <option value="Lagos">Lagos</option>
+                  <option value="Nasarawa">Nasarawa</option>
+                  <option value="Niger">Niger</option>
+                  <option value="Ogun">Ogun</option>
+                  <option value="Ondo">Ondo</option>
+                  <option value="Osun">Osun</option>
+                  <option value="Oyo">Oyo</option>
+                  <option value="Plateau">Plateau</option>
+                  <option value="Rivers">Rivers</option>
+                  <option value="Sokoto">Sokoto</option>
+                  <option value="Taraba">Taraba</option>
+                  <option value="Yobe">Yobe</option>
+                  <option value="Zamfara" selected>Zamfara</option>
+                </select>
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">LGA*</label>
+                <select name="" id="LGAs" class="form-select payInputs payInputsSec" required data-name="lga">
+                </select>
+              </div>
+
+              <div class="form-group w-full" id="theLga">
+                <label for="">Address*</label>
+                <input type="text" class="form-control payInputs payInputsSec" minlength="10" required
+                  data-name="address" placeholder=" Enter your address">
+              </div>
+            </div>
+
+            <h1 class="mb-10 my-3">Secondary Details</h1>
+
+            <div class="form-group mb-2">
+              <label for="category_pre">Select Tax Category*</label>
+
+              <select class="form-select payInputsSec" name="category_pre" id="category_pre">
+                <option value="Formal">Formal</option>
+                <option value="Informal">Informal</option>
+              </select>
+            </div>
+
+            <div class="flex mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">Sector*</label>
+                <select class="form-select payInputsSec" id="sectorSelect" data-name="sector" >
+                  <option value="" selected>Select</option>
+                </select>
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Industry*</label>
+                <select name="" class="form-select payInputsSec" id="industrySelect" data-name="industry" >
+                  <option value="" selected>Select</option>
+                </select>
+              </div>
+            </div>
+
+
+            <button class="button w-full" type="button" onclick="continuePage()">Continue</button>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+        <div class="flex justify-center items-center h-full -mt-10">
+
+          <form action="" class="md:w-[70%] secondForm">
+            <h1 class="fontBold text-2xl">Generate Direct Assessment</h1>
+            <h1 class="mb-3 mt-3">Billing Information</h1>
+
+            <div class="flex gap-3 mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="grossInptt" id="monthlyGrossInput" value="monthly">
+                <label class="form-check-label" for="monthlyGrossInput">
+                  Monthly Gross Income
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="grossInptt" id="AnnualGrossInput" value="annual"
+                  checked>
+                <label class="form-check-label" for="AnnualGrossInput">
+                  Annual Gross Income
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="grossInptt" id="TaxLiabilityInput"
+                  value="tax_liability">
+                <label class="form-check-label" for="TaxLiabilityInput">
+                  Tax Liability
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group mb-4" id="grossContainer">
+              <label for="basic_salary">Annual Gross Income*</label>
+              <input type="number" placeholder="Input the annual gross income" class="form-control genInv directInputs"
+                id="basic_salary" required data-name="basic_salary" onblur="calculateTaxLiability('yearly')"
+                data-version="annual">
+            </div>
+
+
+            <div id="theCalDisContainer" class="">
+
+            </div>
+
+
+            <div class="form-group mb-4">
+              <label for="description">Description*</label>
+              <textarea class="form-control genInv" id="description" required data-name="description"></textarea>
+            </div>
+
+            <button class="button w-full hidden" id="previewBtn" type="button"
+              onclick="goToPreviewPage()">Continue</button>
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+
+        <div class="md:pt-20 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-full">
+          <form action="" class="md:w-[70%] secondForm">
+            <!-- <h1 class="fontBold text-2xl">Generate Direct Assessment</h1> -->
+
+            <h1 class="mb-3 mt-3">Billing Details</h1>
+            <div class="shadow-md p-3 bg-[#E9ECEF]" id="bill">
+              <div class="flex space-x-3">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+            <h1 class="mb-3 mt-3">User Details</h1>
+            <div class="flex items-center mb-4 gap-2" id="theName2">
+              <div class="form-group w-full">
+                <label for="">First name</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="first_name">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Surname</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="surname">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">Email</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="email">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Phone number *</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="phone">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">TIN</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="tin">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">State</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="state">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">LGA</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="lga">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Address</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="address">
+              </div>
+            </div>
+
+
+
+
+            <button class="button w-full" type="button" id="generating_inv"
+              onclick="generateInvoiceNon()">Continue</button>
+            <div id="msg_box"></div>
+          </form>
+        </div>
+      </section>
+
+
+      <section class="formTabs pb-5">
+        <div class="md:pt-10 pt-3 md:px-10 px-4">
+          <!-- <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button> -->
+        </div>
+
+        <div class="invoiceContainer flex justify-center">
+
+          <div class="invoice bg-white md:w-[70%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
+            <!-- COMING FROM JS invoice.js -->
+          </div>
+
+
+        </div>
+
+        <div class="flex justify-center px-4">
+          <div>
+            <div class="mt-4">
+              <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
+            </div>
+            <div class="flex justify-between flex-wrap mt-4 gap-3">
+              <div class="flex gap-3 items-center">
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Download Invoice</span>
+                </button>
+
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Invoice</span>
+                </button>
+              </div>
+
+              <a href="./direct-assessment.html" class="button flex gap-3 items-center px-10">
+                <span>Proceed</span>
+                <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+
+      </section>
+
+      <section class="formTabs pb-5">
+        <div class="pt-10 px-10">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div id="makePayment">
+
+          <!-- PAYMENT DESIGN COMING FROM PAYMENT.js -->
+        </div>
+
+
+      </section>
+
+      <section class="formTabs pb-5">
+        <div class="pt-10 px-10">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="invoiceContainer flex justify-center pr-10">
+          <div class="invoice bg-white w-[70%] shadow-md" id="receiptCard">
+
+          </div>
+        </div>
+
+        <div class="flex justify-center pr-10">
+          <div class="w-[70%]">
+            <!-- <div class="mt-4">
+              <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
+            </div> -->
+            <div class="flex justify-between flex-wrap mt-4">
+              <div class="flex gap-3 items-center">
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('receiptCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Download Receipt</span>
+                </button>
+
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('receiptCard')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Receipt</span>
+                </button>
+              </div>
+
+              <a href="index.html" class="button flex gap-3 items-center px-10">
+                <span>Return to home page</span>
+                <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+
+      </section>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="../assets/js/jquery.js"></script>
+  <script src="../assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/Joe12387/detectIncognito@main/dist/es5/detectIncognito.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      //change selectboxes to selectize mode to be searchable
+      $(".revHeadInputSel").select2();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadInvoice(thecard) {
+      const element = document.getElementById(thecard);
+
+      var HTML_Width = $("#" + thecard).width();
+      var HTML_Height = $("#" + thecard).height();
+      var top_left_margin = 15;
+      var PDF_Width = HTML_Width + (top_left_margin * 2);
+      var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+      var canvas_image_width = HTML_Width;
+      var canvas_image_height = HTML_Height;
+
+      var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+      html2canvas($("#" + thecard)[0]).then(function (canvas) {
+        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        for (var i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage(PDF_Width, PDF_Height);
+          pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        pdf.save(thecard + ".pdf");
+      });
+
+    }
+  </script>
+  <script>
+    const amountInput = document.getElementById('amountTopay');
+
+    amountInput?.addEventListener('input', function (e) {
+      let inputVal = e.target.value;
+
+      // Immediately return if the first character is a dot to allow ".xx" inputs
+      if (inputVal === '.') {
+        return;
+      }
+
+      // Normalize the input by removing commas and any non-numeric characters except for the decimal point
+      let normalizedInput = inputVal.replace(/,/g, '').replace(/[^0-9.]/g, '');
+
+      // Split the input into whole and decimal parts
+      let [whole, decimal] = normalizedInput.split('.');
+
+      // Ensure the whole part is only numeric
+      whole = whole.replace(/\D/g, '');
+
+      // If there's a decimal part, limit it to two digits
+      if (decimal) {
+        decimal = decimal.substring(0, 2); // Limit decimal part to two digits
+      }
+
+      // Format the whole part with commas
+      let formattedWhole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // Reconstruct the formatted value
+      e.target.value = decimal !== undefined ? `${formattedWhole}.${decimal}` : formattedWhole;
+    });
+
+  </script>
+
+
+  <script src="assets/js/nav.js"></script>
+  <!--<script src="assets/js/payment.js?v=1.6"></script>-->
+  <script src="../assets/js/tabHandler.js"></script>
+  <script src="../assets/js/invoice.js"></script>
+  <script src="assets/js/direct-generate.js"></script>
+
+</body>
+
+</html>

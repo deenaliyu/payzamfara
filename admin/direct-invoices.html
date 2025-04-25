@@ -108,7 +108,33 @@
 
             </div>
 
+            <div class="grid grid-cols-3 gap-3 mt-2" id="cardsForSummaray">
 
+              <div class="card dashCards">
+                <div class="icoCont bg-[#e850391f]">
+                  <iconify-icon class="text-[#E85039]" icon="material-symbols:finance-chip"></iconify-icon>
+                </div>
+                <p class="headder">TOTAL INVOICES</p>
+                <p class="zanumbers" id="totalInv">-</p>
+              </div>
+              <!-- 7ad0c7 -->
+              <div class="card dashCards">
+                <div class="icoCont bg-[#7ad0c714]">
+                  <iconify-icon class="text-[#7ad0c7]" icon="la:file-invoice-dollar"></iconify-icon>
+                </div>
+                <p class="headder">TOTAL INVOICED</p>
+                <p class="zanumbers">&#8358; <span id="total_amount_invoiced">-</span></p>
+              </div>
+
+              <div class="card dashCards">
+                <div class="icoCont bg-[#d7a1271f]">
+                  <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                </div>
+                <p class="headder">PAID</p>
+                <p class="zanumbers">&#8358; <span id="total_amountP">-</span></p>
+              </div>
+              
+            </div>
 
             <div class="card card-body mt-5">
               <div class="py-4">
@@ -133,7 +159,7 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0" id="showThem">
-                      <tr>
+                      <!-- <tr>
                         <td>1</td>
                         <td>1234567890</td>
                         <td>Plateau State Internal Revenue Service</td>
@@ -149,7 +175,7 @@
                         <td>
                           <button class="btn btn-primary btn-sm">View</button>
                         </td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
 
@@ -312,7 +338,7 @@
   </script>
   <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v1.2"></script>
-  <script src="./assets/js/direct-assessment.js"></script>
+  <script src="./assets/js/direct-invoices.js"></script>
   <script src="./assets/js/main.js"></script>
 
 </body>

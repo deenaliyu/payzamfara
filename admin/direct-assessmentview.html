@@ -132,18 +132,18 @@
 
 
             <div class="card card-body mt-5">
-              <div class="modal-body">
+              <div class="modal-body" id="theUserDetails">
                 <div class="row mb-4">
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Payer ID</div>
-                      <div class="info-value">1234567890</div>
+                      <div class="info-value" id="payerId">-</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Name</div>
-                      <div class="info-value">John Doe</div>
+                      <div class="info-value" id="nameo">-</div>
                     </div>
                   </div>
                 </div>
@@ -153,14 +153,14 @@
                     <div class="info-card">
                       <div class="info-label">Status</div>
                       <div class="info-value">
-                        <span class="status-badge">SECOND REVIEW</span>
+                        <span class="status-badge" id="thestatus">-</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Date Created</div>
-                      <div class="info-value">2023-10-01</div>
+                      <div class="info-value" id="date_created">-</div>
                     </div>
                   </div>
                 </div>
@@ -169,13 +169,13 @@
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Annual Gross Income</div>
-                      <div class="info-value currency">₦ 2,400,000.00</div>
+                      <div class="info-value currency" id="annual_gross">-</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Consolidated Tax Relief</div>
-                      <div class="info-value currency">₦ 200,000.00</div>
+                      <div class="info-value currency" id="consolidated_tax">-</div>
                     </div>
                   </div>
                 </div>
@@ -184,13 +184,13 @@
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Taxable Income</div>
-                      <div class="info-value currency">₦ 2,200,000.00</div>
+                      <div class="info-value currency" id="taxable_income">-</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Monthly Tax Liability</div>
-                      <div class="info-value currency">₦ 20,000.00</div>
+                      <div class="info-value currency" id="monthly_liability">-</div>
                     </div>
                   </div>
                 </div>
@@ -199,16 +199,16 @@
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Annual Tax Liability</div>
-                      <div class="info-value currency">₦ 240,000.00</div>
+                      <div class="info-value currency" id="annual_liability">-</div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1">
+                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1" id="approveButton">
                   <iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>
                 </button>
-                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1">
+                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1" id="disapproveButton">
                   <iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>
                 </button>
               </div>
@@ -354,20 +354,8 @@
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $("#getMDAs").select2({
-        dropdownParent: $("#filterInvoice")
-      })
-      $("#listOfpayable").select2({
-        dropdownParent: $("#filterInvoice")
-      })
-
-    })
-  </script>
-  <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v1.2"></script>
-  <script src="./assets/js/direct-assessment.js"></script>
+  <script src="./assets/js/direct-assessmentview.js"></script>
   <script src="./assets/js/main.js"></script>
 
 </body>

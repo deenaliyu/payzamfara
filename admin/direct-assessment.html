@@ -105,34 +105,18 @@
 
             <div class="flex justify-between  items-center mb-5">
               <p class="font-bold text-2xl text-black">Direct Assessment</p>
-              <a href="generate-assessment.html" class="button items-center flex gap-x-1" id="newDemandNotice">Generate
+              <a href="direct-generate.html" class="button items-center flex gap-x-1" id="newDemandNotice">Generate
                 Assessment</a>
             </div>
 
             <div class="grid grid-cols-3 gap-3 mt-2" id="cardsForSummaray">
 
               <div class="card dashCards">
-                <div class="icoCont bg-[#e850391f]">
-                  <iconify-icon class="text-[#E85039]" icon="material-symbols:finance-chip"></iconify-icon>
-                </div>
-                <p class="headder">TOTAL INVOICES</p>
-                <p class="zanumbers" id="totalInv">-</p>
-              </div>
-              <!-- 7ad0c7 -->
-              <div class="card dashCards">
-                <div class="icoCont bg-[#7ad0c714]">
-                  <iconify-icon class="text-[#7ad0c7]" icon="la:file-invoice-dollar"></iconify-icon>
-                </div>
-                <p class="headder">TOTAL INVOICED</p>
-                <p class="zanumbers">&#8358; <span id="total_amount_invoiced">-</span></p>
-              </div>
-
-              <div class="card dashCards">
                 <div class="icoCont bg-[#d7a1271f]">
-                  <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
+                  <iconify-icon icon="mingcute:document-line" class="text-primary"></iconify-icon>
                 </div>
-                <p class="headder">PAID</p>
-                <p class="zanumbers">&#8358; <span id="total_amountP">-</span></p>
+                <p class="headder">SUBMITTED</p>
+                <p class="zanumbers">0</p>
               </div>
 
               <div class="card dashCards">
@@ -154,39 +138,46 @@
             </div>
 
             <div class="card card-body mt-5">
-              <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2 border-b " id="pills-tab" role="tablist">
+              <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2 border-b" id="pills-tab-direct" role="tablist">
 
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#direct_assessmentso"
+                  <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#direct_assessmentsall"
                     type="button" role="tab">
+                    All
+                  </button>
+                </li>
+
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link levels-navo" data-note="First reviewer" data-bs-toggle="pill"
+                    data-bs-target="#direct_assessmentso" type="button" role="tab">
                     First Reviewer
                   </button>
                 </li>
 
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#direct_assessmentso" type="button"
-                    role="tab">
+                  <button class="nav-link levels-navo" data-note="Second reviewer" data-bs-toggle="pill"
+                    data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Second Reviewer
                   </button>
                 </li>
 
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#direct_assessmentso" type="button"
-                    role="tab">
+                  <button class="nav-link levels-navo" data-note="Third reviewer" data-bs-toggle="pill"
+                    data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Third Reviewer
                   </button>
                 </li>
 
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#direct_assessmentso" type="button"
-                    role="tab">
+                  <button class="nav-link levels-navo" data-note="Appproval" data-bs-toggle="pill"
+                    data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Appproved
                   </button>
                 </li>
 
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#direct_assessmentso" type="button"
-                    role="tab">
+                  <button class="nav-link levels-navo" data-note="Disapproved" data-bs-toggle="pill"
+                    data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Declined
                   </button>
                 </li>
@@ -194,10 +185,53 @@
 
               <div class="tab-content" id="pills-tabContent">
 
-                <div class="tab-pane fade active show" id="direct_assessmentso" role="tabpanel">
+                <div class="tab-pane fade active show" id="direct_assessmentsall" role="tabpanel">
                   <div class="py-4">
                     <div class="table-responsive">
                       <table class="table invoiceTable" style="width: 100% !important;" id="dataTable2">
+                        <thead>
+                          <tr class="text-center">
+                            <th></th>
+                            <th>Payer ID</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Annual Gross Income</th>
+                            <th>Consolidated Tax Relief</th>
+                            <th>Taxable Income</th>
+                            <th>Monthly Tax Liability</th>
+                            <th>Annual Tax Liability</th>
+                            <th>Date Created</th>
+                          </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                          <!-- <tr>
+                            <td>1</td>
+                            <td class="text-center">1234567890</td>
+                            <td class="text-center">John Doe</td>
+                            <td><span class="badge bg-warning">Second Review</span></td>
+                            <td class="text-center">₦ 2,400,000.00</td>
+                            <td class="text-center">₦ 200,000.00</td>
+                            <td class="text-center">₦ 2,200,000.00</td>
+                            <td class="text-center">₦ 20,000.00</td>
+                            <td class="text-center">₦ 240,000.00</td>
+                            <td class="text-center">2023-10-01</td>
+                            <td>
+                              <a href="direct-assessmentview.html" class="btn btn-primary btn-sm">View</a>
+                            </td>
+                          </tr> -->
+                        </tbody>
+                      </table>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="direct_assessmentso" role="tabpanel">
+                  <div class="py-4">
+                    <div class="table-responsive">
+                      <table class="table invoiceTable" style="width: 100% !important;" id="dataTable3">
                         <thead>
                           <tr class="text-center">
                             <th></th>
@@ -214,7 +248,7 @@
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                          <tr>
+                          <!-- <tr>
                             <td>1</td>
                             <td class="text-center">1234567890</td>
                             <td class="text-center">John Doe</td>
@@ -228,7 +262,7 @@
                             <td>
                               <a href="direct-assessmentview.html" class="btn btn-primary btn-sm">View</a>
                             </td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
 

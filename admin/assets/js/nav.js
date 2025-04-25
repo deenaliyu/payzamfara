@@ -1215,6 +1215,7 @@ let lgaList = {
 
 let stateSelect = document.querySelector("#STATES")
 let lgaSelect = document.querySelector('#LGAs')
+
 if (stateSelect) {
   lgaList["Zamfara"].forEach(lga => {
     lgaSelect.innerHTML += `
