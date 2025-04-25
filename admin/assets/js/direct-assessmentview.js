@@ -52,18 +52,8 @@ async function updateStatus(id, status) {
       'Approving'
     );
   try {
-    const payload = {
-      endpoint: "updateDirectAsststatus",
-      data: {
-        id,
-        set: status
-      }
-    };
-    const response = await fetch(`${HOST}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+
+    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=${status}`);
     if (!response.ok) throw new Error('Failed to update status');
     const data = await response.json();
     // console.log('Status Update Response:', data);
@@ -132,22 +122,12 @@ document.getElementById('approveButton').addEventListener('click', async functio
 
 async function declineStatus(id) {
   $("#disapproveButton").prop('disabled', false)
-      .html(
-        `Declining...`
-      );
+    .html(
+      `Declining...`
+    );
   try {
-    const payload = {
-      endpoint: "updateDirectAsststatus",
-      data: {
-        id,
-        set: "Disapproved"
-      }
-    };
-    const response = await fetch(`${HOST}/updateDirectAsststatus`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+
+    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=${Disapproved}`);
     if (!response.ok) throw new Error('Failed to update status');
 
     $("#disapproveButton").prop('disabled', false)
