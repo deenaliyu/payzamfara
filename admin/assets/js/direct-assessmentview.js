@@ -1,7 +1,7 @@
 // Extract ID and levels from the URL
 const urlParams = new URLSearchParams(window.location.search);
 const assid = urlParams.get('id');
-const levels = urlParams.get('levels');
+const levels = urlParams.get('level');
 
 const thedetailss = null
 
@@ -47,19 +47,31 @@ fetchUserDetailsById(assid)
 
 // Function to update status
 async function updateStatus(id, status) {
+  $("#approveButton").prop('disabled', true)
+    .html(
+      'Approving'
+    );
   try {
     const payload = {
-      id,
-      set: status
+      endpoint: "updateDirectAsststatus",
+      data: {
+        id,
+        set: status
+      }
     };
-    const response = await fetch(`${HOST}/updateDirectAsststatus`, {
+    const response = await fetch(`${HOST}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
     if (!response.ok) throw new Error('Failed to update status');
     const data = await response.json();
-    console.log('Status Update Response:', data);
+    // console.log('Status Update Response:', data);
+
+    $("#approveButton").prop('disabled', false)
+      .html(
+        `<iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>`
+      );
 
     if (thenextstat === "Approval") {
       Swal.fire({
@@ -67,8 +79,7 @@ async function updateStatus(id, status) {
         title: 'Status Updated',
         text: 'The status has been successfully updated.',
         confirmButtonText: 'Generate Invoice',
-        showCancelButton: true,
-        cancelButtonText: 'Close'
+        showCancelButton: false,
       }).then((result) => {
         if (result.isConfirmed) {
           // Logic to generate the invoice
@@ -81,11 +92,19 @@ async function updateStatus(id, status) {
         title: 'Status Updated',
         text: 'The status has been successfully updated.',
         confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "direct-assessment.html";
+        }
       });
     }
 
 
   } catch (error) {
+    $("#approveButton").prop('disabled', false)
+      .html(
+        `<iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>`
+      );
     console.error(error);
     Swal.fire({
       icon: 'error',
@@ -112,10 +131,17 @@ document.getElementById('approveButton').addEventListener('click', async functio
 });
 
 async function declineStatus(id) {
+  $("#disapproveButton").prop('disabled', false)
+      .html(
+        `Declining...`
+      );
   try {
     const payload = {
-      id,
-      set: "Disapproved"
+      endpoint: "updateDirectAsststatus",
+      data: {
+        id,
+        set: "Disapproved"
+      }
     };
     const response = await fetch(`${HOST}/updateDirectAsststatus`, {
       method: 'POST',
@@ -123,6 +149,11 @@ async function declineStatus(id) {
       body: JSON.stringify(payload),
     });
     if (!response.ok) throw new Error('Failed to update status');
+
+    $("#disapproveButton").prop('disabled', false)
+      .html(
+        `<iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>`
+      );
     const data = await response.json();
     console.log('Status Update Response:', data);
 
@@ -136,6 +167,10 @@ async function declineStatus(id) {
 
 
   } catch (error) {
+    $("#disapproveButton").prop('disabled', false)
+      .html(
+        `<iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>`
+      );
     console.error(error);
     Swal.fire({
       icon: 'error',
@@ -154,7 +189,7 @@ document.getElementById('disapproveButton').addEventListener('click', async func
     showCancelButton: true,
   });
   if (reason) {
-    await declineStatus(id);
+    await declineStatus(assid);
   } else {
     alert('Decline reason is required');
   }
