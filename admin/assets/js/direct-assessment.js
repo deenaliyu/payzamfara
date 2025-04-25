@@ -70,6 +70,8 @@ async function fetchInvoice() {
       },
       { data: 'tax_number' },
       { data: 'fullname' },
+      { data: 'phone' },
+      { data: 'email' },
       {
         data: 'level',
         render: function (data, type, row) {
