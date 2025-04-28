@@ -28,12 +28,33 @@ async function fetchUserDetailsById(id) {
     let detailss = data.message[0]
 
     $("#payerId").text(detailss.tax_number);
-    $("#nameo").text(detailss.first_name + " " + detailss.last_name);
+    $("#nameo").text(detailss.first_name);
     $("#thestatus").text(detailss.status);
-    $("#date_created").text(detailss.timeIn);
+    $("#date_created").text(detailss.time_in);
 
+    let totalStaffAmounts = 0;
+    detailss.staff_details.forEach(stf => totalStaffAmounts += parseFloat(stf.monthly));
+    $("#totalPayableAmt").text(formatMoney(totalStaffAmounts));
+    // Populate the staffListInvoices table
+    const staffListInvoices = $("#staffListInvoices");
+    staffListInvoices.empty(); // Clear any existing rows
 
-    return data;
+    detailss.staff_details.forEach((staff, index) => {
+      const row = `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${staff.fullname}</td>
+        <td>₦ ${formatMoney(staff.annual_gross_income)}</td>
+        <td>₦ ${formatMoney(staff.annual_gross_income)}</td>
+        <td>₦ ${formatMoney(staff.annual_gross_income)}</td>
+        <td>₦ ${formatMoney(staff.annual_gross_income)}</td>
+        <td>${staff.timeIn}</td>
+      </tr>
+
+      `;
+      staffListInvoices.append(row);
+    });
+
   } catch (error) {
     console.error(error);
     alert('Error fetching user details');
@@ -60,17 +81,39 @@ async function updateStatus(id, status) {
         `<iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>`
       );
 
+
     if (data.status === 1) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Status Updated',
-        text: 'The status has been successfully updated.',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "direct-assessment.html";
-        }
-      });
+      if (status === "Approval") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Status Updated',
+          text: 'The status has been successfully updated.',
+          confirmButtonText: 'Generate Invoice',
+          showCancelButton: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Logic to generate the invoice
+            let totalStaffAmounts = 0;
+            detailss.staff_details.forEach((staff) => {
+              totalStaffAmounts += parseFloat(staff.monthly);
+            });
+
+            console.log(detailss.tax_number, detailss.monthly_tax_payable)
+            // generateInvoiceNum(detailss.tax_number, detailss.monthly_tax_payable);
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Status Updated',
+          text: 'The status has been successfully updated.',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "paye-assessments.html";
+          }
+        });
+      }
     } else {
       throw new Error('Failed to update status');
     }
@@ -132,7 +175,7 @@ async function declineStatus(id) {
         confirmButtonText: 'OK'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "direct-assessment.html";
+          window.location.href = "paye-assessments.html";
         }
       });
 
