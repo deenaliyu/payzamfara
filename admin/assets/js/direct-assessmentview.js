@@ -7,7 +7,7 @@ if (levels === "A" || levels === "D") {
   $("#approveButtons").remove("")
 }
 
-const thedetailss = null
+let thedetailss = null
 
 function formatMoney(amount) {
   return parseFloat(amount).toLocaleString('en-US', {
@@ -26,6 +26,8 @@ async function fetchUserDetailsById(id) {
     const data = await response.json();
 
     let detailss = data.data.direct_assessments[0]
+
+    thedetailss = detailss
 
     $("#payerId").text(detailss.tax_number);
     $("#nameo").text(detailss.fullname);
@@ -78,7 +80,7 @@ async function updateStatus(id, status) {
         }).then((result) => {
           if (result.isConfirmed) {
             // Logic to generate the invoice
-            generateInvoiceNum(detailss.tax_number, detailss.monthly_tax_payable);
+            generateInvoiceNum(thedetailss.tax_number, thedetailss.monthly_tax_payable);
           }
         });
       } else {
@@ -192,70 +194,115 @@ document.getElementById('disapproveButton').addEventListener('click', async func
   }
 });
 
+function generateInvoiceNum(taxNumber, amountCal) {
+  Swal.fire({
+    title: "Generating Invoice",
+    icon: "info",
+    html: `
+      <div class="form-group mb-3">
+        <label for="LGAaas">Select LGA:</label>
+        <select id="LGAaas" class="form-select">
+          <option disabled selected>Select--</option>
+          <option value="Shinkafi">Shinkafi</option>
+          <option value="Zurmi">Zurmi</option>
+          <option value="Birnin Magaji">Birnin Magaji</option>
+          <option value="Kaura Namoda">Kaura Namoda</option>
+          <option value="Gusau">Gusau</option>
+          <option value="Bungudu">Bungudu</option>
+          <option value="Maru">Maru</option>
+          <option value="Tsafe">Tsafe</option>
+          <option value="Anka">Anka</option>
+          <option value="Bukkuyum">Bukkuyum</option>
+          <option value="Gummi">Gummi</option>
+          <option value="Bakura">Bakura</option>
+          <option value="Maradun">Maradun</option>
+          <option value="Talata Mafara">Talata Mafara</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="zonalOff">Select Zonal Office:</label>
+        <select id="zonalOff" class="form-select">
+          <option value="" disabled selected>Select Zonal Office</option>
+        </select>
+      </div>
+    `,
+    backdrop: true,
+    allowOutsideClick: false,
+    showCancelButton: true,
+    confirmButtonText: "Generate Invoice",
+    showLoaderOnConfirm: true,
+    preConfirm: async () => {
+      try {
+        const selectedLga = document.getElementById("LGAaas").value;
+        const selectedZonalOffice = document.getElementById("zonalOff").value;
 
+        if (!selectedLga || !selectedZonalOffice) {
+          Swal.showValidationMessage(`Please select both LGA and Zonal Office`);
+          return;
+        }
 
-async function generateInvoiceNum(taxNumber, amountCal) {
-  let timer;
-
-  // Start a timer that triggers after 15 seconds
-  timer = setTimeout(() => {
-    Swal.fire({
-      title: 'Please Check Your Email',
-      text: "The invoice is being generated. Please check your email for the generated invoice.",
-      icon: 'info',
-      confirmButtonColor: '#3085d6',
-      allowOutsideClick: false
-    });
-    $("#generating_inv").removeClass("hidden");
-  }, 15000);
-
-  // let category_pre = $("#category_pre").val();
-  // let sectorSelect = $("#sectorSelect").val();
-  // let industrySelect = $("#industrySelect").val();
-
-  // let sectorAndIndustry = `${sectorSelect} - ${industrySelect}`;
-  // let descriptionVal = $("#description").val();
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=328&price=${amountCal}&category_pre=Formal&sector=sector&description=description&invoice_type=direct`,
-    dataType: 'json',
-    success: function (data) {
-      clearTimeout(timer); // Clear the timer if the request succeeds
-
-      // console.log(data);
-      if (data.status === 2) {
-        // Handle status 2
-      } else if (data.status === 1) {
-        $("#generating_inv").removeClass("hidden");
-        $("#msg_box").html(``);
-        Swal.fire({
-          title: 'Generated',
-          text: "Direct Assessment has been generated successfully. Assessment Details will be sent to your mail and phone number. Check your spam junk folder if you can't find the mail.",
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#3085d6',
-          confirmButtonText: 'Open Assessment',
-          allowOutsideClick: false
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // nextPrev(1);
-            // openInvoice(data.invoice_number, data.price);
-            window.location.href = `viewinvoice.html?invnum=${data.invoice_number}`
-          }
-        });
+        const response = await fetch(
+          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=59&price=${amountCal}&category_pre=Formal&zonalOffice=${selectedZonalOffice}&lga=${selectedLga}&sector=sector&description=description&invoice_type=direct`
+        );
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return await response.json();
+      } catch (error) {
+        Swal.showValidationMessage(`Request failed: ${error}`);
       }
     },
-    error: function (request, error) {
-      clearTimeout(timer); // Clear the timer if the request fails
-
-      $("#msg_box").html(`
-              <p class="text-danger text-center mt-4 text-lg">Something went wrong, Try again.</p>
-            `);
-      $("#generating_inv").removeClass("hidden");
-      console.log(error);
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: "success",
+        title: `Invoice Generated successfully!`,
+        confirmButtonText: "Open Invoice",
+      }).then((result3) => {
+        if (result3.isConfirmed) {
+          window.location.href = `./viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+        }
+      });
     }
   });
 
-}
+  let allZonalOffice = null;
 
+  async function fetchZonalOffice(categ) {
+    const response = await fetch(`${HOST}?tax_offices`)
+    const revHeads = await response.json()
+
+    if (revHeads.status === 0) {
+    } else {
+      allZonalOffice = revHeads.message
+
+    }
+  }
+
+  fetchZonalOffice()
+
+  const lgaSelector = document.getElementById('LGAaas');
+  const zonalOfficeSelect = document.getElementById('zonalOff');
+
+  console.log(lgaSelector, zonalOfficeSelect)
+
+  lgaSelector.addEventListener('change', (event) => {
+    const selectedLga = event.target.value;
+    // Clear previous options
+    zonalOfficeSelect.innerHTML = '';
+
+    if (selectedLga && allZonalOffice) {
+      const filteredZonalOffices = allZonalOffice.filter(office => office.lga.includes(selectedLga));
+      filteredZonalOffices.forEach(office => {
+        const option = document.createElement('option');
+        option.value = office.id;
+        option.textContent = office.office_name;
+        zonalOfficeSelect.appendChild(option);
+      });
+    }
+
+  });
+
+
+}

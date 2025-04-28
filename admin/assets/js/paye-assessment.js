@@ -35,6 +35,16 @@ async function fetchInvoice() {
         data: filters,
         success: function (response) {
           // Map the API response to DataTables expected format
+
+          $("#generetedAssess").html(response.message.length)
+          const totalReviewers = response.message.filter(item =>
+            item.status === 'First reviewer' ||
+            item.status === 'Second reviewer' ||
+            item.status === 'Third reviewer'
+          ).length;
+          $("#pendingAssess").html(totalReviewers);
+          $("#approvedAss").html(response.message.filter(item => item.status === 'Accepted').length)
+          $("#declinedAss").html(response.message.filter(item => item.status === 'Declined').length)
           callback({
             draw: data.draw, // Pass through draw counter
             recordsTotal: response.message.length, // Total records in your database
@@ -195,8 +205,8 @@ function getStatusBadge(status) {
     'First reviewer': 'bg-warning',
     'Second reviewer': 'bg-warning',
     'Third reviewer': 'bg-warning',
-    'Approval': 'bg-success',
-    'Disapproved': 'bg-danger',
+    'Accepted': 'bg-success',
+    'Declined': 'bg-danger',
   }[status] || 'bg-secondary';
 
   return `<span class="badge ${statusClass} rounded-pill">${status === 'Approval' ? 'Approved' : status}</span>`;
