@@ -231,27 +231,7 @@
 
                         <tbody id="stafflistTable">
 
-                          <tr>
-                            <td><input class="form-check-input" type="checkbox" value=""></td>
-                            <td>1</td>
-                            <td>IRP-576383</td>
-                            <td>John Doe
-                            </td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>26/09/2023</td>
-                            <td>
-                              <div class="flex items-center gap-2">
-                                <button onclick="editMDAFunc(this)" data-revid="${rhUser.id}" data-bs-toggle="modal"
-                                  data-bs-target="#editStaff"><iconify-icon class="fontBold text-lg"
-                                    icon="basil:edit-outline"></iconify-icon></button>
-                                <button><iconify-icon class="fontBold text-lg"
-                                    icon="fluent:delete-24-regular"></iconify-icon></button>
-                              </div>
-                            </td>
-                          </tr>
+                         
                         </tbody>
                       </table>
 
@@ -259,9 +239,9 @@
 
                     </div>
 
-                    <!-- <div class="flex justify-center items-center mt-4" id="loader">
+                    <div class="flex justify-center items-center mt-4" id="loader">
                       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                    </div> -->
+                    </div>
 
                   </div>
 
@@ -350,25 +330,7 @@
                         </thead>
                         <tbody id="invoiceHistoryTable">
 
-                          <tr>
-                            <td>1</td>
-                            <td>IRP-576383</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>26/09/2023</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-success rounded-pill">Paid</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewinvoice.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
+
 
                         </tbody>
                       </table>
@@ -396,43 +358,7 @@
                         <tbody id="paymentHistoryTable">
 
 
-                          <tr>
-                            <td>2</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>September</td>
-                            <td>Nil</td>
-                            <td>Nil</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-danger rounded-pill">Due</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewreceipt.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>2</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>September</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>Remita</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-warning rounded-pill">Partial</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewreceipt.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
+                          
 
 
                         </tbody>
@@ -676,7 +602,7 @@
 
     // $('#dataTable2').DataTable();
 
-    let theAtivo = document.querySelector(".mdoo")
+    let theAtivo = document.querySelector(".payemananav")
     theAtivo.parentElement.classList.add("active")
 
   </script>

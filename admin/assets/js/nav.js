@@ -124,7 +124,7 @@ $(".aside").html(`
       </li>
 
       <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link paye-manager-nav menu-toggle dggg">
+        <a href="javascript:void(0);" class="menu-link paye-manager-nav menu-toggle payemananav">
           <iconify-icon icon="mdi:account-payment-outline" class="menu-icon"></iconify-icon>
           <div data-i18n="Basic">PAYE Manager</div>
         </a>

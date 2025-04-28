@@ -130,7 +130,7 @@
 
           <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
             <button type="button" id="last-button" onclick="fillManually()">Fill Manually</button>
-            <button id="lastly-button" onclick="nextPrev(1)" class="btn-only" type="button">Fetch
+            <button id="lastly-button" onclick="fetchUserDetails()" class="btn-only" type="button">Fetch
               Details</button>
           </div>
           <div id="msg_box001"></div>
@@ -156,6 +156,16 @@
           <div class="form-group mb-3">
             <label for="">Name of Organization*</label>
             <input type="text" class="form-control w-full enumInput" data-name="fullname" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">Category*</label>
+            <select class="form-select enumInput" id="categorySelect" data-name="category" required>
+              <option value="" selected>Select</option>
+              <option value="private">Private</option>
+              <option value="public">Public</option>
+            </select>
+
           </div>
 
           <div class="flex mb-4 gap-2">
@@ -190,7 +200,7 @@
             <input type="text" class="form-control w-full enumInput" data-name="cac">
           </div>
 
-          <button class="button w-full mb-4" type="button" onclick="nextPrev(1)">Continue</button>
+          <button class="button w-full mb-4" type="button" onclick="continueReg()">Continue</button>
 
         </form>
 
@@ -223,7 +233,44 @@
           <div class="form-group mb-3">
             <label for="">State*</label>
             <select class="form-select w-full enumInputB" data-name="state" id="STATES" required>
-              <option value="Plateau" selected>Plateau</option>
+              <option disabled selected>--Select State--</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="FCT">Federal Capital Territory</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara" selected>Zamfara</option>
             </select>
           </div>
 
@@ -240,7 +287,7 @@
             <input type="text" class="form-control w-full enumInputB" data-name="address" required>
           </div>
 
-          <button class="button w-full mb-4" type="button" onclick="nextPrev(1)">Continue</button>
+          <button class="button w-full mb-4" type="button" onclick="continueReg2()">Continue</button>
 
         </form>
 
@@ -340,7 +387,7 @@
 
 
             <!-- <button class="button w-full mb-4" id="theButton" type="button" onclick="registerUser()">Verify</button> -->
-            <button class="button w-full mb-4" id="theButton" type="button" onclick="alert('created successfully')">Verify</button>
+            <button class="button w-full mb-4" id="theButton" type="button" onclick="createUserFirst()">Verify</button>
 
 
 

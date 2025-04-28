@@ -3,6 +3,10 @@ const urlParams = new URLSearchParams(window.location.search);
 const assid = urlParams.get('id');
 const levels = urlParams.get('level');
 
+if (levels === "A" || levels === "D") {
+  $("#approveButtons").remove("")
+}
+
 const thedetailss = null
 
 function formatMoney(amount) {
