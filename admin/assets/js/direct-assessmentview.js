@@ -239,9 +239,9 @@ async function generateInvoiceNum(taxNumber, amountCal) {
           allowOutsideClick: false
         }).then((result) => {
           if (result.isConfirmed) {
-            nextPrev(1);
-            openInvoice(data.invoice_number, data.price);
-            // window.location.href = `invoice.html?invnum=${data.invoice_number}`
+            // nextPrev(1);
+            // openInvoice(data.invoice_number, data.price);
+            window.location.href = `viewinvoice.html?invnum=${data.invoice_number}`
           }
         });
       }
@@ -258,3 +258,4 @@ async function generateInvoiceNum(taxNumber, amountCal) {
   });
 
 }
+

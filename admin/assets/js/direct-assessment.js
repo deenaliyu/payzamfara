@@ -78,6 +78,7 @@ async function fetchInvoice() {
           return getStatusBadge(data);
         }
       },
+      { data: 'reason' },
       {
         data: null,
         render: function (data, type, row) {

@@ -25,6 +25,7 @@ $(".payebtns").each(function () {
 
 async function renderTable(filterStatus = "all") {
   $("#payeMTabAll").empty(); // Clear the table before rendering
+  $("#loader").remove()
   try {
     const response = await fetch(`${HOST}/?getSpecialUsers&id=all`);
     const result = await response.json();
