@@ -93,8 +93,8 @@ async function fetchUserDetails() {
           title: 'Not Found',
           text: "User detail not found in the database! please go back and fill your details manually",
           icon: 'error',
-          confirmButtonColor: '##CDA545',
-          cancelButtonColor: '##CDA545',
+          confirmButtonColor: '##025826',
+          cancelButtonColor: '##025826',
           confirmButtonText: 'Fill In Manually',
           allowOutsideClick: true
         }).then((result) => {
@@ -113,8 +113,8 @@ async function fetchUserDetails() {
         title: 'Not Found',
         text: "User detail not found in the database! please go back and fill your details manually",
         icon: 'error',
-        confirmButtonColor: '##CDA545',
-        cancelButtonColor: '##CDA545',
+        confirmButtonColor: '##025826',
+        cancelButtonColor: '##025826',
         confirmButtonText: 'Fill In Manually',
         allowOutsideClick: true
       }).then((result) => {
@@ -220,7 +220,7 @@ function registerUser(payer_id) {
           text: "Registered successfully!",
           icon: 'success',
           showCancelButton: false,
-          confirmButtonColor: '#CDA545',
+          confirmButtonColor: '#025826',
           // cancelButtonColor: '#3085d6',
           confirmButtonText: 'Go to PAYE manager'
 
@@ -236,7 +236,7 @@ function registerUser(payer_id) {
           text: "This email is already registered, Please go Staff manager to register staffs!",
           icon: 'success',
           showCancelButton: true,
-          confirmButtonColor: '#CDA545',
+          confirmButtonColor: '#025826',
           allowOutsideClick: false,
           confirmButtonText: 'Go to Staff manager'
 

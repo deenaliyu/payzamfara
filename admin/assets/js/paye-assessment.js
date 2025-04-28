@@ -37,9 +37,9 @@ async function fetchInvoice() {
           // Map the API response to DataTables expected format
           callback({
             draw: data.draw, // Pass through draw counter
-            recordsTotal: response.data.total_records, // Total records in your database
-            recordsFiltered: response.data.total_records, // Filtered records count
-            data: response.data.direct_assessments, // The actual data array from your API
+            recordsTotal: response.message.length, // Total records in your database
+            recordsFiltered: response.message.length, // Filtered records count
+            data: response.message, // The actual data array from your API
           });
         },
         error: function (error) {
@@ -69,48 +69,17 @@ async function fetchInvoice() {
         },
       },
       { data: 'tax_number' },
-      { data: 'fullname' },
-      { data: 'phone' },
+      { data: 'first_name' },
       { data: 'email' },
+      { data: 'phone' },
       {
-        data: 'level',
+        data: 'status',
         render: function (data, type, row) {
           return getStatusBadge(data);
         }
       },
-      { data: 'reason' },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.annual_gross_income));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.consolidated_relief));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.chargeable_income));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable));
-        }
-      },
-
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
-        }
-      },
-      { data: 'created_date' },
+      // { data: 'reason' },
+      { data: 'time_in' },
 
     ],
   });
@@ -146,14 +115,14 @@ async function fetchForSpecificLevels(level) {
         data: filters,
         success: function (response) {
           // Filter the data based on the selected level
-          const filteredData = response.data.direct_assessments.filter(item => item.level === level);
+          const filteredData = response.message.filter(item => item.status === level);
 
           // Map the API response to DataTables expected format
           callback({
             draw: data.draw, // Pass through draw counter
-            recordsTotal: filteredData.length, // Total records after filtering
+            recordsTotal: filteredData.length, // Total records in your database
             recordsFiltered: filteredData.length, // Filtered records count
-            data: filteredData, // The filtered data array
+            data: filteredData, // The actual data array from your API
           });
         },
         error: function (error) {
@@ -182,51 +151,22 @@ async function fetchForSpecificLevels(level) {
         },
       },
       { data: 'tax_number' },
-      { data: 'fullname' },
-      { data: 'phone' },
+      { data: 'first_name' },
       { data: 'email' },
-      // {
-      //   data: 'level',
-      //   render: function (data, type, row) {
-      //     return getStatusBadge(data);
-      //   }
-      // },
+      { data: 'phone' },
       {
-        data: null,
+        data: 'status',
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.annual_gross_income));
+          return getStatusBadge(data);
         }
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.consolidated_relief));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.chargeable_income));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
-        }
-      },
-      { data: 'created_date' },
+      // { data: 'reason' },
+      { data: 'time_in' },
       {
         data: null,
         render: function (data, type, row) {
           return `
-              <a href="direct-assessmentview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
+              <a href="paye-assview.html?id=${row.id}&level=${row.status.split("")[0]}" class="btn btn-primary btn-sm">View</a>
             `;
         },
       },

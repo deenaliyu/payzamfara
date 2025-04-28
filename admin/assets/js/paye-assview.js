@@ -21,23 +21,16 @@ function formatMoney(amount) {
 // Function to fetch user details by ID
 async function fetchUserDetailsById(id) {
   try {
-    const response = await fetch(`${HOST}?getAllDirectAssessmentss&id=${id}`);
+    const response = await fetch(`${HOST}?getPayeeAssessment&id=${id}`);
     if (!response.ok) throw new Error('Failed to fetch user details');
     const data = await response.json();
 
-    let detailss = data.data.direct_assessments[0]
+    let detailss = data.message[0]
 
     $("#payerId").text(detailss.tax_number);
-    $("#nameo").text(detailss.fullname);
-    $("#thestatus").text(detailss.level);
-    $("#date_created").text(detailss.created_date);
-    $("#annual_gross").text(formatMoney(detailss.annual_gross_income));
-    $("#consolidated_tax").text(formatMoney(detailss.consolidated_relief));
-    $("#taxable_income").text(formatMoney(detailss.chargeable_income));
-
-    $("#monthly_liability").text(formatMoney(detailss.monthly_tax_payable));
-    $("#annual_liability").text(formatMoney(parseFloat(detailss.monthly_tax_payable) * 12));
-
+    $("#nameo").text(detailss.first_name + " " + detailss.last_name);
+    $("#thestatus").text(detailss.status);
+    $("#date_created").text(detailss.timeIn);
 
 
     return data;
@@ -57,7 +50,7 @@ async function updateStatus(id, status) {
     );
   try {
 
-    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=${status}`);
+    const response = await fetch(`${HOST}?updatePayeeAsststatus&id=${assid}&set=${status}`);
     if (!response.ok) throw new Error('Failed to update status');
     const data = await response.json();
     // console.log('Status Update Response:', data);
@@ -68,31 +61,16 @@ async function updateStatus(id, status) {
       );
 
     if (data.status === 1) {
-      if (status === "Approval") {
-        Swal.fire({
-          icon: 'success',
-          title: 'Status Updated',
-          text: 'The status has been successfully updated.',
-          confirmButtonText: 'Generate Invoice',
-          showCancelButton: false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Logic to generate the invoice
-            generateInvoiceNum(detailss.tax_number, detailss.monthly_tax_payable);
-          }
-        });
-      } else {
-        Swal.fire({
-          icon: 'success',
-          title: 'Status Updated',
-          text: 'The status has been successfully updated.',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "direct-assessment.html";
-          }
-        });
-      }
+      Swal.fire({
+        icon: 'success',
+        title: 'Status Updated',
+        text: 'The status has been successfully updated.',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "direct-assessment.html";
+        }
+      });
     } else {
       throw new Error('Failed to update status');
     }
@@ -137,7 +115,7 @@ async function declineStatus(id) {
     );
   try {
 
-    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=Disapproved`);
+    const response = await fetch(`${HOST}?updatePayeeAsststatus&id=${assid}&set=Declined`);
     if (!response.ok) throw new Error('Failed to update status');
 
     $("#disapproveButton").prop('disabled', false)

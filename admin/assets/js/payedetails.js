@@ -188,7 +188,7 @@ $("#theButton").on("click", () => {
   });
 })
 
-function generateInv(amount, staff_id) {
+function generateInv(staff_id) {
   Swal.fire({
     title: "Generate Assessment",
     icon: "info",
@@ -230,7 +230,7 @@ function generateInv(amount, staff_id) {
         confirmButtonText: "Open Assessments",
       }).then((result3) => {
         if (result3.isConfirmed) {
-          window.open(`./paye-assessments.html`)
+          window.location.href = "./paye-assessments.html"
         }
       });
     }

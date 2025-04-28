@@ -137,13 +137,13 @@
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Payer ID</div>
-                      <div class="info-value">1234567890</div>
+                      <div class="info-value" id="payerId">-</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Organization Name</div>
-                      <div class="info-value">John Doe</div>
+                      <div class="info-value" id="nameo">-</div>
                     </div>
                   </div>
                 </div>
@@ -153,29 +153,14 @@
                     <div class="info-card">
                       <div class="info-label">Status</div>
                       <div class="info-value">
-                        <span class="status-badge">SECOND REVIEW</span>
+                        <span class="status-badge" id="thestatus">-</span>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Date Created</div>
-                      <div class="info-value">2023-10-01</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Gross Income</div>
-                      <div class="info-value currency">₦ 2,400,000.00</div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="info-card">
-                      <div class="info-label">Consolidated Tax Relief</div>
-                      <div class="info-value currency">₦ 200,000.00</div>
+                      <div class="info-value" id="date_created">-</div>
                     </div>
                   </div>
                 </div>
@@ -185,7 +170,7 @@
                   <div class="col-md-6">
                     <div class="info-card">
                       <div class="info-label">Total Amount Payable</div>
-                      <div class="info-value currency">₦ 240,000.00</div>
+                      <div class="info-value currency">₦ 0</div>
                     </div>
                   </div>
                 </div>
@@ -219,11 +204,12 @@
                 </tbody>
               </table>
 
-              <div class="modal-footer mt-10">
-                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1">
+              <div class="modal-footer" id="approveButtons">
+                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1" id="approveButton">
                   <iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>
                 </button>
-                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1">
+                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1"
+                  id="disapproveButton">
                   <iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>
                 </button>
               </div>
@@ -382,7 +368,7 @@
   </script>
   <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v1.2"></script>
-  <script src="./assets/js/direct-assessment.js"></script>
+  <script src="./assets/js/paye-assview.js"></script>
   <script src="./assets/js/main.js"></script>
 
 </body>

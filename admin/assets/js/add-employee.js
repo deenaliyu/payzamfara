@@ -82,7 +82,7 @@ function registerUser() {
           text: "Employee Registered successfully!",
           icon: 'success',
           showCancelButton: false,
-          confirmButtonColor: '#CDA545',
+          confirmButtonColor: '#025826',
           // cancelButtonColor: '#3085d6',
           confirmButtonText: 'Go to PAYE manager'
 
