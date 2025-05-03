@@ -83,7 +83,7 @@ async function fetchInvoice() {
           return formatMoney(parseFloat(row.amount_paid));
         }
       },
-      { data: 'sector' },
+      // { data: 'sector' },
       { data: 'business_cat' },
       { data: 'date_created' },
       { data: 'due_date' },
@@ -106,6 +106,13 @@ async function fetchInvoice() {
 
 fetchInvoice()
 
+function formatMoney(amount) {
+  return amount.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'NGN', // Change this to your desired currency code
+    minimumFractionDigits: 2,
+  });
+}
 
 function exportData() {
   // console.log(dataToExport)
