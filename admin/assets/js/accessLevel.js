@@ -6,17 +6,17 @@ async function getRolesAdmin() {
   const response = await fetch(`${HOST}?getAdminRoles&id=${adminInfo.id}`);
   const userRoles = await response.json();
 
-//   console.log(userRoles)
+  //   console.log(userRoles)
 
   let currentPage = splitted_url[splitted_url.length - 1]
 
   if (currentPage === "dashboard.html") {
-    
+
     $('.main_section').removeClass('hidden')
-    $('#theLoader').remove()  
-    
+    $('#theLoader').remove()
+
     myCharter.resize();
-      
+
     if (userRoles.dashboard_access[0] === "no_access") {
       $(".main_section").html(`<p class="text-center text-xl fontBold">No Access !</p>`)
     }
@@ -42,7 +42,7 @@ async function getRolesAdmin() {
     let create_mda = analyticsRoles.find(ff => ff === "create_mda")
 
     // console.log(analyticsRoles, viewMda)
-    
+
     $('#mdaContainer').removeClass('hidden')
     $('#theLoader').remove()
 
@@ -50,7 +50,7 @@ async function getRolesAdmin() {
       $(".theTable").html(`
         <p class="text-center text-xl fontBold">No Access to view list !</p>
       `)
-      
+
       $(".theTable2").html(`
         <p class="text-center text-xl fontBold">No Access to view list !</p>
       `)
@@ -88,7 +88,7 @@ async function getRolesAdmin() {
     }
   } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html")) {
     let ReportRoles = userRoles.reports_access
-    
+
     $('#reportDisplay').removeClass('hidden')
     $('#theLoader').remove()
 
@@ -108,9 +108,9 @@ async function getRolesAdmin() {
     if (generate_inv_report === undefined) {
       $("#invReportd").addClass("disabled")
     }
-    
+
     if (view_coll_list === undefined) {
-        
+
       $(".collTab").html(`
         <p class="text-center text-xl fontBold">No Access to view list !</p>
       `)
@@ -136,13 +136,13 @@ async function getRolesAdmin() {
 
     $('#taxpContainer').removeClass('hidden')
     $('#theLoader').remove()
-    
+
     let view_tax_list = taxPayers.find(ff => ff === "view_tax_list")
     let view_tax_detail = taxPayers.find(ff => ff === "view_tax_detail")
     let acti_taxpayer = taxPayers.find(ff => ff === "acti_taxpayer")
     let allocate_appli = taxPayers.find(ff => ff === "allocate_appli")
     let download_report = taxPayers.find(ff => ff === "download_report")
-    
+
     $('#taxpContainer').removeClass('hidden')
     $('#theLoader').remove()
 
@@ -168,7 +168,7 @@ async function getRolesAdmin() {
 
   } else if (currentPage.includes("enumeration.html")) {
     let enumPayers = userRoles.enumeration_access
-    
+
     $('#enummContainer').removeClass('hidden')
     $('#theLoader').remove()
 
@@ -260,10 +260,10 @@ async function getRolesAdmin() {
 
   } else if (currentPage.includes("support.html") || currentPage.includes("complain.html")) {
     let supportRoles = userRoles.cms_access
-        
+
     $('#supportContainer').removeClass('hidden')
     $('#theLoader').remove()
-    
+
     let view_support = supportRoles.find(ff => ff === "view_support")
     let respond_ticket = supportRoles.find(ff => ff === "respond_ticket")
     let escalate_issues = supportRoles.find(ff => ff === "escalate_issues")
@@ -280,12 +280,12 @@ async function getRolesAdmin() {
       $(".message-container").addClass("hidden")
     }
 
-  } else if(currentPage.includes("enduseraudit.html")) {
+  } else if (currentPage.includes("enduseraudit.html")) {
     let auditRoles = userRoles.audit_trail_access
-        
+
     $('#auditContainer').removeClass('hidden')
     $('#theLoader').remove()
-    
+
     let view_audit = auditRoles?.find(ff => ff === "view_audit")
     let analyze_audit = auditRoles?.find(ff => ff === "analyze_audit")
     let generate_reports = auditRoles?.find(ff => ff === "generate_reports")
@@ -296,31 +296,83 @@ async function getRolesAdmin() {
         <p class="m-5 text-2xl fontBold text-center">No Access !!</p>
       `)
     }
-    
-  } else if(currentPage.includes("service.html")) {
-        let eservicePayers = userRoles.eservices_access
-    
-        $('#serviceContainer').removeClass('hidden')
-        $('#theLoader').remove()
 
-        let no_access = eservicePayers?.find(ff => ff === "no_access")
-        let full_access = eservicePayers?.find(ff => ff === "full_access")
-        
-        if (full_access === undefined && no_access === undefined) {
-          $("#serviceContainer").html(`
+  } else if (currentPage.includes("service.html")) {
+    let eservicePayers = userRoles.eservices_access
+
+    $('#serviceContainer').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let no_access = eservicePayers?.find(ff => ff === "no_access")
+    let full_access = eservicePayers?.find(ff => ff === "full_access")
+
+    if (full_access === undefined && no_access === undefined) {
+      $("#serviceContainer").html(`
             <p class="text-2xl m-5 text-center">No Access !!</p>
           `)
-    
-        } else if (full_access) {
-    
-        } else if (no_access) {
-          $("#serviceContainer").html(`
+
+    } else if (full_access) {
+
+    } else if (no_access) {
+      $("#serviceContainer").html(`
             <p class="text-2xl m-5 text-center">No Access !!</p>
           `)
-    
-        }
+
+    }
+  } else if (currentPage.includes("direct")) {
+    let directRoles = userRoles.direct_assessment_access
+
+    $('#directContainer').removeClass('hidden')
+    $('#theLoader').remove()
+
+    const roles = {
+      first_reviewer: "#firstReview",
+      second_reviewer: "#secondReview",
+      third_reviewer: "#thirdReview"
+    };
+
+    const hasAccess = Object.keys(roles).some(role => directRoles?.includes(role));
+
+    if (!hasAccess) {
+      $("#directContainer").html(`
+        <p class="text-2xl m-5 text-center">No Access !!</p>
+      `);
+      return;
+    }
+
+    for (const [role, selector] of Object.entries(roles)) {
+      if (!directRoles?.includes(role)) {
+        $(selector).remove();
+      }
+    }
+  } else if (currentPage.includes("paye")) {
+    let payeRoles = userRoles.payee_access
+
+    $('#payeContainer').removeClass('hidden')
+    $('#theLoader').remove()
+
+    const roles = {
+      first_reviewer: "#firstReview",
+      second_reviewer: "#secondReview",
+      third_reviewer: "#thirdReview"
+    };
+
+    const hasAccess = Object.keys(roles).some(role => payeRoles?.includes(role));
+
+    if (!hasAccess) {
+      $("#payeContainer").html(`
+        <p class="text-2xl m-5 text-center">No Access !!</p>
+      `);
+      return;
+    }
+
+    for (const [role, selector] of Object.entries(roles)) {
+      if (!payeRoles?.includes(role)) {
+        $(selector).remove();
+      }
+    }
   }
-  
+
 }
 
 getRolesAdmin()

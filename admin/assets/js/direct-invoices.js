@@ -106,6 +106,29 @@ async function fetchInvoice() {
 
 fetchInvoice()
 
+async function fetchAnalytics() {
+  try {
+    const response = await fetch(
+      `${HOST}?getDashboardAnalyticsDirect`
+    );
+
+    const userAnalytics = await response.json();
+    $("#totalInv").html(userAnalytics.total_invoice)
+    $("#due_amount").html(userAnalytics.due_amount)
+    $("#due_invoices").html(userAnalytics.due_invoices)
+    $("#total_amount_invoiced").html(userAnalytics.total_amount_invoiced.toLocaleString())
+    $("#total_amountP").html(userAnalytics.total_amount_paid.toLocaleString())
+
+    // console.log(userAnalytics)
+  } catch (error) {
+    console.log(error)
+  }
+
+
+}
+
+fetchAnalytics()
+
 function formatMoney(amount) {
   return amount.toLocaleString('en-US', {
     style: 'currency',

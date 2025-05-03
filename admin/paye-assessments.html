@@ -97,11 +97,11 @@
         <section class="content-wrapper">
 
 
-          <!--<div class="flex justify-center items-center mt-4" id="theLoader">-->
-          <!--  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>-->
-          <!--</div>-->
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>
 
-          <div class="container-xxl flex-grow-1 container-p-y taxes" id="reportDisplay">
+          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="payeContainer">
 
             <section class="w-full main_section">
               <h1 class="text-xl mb-3 fontBold text-black">Overview</h1>
@@ -189,33 +189,37 @@
                     </button>
                   </li>
 
-                  <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="First reviewer" data-bs-toggle="pill" data-bs-target="#allpaye_stages" type="button"
-                      role="tab">
+                  <li class="nav-item text-center" role="presentation" id="firstReview">
+                    <button class="nav-link payestgBtns" data-note="First reviewer" data-bs-toggle="pill"
+                      data-bs-target="#allpaye_stages" type="button" role="tab">
                       First Reviewer
                     </button>
                   </li>
 
-                  <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="Second reviewer" data-bs-toggle="pill" data-bs-target="#allpaye_stages" type="button" role="tab">
+                  <li class="nav-item text-center" role="presentation" id="secondReview">
+                    <button class="nav-link payestgBtns" data-note="Second reviewer" data-bs-toggle="pill"
+                      data-bs-target="#allpaye_stages" type="button" role="tab">
                       Second Reviewer
                     </button>
                   </li>
 
-                  <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="Third reviewer" data-bs-toggle="pill" data-bs-target="#allpaye_stages" type="button" role="tab">
+                  <li class="nav-item text-center" role="presentation" id="thirdReview">
+                    <button class="nav-link payestgBtns" data-note="Third reviewer" data-bs-toggle="pill"
+                      data-bs-target="#allpaye_stages" type="button" role="tab">
                       Third Reviewer
                     </button>
                   </li>
 
                   <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="Accepted" data-bs-toggle="pill" data-bs-target="#allpaye_stages" type="button" role="tab">
+                    <button class="nav-link payestgBtns" data-note="Accepted" data-bs-toggle="pill"
+                      data-bs-target="#allpaye_stages" type="button" role="tab">
                       Accepted
                     </button>
                   </li>
 
                   <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="Declined" data-bs-toggle="pill" data-bs-target="#allpaye_stages" type="button" role="tab">
+                    <button class="nav-link payestgBtns" data-note="Declined" data-bs-toggle="pill"
+                      data-bs-target="#allpaye_stages" type="button" role="tab">
                       Declined
                     </button>
                   </li>
@@ -239,7 +243,7 @@
                           </tr>
                         </thead>
                         <tbody id="payeMTabAll">
-                          
+
 
 
                         </tbody>
@@ -270,12 +274,12 @@
                           </tr>
                         </thead>
                         <tbody id="payeMTabAll">
-                          
+
 
 
                         </tbody>
                       </table>
-                      
+
 
 
                       <!-- <div class="flex justify-center items-center mt-4" id="loader">

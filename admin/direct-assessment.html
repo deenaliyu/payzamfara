@@ -97,11 +97,11 @@
         <section class="content-wrapper">
 
 
-          <!--<div class="flex justify-center items-center mt-4" id="theLoader">-->
-          <!--  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>-->
-          <!--</div>-->
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>
 
-          <div class="container-xxl flex-grow-1 container-p-y taxes" id="reportDisplay">
+          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="directContainer">
 
             <div class="flex justify-between  items-center mb-5">
               <p class="font-bold text-2xl text-black">Direct Assessment</p>
@@ -147,21 +147,21 @@
                   </button>
                 </li>
 
-                <li class="nav-item text-center" role="presentation">
+                <li class="nav-item text-center" role="presentation" id="firstReview">
                   <button class="nav-link levels-navo" data-note="First reviewer" data-bs-toggle="pill"
                     data-bs-target="#direct_assessmentso" type="button" role="tab">
                     First Reviewer
                   </button>
                 </li>
 
-                <li class="nav-item text-center" role="presentation">
+                <li class="nav-item text-center" role="presentation" id="secondReview">
                   <button class="nav-link levels-navo" data-note="Second reviewer" data-bs-toggle="pill"
                     data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Second Reviewer
                   </button>
                 </li>
 
-                <li class="nav-item text-center" role="presentation">
+                <li class="nav-item text-center" role="presentation" id="thirdReview">
                   <button class="nav-link levels-navo" data-note="Third reviewer" data-bs-toggle="pill"
                     data-bs-target="#direct_assessmentso" type="button" role="tab">
                     Third Reviewer
