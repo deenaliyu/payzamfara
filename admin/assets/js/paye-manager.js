@@ -130,8 +130,26 @@ $(document).ready(function () {
   let yearr = new Date().getFullYear()
 
   getSpecialUsersDashAnnualEstimate(yearr)
-  getSpecialUsersDashMonthlyEstimate(yearr)
+  // getSpecialUsersDashMonthlyEstimate(yearr)
 });
+
+// Populate #selYear with years from 2024 to the current years
+function populateYearSelect() {
+  const currentYear = new Date().getFullYear();
+  const select = $(".selYear");
+  const select2 = $(".selYear2");
+
+  for (let year = 2024; year <= currentYear; year++) {
+    const option = $("<option>").val(year).text(year);
+    if (year === currentYear) {
+      option.attr("selected", "selected");
+    }
+    select.append(option);
+    select2.append(option)
+  }
+}
+
+populateYearSelect();
 
 $('#selYear').on('change', function () {
   let value = $(this).val()
@@ -142,27 +160,27 @@ $('#selYear').on('change', function () {
 
 let finalJson = {}
 
-async function getSpecialUsersDashMonthlyEstimate(year) {
-  $("#annEstimate").html('-')
+// async function getSpecialUsersDashMonthlyEstimate(year) {
+//   $("#annEstimate").html('-')
 
-  const response = await fetch(`${HOST}/?getSpecialUsersDashMonthlyEstimate&year=${year}`)
-  const getDashData = await response.json()
+//   const response = await fetch(`${HOST}/?getSpecialUsersDashMonthlyEstimate&year=${year}`)
+//   const getDashData = await response.json()
 
-  if (getDashData.status === 0) {
-    $("#monthlyEstimate").html(0)
+//   if (getDashData.status === 0) {
+//     $("#monthlyEstimate").html(0)
 
-  } else {
-    populateSelect(getDashData.message)
+//   } else {
+//     populateSelect(getDashData.message)
 
-    finalJson = getDashData.message
+//     finalJson = getDashData.message
 
-    setTimeout(() => {
-      displayEstimate()
-    }, 1000);
+//     setTimeout(() => {
+//       displayEstimate()
+//     }, 1000);
 
-  }
+//   }
 
-}
+// }
 
 function getAbbreviatedMonthName(monthValue) {
   var date = new Date(monthValue + "-01");

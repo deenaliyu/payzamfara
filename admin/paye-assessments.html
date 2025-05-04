@@ -358,7 +358,7 @@
             <button class="btn btn-primary btn-sm" onclick="clearfilter3()">clear filter</button>
           </div>
 
-          <div class="row  mb-4">
+          <!-- <div class="row  mb-4">
             <div class="col mb-0" id="the_rev">
               <label for="defaultSelect" class="form-label">Sector</label>
               <div class="form-group">
@@ -370,22 +370,26 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="row mb-2">
+          <!-- <div class="row mb-2">
             <div class="col mb-0">
               <label for="invoiceNumber" class="form-label">Invoice Number</label>
               <input type="text" class="form-control" id="invnumberInput">
             </div>
-          </div>
+          </div> -->
 
           <div class="row mb-2">
             <div class="col mb-0">
-              <label for="paymentStatusSelect" class="form-label">Payment status</label>
-              <select id="paymentStatusSelect" class="form-select">
+              <label for="assessmentStatus" class="form-label">Assessment Status</label>
+              <select id="assessmentStatus" class="form-select">
                 <option value="">All</option>
-                <option value="paid">Paid</option>
-                <option value="unpaid">Un-paid</option>
+                <option value="First reviewer">First Reviewer</option>
+                <option value="Second reviewer">Second Reviewer</option>
+                <option value="Third reviewer">Third Reviewer</option>
+                <option value="accepted">Accepted</option>
+                <option value="declined">Declined</option>
+                <option value="unpaid">Second Reviewer</option>
               </select>
             </div>
           </div>

@@ -150,10 +150,8 @@
 
 
                   <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="selYear">
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025" selected>2025</option>
+                    <select class="form-select form-select-sm selYear" required name="" id="selYear">
+
                     </select>
 
                     <p class="text-base fontBold"><span id="annEstimate">-</span></p>
@@ -170,10 +168,7 @@
                   </div>
 
                   <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="">
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025" selected>2025</option>
+                    <select class="form-select form-select-sm selYear2" required name="" id="">
                     </select>
 
                     <p class="text-base fontBold">
@@ -183,7 +178,7 @@
 
                 </div>
 
-                <div class="dashCards card w-full flex-col space-y-2">
+                <!-- <div class="dashCards card w-full flex-col space-y-2">
                   <div class="flex items-center gap-2">
                     <div class="icoCont bg-[#f890301f]">
                       <iconify-icon class="text-[#025826]" icon="solar:wallet-bold"></iconify-icon>
@@ -202,7 +197,7 @@
                     </p>
                   </div>
 
-                </div>
+                </div> -->
 
                 <div class="dashCards card w-full flex-col space-y-2">
                   <div class="flex items-center gap-2">
@@ -214,9 +209,7 @@
                   </div>
 
                   <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="">
-                      <option value="February">February</option>
-                    </select>
+                    <input type="month" class="form-control form-control-sm">
 
                     <p class="text-base fontBold">
                       &#8358;<span id="due_amount"> 0</span>

@@ -44,10 +44,10 @@ async function fetchUserDetailsById(id) {
       <tr>
         <td>${index + 1}</td>
         <td>${staff.fullname}</td>
-        <td>₦ ${formatMoney(staff.annual_gross_income)}</td>
-        <td>₦ ${formatMoney(staff.basic_salary)}</td>
-        <td>₦ ${formatMoney(staff.monthly * 12)}</td>
-        <td>₦ ${formatMoney(staff.monthly)}</td>
+        <td>${formatMoney(staff.annual_gross_income)}</td>
+        <td>${formatMoney(staff.basic_salary)}</td>
+        <td>${formatMoney(staff.monthly * 12)}</td>
+        <td>${formatMoney(staff.monthly)}</td>
         <td>${staff.timeIn}</td>
       </tr>
 
@@ -83,7 +83,7 @@ async function updateStatus(id, status) {
 
 
     if (data.status === 1) {
-      if (status === "Accepted") {
+      if (status === "1") {
         Swal.fire({
           icon: 'success',
           title: 'Status Updated',
@@ -141,24 +141,24 @@ document.getElementById('approveButton').addEventListener('click', async functio
   let thenextstat = ""
 
   if (levels === "F") {
-    thenextstat = "Second reviewer"
+    thenextstat = "4"
   } else if (levels === "S") {
-    thenextstat = "Third reviewer"
+    thenextstat = "5"
   } else if (levels === "T") {
-    thenextstat = "Accepted"
+    thenextstat = "1"
   }
 
   await updateStatus(assid, thenextstat);
 });
 
-async function declineStatus(id) {
+async function declineStatus(id, reason) {
   $("#disapproveButton").prop('disabled', false)
     .html(
       `Declining...`
     );
   try {
 
-    const response = await fetch(`${HOST}?updatePayeeAsststatus&id=${assid}&set=Declined`);
+    const response = await fetch(`${HOST}?updatePayeeAsststatus&id=${assid}&set=2&reason=${reason}`);
     if (!response.ok) throw new Error('Failed to update status');
 
     $("#disapproveButton").prop('disabled', false)
@@ -207,7 +207,7 @@ document.getElementById('disapproveButton').addEventListener('click', async func
     showCancelButton: true,
   });
   if (reason) {
-    await declineStatus(assid);
+    await declineStatus(assid, reason);
   } else {
     alert('Decline reason is required');
   }

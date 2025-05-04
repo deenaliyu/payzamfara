@@ -70,7 +70,7 @@ async function updateStatus(id, status) {
       );
 
     if (data.status === 1) {
-      if (status === "Approval") {
+      if (status === "4") {
         Swal.fire({
           icon: 'success',
           title: 'Status Updated',
@@ -122,24 +122,24 @@ document.getElementById('approveButton').addEventListener('click', async functio
   let thenextstat = ""
 
   if (levels === "F") {
-    thenextstat = "Second reviewer"
+    thenextstat = "2"
   } else if (levels === "S") {
-    thenextstat = "Third reviewer"
+    thenextstat = "3"
   } else if (levels === "T") {
-    thenextstat = "Approval"
+    thenextstat = "4"
   }
 
   await updateStatus(assid, thenextstat);
 });
 
-async function declineStatus(id) {
+async function declineStatus(id, reason) {
   $("#disapproveButton").prop('disabled', false)
     .html(
       `Declining...`
     );
   try {
 
-    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=Disapproved`);
+    const response = await fetch(`${HOST}?updateDirectAsststatus&id=${assid}&set=5&reason=${reason}`);
     if (!response.ok) throw new Error('Failed to update status');
 
     $("#disapproveButton").prop('disabled', false)
@@ -188,7 +188,7 @@ document.getElementById('disapproveButton').addEventListener('click', async func
     showCancelButton: true,
   });
   if (reason) {
-    await declineStatus(assid);
+    await declineStatus(assid, reason);
   } else {
     alert('Decline reason is required');
   }

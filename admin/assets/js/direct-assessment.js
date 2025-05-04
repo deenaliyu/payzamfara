@@ -35,6 +35,7 @@ async function fetchInvoice() {
         data: filters,
         success: function (response) {
           // Map the API response to DataTables expected format
+          dataToExport = response.data.direct_assessments
           callback({
             draw: data.draw, // Pass through draw counter
             recordsTotal: response.data.total_records, // Total records in your database
@@ -79,6 +80,7 @@ async function fetchInvoice() {
         }
       },
       { data: 'reason' },
+      { data: 'admin_fullname' },
       {
         data: null,
         render: function (data, type, row) {
@@ -147,7 +149,7 @@ async function fetchForSpecificLevels(level) {
         success: function (response) {
           // Filter the data based on the selected level
           const filteredData = response.data.direct_assessments.filter(item => item.level === level);
-
+          dataToExport = filteredData
           // Map the API response to DataTables expected format
           callback({
             draw: data.draw, // Pass through draw counter
@@ -269,25 +271,16 @@ $("#filterDemand").on('click', function () {
 
 async function fetchAnalytics() {
 
-  let config = {
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "*",
-    },
-  };
   try {
     const response = await fetch(
-      `${HOST}?getDashboardAnalyticsDirect`
+      `${HOST}?getDirectAssessmentAnalysis`
     );
 
     const userAnalytics = await response.json();
-    $("#totalInv").html(userAnalytics.total_invoice)
-    $("#due_amount").html(userAnalytics.due_amount)
-    $("#due_invoices").html(userAnalytics.due_invoices)
-    $("#total_amount_invoiced").html(userAnalytics.total_amount_invoiced.toLocaleString())
-    $("#total_amountP").html(userAnalytics.total_amount_paid.toLocaleString())
+
+    $("#submittedCount").html(userAnalytics.total_assessments)
+    $("#approvedCount").html(userAnalytics.total_approved_assessments)
+    $("#pendingCount").html(userAnalytics.total_pending_assessments)
 
     // console.log(userAnalytics)
   } catch (error) {

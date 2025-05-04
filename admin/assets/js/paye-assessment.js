@@ -26,6 +26,7 @@ async function fetchInvoice() {
 
       const filters = {
         getPayeeAssessment: true,
+        level: $("#assessmentStatus").val()
       };
 
       // Call your API with the calculated page number
@@ -35,7 +36,7 @@ async function fetchInvoice() {
         data: filters,
         success: function (response) {
           // Map the API response to DataTables expected format
-
+          dataToExport = response.message
           $("#generetedAssess").html(response.message.length)
           const totalReviewers = response.message.filter(item =>
             item.status === 'First reviewer' ||
@@ -126,7 +127,7 @@ async function fetchForSpecificLevels(level) {
         success: function (response) {
           // Filter the data based on the selected level
           const filteredData = response.message.filter(item => item.status === level);
-
+          dataToExport = filteredData
           // Map the API response to DataTables expected format
           callback({
             draw: data.draw, // Pass through draw counter
@@ -218,15 +219,6 @@ $("#filterDemand").on('click', function () {
 })
 
 async function fetchAnalytics() {
-
-  let config = {
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "*",
-    },
-  };
   try {
     const response = await fetch(
       `${HOST}?getDashboardAnalyticsDirect`
@@ -273,14 +265,12 @@ function exportData() {
   const blob = new Blob([csvString], { type: "text/csv" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "direct-assessment.csv";
+  a.download = "paye-assessments.csv";
   a.click();
 }
 
 function clearfilter3() {
-  $('#sectorFil').val('')
-  $('#invnumberInput').val('')
-  $('#paymentStatusSelect').val('')
+  $('#assessmentStatus').val('')
   $('#fromDateInput').val('')
   $('#toDateInput').val('')
 

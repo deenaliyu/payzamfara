@@ -652,10 +652,13 @@ async function calculateAssessment(tax_number) {
   } else {
     basicSalaryVal = taxCalculation?.annualGrossIncome
   }
+  let userInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"));
+
   let dataToSend = {
     endpoint: "registerEmployeeDirectAssessment",
     data: {
       tax_number: tax_number,
+      generatedBy: userInfo2?.id,
       housing: 0,
       transport: 0,
       utility: 0,
