@@ -79,7 +79,6 @@ async function fetchInvoice() {
           return getStatusBadge(data);
         }
       },
-      { data: 'reason' },
       { data: 'admin_fullname' },
       {
         data: null,
@@ -149,7 +148,7 @@ async function fetchForSpecificLevels(level) {
         success: function (response) {
           // Filter the data based on the selected level
           const filteredData = response.data.direct_assessments.filter(item => item.level === level);
-          dataToExport = filteredData
+          dataToExport = filteredData;
           // Map the API response to DataTables expected format
           callback({
             draw: data.draw, // Pass through draw counter
@@ -168,7 +167,7 @@ async function fetchForSpecificLevels(level) {
           });
           $("#dataTable3 tbody").html(`
               <tr>
-                <td colspan="11" class="text-center">Failed to fetch Data.</td>
+                <td colspan="12" class="text-center">Failed to fetch Data.</td>
               </tr>   
             `);
         },
@@ -187,12 +186,7 @@ async function fetchForSpecificLevels(level) {
       { data: 'fullname' },
       { data: 'phone' },
       { data: 'email' },
-      // {
-      //   data: 'level',
-      //   render: function (data, type, row) {
-      //     return getStatusBadge(data);
-      //   }
-      // },
+      { data: 'reason' },
       {
         data: null,
         render: function (data, type, row) {

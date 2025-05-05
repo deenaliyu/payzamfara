@@ -258,10 +258,10 @@ function generateInvoiceNum(taxNumber, amountCal) {
       Swal.fire({
         icon: "success",
         title: `Invoice Generated successfully!`,
-        confirmButtonText: "Open Invoice",
+        confirmButtonText: "Go to Invoices",
       }).then((result3) => {
         if (result3.isConfirmed) {
-          window.location.href = `./viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+          window.location.href = `./direct-invoices.html`;
         }
       });
     }
