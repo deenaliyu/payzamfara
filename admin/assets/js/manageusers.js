@@ -52,6 +52,9 @@ let definition = {
   escalate_issues: "Escalate issues",
   export_support: "Export support data",
   generate_report: "Generate report",
+  first_reviewer: "First Reviewer",
+  second_reviewer: "Second Reviewer",
+  third_reviewer: "Third Reviewer"
 };
 
 
@@ -79,7 +82,7 @@ $("#createUser").on("click", function () {
       let obj = {
         id: theUserID,
         img: "",
-        verification_status: "",
+        // verification_status: "",
       };
 
       allInputs.forEach((allInput) => {
