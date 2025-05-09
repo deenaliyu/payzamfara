@@ -82,7 +82,7 @@ $("#createUser").on("click", function () {
       let obj = {
         id: theUserID,
         img: "",
-        // verification_status: "",
+        verification_status: 1,
       };
 
       allInputs.forEach((allInput) => {
