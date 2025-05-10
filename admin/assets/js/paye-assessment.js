@@ -165,12 +165,12 @@ async function fetchForSpecificLevels(level) {
       { data: 'first_name' },
       { data: 'email' },
       { data: 'phone' },
-      {
-        data: 'status',
-        render: function (data, type, row) {
-          return getStatusBadge(data);
-        }
-      },
+      // {
+      //   data: 'status',
+      //   render: function (data, type, row) {
+      //     return getStatusBadge(data);
+      //   }
+      // },
       // { data: 'reason' },
       { data: 'time_in' },
       {

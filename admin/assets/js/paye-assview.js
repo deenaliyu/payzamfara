@@ -219,34 +219,6 @@ function generateInvoiceNum(taxNumber, amountCal, staff_id) {
   Swal.fire({
     title: "Generating Invoice",
     icon: "info",
-    html: `
-      <div class="form-group mb-3">
-        <label for="LGAaas">Select LGA:</label>
-        <select id="LGAaas" class="form-select">
-          <option disabled selected>Select--</option>
-          <option value="Shinkafi">Shinkafi</option>
-          <option value="Zurmi">Zurmi</option>
-          <option value="Birnin Magaji">Birnin Magaji</option>
-          <option value="Kaura Namoda">Kaura Namoda</option>
-          <option value="Gusau">Gusau</option>
-          <option value="Bungudu">Bungudu</option>
-          <option value="Maru">Maru</option>
-          <option value="Tsafe">Tsafe</option>
-          <option value="Anka">Anka</option>
-          <option value="Bukkuyum">Bukkuyum</option>
-          <option value="Gummi">Gummi</option>
-          <option value="Bakura">Bakura</option>
-          <option value="Maradun">Maradun</option>
-          <option value="Talata Mafara">Talata Mafara</option>
-        </select>
-      </div>
-      <div class="form-group mb-3">
-        <label for="zonalOff">Select Zonal Office:</label>
-        <select id="zonalOff" class="form-select">
-          <option value="" disabled selected>Select Zonal Office</option>
-        </select>
-      </div>
-    `,
     backdrop: true,
     allowOutsideClick: false,
     showCancelButton: true,
@@ -254,16 +226,8 @@ function generateInvoiceNum(taxNumber, amountCal, staff_id) {
     showLoaderOnConfirm: true,
     preConfirm: async () => {
       try {
-        const selectedLga = document.getElementById("LGAaas").value;
-        const selectedZonalOffice = document.getElementById("zonalOff").value;
-
-        if (!selectedLga || !selectedZonalOffice) {
-          Swal.showValidationMessage(`Please select both LGA and Zonal Office`);
-          return;
-        }
-
         const response = await fetch(
-          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=59&price=${amountCal}&category_pre=Formal&zonalOffice=${selectedZonalOffice}&lga=${selectedLga}&sector=sector&description=description&invoice_type=invoice`
+          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=59&price=${amountCal}&category_pre=Formal&zonalOffice=8&lga=Not Assigned&sector=sector&description=description&invoice_type=invoice`
         );
         if (!response.ok) {
           throw new Error(response.statusText);
@@ -288,44 +252,6 @@ function generateInvoiceNum(taxNumber, amountCal, staff_id) {
       });
     }
   });
-
-  let allZonalOffice = null;
-
-  async function fetchZonalOffice(categ) {
-    const response = await fetch(`${HOST}?tax_offices`)
-    const revHeads = await response.json()
-
-    if (revHeads.status === 0) {
-    } else {
-      allZonalOffice = revHeads.message
-
-    }
-  }
-
-  fetchZonalOffice()
-
-  const lgaSelector = document.getElementById('LGAaas');
-  const zonalOfficeSelect = document.getElementById('zonalOff');
-
-  console.log(lgaSelector, zonalOfficeSelect)
-
-  lgaSelector.addEventListener('change', (event) => {
-    const selectedLga = event.target.value;
-    // Clear previous options
-    zonalOfficeSelect.innerHTML = '';
-
-    if (selectedLga && allZonalOffice) {
-      const filteredZonalOffices = allZonalOffice.filter(office => office.lga.includes(selectedLga));
-      filteredZonalOffices.forEach(office => {
-        const option = document.createElement('option');
-        option.value = office.id;
-        option.textContent = office.office_name;
-        zonalOfficeSelect.appendChild(option);
-      });
-    }
-
-  });
-
 
 }
 
