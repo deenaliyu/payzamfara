@@ -297,6 +297,48 @@ async function getRolesAdmin() {
       `)
     }
 
+  } else if (currentPage.includes("etcc-management.html")) {
+    let etccRoles = userRoles.etcc_access;
+
+    $(".main_section").removeClass('hidden');
+    $("#theLoader").remove();
+
+    const firstReviewer = etccRoles.includes("first_reviewer");
+    const secondReviewer = etccRoles.includes("second_reviewer");
+    const thirdReviewer = etccRoles.includes("third_reviewer");
+
+    // Check if the user has no access
+    if (!firstReviewer && !secondReviewer && !thirdReviewer) {
+      $(".main_section").html(`<p class="text-center text-xl fontBold m-5">No Access!</p>`);
+      $("#initiateEtcc").remove();
+    } else {
+      // Handle role-based UI adjustments for multiple roles
+      if (thirdReviewer && secondReviewer && firstReviewer) {
+        // All three roles are present, no need to remove anything
+      } else if (thirdReviewer && secondReviewer) {
+        // If both thirdReviewer and secondReviewer are present
+        $("#first_reviewer").remove();
+      } else if (secondReviewer && firstReviewer) {
+        // If both secondReviewer and firstReviewer are present
+        $("#third_reviewer").remove();
+      } else if (thirdReviewer && firstReviewer) {
+        // If both thirdReviewer and firstReviewer are present
+        $("#second_reviewer").remove();
+      } else if (thirdReviewer) {
+        // If only thirdReviewer is present
+        $("#second_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (secondReviewer) {
+        // If only secondReviewer is present
+        $("#third_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (firstReviewer) {
+        // If only firstReviewer is present
+        $("#second_reviewer").remove();
+        $("#third_reviewer").remove();
+      }
+    }
+
   } else if (currentPage.includes("service.html")) {
     let eservicePayers = userRoles.eservices_access
 

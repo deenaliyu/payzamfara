@@ -145,6 +145,13 @@ $(".aside").html(`
       </li>
 
       <li class="menu-item">
+        <a href="etcc-management.html?type=private" class="menu-link mdoetcc">
+          <iconify-icon icon="tabler:world-dollar" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">eTCC Manager</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
         <a href="enumeration.html" class="menu-link enu">
         <i class='menu-icon tf-icons bx bxs-group' ></i>
           <div data-i18n="Basic">Enumeration</div>

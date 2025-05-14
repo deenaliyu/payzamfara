@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Payzamfara</title>
+
+  <meta name="description" content="" />
+
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+  <header>
+    <a href="index.html" class="flex gap-2 items-center p-3 border-b">
+
+      <img src="./assets/img/logo.png" class="w-[50px]" alt="">
+      <p class="text-md fontBold">Payzamfara</p>
+    </a>
+
+  </header>
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="w-3/12 md:block hidden bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="flex px-1 h-full">
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc1.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc1.png" />
+          </div>
+          <!-- <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc2.png" />
+          </div> -->
+          <!-- <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc4.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc5.png" />
+          </div> -->
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc2.png" />
+          </div>
+          <div class="mt-5 imgTabs">
+            <img src="./assets/img/etcc3.png" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="md:w-9/12 w-full bg-center overflow-y-scroll md:px-10 px-4">
+
+      <section class="formTabs h-full mt-3">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="history.go(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 md:w-8/12 w-full ">
+
+          <h1 class="font-bold text-xl">Tax Clearance Certificate Request</h1>
+          <p class="mt-2 mb-4">Primary Information</p>
+
+          <div class="form-group mb-3">
+            <label for="tin/email">Enter Tin or Email*</label>
+            <input type="text" class="form-control" id="tinOrEmail" required>
+          </div>
+
+          <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
+            <button id="lastly-button" onclick="fetchUserDetails()" class="btn-only" type="button">Fetch
+              Details</button>
+          </div>
+          <div id="msg_box001"></div>
+
+
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+
+        <form action="" class="mt-4 md:w-8/12 w-full ">
+          <h1 class="font-bold text-xl">Tax Clearance Certificate Request</h1>
+          <h1 class="mb-3 mt-3">Personal Details</h1>
+
+          <div class="form-group mb-4">
+            <label for="">Select your category*</label>
+            <select class="form-select payInputs selCateg" required id="category">
+              <option disabled selected>Select--</option>
+              <option value="2">Individual</option>
+              <option value="1">Corporate</option>
+            </select>
+          </div>
+
+          <div class="flex items-center mb-4 gap-2" id="theName">
+            <div class="form-group w-full">
+              <label for="">First name *</label>
+              <input type="text" class="form-control payInputs" required data-name="first_name"
+                placeholder="Enter your first name">
+            </div>
+
+            <div class="form-group w-full">
+              <label for="">Surname *</label>
+              <input type="text" class="form-control payInputs" required data-name="surname"
+                placeholder="Enter your surname">
+            </div>
+          </div>
+
+          <div class="flex items-center mb-4 gap-2" id="theEmail">
+            <div class="form-group w-full">
+              <label for="">Email *</label>
+              <input type="text" class="form-control payInputs" required data-name="email"
+                placeholder="Enter your Email Address">
+            </div>
+
+            <div class="form-group w-full">
+              <label for="">Phone number *</label>
+              <input type="number" class="form-control payInputs" id="phonenumber" minlength="11" maxlength="11"
+                required data-name="phone" placeholder="Your 11-digits phone number">
+            </div>
+          </div>
+
+          <div id="DOBcont">
+            <div class="form-group mb-4">
+              <label for="">Date of Birth*</label>
+              <input type="date" class="form-control w-full enumA" data-name="DOB" required>
+            </div>
+          </div>
+
+          <div class="form-group w-full mb-4" id="theTin">
+            <label for="">TIN </label>
+            <input type="text" class="form-control payInputs" id="tin" data-name="tin" placeholder="Enter your TIN">
+          </div>
+
+
+          <div class="form-group w-full mb-3">
+            <label for="">Address*</label>
+            <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
+              placeholder=" Enter your address">
+          </div>
+
+          <p class="fontBold mb-3">More Information</p>
+
+          <div class="flex gap-3">
+            <div class="form-group mb-3" id="employStatus">
+              <label for="">Employment Status*</label>
+              <select class="form-select enumA payInputs" id="employSelect" data-name="employment_type">
+                <option value="" selected disabled>Select --</option>
+                <option value="Self Employed">Self Employed</option>
+                <option value="Employed">Employed</option>
+                <option value="Unemployed">Unemployed</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="">BVN*</label>
+              <input type="number" class="form-control enumA payInputs" data-name="bvn">
+            </div>
+          </div>
+
+          <div class="flex mb-4 gap-2">
+            <div class="form-group w-full">
+              <label for="">Sector*</label>
+              <select class="form-select payInputs enumA" id="sectorSelect" data-name="sector">
+                <option value="" selected>Select</option>
+              </select>
+            </div>
+
+            <div class="form-group w-full">
+              <label for="">Industry*</label>
+              <select name="" class="form-select payInputs enumA" id="industrySelect" data-name="industry">
+                <option value="" selected>Select</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="button w-full" type="button" onclick="continuePage()">Continue</button>
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 md:w-8/12 w-full ">
+
+          <h1 class="fontBold text-xl">Tax Clearance Certificate Request</h1>
+          <p class="mt-2 mb-4">Secondary Information</p>
+
+          <div class="form-group mb-4">
+            <label for="">Private or Public Organization*</label>
+            <select class="form-select enumInput w-full" data-name="private_or_public" required>
+              <option value="">Select --</option>
+              <option value="Private">Private</option>
+              <option value="Public">Public</option>
+            </select>
+          </div>
+
+          <div id="employmentState">
+
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="">Reason for Obtaining TCC*</label>
+            <textarea type="text" class="form-control w-full enumInput" data-name="reason" required></textarea>
+          </div>
+
+          <button class="button w-full mb-4 mt-4" type="button" onclick="continueReg()">Continue</button>
+
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <form action="" class="mt-4 md:w-8/12 w-full ">
+
+          <h1 class="fontBold text-xl">Tax Clearance Certificate Request</h1>
+          <p class="mt-2 mb-4">Secondary Information</p>
+
+
+          <!-- <div class="flex justify-between items-center mb-3"> -->
+          <h1 class="fontBold text-lg text-black mb-3">Evidence of Tax Payments</h1>
+
+          <!-- <div class="form-group mb-3">
+              <label for="">File Number</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="filename">
+            </div> -->
+          <!-- </div> -->
+
+          <div class="flex gap-3 mb-3">
+            <div class="form-group w-4/12">
+              <label for="">Year*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="year1" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Income*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="income1" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Amount of Tax Paid*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_1" required>
+            </div>
+          </div>
+
+          <div class="flex gap-3 mb-3">
+            <div class="form-group w-4/12">
+              <label for="">Year*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="year2" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Income*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="income2" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Amount of Tax Paid*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_2" required>
+            </div>
+          </div>
+
+          <div class="flex gap-3 mb-3">
+            <div class="form-group w-4/12">
+              <label for="">Year*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="year3" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Income*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="income3" required>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Amount of Tax Paid*</label>
+              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_3" required>
+            </div>
+          </div>
+
+          <p class="text-lg fontBold text-black">Person Exempted from Tax </p>
+
+          <ul class="pl-4 list-disc mb-3">
+            <li>If Wholly Exempted, Exemption Certificate is Required</li>
+            <li>If a house wife without occupation. Please state name and address of husband</li>
+          </ul>
+
+          <div class="form-group w-full mb-3">
+            <label for="">Name of Husband</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="name_hus">
+          </div>
+
+          <div class="form-group w-full mb-3">
+            <label for="">Husband Address</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="hus_address">
+          </div>
+
+          <div class="form-group w-full mb-3">
+            <label for="">Husband TIN</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="hus_tin">
+          </div>
+
+          <ul class="pl-4 list-disc mb-3">
+            <li>If Student Documentary Proof to be Produced/Attached.</li>
+          </ul>
+
+          <div class="form-group w-full mb-3">
+            <label for="">Name of Institution</label>
+            <input type="text" class="form-control w-full enumInputB" data-name="name_institution">
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">School ID or School leaving Certificate (if any)</label>
+            <p class="text-xs text-gray-600">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size: 10mb</p>
+            <input type="file" class="form-control w-full enumInputU mt-2 uploadInputs" data-name="leaving_school_cert">
+          </div>
+
+
+          <p class="text-lg fontBold text-black my-3">Documents Uploads</p>
+          <div class="form-group mb-3">
+            <label for="">Identification of I.D Card(NIN/Passport/Driver License) <span
+                class="text-[red]">*</span></label>
+            <p class="text-xs text-gray-600">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size: 10mb</p>
+            <input type="file" class="form-control w-full enumInputU mt-2 uploadInputs" data-name="id_card" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="">Previous TCC (If Available)</label>
+            <p class="text-xs text-gray-600">Allowed formats: (png, pdf, docx, doc, jpeg, jpg)Max size: 10mb</p>
+            <input type="file" class="form-control w-full enumInputU mt-2 uploadInputs" data-name="previous_tcc">
+          </div>
+
+          <div class="form-group w-full mb-3">
+            <label for="">Supporting Document</label>
+            <input type="file" class="form-control w-full enumInputU mt-2 uploadInputs" data-name="other_doc">
+          </div>
+
+          <div class="form-group form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="certify">
+            <label class="form-check-label" for="certify">I certify that the statement made above are correct and
+              true </label>
+          </div>
+
+
+
+          <button class="button w-full mb-4 mt-4 disabled" disabled type="button" id="theButton"
+            onclick="continueReg2()">Continue</button>
+          <div id="msg_box"></div>
+        </form>
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+
+        <div class="invoiceContainer flex justify-center">
+          <div class="invoice bg-white md:w-[70%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
+            <!-- COMING FROM JS invoice.js -->
+          </div>
+
+
+        </div>
+
+
+
+        <div class="flex justify-center px-4">
+          <div class="flex justify-between flex-wrap mt-4 mb-4 gap-3">
+            <div class="flex gap-3 items-center">
+              <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                <span>Print Invoice</span>
+              </button>
+            </div>
+
+            <button class="button flex gap-3 items-center px-10" onclick="nextPrev(1)">
+              <span>Proceed to Payment</span>
+              <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+
+        <div id="makePayment">
+
+          <!-- PAYMENT DESIGN COMING FROM PAYMENT.js -->
+        </div>
+
+
+
+      </section>
+
+      <section class="formTabs h-full mt-3">
+        <div class="md:pt-4 pt-3">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+
+        <div class="invoiceContainer flex justify-center">
+          <div class="invoice bg-white md:w-[70%] w-[90%] shadow-md md:-mt-12 mt-2" id="receiptCard">
+            <!-- COMING FROM JS payment.js -->
+          </div>
+
+
+        </div>
+
+
+
+        <div class="flex justify-center px-4">
+          <div class="flex justify-between flex-wrap mt-4 mb-4 gap-3">
+            <div class="flex gap-3 items-center">
+              <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                <span>Print receipt</span>
+              </button>
+            </div>
+
+            <button id="viewReff" class="button flex gap-3 items-center px-10" data-bs-toggle="modal"
+              data-bs-target="#refNumberModal">
+              <span>View reference</span>
+              <iconify-icon icon="eva:arrow-forward-outline" class="text-xl"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="modal fade" id="refNumberModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Reference Number</h5>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <div class="modal-body">
+          <p class="text-3xl text-center fontBold" id="refNumber"></p>
+
+          <p class="text-center mt-3">Thanks for using intelligent Billing system.</p>
+          <p class="text-center mb-5">Kindly check back later to know your application status.</p>
+
+          <div class="flex justify-center">
+            <a href="index.html" class="button" id="callbackBtn">Back to Home</a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div id="ModalsContainer"></div>
+
+
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script>
+  <script src="./assets/js/nav.js"></script>
+  <!-- <script src="./assets/js/session.js"></script> -->
+
+  <script src="./assets/js/payment.js"></script>
+  <script src="./assets/js/tabHandler.js"></script>
+
+  <script src="./assets/js/invoice.js"></script>
+  <script src="assets/js/etcc-initiate.js"></script>
+
+
+</body>
+
+</html>

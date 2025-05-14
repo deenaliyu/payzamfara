@@ -4,6 +4,8 @@ function hardRefresh() {
 }
 // hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php"
+let publitioKey1 = "ksWdvJ3JjfV5JZnHyRqv"
+let publitioKey2 = "ruxLmts4NiupnoddqVi1Z70tnoMmf5yT"
 
 let THE_SESSION = localStorage.getItem("userDataPrime")
 
