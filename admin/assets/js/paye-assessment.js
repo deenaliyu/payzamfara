@@ -171,7 +171,7 @@ async function fetchForSpecificLevels(level) {
       //     return getStatusBadge(data);
       //   }
       // },
-      // { data: 'reason' },
+      { data: 'reason' },
       { data: 'time_in' },
       {
         data: null,
