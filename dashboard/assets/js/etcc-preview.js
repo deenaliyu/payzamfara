@@ -10,11 +10,17 @@ let userInfo = JSON.parse(window.localStorage.getItem("userDataPrime"));
 const currentPageURL = window.location.href;
 
 function formatMoney(amount) {
-  return amount.toLocaleString('en-US', {
+  return parseFloat(amount).toLocaleString('en-US', {
     style: 'currency',
     currency: 'NGN', // Change this to your desired currency code
     minimumFractionDigits: 2,
   });
+}
+
+function addOneYearToDate(date) {
+  const givenDate = new Date(date);
+  givenDate.setFullYear(givenDate.getFullYear() + 1);
+  return givenDate.toISOString().split('T')[0]; // Returns in YYYY-MM-DD format
 }
 
 async function getEtccDetails() {
@@ -65,13 +71,13 @@ async function getEtccDetails() {
             <th class="fontBold text-black pr-4">Name:</th>
             <td>${theEtcDetail.fullname}</td>
           </tr>
-          <!-- <tr>
+          <tr>
             <th class="fontBold text-black pr-4">Email:</th>
-            <td>gukus@gmail.com</td>
-          </tr> -->
+            <td>${theEtcDetail.email}</td>
+          </tr>
           <tr>
             <th class="fontBold text-black pr-4">Address:</th>
-            <td>Office: kkk test address</td>
+            <td>${theEtcDetail.address}</td>
           </tr>
           <tr>
             <th class="fontBold text-black pr-4">TIN:</th>
@@ -79,7 +85,7 @@ async function getEtccDetails() {
           </tr>
           <tr>
             <th class="fontBold text-black pr-4">Sector:</th>
-            <td>${theEtcDetail.applicant_tin === "1" ? 'Private' : 'Public'}</td>
+            <td>${theEtcDetail.private_or_public}</td>
           </tr>
         </table>
       </div>
@@ -106,13 +112,13 @@ async function getEtccDetails() {
               <td class="text-sm">${theEtcDetail.year1}</td>
               <td class="text-sm">${formatMoney(theEtcDetail.income1)}</td>
               <td class="text-sm">${formatMoney(theEtcDetail.income1)}</td>
-              <td class="text-sm">${formatMoney(theEtcDetail.tax_paid_3)}</td>
+              <td class="text-sm">${formatMoney(theEtcDetail.tax_paid_1)}</td>
             </tr>
             <tr>
               <td class="text-sm">${theEtcDetail.year2}</td>
               <td class="text-sm">${formatMoney(theEtcDetail.income2)}</td>
               <td class="text-sm">${formatMoney(theEtcDetail.income2)}</td>
-              <td class="text-sm">${formatMoney(theEtcDetail.tax_paid_3)}</td>
+              <td class="text-sm">${formatMoney(theEtcDetail.tax_paid_2)}</td>
             </tr>
             <tr>
               <td class="text-sm">${theEtcDetail.year3}</td>
@@ -127,11 +133,11 @@ async function getEtccDetails() {
         <table>
           <tr>
             <th class="text-black fontBold pr-4">Source of Income:</th>
-            <td>SALARY</td>
+            <td>${theEtcDetail.occupation === "" ? '-' : theEtcDetail.occupation}</td>
           </tr>
           <tr>
             <th class="text-black fontBold pr-4">Expiry Date:</th>
-            <td>Dec 31, 2023</td>
+            <td>${addOneYearToDate(theEtcDetail.date_approved)}</td>
           </tr>
         </table>
       </div>
@@ -182,7 +188,7 @@ async function getEtccDetails() {
     const qrCodeContainer = document.getElementById("qrContainer")
 
     const qrCode = new QRCode(qrCodeContainer, {
-      text: `https://payzamfara.com/dashboard/etcc-preview.html?theid=${theEtcDetail.refe}`,
+      text: `https://payzamfara.vercel.appp/dashboard/etcc-preview.html?theid=${theEtcDetail.refe}`,
       colorDark: '#000000',
       colorLight: '#ffffff',
       version: 10,
