@@ -48,13 +48,13 @@ async function getEtccDetails() {
 
       <div class="flex items-center gap-x-3 flex-wrap mt-4 px-6">
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
-            icon="mdi:address-marker-outline"></iconify-icon><span>No.6 Ban Road P.M.B 2001, Jos, Plateau
+            icon="mdi:address-marker-outline"></iconify-icon><span>No.6 Ban Road P.M.B 2001, Gusau, Zamfara
             State
             Nigeria.</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
-            icon="ic:outline-email"></iconify-icon> <span>info@zsirs.gov.ng</span></p>
+            icon="ic:outline-email"></iconify-icon> <span>Info@payzamfara.com</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
-            icon="ic:round-phone"></iconify-icon> <span>08031230301, 07056990777</span></p>
+            icon="ic:round-phone"></iconify-icon> <span>+23408001015555</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
             icon="streamline:web"></iconify-icon> <span>www.payzamfara.com</span></p>
       </div>
@@ -146,6 +146,7 @@ async function getEtccDetails() {
       <div class="flex justify-around items-center px-6 mt-5">
 
         <div class="sig1 w-4/12">
+          <img src="./assets/img/rakiya_signature.png" alt="EC Signature" />
           <div class="border-b-2"></div>
           <p class="fontBold text-black text-center mt-1">Official stamp Impression</p>
         </div>
@@ -175,8 +176,8 @@ async function getEtccDetails() {
             <p class="text-md fontBold pb-0">Zamfara State Internal Revenue Service</p>
             <div class="flex items-center gap-x-3 flex-wrap">
               <p class="text-sm text-[#6F6F84]">www.payzamfara.com</p>
-              <p class="text-sm text-[#6F6F84]">info@zsirs.gov.ng</p>
-              <p class="text-sm text-[#6F6F84]">07056990777</p>
+              <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
+              <p class="text-sm text-[#6F6F84]">+23408001015555</p>
               <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
             </div>
           </div>
