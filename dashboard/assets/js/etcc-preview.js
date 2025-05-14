@@ -34,9 +34,9 @@ async function getEtccDetails() {
       <div class="invoicetop"></div>
 
       <div class="flex items-center px-6 gap-2 mt-3">
-        <img src="./assets/img/akwaimage.png" alt="">
+        <img src="./assets/img/logo.png" width="100" alt="">
         <div>
-          <p class="text-xl fontBold pb-0">Plateau State Internal Revenue Service</p>
+          <p class="text-xl fontBold pb-0">Zamfara State Internal Revenue Service</p>
         </div>
       </div>
 
@@ -46,7 +46,7 @@ async function getEtccDetails() {
             State
             Nigeria.</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
-            icon="ic:outline-email"></iconify-icon> <span>Info@psirs.gov.ng</span></p>
+            icon="ic:outline-email"></iconify-icon> <span>info@zsirs.gov.ng</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
             icon="ic:round-phone"></iconify-icon> <span>08031230301, 07056990777</span></p>
         <p class="text-base flex items-center gap-1 text-[#000]"><iconify-icon
@@ -93,7 +93,7 @@ async function getEtccDetails() {
 
         <table class="table table-borderless table-sm">
           <thead>
-            <tr class="bg-[#CDA545]">
+            <tr class="bg-[#025826]">
               <td class="text-[#fff] text-sm">Year</td>
               <td class="text-[#fff] text-sm">Total Income</td>
               <td class="text-[#fff] text-sm">Taxable Income </td>
@@ -164,12 +164,12 @@ async function getEtccDetails() {
 
       <div class="md:px-10 px-2 pb-6">
         <div class="flex items-center justify-center gap-2">
-          <img src="./assets/img/akwaimage.png" alt="">
+          <img src="./assets/img/logo.png" width="50" alt="">
           <div>
-            <p class="text-md fontBold pb-0">Plateau State Internal Revenue Service</p>
+            <p class="text-md fontBold pb-0">Zamfara State Internal Revenue Service</p>
             <div class="flex items-center gap-x-3 flex-wrap">
               <p class="text-sm text-[#6F6F84]">www.payzamfara.com</p>
-              <p class="text-sm text-[#6F6F84]">info@psirs.gov.ng</p>
+              <p class="text-sm text-[#6F6F84]">info@zsirs.gov.ng</p>
               <p class="text-sm text-[#6F6F84]">07056990777</p>
               <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
             </div>
