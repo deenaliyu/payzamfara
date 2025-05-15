@@ -148,26 +148,55 @@ async function theVerify(thelvl) {
   }
 }
 async function declineThis() {
-  $("#theApprBtn2").addClass("hidden")
-  $("#msg_boxx").html(`
-    <div class="flex justify-center items-center mb-4">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div>
-  `)
-
-  try {
-    const response = await fetch(`${HOST}/?updateETCC&id=${theid}&set=2`)
-    const etccDetail = await response.json()
-
-    if (etccDetail.status === 1) {
-      alert("Declined successfully")
-      window.location.href = `./etcc-management.html`
-
+  const { value: reason } = await Swal.fire({
+    title: 'Decline Request',
+    input: 'textarea',
+    inputLabel: 'Reason for declining',
+    inputPlaceholder: 'Enter your reason here...',
+    inputAttributes: {
+      'aria-label': 'Enter your reason here'
+    },
+    showCancelButton: true,
+    confirmButtonText: 'Submit',
+    cancelButtonText: 'Cancel',
+    inputValidator: (value) => {
+      if (!value) {
+        return 'You need to provide a reason!'
+      }
     }
-  } catch (error) {
-    console.log(error)
-    $("#theApprBtn2").removeClass("hidden")
-    $("#msg_boxx").html('<p class="text-danger">Something went wrong</p>')
+  });
+
+  if (reason) {
+    $("#theApprBtn2").addClass("hidden");
+    $("#msg_boxx").html(`
+      <div class="flex justify-center items-center mb-4">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+      </div>
+    `);
+
+    try {
+      const response = await fetch(`${HOST}/?updateETCC&id=${theid}&set=2&decline_reason=${encodeURIComponent(reason)}`);
+      const etccDetail = await response.json();
+
+      if (etccDetail.status === 1) {
+        Swal.fire({
+          title: 'Declined',
+          text: "Request declined successfully",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `./etcc-management.html`;
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      $("#theApprBtn2").removeClass("hidden");
+      $("#msg_boxx").html('<p class="text-danger">Something went wrong</p>');
+    }
   }
 }
 
