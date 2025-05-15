@@ -37,9 +37,16 @@ async function getEtccDetails() {
     })
 
     if (theEtcDetail.app_status === "Declined") {
-      $("#deciders").html(`
-        
+      $("#deciders").html(``)
+
+      $("#etcDetails").html(`
+        <div class="mb-4">
+          <h4 class="mb-2 fontBold">Reason for Declining</h4>  
+          <textarea id="theTexto" type="text" class="form-control" readonly></textarea>
+        </div>
       `)
+
+      $("#theTexto").val(theEtcDetail.decline_reason)
     } else if (theEtcDetail.app_status === "Accepted") {
       $("#deciders").html(`
     `)
