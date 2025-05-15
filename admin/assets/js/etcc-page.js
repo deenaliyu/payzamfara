@@ -63,6 +63,7 @@ async function getEtccRequests() {
             <td>${etcReq.email}</td>
             <td>${etcReq.category}</td>
             <td>${etccStatus}</td>
+            <td>${etcReq.decline_reason}</td>
             <td>${etcReq.date_approved === "" ? '-' : etcReq.date_approved}</td>
             <td>
               <a href="./etcc-details.html?theid=${etcReq.refe}&level=3&payer_id=${etcReq.payer_id}" class="button button-sm">View</a>

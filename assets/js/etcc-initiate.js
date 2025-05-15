@@ -52,6 +52,7 @@ async function fetchUserDetails() {
 
         } else {
           $(`#theName`).html(`
+
             <div class="form-group w-full">
               <label for="">Organization Name *</label>
               <input type="text" class="form-control payInputs" data-name="first_name"
@@ -162,6 +163,11 @@ $(".selCateg").on("change", function () {
       console.log(theval)
       if (theval === "Employed") {
         $("#employmentState").html(`
+          <div class="form-group mb-3">
+            <label for="">Date Employed*</label>
+            <input type="date" class="form-control w-full enumInput" data-name="date_of_employment">
+          </div>
+
           <div class="form-group mb-3">
             <label for="">Organization TIN*</label>
             <input type="text" class="form-control w-full enumInput" data-name="org_tin">
@@ -334,6 +340,11 @@ $("#employSelect").on('change', function () {
   if (theval === "Employed") {
     $("#employmentState").html(`
       <div class="form-group mb-3">
+        <label for="">Date Employed*</label>
+        <input type="date" class="form-control w-full enumInput" data-name="date_of_employment">
+      </div>
+
+      <div class="form-group mb-3">
         <label for="">Organization TIN*</label>
         <input type="text" class="form-control w-full enumInput" data-name="org_tin">
       </div>
@@ -397,6 +408,7 @@ function registerUser() {
       "organisation": thefullname,
       "email": emailN,
       "phone": phoneN,
+      "date_of_employment": new Date(new Date().setDate(new Date().getDate() - Math.floor(Math.random() * 365))).toISOString().split('T')[0],
       "recommendation": "recommendation",
       "address": addressN,
       "app_status": "3",
