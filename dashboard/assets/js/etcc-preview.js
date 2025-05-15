@@ -39,10 +39,15 @@ async function getEtccDetails() {
     $("#previewCard").html(`
       <div class="invoicetop"></div>
 
-      <div class="flex items-center px-6 gap-2 mt-3">
-        <img src="./assets/img/logo.png" width="100" alt="">
-        <div>
-          <p class="text-xl fontBold pb-0">Zamfara State Internal Revenue Service</p>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center px-6 gap-2 mt-3">
+          <img src="./assets/img/logo.png" width="100" alt="">
+          <div>
+            <p class="text-xl fontBold pb-0">Zamfara State Internal Revenue Service</p>
+          </div>
+        </div>
+        <div class="mt-3 pr-3 flex justify-center">
+          <div id="qrContainer" class="w-[100px] h-[100px]"></div>
         </div>
       </div>
 
@@ -151,9 +156,7 @@ async function getEtccDetails() {
           <p class="fontBold text-black text-center mt-1">Official stamp Impression</p>
         </div>
 
-        <div class="w-4/12 flex justify-center">
-          <div id="qrContainer" class="w-[100px] h-[100px]"></div>
-        </div>
+        
 
         <div class="sig2 w-4/12">
           <div class="border-b-2"></div>
