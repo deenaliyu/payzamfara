@@ -218,8 +218,8 @@
                   </li>
 
                   <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link payestgBtns" data-note="Declined" data-bs-toggle="pill"
-                      data-bs-target="#allpaye_stages" type="button" role="tab">
+                    <button class="nav-link" data-note="Declined" data-bs-toggle="pill"
+                      data-bs-target="#decline_stages" type="button" role="tab">
                       Declined
                     </button>
                   </li>
@@ -261,6 +261,38 @@
 
                     <div class="table-responsive">
                       <table class="table payeTable" id="dataTable3">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Payer ID</th>
+                            <th>Organization Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <!-- <th>Reason</th> -->
+                            <th>Date Created</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="payeMTabAll">
+
+
+
+                        </tbody>
+                      </table>
+
+
+
+                      <!-- <div class="flex justify-center items-center mt-4" id="loader">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                      </div> -->
+                    </div>
+
+                  </div>
+
+                  <div class="tab-pane fade" id="decline_stages" role="tabpanel">
+
+                    <div class="table-responsive">
+                      <table class="table payeTable" id="dataTable55" style="width: 100% !important;">
                         <thead>
                           <tr>
                             <th></th>

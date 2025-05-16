@@ -171,6 +171,92 @@ async function fetchForSpecificLevels(level) {
       //     return getStatusBadge(data);
       //   }
       // },
+      // { data: 'reason' },
+      { data: 'time_in' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `
+              <a href="paye-assview.html?id=${row.id}&level=${row.status.split("")[0]}" class="btn btn-primary btn-sm">View</a>
+            `;
+        },
+      },
+    ],
+  });
+}
+
+async function fetchForSpecificLevelsDecline(level) {
+  if ($.fn.DataTable.isDataTable('#dataTable55')) {
+    $('#dataTable55').DataTable().clear().destroy();
+  }
+
+  table3 = $('#dataTable55').DataTable({
+    processing: true, // Show processing indicator
+    serverSide: true, // Enable server-side processing
+    paging: true,     // Enable pagination
+    searching: false,  // Enable search box
+    pageLength: 50,   // Number of items per page
+    ajax: function (data, callback, settings) {
+      // Convert DataTables page number to your API page number
+      const pageNumber = Math.ceil(data.start / data.length) + 1;
+
+      const filters = {
+        getPayeeAssessment: true,
+        level: level, // Add the selected level as a filter
+      };
+
+      // Call your API with the calculated page number
+      $.ajax({
+        url: HOST,
+        type: 'GET',
+        data: filters,
+        success: function (response) {
+          // Filter the data based on the selected level
+          const filteredData = response.message.filter(item => item.status === level);
+          dataToExport = filteredData
+          // Map the API response to DataTables expected format
+          callback({
+            draw: data.draw, // Pass through draw counter
+            recordsTotal: filteredData.length, // Total records in your database
+            recordsFiltered: filteredData.length, // Filtered records count
+            data: filteredData, // The actual data array from your API
+          });
+        },
+        error: function (error) {
+          console.log(error, 'Failed to fetch data.');
+          callback({
+            draw: data.draw, // Pass through draw counter
+            recordsTotal: 0, // Total records in your database
+            recordsFiltered: 0, // Filtered records count
+            data: [], // The actual data array from your API
+          });
+          $("#dataTable55 tbody").html(`
+                <tr>
+                  <td colspan="11" class="text-center">Failed to fetch Data.</td>
+                </tr>   
+              `);
+        },
+      });
+    },
+    columns: [
+      {
+        data: null,
+        orderable: false, // Disable ordering for the numbering column
+        render: function (data, type, row, meta) {
+          // Calculate the row number based on the page
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+      },
+      { data: 'tax_number' },
+      { data: 'first_name' },
+      { data: 'email' },
+      { data: 'phone' },
+      // {
+      //   data: 'status',
+      //   render: function (data, type, row) {
+      //     return getStatusBadge(data);
+      //   }
+      // },
       { data: 'reason' },
       { data: 'time_in' },
       {
@@ -184,6 +270,8 @@ async function fetchForSpecificLevels(level) {
     ],
   });
 }
+
+fetchForSpecificLevelsDecline('Declined')
 
 $(document).ready(function () {
   $(".payestgBtns").each(function () {

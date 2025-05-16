@@ -186,6 +186,116 @@ async function fetchForSpecificLevels(level) {
       { data: 'fullname' },
       { data: 'phone' },
       { data: 'email' },
+      // { data: 'reason' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return formatMoney(parseFloat(row.annual_gross_income));
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return formatMoney(parseFloat(row.consolidated_relief));
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return formatMoney(parseFloat(row.chargeable_income));
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return formatMoney(parseFloat(row.monthly_tax_payable));
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
+        }
+      },
+      { data: 'created_date' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `
+            <a href="direct-assessmentview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
+          `;
+        },
+      },
+    ],
+  });
+}
+
+async function fetchForSpecificLevelsDecline(level) {
+  if ($.fn.DataTable.isDataTable('#dataTable33')) {
+    $('#dataTable33').DataTable().clear().destroy();
+  }
+
+  table3 = $('#dataTable33').DataTable({
+    processing: true, // Show processing indicator
+    serverSide: true, // Enable server-side processing
+    paging: true,     // Enable pagination
+    searching: false,  // Enable search box
+    pageLength: 50,   // Number of items per page
+    ajax: function (data, callback, settings) {
+      // Convert DataTables page number to your API page number
+      const pageNumber = Math.ceil(data.start / data.length) + 1;
+
+      const filters = {
+        getAllDirectAssessmentss: true,
+        level: level, // Add the selected level as a filter
+      };
+
+      // Call your API with the calculated page number
+      $.ajax({
+        url: HOST,
+        type: 'GET',
+        data: filters,
+        success: function (response) {
+          // Filter the data based on the selected level
+          const filteredData = response.data.direct_assessments.filter(item => item.level === level);
+          dataToExport = filteredData;
+          // Map the API response to DataTables expected format
+          callback({
+            draw: data.draw, // Pass through draw counter
+            recordsTotal: filteredData.length, // Total records after filtering
+            recordsFiltered: filteredData.length, // Filtered records count
+            data: filteredData, // The filtered data array
+          });
+        },
+        error: function (error) {
+          console.log(error, 'Failed to fetch data.');
+          callback({
+            draw: data.draw, // Pass through draw counter
+            recordsTotal: 0, // Total records in your database
+            recordsFiltered: 0, // Filtered records count
+            data: [], // The actual data array from your API
+          });
+          $("#dataTable33 tbody").html(`
+              <tr>
+                <td colspan="12" class="text-center">Failed to fetch Data.</td>
+              </tr>   
+            `);
+        },
+      });
+    },
+    columns: [
+      {
+        data: null,
+        orderable: false, // Disable ordering for the numbering column
+        render: function (data, type, row, meta) {
+          // Calculate the row number based on the page
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+      },
+      { data: 'tax_number' },
+      { data: 'fullname' },
+      { data: 'phone' },
+      { data: 'email' },
       { data: 'reason' },
       {
         data: null,
@@ -229,6 +339,8 @@ async function fetchForSpecificLevels(level) {
     ],
   });
 }
+
+fetchForSpecificLevelsDecline("Disapproved")
 
 $(document).ready(function () {
   $(".levels-navo").each(function () {
