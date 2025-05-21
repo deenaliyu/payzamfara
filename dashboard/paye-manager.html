@@ -115,7 +115,7 @@
                   </div>
 
                   <p class="zanumbers text-end" style="margin-top: 30px;">
-                    <span id="reg_staffs">10</span>
+                    <span id="reg_staffs">0</span>
                   </p>
                 </div>
 
@@ -124,81 +124,15 @@
                     <div class="icoCont bg-[#f890301f]">
                       <iconify-icon class="text-[#025826]" icon="solar:wallet-bold"></iconify-icon>
                     </div>
-                    <p class="text-gray-500 text-xs impMetrics">ANNUAL ESTIMATE</p>
-                  </div>
 
-
-                  <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="selYear">
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025" selected>2025</option>
-                    </select>
-
-                    <p class="text-base fontBold"><span id="annEstimate">-</span></p>
-                  </div>
-                </div>
-
-                <div class="dashCards card w-full flex-col space-y-2">
-                  <div class="flex items-center gap-2">
-                    <div class="icoCont bg-[#f890301f]">
-                      <iconify-icon class="text-[#025826]" icon="solar:wallet-bold"></iconify-icon>
-                    </div>
-
-                    <p class="text-gray-500 text-xs impMetrics">ANNUAL REMITTANCE</p>
+                    <p class="text-gray-500 text-xs impMetrics">TOTAL REMITTANCE</p>
                   </div>
 
                   <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="">
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025" selected>2025</option>
-                    </select>
 
-                    <p class="text-base fontBold">
-                      &#8358;<span id="ann_remi"> 768,000.00</span>
-                    </p>
-                  </div>
 
-                </div>
-
-                <div class="dashCards card w-full flex-col space-y-2">
-                  <div class="flex items-center gap-2">
-                    <div class="icoCont bg-[#f890301f]">
-                      <iconify-icon class="text-[#025826]" icon="solar:wallet-bold"></iconify-icon>
-                    </div>
-
-                    <p class="text-gray-500 text-xs impMetrics">MONTHLY ESTIMATE</p>
-                  </div>
-
-                  <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" onchange="displayEstimate()" required name=""
-                      id="monthSelect">
-                    </select>
-
-                    <p class="text-base fontBold">
-                      &#8358;<span id="ann_remi"> 768,000.00</span>
-                    </p>
-                  </div>
-
-                </div>
-
-                <div class="dashCards card w-full flex-col space-y-2">
-                  <div class="flex items-center gap-2">
-                    <div class="icoCont bg-[#f890301f]">
-                      <iconify-icon class="text-[#025826]" icon="solar:wallet-bold"></iconify-icon>
-                    </div>
-
-                    <p class="text-gray-500 text-xs impMetrics">MONTHLY REMITTANCE</p>
-                  </div>
-
-                  <div class="flex items-center w-full gap-2" style="margin-top: 30px;">
-                    <select class="form-select form-select-sm" required name="" id="">
-                      <option value="February">February</option>
-                    </select>
-
-                    <p class="text-base fontBold">
-                      &#8358;<span id="due_amount"> 64,000</span>
+                    <p class="zanumbers fontBold">
+                      <span id="total_remi">0</span>
                     </p>
                   </div>
 
@@ -260,7 +194,6 @@
                       <div id="msg_box2"></div>
                     </div>
 
-
                     <div class="table-responsive">
                       <table class="table payeTable" id="dataTable">
                         <thead>
@@ -270,8 +203,9 @@
                                 onchange="selectAll(this)">
                             </th>
                             <th></th>
-                            <th>TIN</th>
+                            <!-- <th>TIN</th> -->
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Annual Gross Income</th>
                             <th>Basic Salary</th>
                             <th>Annual Tax Payable</th>
@@ -283,27 +217,7 @@
 
                         <tbody id="stafflistTable">
 
-                          <tr>
-                            <td><input class="form-check-input" type="checkbox" value=""></td>
-                            <td>1</td>
-                            <td>IRP-576383</td>
-                            <td>John Doe
-                            </td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>NGN 1,500,000</td>
-                            <td>26/09/2023</td>
-                            <td>
-                              <div class="flex items-center gap-2">
-                                <button onclick="editMDAFunc(this)" data-revid="${rhUser.id}" data-bs-toggle="modal"
-                                  data-bs-target="#editStaff"><iconify-icon class="fontBold text-lg"
-                                    icon="basil:edit-outline"></iconify-icon></button>
-                                <button><iconify-icon class="fontBold text-lg"
-                                    icon="fluent:delete-24-regular"></iconify-icon></button>
-                              </div>
-                            </td>
-                          </tr>
+
                         </tbody>
                       </table>
 
@@ -311,33 +225,33 @@
 
                     </div>
 
-                    <!-- <div class="flex justify-center items-center mt-4" id="loader">
+                    <div class="flex justify-center items-center mt-4" id="loader">
                       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                    </div> -->
+                    </div>
 
                   </div>
 
                   <div class="tab-pane fade" id="generatedAssessments" role="tabpanel">
 
                     <div class="table-responsive">
-                      <table class="table payeTable" id="dataTable">
+                      <table class="table payeTable" id="dataTableGG" style="width: 100%;">
                         <thead>
                           <tr>
                             <th></th>
-                            <th>TIN</th>
-                            <th>Name</th>
-                            <th>Gross Income</th>
+                            <!-- <th>TIN</th> -->
+                            <th>Total Staffs</th>
                             <th>Annual Tax Payable</th>
                             <th>Monthly Tax Payable</th>
                             <th>Status</th>
+                            <th>Reason</th>
                             <th>Date Created</th>
                             <th></th>
                           </tr>
                         </thead>
 
-                        <tbody id="stafflistTable">
+                        <tbody id="generatedAssessmentsTable">
 
-                          <tr>
+                          <!-- <tr>
                             <td>1</td>
                             <td>IRP-576383</td>
                             <td>John Doe</td>
@@ -366,7 +280,7 @@
                             <td>
                               <button class="btn btn-primary"> Staff</button>
                             </td>
-                          </tr>
+                          </tr> -->
 
 
                         </tbody>
@@ -402,25 +316,7 @@
                         </thead>
                         <tbody id="invoiceHistoryTable">
 
-                          <tr>
-                            <td>1</td>
-                            <td>IRP-576383</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>26/09/2023</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-success rounded-pill">Paid</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewinvoice.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
+
 
                         </tbody>
                       </table>
@@ -448,43 +344,7 @@
                         <tbody id="paymentHistoryTable">
 
 
-                          <tr>
-                            <td>2</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>September</td>
-                            <td>Nil</td>
-                            <td>Nil</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-danger rounded-pill">Due</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewreceipt.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
 
-                          <tr>
-                            <td>2</td>
-                            <td>INV-576383IRP</td>
-                            <td>Pay as you Earn(PAYE)</td>
-                            <td>September</td>
-                            <td>&#8358; 1,500,000</td>
-                            <td>Remita</td>
-                            <td>26/09/2023</td>
-                            <td><span class="badge bg-warning rounded-pill">Partial</span></td>
-                            <td>
-                              <div class="flex gap-2 items-center">
-                                <a href="./viewreceipt.html?invnumber=8765456789&load=true"
-                                  class="button rounded-md">View</a>
-                                <button class="button rounded-md" data-bs-toggle="modal"
-                                  data-bs-target="#invoiceStaffModal">Staffs</button>
-                              </div>
-                            </td>
-                          </tr>
 
 
                         </tbody>
@@ -520,6 +380,159 @@
   </div>
   <!-- / Layout wrapper -->
 
+  <div class="modal fade" id="editStaff" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header ">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Edit Staff</h5>
+
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="fa6-solid:x"></iconify-icon></button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+
+            <h1 class="fontBold text-xl">Add New Employee</h1>
+            <p class="mt-2 mb-4">Basic Information</p>
+
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Full Name*</label>
+                <input type="text" class="form-control w-full enumInput" data-name="fullname" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Email*</label>
+                <input type="email" class="form-control w-full enumInput" data-name="email" required>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Phone*</label>
+                <input type="tel" class="form-control w-full enumInput" data-name="phone" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">TIN</label>
+                <input type="text" class="form-control w-full enumInput" data-name="payer_id">
+              </div>
+
+            </div>
+
+            <div class="form-group w-full mb-3">
+              <label for="">Annual Gross Income*</label>
+              <input type="text" class="form-control w-full enumInput" data-name="annual_gross_income" required>
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Basic Salary*</label>
+                <input type="text" class="form-control w-full enumInput" data-name="basic_salary" required>
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Date Employed*</label>
+                <input type="date" class="form-control w-full enumInput" data-name="date_employed" required>
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Housing</label>
+                <input type="text" class="form-control w-full enumInput" data-name="housing">
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Transport</label>
+                <input type="text" class="form-control w-full enumInput" data-name="transport">
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Utility</label>
+                <input type="text" class="form-control w-full enumInput" data-name="utility">
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Medical</label>
+                <input type="text" class="form-control w-full enumInput" data-name="medical">
+              </div>
+
+            </div>
+
+            <div class="flex gap-3 md:flex-row flex-col mb-3">
+
+              <div class="form-group md:w-6/12">
+                <label for="">Entertainment</label>
+                <input type="text" class="form-control w-full enumInput" data-name="entertainment">
+              </div>
+
+              <div class="form-group md:w-6/12">
+                <label for="">Leave</label>
+                <input type="text" class="form-control w-full enumInput" data-name="leaves">
+              </div>
+
+            </div>
+
+
+
+
+            <button class="button w-full mb-4" type="button" id="theButton">Continue</button>
+            <div id="msg_box"></div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="invoiceStaffModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header ">
+          <h5 class="modal-title" id="exampleModalCenterTitle">List of Staffs</h5>
+
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="fa6-solid:x"></iconify-icon></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>TIN</th>
+                  <th>Name</th>
+                  <th>Annual Gross Income</th>
+                  <th>Basic Salary</th>
+                  <th>Annual Tax Payable</th>
+                  <th>Monthly Tax Payable</th>
+                  <th>Date Added</th>
+                </tr>
+              </thead>
+              <tbody id="staffListInvoices">
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="notiModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -558,6 +571,7 @@
   </script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="./assets/js/main.js"></script>
+  <script src="assets/js/paye-manager.js"></script>
 
 </body>
 
