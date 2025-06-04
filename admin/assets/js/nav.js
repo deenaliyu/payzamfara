@@ -144,6 +144,21 @@ $(".aside").html(`
         </ul>  
       </li>
 
+        <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle presump">
+          <iconify-icon icon="heroicons-outline:receipt-tax" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">Informal Tax Manager</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="presumptive-tax.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Presumptive Tax</div>
+            </a>
+          </li>
+        </ul>  
+      </li>
+
       <li class="menu-item">
         <a href="etcc-management.html?type=private" class="menu-link mdoetcc">
           <iconify-icon icon="tabler:world-dollar" class="menu-icon"></iconify-icon>

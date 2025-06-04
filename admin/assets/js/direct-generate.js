@@ -428,7 +428,7 @@ async function fetchUserDetails() {
 
         if (data.user.old_user && data.user.category === "Individual") {
           if (data.user.state === null) {
-            selectOptionByText('selectState', "Plateau");
+            selectOptionByText('selectState', "Zamfara");
           }
 
         } else if (data.user.old_user && data.user.category === "Corporate") {
@@ -437,7 +437,7 @@ async function fetchUserDetails() {
           document.querySelector(".payInputs[data-name='phone']").value = data.user.office_number
 
           if (data.user.state === null) {
-            selectOptionByText('selectState', "Plateau");
+            selectOptionByText('selectState', "Zamfara");
           }
         }
         nextPrev(1)
@@ -760,38 +760,22 @@ async function generateInvoiceNon() {
         $("#generating_inv").addClass("hidden")
 
         let obj = {
-          "endpoint": "createPayerAccount",
-          "data": {
-            "state": "Plateau",
-            "category": categ,
-            "employment_status": "",
-            "business_type": "",
-            "numberofstaff": "",
-            "id_type": "1",
-            "id_number": "",
-            "img": "assets/img/userprofile.png",
-            "tin": tin,
-            "lga": "",
-            "address": "",
-            "password": "12345",
-            "verification_status": "grfdses",
-            "business_own": "2",
-            "industry": "",
-            "bvn": "",
-            "nin": "",
-            "annual_revenue": "",
-            "value_business": "",
-            "rep_firstname": "",
-            "rep_surname": "",
-            "rep_email": "",
-            "rep_phone": "",
-            "rep_position": "",
-            "rep_state": "",
-            "rep_state": "",
-            "rep_lga": "",
-            "rep_address": "",
-          }
+        "endpoint": "createPayerAccount",
+        "data": {
+          "state": "Zamfara",
+          "category": categ,
+          "employment_status": "",
+          "business_type": "",
+          "numberofstaff": "",
+          "business_type": "",
+          "img": "",
+          "tin": tin,
+          "lga": "",
+          "address": "",
+          "password": "12345",
+          "verification_status": "grfdses"
         }
+      }
         allInputs.forEach(allInput => {
           obj.data[allInput.dataset.name] = allInput.value
         })
