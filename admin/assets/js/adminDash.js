@@ -95,6 +95,13 @@ function filterByMonth(monthsArray, targetMonth) {
     const result = monthsArray.find(monthData => monthData.month === targetMonth);
     return result ? result.total_monthly_revenue : 0;
 }
+
+function filterByMonth2(monthsArray, targetMonth) {
+    const result = monthsArray.find(monthData => monthData.month === targetMonth);
+    return result ? result.total_unpaid_revenue : 0;
+}
+
+
 let allRevenueData = []
 
 function refreshTheCards2() {
@@ -215,7 +222,180 @@ async function getExpectedMonthlyRevenue() {
     }
 }
 
-getExpectedMonthlyRevenue()
+// getExpectedMonthlyRevenue()
+
+
+// get Total Revenue 
+let allExpectedRevenueDatattl = []
+
+function refreshTheCardsttl() {
+    let theMonth = document.querySelector("#monthlyYear2ttl").value
+    
+    let genAmount = filterByMonth(allExpectedRevenueDatattl, theMonth)
+    $("#due_amountttl").html(formatMoney(genAmount))
+}
+
+async function getExpectedMonthlyRevenuettl() {
+    $("#due_amountttl").html(`
+        <div class="flex mb-4">
+          <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+        </div>
+    `)
+    
+    try {
+        const response = await fetch(`${HOST}?getMonthlyRevenue&sort=expected`);
+        const userAnalytics = await response.json();
+        
+        // console.log(userAnalytics)
+        if(userAnalytics.status === 0) {
+            $("#due_amountttl").html(0)
+        } else {
+            allExpectedRevenueDatattl = userAnalytics.message
+            const monthSelector = document.getElementById('monthlyYear2ttl');
+            
+            let theSortedData = sortByDateDescending(userAnalytics.message)
+            
+            for (const monthData of theSortedData) {
+                const option = document.createElement('option');
+                const monthValue = monthData.month;
+                const displayText = `${getMonthName(monthValue)} ${getYear(monthValue)}`;
+    
+                option.value = monthValue;
+                option.text = displayText;
+    
+                // Set the default selected option to the current month and year
+                if (monthValue === `${theCurrentYear}-${theCurrentMonth}`) {
+                    option.selected = true;
+                }
+    
+                monthSelector.add(option);
+            }
+            
+            
+            let theAmountGen = filterByMonth(theSortedData, `${theCurrentYear}-${convertToTwoDigits(theCurrentMonth)}`)
+            $("#due_amountttl").html(formatMoney(theAmountGen))
+        }
+        
+
+   
+    } catch (error) {
+        console.log(error)
+        $("#due_amountttl").html(0)
+    }
+}
+
+getExpectedMonthlyRevenuettl()
+
+
+// getAccrued Revenue Data 
+let allAccruedData = []
+
+function refreshTheCardsAcr() {
+    let theMonth = document.querySelector("#accruedRev").value
+    
+    let genAmount = filterByMonth2(allAccruedData, theMonth)
+    $("#accruedRevText").html(formatMoney(genAmount))
+}
+
+async function getAccruedData() {
+    $("#accruedRevText").html(`
+        <div class="flex mb-4">
+          <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+        </div>
+    `)
+    
+    try {
+        const response = await fetch(`${HOST}?getMonthlyUnpaidRevenue`);
+        const userAnalytics = await response.json();
+        
+        // console.log(userAnalytics)
+        if(userAnalytics.status === 0) {
+            $("#accruedRevText").html(0)
+        } else {
+            allAccruedData = userAnalytics.message
+            const monthSelector = document.getElementById('accruedRev');
+            
+            let theSortedData = sortByDateDescending(userAnalytics.message)
+            
+            for (const monthData of theSortedData) {
+                const option = document.createElement('option');
+                const monthValue = monthData.month;
+                const displayText = `${getMonthName(monthValue)} ${getYear(monthValue)}`;
+    
+                option.value = monthValue;
+                option.text = displayText;
+    
+                // Set the default selected option to the current month and year
+                if (monthValue === `${theCurrentYear}-${theCurrentMonth}`) {
+                    option.selected = true;
+                }
+                monthSelector.add(option);
+            }
+            
+            
+            let theAmountGen = filterByMonth2(theSortedData, `${theCurrentYear}-${convertToTwoDigits(theCurrentMonth)}`)
+            // console.log(theSortedData,theCurrentYear,theCurrentMonth)
+            $("#accruedRevText").html(formatMoney(theAmountGen))
+        }
+
+    } catch (error) {
+        console.log(error)
+        $("#accruedRevText").html(0)
+    }
+}
+
+getAccruedData()
+
+async function getDailyRevenue() {
+
+  const response = await fetch(`${HOST}/?getDailyRevenue`)
+  const MDAs = await response.json()
+  
+  if(MDAs.status === 1){
+      $("#avg_daily_rev").html(formatMoney(MDAs.message[0].total_daily_revenue))
+  } else{
+     $("#avg_daily_rev").html(formatMoney(0)) 
+  }
+
+}
+
+async function getDailyRemittance(date) {
+
+    $.ajax({
+        url: `${HOST}?getDailyRemittance`, // Replace with the actual path
+        type: 'GET',
+        data: { date: date },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 1) {
+                const data = response.message[0];
+                $('#numberOfdailyRemittance').html(data.total_daily_remittances.toLocaleString());
+                $('#amountOfdailyRemittance').html(formatMoney(parseFloat(data.total_daily_amount)));
+            } else {
+                // console.log('No data found for today');
+                $('#numberOfdailyRemittance').html(0);
+                $('#amountOfdailyRemittance').html(formatMoney(parseFloat(0)));
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', status, error);
+            $('#numberOfdailyRemittance').html(0);
+            $('#amountOfdailyRemittance').html(formatMoney(parseFloat(0)));
+        }
+    });
+
+}
+
+$("#dateFilter").val(new Date().toISOString().split('T')[0])
+
+$('#dateFilter').on('change', function() {
+    $('#numberOfdailyRemittance').html(`<div class="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>`);
+    $('#amountOfdailyRemittance').html(`<div class="animate-spin rounded-full h-3 w-3 border-b-2 border-gray-900"></div>`);
+    getDailyRemittance($(this).val());
+});
+
+getDailyRevenue()
+getDailyRemittance(new Date().toISOString().split('T')[0])
 
 var myCharter;
 
@@ -247,9 +427,6 @@ async function fetchAnalytics() {
     $("#total_invoice").html(userAnalytics.total_invoice.toLocaleString())
     $("#total_amount").html(userAnalytics.total_invoice_paid.toLocaleString())
     $("#reg_taxP").html(userAnalytics.total_user.toLocaleString())
-
-    $("#total_numberE").html(userAnalytics.total_expired_invoice.toLocaleString())
-    $("#total_amountE").html(userAnalytics.total_expired_invoice_amount.toLocaleString())
 
     let tt = parseFloat(userAnalytics.total_amount_paid);
     let ti = parseFloat(userAnalytics.total_amount_invoiced);
@@ -322,3 +499,28 @@ async function fetchRevHeads() {
 }
 
 fetchRevHeads()
+
+
+async function fetchPercent() {
+  $("#showThem").html("")
+  $("#loader").css("display", "flex")
+  const response = await fetch(`${HOST}/?getPercentage`)
+  const MDAs = await response.json()
+    // console.log(MDAs)
+  $("#loader").css("display", "none")
+    MDAs.reverse().forEach((MDA, i) => {
+          $("#showThem").append(`
+        <tr class="relative">
+        <td>${i + 1}</td>
+          <td>${MDA.month}</td>
+          <td>${MDA.total_monthly_revenue}</td>
+          <td>${MDA.total_expired_revenue1}</td>
+          <td>${MDA.total_expired_revenue}</td>
+        </tr>
+      `)
+    });
+
+
+}
+
+fetchPercent()

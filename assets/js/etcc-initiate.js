@@ -6,6 +6,14 @@ const adminId = urlParamsEtcc.get('id');
 
 let theFetchedDetails = null
 
+
+$('.yearlySelect').each(function () {
+  const currentYear = new Date().getFullYear();
+  for (let year = currentYear - 5; year <= currentYear + 2; year++) {
+    $(this).append($('<option>', { value: year, text: year }));
+  }
+});
+
 async function fetchUserDetails() {
   let tinOrEmail = document.querySelector("#tinOrEmail").value;
 

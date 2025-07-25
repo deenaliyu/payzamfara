@@ -162,7 +162,7 @@
             <div class="flex items-center gap-3 mb-4">
               <div class="form-group md:w-6/12 w-full">
                 <label for="">State of Origin*</label>
-                <select name="" id="states" class="form-select tinReqInput" data-name="state_of_origin" required>
+                <select name="" id="states" class="form-select tinReqInput stat" data-name="state_of_origin" required>
                   <option value="Akwa Ibom">Akwa Ibom</option>
                 </select>
               </div>
@@ -170,7 +170,8 @@
               <div class="form-group  md:w-6/12 w-full">
                 <label for="">Marital Status*</label>
                 <select name="" class="form-select tinReqInput" data-name="marital_status" required>
-                  <option value="Single">Single</option>
+                  <option value="single">Single</option>
+                    <option value="married">Married</option>
                 </select>
               </div>
             </div>
@@ -391,14 +392,14 @@
             <div class="flex items-center gap-3 mb-4">
               <div class="form-group md:w-6/12 w-full">
                 <label for="">State*</label>
-                <select name="" id="states" class="form-select tinReqInput" data-name="state" required>
+                <select name="" id="selectState" class="form-select tinReqInput" data-name="state" required>
                   <option value="Akwa Ibom">Akwa Ibom</option>
                 </select>
               </div>
 
               <div class="form-group  md:w-6/12 w-full">
                 <label for="">LGA*</label>
-                <select name="" id="states" class="form-select tinReqInput" data-name="local_gvt" required>
+                <select name="" id="selectLGA" class="form-select tinReqInput" data-name="local_gvt" required>
                   <option selected disabled>Select--</option>
                 </select>
               </div>
@@ -504,7 +505,7 @@
 
               <div class="form-group md:w-6/12 w-full">
                 <label for="">State of Origin*</label>
-                <select name="" class="form-select tinReqInput" data-name="dep_child_state" id="">
+                <select name="" class="form-select tinReqInput stat" data-name="dep_child_state" id="states">
                   <option value="Akwa Ibom">Akwa Ibom</option>
                 </select>
               </div>

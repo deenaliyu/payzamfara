@@ -55,7 +55,7 @@ async function getTaxPayer() {
                   ? "-"
                   : taxPayerData.business_type
               }</p>
-              <p><span class="font-bold">Emplyment Status:</span> ${
+              <p><span class="font-bold">Employment Status:</span> ${
                 taxPayerData.employment_status == ""
                   ? "-"
                   : taxPayerData.employment_status
@@ -261,7 +261,6 @@ async function getAnalytics() {
         <tr>
           <td>${notification.timeIn}</td>
           <td>${notification.comment}</td>
-          <td>${notification.ip_address}</td>
         </tr>
       `);
       });

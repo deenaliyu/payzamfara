@@ -98,7 +98,7 @@ async function openReceipt(invoicenumber) {
   
               <div class="w-full md:mr-[-10%]">
                 <p class="text-[#555555]">TO :</p>
-                <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
+                <p class="fontBold text-left">${invoice_info.category === 'Individual' ? invoice_info.surname : ''} ${invoice_info.first_name}</p>
                 <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
               </div>
   
@@ -167,11 +167,7 @@ async function openReceipt(invoicenumber) {
                     <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
                   </tr>
                   <tr>
-<<<<<<< HEAD
                     <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(invoice_info.amount_paid)} Only</td>
-=======
-                    <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(invoice_info.amount_paid)} Naira Only</td>
->>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
                   </tr>
 
                 </table>

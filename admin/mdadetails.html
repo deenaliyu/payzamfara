@@ -20,7 +20,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet" />
-
+    
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
   <link rel="stylesheet" href="./assets/css/dataTable.css">
@@ -105,13 +105,9 @@
 
               <div class="">
                 <div id="otherInfo">
-                  <h1 class="text-2xl">Ministry of Agriculture</h1>
+                  <h1 class="text-2xl">Loading ...</h1>
                   <!-- <p>Address: <span></span></p> -->
-                  <p>Email Address: <span></span></p>
-                  <p>LGA: <span>Uyo</span></p>
-                  <p>Number of Revenue heads: <span>6</span></p>
-                  <p>Date created: <span>22/02/2023</span></p>
-                  <p>Contact: <span>091234593</span></p>
+                  
 
                 </div>
                 <div class="flex justify-content-center">
@@ -164,6 +160,8 @@
                         <th>S/N</th>
                         <th>Revenue Head</th>
                         <th>Category</th>
+                        <th>Demand Notice</th>
+                        <th>Remita Code</th>
                         <th>Frequency</th>
                         <th>Amount per head</th>
                         <th>Revenue generated</th>
@@ -186,6 +184,7 @@
                         <th>S/N</th>
                         <th>Revenue Head</th>
                         <th>Category</th>
+                        <th>Remita Code</th>
                         <th>Frequency</th>
                         <th>Amount per head</th>
                         <th>Revenue generated</th>
@@ -359,7 +358,22 @@
                 placeholder="NGN XXX" />
             </div>
           </div>
+          
+          <div class="row">
+            <div class="col mb-3">
+              <label for="nameLarge" class="form-label">Remita Code</label>
+              <input type="text" id="nameLarge" class="form-control revInput2" data-name="remita_code"
+                placeholder="remita code" />
+            </div>
+          </div>
 
+            <div class="row">
+            <div class="col mb-3">
+              <label for="nameLarge" class="form-label">Revenue Code</label>
+              <input type="text" id="nameLarge" class="form-control revInput2" data-name="COL_2"
+                placeholder="revenue code" />
+            </div>
+          </div>
 
           <div class="row">
             <div class="col mb-3">
@@ -369,6 +383,17 @@
                 <option value="Individual">Individual</option>
                 <option value="State Agency">State Agency</option>
                 <option value="Federal Agency">Federal Agency</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col mb-3">
+              <label for="dobLarge" class="form-label">Demand Notice</label>
+              <select id="defaultSelect" class="form-select revInput2" data-name="demand_notice">
+                <option value="">Select--</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
               </select>
             </div>
           </div>
@@ -434,7 +459,7 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   
   <!-- Main JS -->
-  <script src="./assets/js/revHead.js"></script>
+  <script src="./assets/js/revHead.js?v=1.1"></script>
   <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/main.js"></script>
 </body>

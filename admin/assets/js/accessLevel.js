@@ -373,14 +373,14 @@ async function getRolesAdmin() {
       third_reviewer: "#thirdReview"
     };
 
-    const hasAccess = Object.keys(roles).some(role => directRoles?.includes(role));
+    // const hasAccess = Object.keys(roles).some(role => directRoles?.includes(role));
 
-    if (!hasAccess) {
-      $("#directContainer").html(`
-        <p class="text-2xl m-5 text-center">No Access !!</p>
-      `);
-      return;
-    }
+    // if (!hasAccess) {
+    //   $("#directContainer").html(`
+    //     <p class="text-2xl m-5 text-center">No Access !!</p>
+    //   `);
+    //   return;
+    // }
 
     for (const [role, selector] of Object.entries(roles)) {
       if (!directRoles?.includes(role)) {
@@ -399,14 +399,14 @@ async function getRolesAdmin() {
       third_reviewer: "#thirdReview"
     };
 
-    const hasAccess = Object.keys(roles).some(role => payeRoles?.includes(role));
+    // const hasAccess = Object.keys(roles).some(role => payeRoles?.includes(role));
 
-    if (!hasAccess) {
-      $("#payeContainer").html(`
-        <p class="text-2xl m-5 text-center">No Access !!</p>
-      `);
-      return;
-    }
+    // if (!hasAccess) {
+    //   $("#payeContainer").html(`
+    //     <p class="text-2xl m-5 text-center">No Access !!</p>
+    //   `);
+    //   return;
+    // }
 
     for (const [role, selector] of Object.entries(roles)) {
       if (!payeRoles?.includes(role)) {

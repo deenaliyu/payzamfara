@@ -80,7 +80,7 @@
                 <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
                 Filter
               </button>
-              <button class="button flex gap-x-1 items-center" id="collReportd" onclick="exportData()">
+              <button class="button flex gap-x-1 items-center" id="collReportd" onclick="exportData(this)">
                 <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                 Report</button>
               <div class="avatar avatar-online flex gap-x-5 items-center">
@@ -113,10 +113,12 @@
                     <th>Revenue Head</th>
                     <th>Name</th>
                     <th>Office</th>
-                    <th>TIN</th>
+                    <th>TaxPayer ID</th>
                     <th>Invoice Number</th>
                     <th>Amount Paid</th>
-                    <th>Payment Channel</th>
+                    <th>Payment Gateway</th>
+                    <th>Payment Method</th>
+                    <th>Payment Bank</th>
                     <th>Payment Refrence Number</th>
                     <th>Receipt Number</th>
                     <th>Payment Date</th>
@@ -130,24 +132,23 @@
               
             </div>
             
-            <div class="flex justify-center items-center mt-4" id="loader">
-              <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-            </div>
 
           </div>
           
            <table class="table invoiceTable hidden" id="invoiceTableFull">
               <thead>
                 <tr class="text-center">
-                  <th></th>
+                    <th></th>
                     <th>MDAS</th>
                     <th>Revenue Head</th>
                     <th>Name</th>
                     <th>Office</th>
-                    <th>TIN</th>
+                    <th>TaxPayer ID</th>
                     <th>Invoice Number</th>
                     <th>Amount Paid</th>
-                    <th>Payment Channel</th>
+                    <th>Payment Gateway</th>
+                    <th>Payment Method</th>
+                    <th>Payment Bank</th>
                     <th>Payment Refrence Number</th>
                     <th>Receipt Number</th>
                     <th>Payment Date</th>
@@ -184,13 +185,21 @@
         <div class="modal-body">
             
             <div class="flex justify-end">
-              <button class="btn btn-primary btn-sm" onclick="clearfilter2()">clear filter</button>
+              <button class="btn btn-primary btn-sm" onclick="clearfilter()">clear filter</button>
           </div>
+          
+            <div class="col mb-3">
+              <label class="form-label">Invoice Number</label>
+              <div class="form-group">
+                <input class="form-control filterInputs" data-name="invoice_number" placeholder="Invoice Number" />
+              </div>
+            </div>
+            
           <div class="row">
             <div class="col mb-3" id="mdass">
               <label for="defaultSelect" class="form-label">MDA</label>
               <div class="form-group">
-                <select name="" id="getMDAs" class="form-select">
+                <select name="" id="getMDAs" class="form-select filterInputs" data-name="mda_id">
                   <option disabled selected>--- All ---</option>
                 </select>
               </div>
@@ -201,15 +210,15 @@
             <div class="col mb-0" id="the_rev">
               <label for="defaultSelect" class="form-label">Revenue Head</label>
               <div class="form-group">
-                <select name="" id="getMDAs" class="form-select">
+                <select name="" id="listOfpayable" class="form-select filterInputs" data-name="revenue_head">
                   <option disabled selected>--- All ---</option>
                 </select>
               </div>
             </div>
              <div class="col mb-0" id="payment_channel">
-              <label for="defaultSelect" class="form-label">Payment Channel</label>
+              <label for="defaultSelect" class="form-label">Payment Gateway</label>
               <div class="form-group">
-                <select name="" id="getPayment" class="form-select ">
+                <select name="" id="getPayment" class="form-select filterInputs" data-name="payment_channel">
                   <option  selected>--- All---</option>
                 </select>
               </div>
@@ -217,21 +226,23 @@
             
           </div>
           
+          
           <div class="row g-2">
             <label for="" class="mt-3">Date</label>
             <div class="col mb-0">
               <label for="emailLarge" class="form-label">From</label>
-              <input class="form-control" type="date" value="" id="fromDateInput">
+              <input class="form-control filterInputs" data-name="timeIn_start" type="date" value="" id="fromDateInput">
             </div>
             <div class="col mb-0">
               <label for="dobLarge" class="form-label">To</label>
-              <input class="form-control" type="date" value="" id="toDateInput">
+              <input class="form-control filterInputs" data-name="timeIn_end" type="date" value="" id="toDateInput">
             </div>
           </div>
           
         </div>
         <div class="modal-footer ">
-          <button type="button" class="btn btn-prime w-full" id="filterMda2">Apply</button>
+          <button type="button" class="btn btn-prime w-full" onclick='filterTheInvoice()' id="filterTheInvoice">Apply</button>
+          <div id='msg_boxer'></div>
         </div>
       </div>
     </div>
@@ -251,41 +262,6 @@
     });
   </script>
 
-  <script>
-
-
-    function exportData() {
-      var csv = [];
-      var table = document.getElementById("invoiceTableFull");
-
-      // Add header to CSV
-      var header = [];
-      for (var h = 0; h < table.rows[0].cells.length; h++) {
-        header.push(table.rows[0].cells[h].innerText);
-      }
-      csv.push(header.join(','));
-
-      // Add rows to CSV
-      for (var i = 1; i < table.rows.length; i++) {
-        var row = [], cols = table.rows[i].querySelectorAll('td, th');
-
-        for (var j = 0; j < cols.length; j++) {
-          row.push(cols[j].innerText);
-        }
-
-        csv.push(row.join(','));
-      }
-
-      // Download CSV file
-      var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', 'payment_report');
-      document.body.appendChild(link);
-      link.click();
-    }
-  </script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script>
@@ -295,8 +271,8 @@
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/js/accessLevel.js?v=1.2"></script>
   <script src="./assets/vendor/js/menu.js"></script>
-  <script src="./assets/js/collection.js?v=1.4"></script>
-  <script src="./assets/js/filterInv.js?v=2.1"></script>
+  <script src="./assets/js/collection.js?v=14.0"></script>
+  <script src="./assets/js/filterInv.js?v=4.5"></script>
   <!-- endbuild -->
 
   <!-- Vendors JS -->
@@ -317,11 +293,6 @@
   </script>
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
-
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

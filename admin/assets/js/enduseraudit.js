@@ -105,8 +105,15 @@ async function fetchUsers() {
       }
 
     } else if (txpayers.user_category === "Enum User") {
-      // console.log(enumUser)
-      let userDetail = enumUser?.find(tt => tt.id === txpayers.user_id)
+
+      let userDetail = null
+      if (Object.keys(enumUser).length === 0 && obj.constructor === Object) {
+
+      } else if(enumUser == "failed to load, try again"){
+        
+      } else {
+        userDetail = enumUser?.find(tt => tt.id === txpayers.user_id)
+      }
 
       if (userDetail) {
         iiii++

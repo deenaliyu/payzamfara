@@ -123,6 +123,8 @@
               <option disabled selected>Select--</option>
               <option value="2">Individual</option>
               <option value="1">Corporate</option>
+              <option value="3">State Agency</option>
+              <option value="4">Federal Agency</option>
             </select>
           </div>
 
@@ -266,63 +268,69 @@
           <p class="mt-2 mb-4">Secondary Information</p>
 
 
-          <!-- <div class="flex justify-between items-center mb-3"> -->
-          <h1 class="fontBold text-lg text-black mb-3">Evidence of Tax Payments</h1>
+          <div class="flex justify-between items-center mb-3">
+            <h1 class="fontBold text-lg text-black mb-3">Evidence of Tax Payments</h1>
 
-          <!-- <div class="form-group mb-3">
+            <div class="form-group mb-3">
               <label for="">File Number</label>
               <input type="text" class="form-control w-full enumInputB" data-name="filename">
-            </div> -->
-          <!-- </div> -->
-
-          <div class="flex gap-3 mb-3">
-            <div class="form-group w-4/12">
-              <label for="">Year*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="year1" required>
-            </div>
-
-            <div class="form-group w-4/12">
-              <label for="">Income*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="income1" required>
-            </div>
-
-            <div class="form-group w-4/12">
-              <label for="">Amount of Tax Paid*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_1" required>
             </div>
           </div>
 
           <div class="flex gap-3 mb-3">
             <div class="form-group w-4/12">
               <label for="">Year*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="year2" required>
+              <select class="form-select w-full enumInputB yearlySelect" data-name="year1" required>
+                <option value="">Select --</option>
+              </select>
             </div>
 
             <div class="form-group w-4/12">
               <label for="">Income*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="income2" required>
+              <input type="number" class="form-control w-full enumInputB" data-name="income1" required>
             </div>
 
             <div class="form-group w-4/12">
               <label for="">Amount of Tax Paid*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_2" required>
+              <input type="number" class="form-control w-full enumInputB" data-name="tax_paid_1" required>
             </div>
           </div>
 
           <div class="flex gap-3 mb-3">
             <div class="form-group w-4/12">
-              <label for="">Year*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="year3" required>
+              <label for="">Year</label>
+              <select class="form-select w-full enumInputB yearlySelect" data-name="year2">
+                <option value="">Select --</option>
+              </select>
             </div>
 
             <div class="form-group w-4/12">
-              <label for="">Income*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="income3" required>
+              <label for="">Income</label>
+              <input type="number" class="form-control w-full enumInputB" data-name="income2">
             </div>
 
             <div class="form-group w-4/12">
-              <label for="">Amount of Tax Paid*</label>
-              <input type="text" class="form-control w-full enumInputB" data-name="tax_paid_3" required>
+              <label for="">Amount of Tax Paid</label>
+              <input type="number" class="form-control w-full enumInputB" data-name="tax_paid_2">
+            </div>
+          </div>
+
+          <div class="flex gap-3 mb-3">
+            <div class="form-group w-4/12">
+              <label for="">Year</label>
+              <select class="form-select w-full enumInputB yearlySelect" data-name="year3">
+                <option value="">Select --</option>
+              </select>
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Income</label>
+              <input type="number" class="form-control w-full enumInputB" data-name="income3">
+            </div>
+
+            <div class="form-group w-4/12">
+              <label for="">Amount of Tax Paid</label>
+              <input type="number" class="form-control w-full enumInputB" data-name="tax_paid_3">
             </div>
           </div>
 
@@ -334,7 +342,7 @@
           </ul>
 
           <div class="form-group w-full mb-3">
-            <label for="">Name of Husband</label>
+            <label for="">Name of Spouse</label>
             <input type="text" class="form-control w-full enumInputB" data-name="name_hus">
           </div>
 

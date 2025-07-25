@@ -10,14 +10,106 @@ $("#viewmore").on("click", function () {
 })
 
 
-async function fetchGraph() {
+function convertToTwoDigitsEx(number) {
+  // Using padStart to add a leading zero if needed
+  return String(number).padStart(2, '0');
+}
 
-  const response = await fetch(`${HOST}/?invoicesPaidBeforeDue`)
-  const MDAs = await response.json()
-  console.log(MDAs.message.on_time_percentage)
-  let value2 = parseInt(MDAs.message.on_time_percentage)
-  let valuei = value2 / 100
-  // console.log(valuei)
+function sortByDateDescendingExpired4(data) {
+  return data.sort((a, b) => new Date(b.month) - new Date(a.month));
+}
+
+function getMonthNameEx4(monthValue) {
+  const [year, month] = monthValue.split('-');
+  const date = new Date(year, month - 1, 1);
+  const monthName = date.toLocaleString('default', { month: 'long' });
+  return monthName;
+}
+
+
+function getYearEx4(monthValue) {
+  return monthValue.split('-')[0];
+}
+
+function filterByMonthEx(monthsArray, targetMonth) {
+  const result = monthsArray.find(monthData => monthData.month === targetMonth);
+  return result ? result.total_expired_revenue : 0;
+}
+
+var finalp = 0;
+
+var ThecurrentDateEx4 = new Date();
+var theCurrentYearEx4 = ThecurrentDateEx4.getFullYear();
+var theCurrentMonthEx4 = ThecurrentDateEx4.getMonth() + 1;
+
+let allExpectedRevenueDataEx4 = []
+
+function refreshTheMonth1() {
+  let theMonth = document.querySelector("#theMonth").value
+
+  let genAmount = filterByMonthEx(allExpectedRevenueDataEx4, theMonth)
+  $("#percent").html(genAmount)
+  console.log(genAmount)
+  fetchGraph(genAmount)
+}
+
+
+async function totalE() {
+  $("#percent").html(`
+          <div class="flex mb-4">
+            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900"></div>
+          </div>
+      `)
+
+  try {
+    const response = await fetch(`${HOST}?getPercentage`);
+    const userAnalytics = await response.json();
+
+    console.log(userAnalytics)
+   
+      allExpectedRevenueDataEx4 = userAnalytics
+      const monthSelector = document.getElementById('theMonth');
+
+      let theSortedData = sortByDateDescendingExpired4(userAnalytics)
+
+      for (const monthData of theSortedData) {
+        const option = document.createElement('option');
+        const monthValue = monthData.month;
+        const displayText = `${getMonthNameEx4(monthValue)} ${getYearEx4(monthValue)}`;
+
+        option.value = monthValue;
+        option.text = displayText;
+
+        // Set the default selected option to the current month and year
+        if (monthValue === `${theCurrentYearEx4}-${theCurrentMonthEx4}`) {
+          option.selected = true;
+        }
+
+        monthSelector.add(option);
+      }
+
+
+      let theAmountGen = filterByMonthEx(theSortedData, `${theCurrentYearEx4}-${convertToTwoDigitsEx(theCurrentMonthEx4)}`)
+      // console.log(theAmountGen, theCurrentYearEx, theCurrentMonthEx)
+      console.log(theAmountGen)
+      $("#percent").html(theAmountGen)
+      fetchGraph(theAmountGen)
+
+
+  } catch (error) {
+    console.log(error)
+    $("#percent").html(0)
+  }
+}
+
+totalE()
+
+console.log(finalp)
+
+function fetchGraph(finalp) {
+
+  let valui = parseInt(finalp)
+  let value2 = valui / 100
 
   var chartDom = document.getElementById('gauge-graph');
   var myChart = echarts.init(chartDom);
@@ -101,7 +193,7 @@ async function fetchGraph() {
         },
         data: [
           {
-            value: valuei,
+            value: value2,
             fontSize: 14,
             name: ''
           }
@@ -114,11 +206,10 @@ async function fetchGraph() {
 
 }
 
-fetchGraph()
 
 function createGuageGraph() {
 
-
+  
 
 }
 

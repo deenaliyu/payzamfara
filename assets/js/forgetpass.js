@@ -20,7 +20,9 @@ $("#LoginNow").on("click", (e) => {
           $("#msg_box").html(`
             <p class="text-success text-center mt-4 text-lg">${data.message}</p>
           `)
-          // window.location.href = `resetpass.html?id=${data.id}`
+           setTimeout(() => {
+            window.location.href = `index.html`
+          }, 1500);
 
         } else if (data.status === 0) {
           $("#msg_box").html(`

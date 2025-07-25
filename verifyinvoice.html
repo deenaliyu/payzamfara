@@ -166,7 +166,7 @@
 
         <div class="invoiceContainer flex justify-center pr-10 mt-20">
 
-          <div class="invoice bg-white w-[70%] shadow-md" id="receiptCard">
+          <div class="invoice bg-white md:w-[70%] w-full shadow-md" id="receiptCard">
             <!-- RECEIPT FROM JS -->
           </div>
 
@@ -174,7 +174,7 @@
         </div>
 
         <div class="flex justify-center pr-10">
-          <div class="w-[70%]">
+          <div class="md:w-[70%] w-full">
             <!-- <div class="mt-4">
               <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
             </div> -->
@@ -220,10 +220,11 @@
   <script>
     AOS.init();
   </script>
-  <script src="assets/js/nav.js"></script>
-  <script src="assets/js/payment.js?v=1.5"></script>
+  <script src="assets/js/nav.js?v=2.4"></script>
+  <script type="text/javascript" src="https://login.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
+  <script src="assets/js/payment.js?v=21.0"></script>
   <script src="assets/js/tabHandler.js"></script>
-  <script src="assets/js/invoice.js?v=1.5"></script>
+  <script src="assets/js/invoice.js?v=7.0"></script>
   <script src="assets/js/verifyInvoice.js"></script>
   <script src="assets/js/landingcms.js"></script>
 </body>

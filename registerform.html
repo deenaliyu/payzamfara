@@ -76,6 +76,14 @@
                   placeholder="Enter your 14 digits TIN E.g 1234567890-1111" maxlength="15" />
                 <small class="validate text-[red]"></small>
               </div>
+                
+              <div class="form-group mb-2 w-full">
+                <label>Phone Number <span class="text-[red]">*</span></label>
+                <input class="form-control mt-1 regInputs" id="phonenumber" required data-name="phone"
+                  placeholder="11 digits phone number e.g 08032434354" type="text" minlength="11" maxlength="11" />
+                <small class="validate text-[red] phonenumberValidate"></small>
+              </div>    
+              
               <div class=" pt-3">
                 <button class="button flex items-center gap-x-4 justify-center firstNext">Continue<iconify-icon
                     icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
@@ -111,20 +119,12 @@
               </div>
 
               <div class="form-group mb-2 w-full">
-                <label>Phone Number <span class="text-[red]">*</span></label>
-                <input class="form-control mt-1 regInputs" required data-name="phone"
-                  placeholder="11 digits phone number e.g 08032434354" type="text" minlength="11" maxlength="11" />
-                <small class="validate text-[red]"></small>
-              </div>
-
-              <div class="form-group mb-2 w-full">
                 <label>State</label>
                 <select class="form-select mt-1 regInputs" id="selectState" data-name="state" required>
                   <option value="Zamfara">Zamfara</option>
                 </select>
                 <small class="validate text-[red]"></small>
               </div>
-
               <div class="form-group mb-2 w-full">
                 <label>Local Govt</label>
                 <select class="form-select mt-1 regInputs" id="selectLGA" data-name="lga" required>
@@ -178,14 +178,14 @@
             <div class="validated"></div>
 
             <div class="text-[red] text-sm" id="valPas"></div>
-            <div class="alert alert-info">
+            <!-- <div class="alert alert-info">
               <ul class="list-disc pl-2">
                 <li class="text-xs">At least 1 uppercase character.</li>
                 <li class="text-xs">At least 1 lowercase character.</li>
                 <li class="text-xs">At least 1 digit number.</li>
                 <li class="text-xs">Minimum 8 characters.</li>
               </ul>
-            </div>
+            </div> -->
             <div class="flex items-center mt-10 gap-4">
               <button class="outline-btn" type="button" onclick="nextPrev(-1)">Previous</button>
               <button class="button block" id="CreateAccountBtn">Register</button>
@@ -210,7 +210,7 @@
 
   </script>
   <script src="assets/js/nav.js"></script>
-  <script src="assets/js/register.js?v=3"></script>
+  <script src="assets/js/register.js?v=6.2"></script>
 </body>
 
 </html>

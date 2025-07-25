@@ -1,13 +1,13 @@
 function hardRefresh() {
-  // This will reload the page and bypass the cache, similar to a hard refresh
-  window.location.reload(true);
+    // This will reload the page and bypass the cache, similar to a hard refresh
+    window.location.reload(true);
 }
 // hardRefresh();
-// let HOST = "https://test.payzamfara.com/php/index.php";
 let HOST = "https://payzamfara.com/php/index.php";
+// let HOST = "https://useibs.com/payzamfara/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
 
-document.title = "Payzamfara";
+document.title="Payzamfara";
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -63,29 +63,24 @@ $(".aside").html(`
           </li>
 
           <li class="menu-item">
-            <a href="expiredinvoice.html" class="menu-link">
-              <div data-i18n="Basic Inputs">Expired Invoice</div>
-            </a>
-          </li>
-
-          <li class="menu-item">
             <a href="collection.html" class="menu-link">
               <div data-i18n="Input groups">Collection Report</div>
             </a>
           </li>
+          <li class="menu-item">
+            <a href="presumptive.html" class="menu-link">
+              <div data-i18n="Input groups">Presumptive Report</div>
+            </a>
+          </li>
 
-          ${userInfo2.email === "primeguage@gmail.com" ?
-    `
-            <!--<li class="menu-item">
-              <a href="settlement.html" class="menu-link">
-                <div data-i18n="Input groups">Settlement Report</div>
-              </a>
-            </li>-->
-          `
-    : ''} 
-          
-          
         </ul>
+      </li>
+      
+      <li class="menu-item">
+        <a href="demandnotice.html" class="menu-link dmn">
+           <iconify-icon icon="stash:invoice" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">Demand Notice</div>
+        </a>
       </li>
 
       <li class="menu-item">
@@ -94,8 +89,8 @@ $(".aside").html(`
           <div data-i18n="Basic">Tax Payer</div>
         </a>
       </li>
-
-      <li class="menu-item">
+      
+       <li class="menu-item">
         <a href="tax-office.html" class="menu-link txxOffice">
         <i class='menu-icon tf-icons bx bxs-buildings' ></i>
           <div data-i18n="Basic">Tax Office Manager</div>
@@ -139,6 +134,21 @@ $(".aside").html(`
           <li class="menu-item">
             <a href="paye-manager.html?type=private" class="menu-link">
               <div data-i18n="Basic Inputs">Organizations</div>
+            </a>
+          </li>
+        </ul>  
+      </li>
+      
+       <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle presump">
+          <iconify-icon icon="heroicons-outline:receipt-tax" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">Informal Tax Manager</div>
+        </a>
+
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="presumptive-tax.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Presumptive Tax</div>
             </a>
           </li>
         </ul>  
@@ -258,19 +268,19 @@ $(".datem").html(currentDate.toLocaleDateString());
 let logoutTimeout;
 
 function startLogoutTimer() {
-  // Set the timeout to 10 minutes (600,000 milliseconds)
-  logoutTimeout = setTimeout(logout, 600000);
+    // Set the timeout to 10 minutes (600,000 milliseconds)
+    logoutTimeout = setTimeout(logout, 1800000);
 }
 
 function resetLogoutTimer() {
-  clearTimeout(logoutTimeout);
-  startLogoutTimer();
+    clearTimeout(logoutTimeout);
+    startLogoutTimer();
 }
 
 function logout() {
   localStorage.removeItem("adminDataPrime");
-  // alert('You have been logged out due to inactivity.');
-  window.location.href = "./index.html";
+    // alert('You have been logged out due to inactivity.');
+    window.location.href = "./index.html";
 }
 
 // Attach event listeners to reset the logout timer on user activity
@@ -1222,7 +1232,6 @@ let lgaList = {
 
 let stateSelect = document.querySelector("#STATES")
 let lgaSelect = document.querySelector('#LGAs')
-
 if (stateSelect) {
   lgaList["Zamfara"].forEach(lga => {
     lgaSelect.innerHTML += `
@@ -1233,7 +1242,7 @@ if (stateSelect) {
     let selectedState = $(this).val()
 
     let arrStates = Object.values(lgaList)
-    let finalarrState = arrStates[stateSelect.selectedIndex - 1]
+    let finalarrState = arrStates[stateSelect.selectedIndex]
 
     lgaSelect.innerHTML = ''
 
@@ -1275,241 +1284,98 @@ if (stateSelect2) {
 
 }
 
-function convertNumberToWords(number) {
-  let [integer, fraction] = String(number).split('.');
-  let output = "";
+function convertNumberToWords(amount) {
+    const ones = [
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+  ];
+  const tens = [
+    "",
+    "",
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety",
+  ];
+  const teens = [
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
+  ];
 
-  if (integer[0] === "-") {
-    output = "negative ";
-    integer = integer.substring(1);
-  } else if (integer[0] === "+") {
-    output = "positive ";
-    integer = integer.substring(1);
-  }
-
-  if (integer[0] === "0") {
-    output += "zero";
-  } else {
-    integer = integer.padStart(36, "0");
-    let group = integer.match(/.{1,3}/g);
-    let groups2 = group.map(g => convertThreeDigit(g[0], g[1], g[2]));
-
-    for (let z = 0; z < groups2.length; z++) {
-      if (groups2[z] !== "") {
-        output += groups2[z] + convertGroup(11 - z) +
-          (z < 11 && !groups2.slice(z + 1, -1).includes('') &&
-            groups2[11] !== '' && group[11][0] === '0' ? " and " : ", ");
-      }
+  function convertToWords(num) {
+    if (num === 0) return "";
+    if (num < 10) return ones[num];
+    if (num < 20) return teens[num - 10];
+    if (num < 100) {
+      return (
+        tens[Math.floor(num / 10)] +
+        (num % 10 !== 0 ? " " + ones[num % 10] : "")
+      );
     }
-
-    output = output.replace(/, $/, "");
+    if (num < 1000) {
+      return (
+        ones[Math.floor(num / 100)] +
+        " Hundred" +
+        (num % 100 !== 0 ? " and " + convertToWords(num % 100) : "")
+      );
+    }
+    if (num < 1000000) {
+      return (
+        convertToWords(Math.floor(num / 1000)) +
+        " Thousand" +
+        (num % 1000 !== 0 ? ", " + convertToWords(num % 1000) : "")
+      );
+    }
+    if (num < 1000000000) {
+      return (
+        convertToWords(Math.floor(num / 1000000)) +
+        " Million" +
+        (num % 1000000 !== 0 ? ", " + convertToWords(num % 1000000) : "")
+      );
+    }
+    return "Amount too large";
   }
 
-  if (fraction > 0) {
-    output += " naira and";
-    output += " " + numberToWords(fraction);
-
-    output += " Kobo"
+  function getNairaKoboParts(amount) {
+    const naira = Math.floor(amount); // Whole number part
+    const kobo = Math.round((amount - naira) * 100); // Decimal part converted to kobo
+    return { naira, kobo };
   }
 
-  return output;
+  // Get naira and kobo parts
+  const { naira, kobo } = getNairaKoboParts(amount);
+
+  // Convert to words
+  const nairaWords = naira > 0 ? convertToWords(naira) + " Naira" : "";
+  const koboWords = kobo > 0 ? convertToWords(kobo) + " Kobo" : "";
+
+  // Combine results
+  if (!naira && !kobo) return "Zero Naira";
+  if (!naira) return koboWords;
+  if (!kobo) return nairaWords;
+  return nairaWords + " and " + koboWords;
 }
 
-function convertGroup(index) {
-  switch (index) {
-    case 11:
-      return " decillion";
-    case 10:
-      return " nonillion";
-    case 9:
-      return " octillion";
-    case 8:
-      return " septillion";
-    case 7:
-      return " sextillion";
-    case 6:
-      return " quintrillion";
-    case 5:
-      return " quadrillion";
-    case 4:
-      return " trillion";
-    case 3:
-      return " billion";
-    case 2:
-      return " million";
-    case 1:
-      return " thousand";
-    case 0:
-      return "";
-  }
-}
-
-function convertThreeDigit(digit1, digit2, digit3) {
-  let buffer = "";
-
-  if (digit1 === "0" && digit2 === "0" && digit3 === "0") {
-    return "";
-  }
-
-  if (digit1 !== "0") {
-    buffer += convertDigit(digit1) + " hundred";
-    if (digit2 !== "0" || digit3 !== "0") {
-      buffer += " and ";
-    }
-  }
-
-  if (digit2 !== "0") {
-    buffer += convertTwoDigit(digit2, digit3);
-  } else {
-    if (digit3 !== "0") {
-      buffer += convertDigit(digit3);
-    }
-  }
-
-  return buffer;
-}
-
-function convertTwoDigit(digit1, digit2) {
-  if (digit2 === "0") {
-    switch (digit1) {
-      case "1":
-        return "ten";
-      case "2":
-        return "twenty";
-      case "3":
-        return "thirty";
-      case "4":
-        return "forty";
-      case "5":
-        return "fifty";
-      case "6":
-        return "sixty";
-      case "7":
-        return "seventy";
-      case "8":
-        return "eighty";
-      case "9":
-        return "ninety";
-    }
-  } else {
-    if (digit1 === "1") {
-      switch (digit2) {
-        case "1":
-          return "eleven";
-        case "2":
-          return "twelve";
-        case "3":
-          return "thirteen";
-        case "4":
-          return "fourteen";
-        case "5":
-          return "fifteen";
-        case "6":
-          return "sixteen";
-        case "7":
-          return "seventeen";
-        case "8":
-          return "eighteen";
-        case "9":
-          return "nineteen";
-      }
-    } else {
-      let temp = convertDigit(digit2);
-      switch (digit1) {
-        case "2":
-          return "twenty-" + temp;
-        case "3":
-          return "thirty-" + temp;
-        case "4":
-          return "forty-" + temp;
-        case "5":
-          return "fifty-" + temp;
-        case "6":
-          return "sixty-" + temp;
-        case "7":
-          return "seventy-" + temp;
-        case "8":
-          return "eighty-" + temp;
-        case "9":
-          return "ninety-" + temp;
-      }
-    }
-  }
-}
-
-function convertDigit(digit) {
-  switch (digit) {
-    case "0":
-      return "zero";
-    case "1":
-      return "one";
-    case "2":
-      return "two";
-    case "3":
-      return "three";
-    case "4":
-      return "four";
-    case "5":
-      return "five";
-    case "6":
-      return "six";
-    case "7":
-      return "seven";
-    case "8":
-      return "eight";
-    case "9":
-      return "nine";
-  }
-}
-
-function numberToWords(num) {
-  const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-  const teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-  const tens = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-
-  function convertLessThanOneThousand(n) {
-    let word = '';
-    if (n >= 100) {
-      word += ones[Math.floor(n / 100)] + ' hundred ';
-      n %= 100;
-    }
-    if (n >= 20) {
-      word += tens[Math.floor(n / 10)] + ' ';
-      n %= 10;
-    }
-    if (n > 0) {
-      if (n < 10) word += ones[n] + ' ';
-      else word += teens[n - 10] + ' ';
-    }
-    return word.trim();
-  }
-
-  if (num === 0) return 'zero';
-
-  let words = '';
-  if (num < 0) {
-    words += 'negative ';
-    num = Math.abs(num);
-  }
-
-  if (num >= 1000000000) {
-    words += convertLessThanOneThousand(Math.floor(num / 1000000000)) + ' billion ';
-    num %= 1000000000;
-  }
-  if (num >= 1000000) {
-    words += convertLessThanOneThousand(Math.floor(num / 1000000)) + ' million ';
-    num %= 1000000;
-  }
-  if (num >= 1000) {
-    words += convertLessThanOneThousand(Math.floor(num / 1000)) + ' thousand ';
-    num %= 1000;
-  }
-  if (num > 0) {
-    words += convertLessThanOneThousand(num);
-  }
-
-  return words.trim();
-}
 
 
 

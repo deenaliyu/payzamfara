@@ -56,7 +56,7 @@ $(".aside").html(`
           <iconify-icon icon="mdi:account-payment-outline" class="menu-icon"></iconify-icon>
           <div data-i18n="Basic">PAYE Manager</div>
         </a>
-      </li> 
+      </li>
       <li class="menu-item">
         <a href="eservice.html" class="menu-link mdd">
         <i class='menu-icon tf-icons bx bxs-group' ></i>

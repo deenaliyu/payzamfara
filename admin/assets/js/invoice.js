@@ -139,7 +139,7 @@ async function openInvoice(invoicenum) {
   
               <div class="w-full md:mr-[-10%]">
                 <p class="text-[#555555]">TO :</p>
-                <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
+                <p class="fontBold text-left">${invoice_info.category === 'Individual' ? invoice_info.surname : ''} ${invoice_info.first_name}</p>
                 <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
               </div>
   
