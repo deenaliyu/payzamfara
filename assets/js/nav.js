@@ -1100,8 +1100,6 @@ $(".stat").html(STATES2)
 let stateSelect2 = document.querySelector("#selectState")
 let lgaSelect2 = document.querySelector('#selectLGA')
 
-
-
 if (stateSelect2) {
   // lgaSelect = ""
   stateSelect2.innerHTML = STATES2
@@ -1127,8 +1125,6 @@ if (stateSelect2) {
         <option value="${opt}">${opt}</option>
       `
     })
-
-
   })
 
 }

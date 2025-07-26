@@ -34,7 +34,7 @@
 
   <!-- Base Structure for All Form Sections -->
   <template id="form-section-template">
-    <section class="reg formTabs hidden">
+    <section class="reg formTabs">
       <div class="row">
         <div class="bg-[#F9FAFB] md:block w-3/12 hidden">
           <div class="pl-4">
@@ -99,7 +99,7 @@
               </div>
 
               <div class="form-group">
-                <input type="text" placeholder="Enter your TIN" class="form-control mt-1 regInputs" id="validationInput"
+                <input type="text" placeholder="Enter your TIN" class="form-control mt-1" id="validationInput"
                   data-name="tin" required />
                 <small class="validate text-red-500 hidden"></small>
               </div>
@@ -132,7 +132,7 @@
   </section>
 
   <!-- Contact Information Section -->
-  <section class="reg formTabs firstForm headerBeginner hidden" id="contact-info">
+  <section class="reg formTabs firstForm headerBeginner" id="contact-info">
     <div class="row">
       <div class="bg-[#F9FAFB] md:block w-3/12 hidden">
         <div class="pl-4">
@@ -140,12 +140,12 @@
         </div>
       </div>
       <div class="md:w-9/12 w-full h-[110vh] bg-[url('./assets/img/slide3.png')] bg-no-repeat bg-bottom p-0">
-        <!-- <div class="pt-10 md:px-10 px-4">
-          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 back-btn">
             <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
             <span>Go back</span>
           </button>
-        </div> -->
+        </div>
 
         <div class="w-full h-[110vh] -z-10 bg-white bg-opacity-90">
 
@@ -247,14 +247,14 @@
 
               <div class="flex gap-x-10 pt-2 items-center md:flex-nowrap sm:flex-wrap">
                 <div class="form-group mb-2 w-full">
-                  <label>State</label>
+                  <label>State <span class="text-red-500">*</span></label>
                   <select class="form-select mt-1 regInputs" id="selectState" data-name="state" required>
                     <option value="Zamfara">Zamfara</option>
                   </select>
                   <small class="validate text-red-500 hidden"></small>
                 </div>
                 <div class="form-group mb-2 w-full">
-                  <label>Local Govt</label>
+                  <label>Local Govt <span class="text-red-500">*</span></label>
                   <select class="form-select mt-1 regInputs" id="selectLGA" data-name="lga" required>
                     <option value="" selected disabled>--Select LGA--</option>
                   </select>
@@ -263,7 +263,7 @@
               </div>
 
               <div class="form-group mt-2 w-full">
-                <label>Address</label>
+                <label>Address <span class="text-red-500">*</span></label>
                 <input class="form-control mt-1 regInputs" minlength="10" data-name="address" type="text"
                   placeholder="Enter your address" required />
                 <small class="validate text-red-500 hidden"></small>
@@ -283,7 +283,7 @@
   </section>
 
   <!-- Password Section -->
-  <section class="reg formTabs headerBeginner hidden" id="password-section">
+  <section class="reg formTabs headerBeginner" id="password-section">
     <div class="row">
       <div class="bg-[#F9FAFB] md:block w-3/12 hidden">
         <div class="pl-6 pt-3">
@@ -299,25 +299,25 @@
             <form id="password-form">
               <div class="form-group mb-3">
                 <label>Password <span class="text-red-500">*</span></label>
-                <div class="flex items-center relative">
+                <div class="flex items-center relative" id="pps-cont">
                   <input class="form-control mt-1 regInputs password" id="pps" required data-name="password"
                     type="password" placeholder="Password" minlength="8" />
                   <i class="bi bi-eye-slash togglePassword absolute right-3 cursor-pointer"></i>
                 </div>
                 <small class="validate text-red-500 hidden"></small>
-                <div class="password-requirements mt-1 text-sm text-gray-600">
+                <!-- <div class="password-requirements mt-1 text-sm text-gray-600">
                   <ul class="list-disc pl-4">
                     <li>At least 8 characters</li>
                     <li>At least 1 uppercase letter</li>
                     <li>At least 1 lowercase letter</li>
                     <li>At least 1 number</li>
                   </ul>
-                </div>
+                </div> -->
               </div>
 
               <div class="form-group mb-3">
                 <label>Confirm password <span class="text-red-500">*</span></label>
-                <div class="flex items-center relative">
+                <div class="flex items-center relative" id="pps2-cont">
                   <input class="form-control mt-1 password" required id="pps2" type="password"
                     placeholder="Confirm password" />
                   <i class="bi bi-eye-slash togglePassword absolute right-3 cursor-pointer"></i>
@@ -353,29 +353,6 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script>
     AOS.init();
-  </script>
-  <script>
-    const togglePassword = document
-      .querySelectorAll('.togglePassword');
-
-    const password = document.querySelectorAll('.password');
-    togglePassword.forEach((togle, i) => {
-      togle.addEventListener('click', () => {
-
-        // Toggle the type attribute using
-        // getAttribure() method
-        password.forEach((pass, i) => {
-          const type = pass
-            .getAttribute('type') === 'password' ?
-            'text' : 'password';
-
-          pass.setAttribute('type', type);
-        });
-
-      });
-    })
-
-
   </script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/register.js"></script>

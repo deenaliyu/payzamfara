@@ -524,11 +524,10 @@ class InvoiceGenerator {
   }
 
   proceedToBilling() {
-    if (!this.selectedTaxpayer) {
-      this.showError('Please select a taxpayer record');
-      return;
-    }
-
+    // if (!this.selectedTaxpayer) {
+    //   this.showError('Please select a taxpayer record');
+    //   return;
+    // }
     this.nextTab();
 
     // Pre-fill contact form if we have taxpayer data
@@ -725,6 +724,7 @@ class InvoiceGenerator {
     } finally {
       btn.disabled = false;
       btn.innerHTML = 'Continue';
+      msgBox.innerHTML = ""
     }
   }
 

@@ -295,27 +295,49 @@ class CustomerValidation {
     const record = taxpayer.record;
 
     if (taxpayer.type === 'individual') {
-      document.querySelector('input[data-name="first_name"]').value = record.first_name || '';
-      document.querySelector('input[data-name="surname"]').value = record.last_name || '';
-      document.querySelector('input[data-name="email"]').value = record.email_address || '';
-      document.querySelector('input[data-name="phone"]').value = record.phone_no_1 || '';
-      document.querySelector('input[data-name="tin"]').value = record.tin || '';
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
 
       // Set state and LGA if available in your form
       if (document.getElementById('selectState')) {
-        document.getElementById('selectState').value = record.StateName || '';
-        // Trigger LGA population if needed
+        let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
+
+        let formattedLGA = record.LGAName
+          ? record.LGAName
+              .toLowerCase()
+              .split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ')
+          : '';
+
+        document.getElementById('selectState').value = formattedState;
+
+
+        let lgaSelector = document.querySelector('#selectLGA')
+        if (lgaList2[formattedState]) {
+          lgaSelector.innerHTML = '<option>--Select LGA--</option>'
+          lgaList2[formattedState].forEach(lga => {
+            lgaSelector.innerHTML += `
+              <option value="${lga}">${lga}</option>
+              `;
+          });
+        }
+
+        document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
       }
 
-      document.querySelector('input[data-name="address"]').value =
+      document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
     } else {
       // For non-individual taxpayers
-      document.querySelector('input[data-name="first_name"]').value = record.registered_name || '';
-      document.querySelector('input[data-name="surname"]').value = record.main_trade_name || '';
-      document.querySelector('input[data-name="email"]').value = record.email_address || '';
-      document.querySelector('input[data-name="phone"]').value = record.phone_no_1 || '';
-      document.querySelector('input[data-name="tin"]').value = record.tin || '';
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.registered_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
 
       // Set business type to "yes" and select appropriate type
       document.getElementById('businessOwnerYes').checked = true;
@@ -327,7 +349,7 @@ class CustomerValidation {
         // Trigger LGA population if needed
       }
 
-      document.querySelector('input[data-name="address"]').value =
+      document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
     }
   }
@@ -403,11 +425,15 @@ class RegistrationForm {
   setupEventListeners() {
     // Form submissions
     // document.getElementById('validation-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 1));
-    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 1));
-    document.getElementById('password-form')?.addEventListener('submit', (e) => this.handleFinalSubmit(e));
+    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 2));
+    document.getElementById('CreateAccountBtn')?.addEventListener('click', (e) => this.handleFinalSubmit(e));
+    document.querySelector(".back-btn")?.addEventListener("click", () => this.nextPrev(-1))
 
     // Previous button
-    document.getElementById('prev-btn')?.addEventListener('click', () => this.nextPrev(-1));
+    document.getElementById('prev-btn')?.addEventListener('click', () => {
+      // console.log('Going back');
+      this.nextPrev(-1);
+    });
 
     // Business owner toggle
     document.querySelectorAll('.checki').forEach(radio => {
@@ -422,6 +448,14 @@ class RegistrationForm {
   }
 
   nextPrev(n) {
+    if (n < 0) {
+      this.formSections[this.currentTab].style.display = 'none';
+      this.currentTab += n;
+      if (this.currentTab < 0) this.currentTab = 0;
+      this.showTab(this.currentTab);
+      return;
+    }
+
     if (this.validateCurrentTab()) {
       this.formSections[this.currentTab].style.display = 'none';
       this.currentTab += n;
@@ -482,41 +516,43 @@ class RegistrationForm {
 
     // Validate password
     if (!password) {
-      this.showError(document.getElementById('pps'), 'Password cannot be empty');
+      this.showError(document.getElementById('pps-cont'), 'Password cannot be empty');
       return;
     }
 
-    if (password.length < 8) {
-      this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
-      return;
-    }
+    // if (password.length < 8) {
+    //   this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
+    //   return;
+    // }
 
-    if (!/[A-Z]/.test(password)) {
-      this.showError(document.getElementById('pps'), 'Password must contain at least one uppercase letter');
-      return;
-    }
+    // if (!/[A-Z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one uppercase letter');
+    //   return;
+    // }
 
-    if (!/[a-z]/.test(password)) {
-      this.showError(document.getElementById('pps'), 'Password must contain at least one lowercase letter');
-      return;
-    }
+    // if (!/[a-z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one lowercase letter');
+    //   return;
+    // }
 
-    if (!/[0-9]/.test(password)) {
-      this.showError(document.getElementById('pps'), 'Password must contain at least one number');
-      return;
-    }
+    // if (!/[0-9]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one number');
+    //   return;
+    // }
 
     if (password !== confirmPassword) {
-      this.showError(document.getElementById('pps2'), 'Passwords do not match');
+      this.showError(document.getElementById('pps2-cont'), 'Passwords do not match');
       return;
     }
 
     // All validations passed - proceed with registration
     this.showLoader();
-
+    $("#createAccountBtn").prop('disabled', true);
     try {
       const formData = this.collectFormData();
+
       const response = await this.submitForm(formData);
+
 
       this.handleRegistrationResponse(response);
     } catch (error) {
@@ -524,6 +560,7 @@ class RegistrationForm {
       console.error('Registration error:', error);
     } finally {
       this.hideLoader();
+      $("#createAccountBtn").prop('disabled', false);
     }
   }
 
@@ -579,14 +616,7 @@ class RegistrationForm {
   handleRegistrationResponse(response) {
     const msgBox = document.getElementById('msg-box');
 
-    if (response.status === 2) {
-      msgBox.innerHTML = `
-        <p class="text-warning text-lg">${response.message}</p>
-        <p class="text-success text-lg mt-2">
-          <a href="forgetpass.html" class="underline">Click here to reset your password</a>
-        </p>
-      `;
-    } else {
+    if (response.status === 1) {
       msgBox.innerHTML = `<p class="text-success text-lg">${response.message}</p>`;
 
       if (this.createdBy === 'admin') {
@@ -596,6 +626,16 @@ class RegistrationForm {
           window.location.href = `verification.html?id=${response.id}&email=${response.data.email}&phone=${response.data.phone}`;
         }, 1500);
       }
+
+    } else if (response.status === 2) {
+      msgBox.innerHTML = `
+        <p class="text-warning text-lg">${response.message}</p>
+        <p class="text-success text-lg mt-2">
+          <a href="forgetpass.html" class="underline">Click here to reset your password</a>
+        </p>
+      `;
+    } else {
+      msgBox.innerHTML = `<p class="text-warning text-lg">${response.message}</p>`;
     }
   }
 
