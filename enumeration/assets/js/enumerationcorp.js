@@ -558,8 +558,8 @@ class RegistrationForm {
         tax_number: "",
         category: this.getCategoryValue(),
         numberofstaff: "",
-        created_by: this.createdBy || "self",
-        by_account: this.adminId || null,
+        created_by: "enumerator",
+        by_account: userInfo2?.id || null,
       }
     };
 
