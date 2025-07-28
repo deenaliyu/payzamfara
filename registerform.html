@@ -25,29 +25,121 @@
 <body class="">
   <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
 
-  <section class="reg formTabs firstForm headerBeginner">
+  <!-- Customer Validation Section -->
+  <section class="reg formTabs firstForm headerBeginner" id="customer-validation">
+    <div class="row">
+      <div class="bg-[#F9FAFB] md:block w-3/12 hidden">
+        <div class="pl-4">
+          <img src="./assets/img/ind3.png" alt="">
+        </div>
+      </div>
+      <div class="md:w-9/12 w-full h-[110vh] bg-[url('./assets/img/slide3.png')] bg-no-repeat bg-bottom p-0">
+
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="window.location.href='regcategory.html'">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="w-full h-[110vh] -z-10 bg-white bg-opacity-90">
+          <div class="md:px-40 px-20 pt-[40px]">
+            <h4 class="text-[#101828] text-[30px]">Customer validation</h4>
+            <p class="text-[#101828] text-[20px] pt-3">Select your preferred identification method</p>
+
+            <form id="validation-form" class="mt-4">
+              <div class="mb-4 flex gap-4 flex-wrap items-center">
+                <div class="form-check mb-2">
+                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="tin"
+                    id="TIN" checked />
+                  <label class="form-check-label" for="TIN">JTB TIN</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod"
+                    value="registration_number" id="TaxRegID" />
+                  <label class="form-check-label" for="TaxRegID">RC No.</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="nin"
+                    id="NIN" />
+                  <label class="form-check-label" for="NIN">NIN</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="phone_no"
+                    id="Phone" />
+                  <label class="form-check-label" for="Phone">Phone</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" placeholder="Enter your TIN" class="form-control mt-1" id="validationInput"
+                  data-name="tin" required />
+                <small class="validate text-red-500 hidden"></small>
+              </div>
+
+              <div class="w-[300px] pt-3">
+                <button type="submit" class="button flex items-center gap-x-4 justify-center" id="validate-btn">
+                  Validate
+                  <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+                </button>
+              </div>
+            </form>
+
+            <!-- Taxpayer Summary (hidden by default) -->
+            <div id="taxpayer-summary" class="hidden mt-6 border border-gray-200 rounded-lg p-4">
+              <h5 class="text-lg font-semibold mb-3">Taxpayer Information</h5>
+              <div id="taxpayer-options" class="mb-4"></div>
+              <div id="taxpayer-details" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+              <div class="w-[300px] pt-6">
+                <button type="button" class="button flex items-center gap-x-4 justify-center" id="proceed-btn">
+                  Proceed
+                  <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Corporate Registration - Section 1 -->
+  <section class="reg formTabs firstForm headerBeginner" id="corporate-registration">
     <div class="row">
       <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-4">
-          <img src="./assets/img/reg2.png" alt="">
+          <img src="./assets/img/reg2.png" alt="Registration Illustration">
         </div>
       </div>
       <div class="col-md-9 col-12 h-[110vh] bg-[url('./assets/img/slide3.png')] bg-no-repeat bg-bottom p-0">
-        <div class="w-full h-[110vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
+
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="w-full h-[110vh] bg-white bg-opacity-90">
           <div class="md:px-40 px-20 pt-[40px]">
-            <div class="">
-              <h4 class="text-[#101828] text-[30px]">Register</h4>
-              <p class="text-[#101828] text-[20px] pt-3">Basic Information</p>
+            <h4 class="text-[#101828] text-[30px]">Register Your Organization</h4>
+            <p class="text-[#101828] text-[20px] pt-3">Basic Information</p>
+
+            <form id="corporateForm1">
+              <!-- Organization Name -->
               <div class="form-group mb-3 w-full">
-                <label>Name of Organization <span class="text-[red]">*</span></label>
+                <label>Name of Organization <span class="text-red-500">*</span></label>
                 <input class="form-control mt-1 regInputs" data-name="first_name" type="text"
                   placeholder="Enter organization name" required />
-                <small class="validate text-[red]"></small>
+                <small class="validate text-red-500 hidden"></small>
               </div>
-              <div class="form-group mb-3  w-full">
-                <label>Industry <span class="text-[red]">*</span></label>
+
+              <!-- Industry Selection -->
+              <div class="form-group mb-3 w-full">
+                <label>Industry <span class="text-red-500">*</span></label>
                 <select class="form-select mt-1 regInputs" data-name="business_type" required>
-                  <option value="" selected>-Select--</option>
+                  <option value="" selected disabled>-Select Industry-</option>
                   <option value="Commercial">Commercial</option>
                   <option value="Pool/betting">Pool/betting</option>
                   <option value="Education">Education</option>
@@ -62,155 +154,197 @@
                   <option value="Legal">Legal</option>
                   <option value="General">General</option>
                 </select>
-                <small class="validate text-[red]"></small>
+                <small class="validate text-red-500 hidden"></small>
               </div>
-              <div class="form-group mb-3  w-full">
-                <label>No of staff <span class="text-[red]">*</span></label>
+
+              <!-- Number of Staff -->
+              <div class="form-group mb-3 w-full">
+                <label>No of Staff <span class="text-red-500">*</span></label>
                 <input class="form-control mt-1 regInputs" required data-name="numberofstaff" type="number"
-                  placeholder="Number of staff" />
-                <small class="validate text-[red]"></small>
+                  placeholder="Number of staff" min="1" />
+                <small class="validate text-red-500 hidden"></small>
               </div>
-              <div class="form-group mb-3  w-full">
-                <label>Tax Identification Number(TIN) <span class="">(Optional)</span></label>
+
+              <!-- TIN (Optional) -->
+              <div class="form-group mb-3 w-full">
+                <label>Tax Identification Number (TIN) <span class="text-gray-500">(Optional)</span></label>
                 <input class="form-control mt-1 regInputs" id="tinInput" data-name="tin" type="text"
-                  placeholder="Enter your 14 digits TIN E.g 1234567890-1111" maxlength="15" />
-                <small class="validate text-[red]"></small>
+                  placeholder="Enter your TIN" pattern="\d{10,}?" maxlength="15" />
+                <small class="validate text-red-500 hidden"></small>
               </div>
-                
-              <div class="form-group mb-2 w-full">
-                <label>Phone Number <span class="text-[red]">*</span></label>
+
+              <!-- Phone Number -->
+              <div class="form-group mb-3 w-full">
+                <label>Phone Number <span class="text-red-500">*</span></label>
                 <input class="form-control mt-1 regInputs" id="phonenumber" required data-name="phone"
-                  placeholder="11 digits phone number e.g 08032434354" type="text" minlength="11" maxlength="11" />
-                <small class="validate text-[red] phonenumberValidate"></small>
-              </div>    
-              
-              <div class=" pt-3">
-                <button class="button flex items-center gap-x-4 justify-center firstNext">Continue<iconify-icon
-                    icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
+                  placeholder="11 digits phone number (e.g., 08032434354)" type="tel" pattern="[0-9]{11}" minlength="11"
+                  maxlength="11" />
+                <small class="validate text-red-500 phonenumberValidate hidden"></small>
               </div>
 
-            </div>
-
+              <!-- Continue Button -->
+              <div class="pt-3">
+                <button type="button" class="button flex items-center gap-x-4 justify-center" id="continueBtn">
+                  Continue
+                  <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+                </button>
+              </div>
+            </form>
           </div>
-
         </div>
-
       </div>
     </div>
   </section>
-  <section class="reg formTabs headerBeginner">
+
+  <!-- Corporate Registration - Section 2 -->
+  <section class="reg formTabs headerBeginner" id="corporate-registration-step2">
     <div class="row">
-      <div class="col-md-3 col-12 bg-[#F9FAFB]  md:block hidden">
+      <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-4">
-          <img src="./assets/img/reg2.png" alt="">
+          <img src="./assets/img/reg2.png" alt="Registration Illustration">
         </div>
       </div>
-      <div class="col-md-9 col-12 h-[100vh] bg-[url('./assets/img/slide1.png')] bg-no-repeat p-0">
-        <div class="w-full h-[100vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
-          <div class="md:px-40 px-20 pt-[40px]">
-            <div class="">
-              <h4 class="text-[#101828] text-[30px]">Register</h4>
-              <p class="text-[#101828] text-[20px] pt-3">Basic Information</p>
-              <div class="form-group my-2 w-full">
-                <label>Email address <span class="text-[red]">*</span></label>
-                <input class="form-control mt-1 regInputs" required data-name="email" type="text"
-                  placeholder="Enter your Email" />
-                <small class="validate text-[red]"></small>
-              </div>
+      <div class="col-md-9 col-12 h-[100vh] bg-no-repeat p-0">
 
-              <div class="form-group mb-2 w-full">
-                <label>State</label>
-                <select class="form-select mt-1 regInputs" id="selectState" data-name="state" required>
-                  <option value="Zamfara">Zamfara</option>
-                </select>
-                <small class="validate text-[red]"></small>
-              </div>
-              <div class="form-group mb-2 w-full">
-                <label>Local Govt</label>
-                <select class="form-select mt-1 regInputs" id="selectLGA" data-name="lga" required>
-                  <option selected disabled>--Select LGA--</option>
-                </select>
-                <small class="validate text-[red]"></small>
-              </div>
-              <div class="form-group mt-2  w-full">
-                <label>Address</label>
-                <input class="form-control mt-1 regInputs" data-name="address" type="text"
-                  placeholder="Enter your address" />
-                <small class="validate text-[red]"></small>
-              </div>
-              <div class="w-[300px] pt-3">
-                <button class="button flex items-center gap-x-4 justify-center firstNext">Continue<iconify-icon
-                    icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
-              </div>
-            </div>
-
-          </div>
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
         </div>
 
+        <div class="w-full h-[100vh] bg-white bg-opacity-90">
+          <div class="md:px-40 px-20 pt-[40px]">
+            <h4 class="text-[#101828] text-[30px]">Register</h4>
+            <p class="text-[#101828] text-[20px] pt-3">Contact Information</p>
+
+            <form id="corporateForm2">
+              <!-- Email Address -->
+              <div class="form-group my-2 w-full">
+                <label>Email address <span class="text-red-500">*</span></label>
+                <input class="form-control mt-1 regInputs" required data-name="email" type="email"
+                  placeholder="Enter your Email" />
+                <small class="validate text-red-500 hidden"></small>
+              </div>
+
+              <!-- State Selection -->
+              <div class="form-group mb-2 w-full">
+                <label>State <span class="text-red-500">*</span></label>
+                <select class="form-select mt-1 regInputs" id="selectState" data-name="state" required>
+                  <option value="" selected disabled>-Select State-</option>
+                  <option value="Zamfara">Zamfara</option>
+                  <!-- Add more states if needed -->
+                </select>
+                <small class="validate text-red-500 hidden"></small>
+              </div>
+
+              <!-- LGA Selection -->
+              <div class="form-group mb-2 w-full">
+                <label>Local Government <span class="text-red-500">*</span></label>
+                <select class="form-select mt-1 regInputs" id="selectLGA" data-name="lga" required>
+                  <option value="" selected disabled>-Select LGA-</option>
+                </select>
+                <small class="validate text-red-500 hidden"></small>
+              </div>
+
+              <!-- Address -->
+              <div class="form-group mt-2 w-full">
+                <label>Address <span class="text-red-500">*</span></label>
+                <input class="form-control mt-1 regInputs" data-name="address" type="text"
+                  placeholder="Enter your address" minlength="10" required />
+                <small class="validate text-red-500 hidden"></small>
+              </div>
+
+              <!-- Continue Button -->
+              <div class="w-[300px] pt-3">
+                <button type="button" class="button flex items-center gap-x-4 justify-center" id="continueBtn2">
+                  Continue
+                  <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-  <section class="reg formTabs headerBeginner">
+
+  <!-- Corporate Registration - Section 3 (Password) -->
+  <section class="reg formTabs headerBeginner" id="corporate-registration-step3">
     <div class="row">
       <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-6 pt-3">
-          <img src="./assets/img/reg3.png" alt="">
+          <img src="./assets/img/reg3.png" alt="Registration Illustration">
         </div>
       </div>
       <div class="col-md-9 col-12 h-[88vh] bg-[url('./assets/img/slide4.png')] bg-no-repeat bg-center p-0">
-        <div class="w-full h-[88vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
-          <div class="md:px-40 px-20 pt-[40px]">
-            <h4 class="text-[#101828] text-[30px]">Register</h4>
-            <p class="text-[#101828] text-[20px] pt-3">Choose a password</p>
-            <div class="form-group mb-3 mt-3">
-              <label>Password <span class="text-[red]">*</span></label>
-              <input class="form-control mt-1 regInputs" id="pps" required data-name="password" type="password"
-                placeholder="Password" />
-              <small class="validate text-[red]"></small>
-            </div>
-
-
-            <div class="form-group mb-3">
-              <label>Confirm password <span class="text-[red]">*</span></label>
-              <input class="form-control mt-1" required id="pps2" type="password" placeholder="Confirm password" />
-              <small class="validate text-[red]"></small>
-            </div>
-            <div class="validated"></div>
-
-            <div class="text-[red] text-sm" id="valPas"></div>
-            <!-- <div class="alert alert-info">
-              <ul class="list-disc pl-2">
-                <li class="text-xs">At least 1 uppercase character.</li>
-                <li class="text-xs">At least 1 lowercase character.</li>
-                <li class="text-xs">At least 1 digit number.</li>
-                <li class="text-xs">Minimum 8 characters.</li>
-              </ul>
-            </div> -->
-            <div class="flex items-center mt-10 gap-4">
-              <button class="outline-btn" type="button" onclick="nextPrev(-1)">Previous</button>
-              <button class="button block" id="CreateAccountBtn">Register</button>
-            </div>
-            <div id="msg_box" class="w-full"></div>
-          </div>
-
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
         </div>
 
+        <div class="w-full h-[88vh] bg-white bg-opacity-90">
+          <div class="md:px-40 px-20 pt-[40px]">
+            <h4 class="text-[#101828] text-[30px]">Create Account</h4>
+            <p class="text-[#101828] text-[20px] pt-3">Set Your Password</p>
+
+            <form id="corporateForm3">
+              <!-- Password -->
+              <div class="form-group mb-3 mt-3">
+                <label>Password <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <input class="form-control mt-1 regInputs" id="pps" required data-name="password" type="password"
+                    placeholder="Password" minlength="8" />
+                  <small class="validate text-red-500 hidden"></small>
+                  <div class="password-requirements mt-1 text-xs text-gray-600">
+                    Must be at least 8 characters.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="form-group mb-3">
+                <label>Confirm Password <span class="text-red-500">*</span></label>
+                <div class="relative">
+                  <input class="form-control mt-1" required id="pps2" type="password" placeholder="Confirm password" />
+                  <small class="validate text-red-500 hidden"></small>
+                </div>
+              </div>
+
+              <!-- Password Error Display -->
+              <div class="text-red-500 text-sm mb-4" id="valPas"></div>
+
+              <!-- Navigation Buttons -->
+              <div class="flex items-center mt-10 gap-4">
+                <button type="button" class="outline-btn previous-btn">Previous</button>
+                <button type="button" class="button" id="CreateAccountBtn">Register</button>
+              </div>
+
+              <!-- Status Messages -->
+              <div id="msg-box" class="w-full mt-4"></div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Loader Template -->
+  <div id="loader-template" class="hidden">
+    <div class="flex justify-center items-center">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  </div>
+
   <script src="assets/js/jquery.js"></script>
   <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="assets/js/aos-master/dist/aos.js"></script>
   <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script>
-    AOS.init();
-  </script>
-  <script>
-
-  </script>
   <script src="assets/js/nav.js"></script>
-  <script src="assets/js/register.js?v=6.2"></script>
+  <script src="assets/js/register-corp.js"></script>
 </body>
 
 </html>

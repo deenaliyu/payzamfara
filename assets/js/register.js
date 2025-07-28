@@ -67,7 +67,7 @@ class CustomerValidation {
 
     switch (method) {
       case 'tin':
-        input.placeholder = 'Enter your TIN (e.g., 0025152785)';
+        input.placeholder = 'Enter your TIN (e.g., 0123456789)';
         input.dataset.name = 'tin';
         break;
       case 'registration_number':
@@ -165,7 +165,6 @@ class CustomerValidation {
     label.textContent = 'Multiple records found. Please select one:';
     optionsDiv.appendChild(label);
 
-    console.log(taxpayers)
     taxpayers.forEach((taxpayer, index) => {
       const div = document.createElement('div');
       div.className = 'flex items-center mb-2';
@@ -232,6 +231,7 @@ class CustomerValidation {
         }
       });
     } else {
+      console.log(taxpayer)
       const record = taxpayer.record;
 
       const details = [
@@ -294,6 +294,34 @@ class CustomerValidation {
     const taxpayer = this.selectedTaxpayer;
     const record = taxpayer.record;
 
+    // Set state and LGA if available in your form
+    if (document.getElementById('selectState')) {
+      let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
+
+      let formattedLGA = record.LGAName
+        ? record.LGAName
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+        : '';
+
+      document.getElementById('selectState').value = formattedState;
+
+
+      let lgaSelector = document.querySelector('#selectLGA')
+      if (lgaList2[formattedState]) {
+        lgaSelector.innerHTML = '<option>--Select LGA--</option>'
+        lgaList2[formattedState].forEach(lga => {
+          lgaSelector.innerHTML += `
+              <option value="${lga}">${lga}</option>
+              `;
+        });
+      }
+
+      document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
+    }
+
     if (taxpayer.type === 'individual') {
       document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
       document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
@@ -301,33 +329,7 @@ class CustomerValidation {
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
 
-      // Set state and LGA if available in your form
-      if (document.getElementById('selectState')) {
-        let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
 
-        let formattedLGA = record.LGAName
-          ? record.LGAName
-              .toLowerCase()
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ')
-          : '';
-
-        document.getElementById('selectState').value = formattedState;
-
-
-        let lgaSelector = document.querySelector('#selectLGA')
-        if (lgaList2[formattedState]) {
-          lgaSelector.innerHTML = '<option>--Select LGA--</option>'
-          lgaList2[formattedState].forEach(lga => {
-            lgaSelector.innerHTML += `
-              <option value="${lga}">${lga}</option>
-              `;
-          });
-        }
-
-        document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
-      }
 
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
@@ -342,12 +344,6 @@ class CustomerValidation {
       // Set business type to "yes" and select appropriate type
       document.getElementById('businessOwnerYes').checked = true;
       this.toggleBusinessType();
-
-      // Set state and LGA if available in your form
-      if (document.getElementById('selectState')) {
-        document.getElementById('selectState').value = record.StateName || '';
-        // Trigger LGA population if needed
-      }
 
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
