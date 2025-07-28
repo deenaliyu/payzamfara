@@ -268,7 +268,7 @@ class CustomerValidation {
     const record = taxpayer.record;
 
     // Set state and LGA if available in your form
-    if (document.getElementById('selectState')) {
+    if (document.getElementById('STATES')) {
       let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
 
       let formattedLGA = record.LGAName
@@ -279,10 +279,10 @@ class CustomerValidation {
           .join(' ')
         : '';
 
-      document.getElementById('selectState').value = formattedState;
+      document.getElementById('STATES').value = formattedState;
 
 
-      let lgaSelector = document.querySelector('#selectLGA')
+      let lgaSelector = document.querySelector('#LGAs')
       if (lgaList2[formattedState]) {
         lgaSelector.innerHTML = '<option>--Select LGA--</option>'
         lgaList2[formattedState].forEach(lga => {
