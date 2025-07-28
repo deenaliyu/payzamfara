@@ -75,7 +75,14 @@ class CustomerValidation {
       if (response.status === 'error') {
         this.handleTaxpayerNotFound();
       } else {
-        this.displayTaxpayerInfo(response.data); // response.data is now the object
+        if (response.data.length > 1) {
+          // If multiple records, pick the one with type !== 'individual'
+          const nonIndividual = response.data.find(taxpayer => taxpayer.type !== 'individual');
+          if (nonIndividual) {
+            this.displayTaxpayerInfo(nonIndividual);
+            return;
+          }
+        }
       }
 
     } catch (error) {
@@ -255,7 +262,7 @@ class CustomerValidation {
 
     // Hide the validation form and show the next section
     document.getElementById('customer-validation').style.display = 'none';
-    document.getElementById('contact-info').style.display = 'block';
+    document.getElementById('corporate-registration').style.display = 'block';
 
     // If we have taxpayer data, pre-fill the next form
     if (this.selectedTaxpayer) {
@@ -309,14 +316,14 @@ class CustomerValidation {
     } else {
       // For non-individual taxpayers
       document.querySelector('.regInputs[data-name="first_name"]').value = record.registered_name || '';
-      document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
+      // document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
       document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
 
       // Set business type to "yes" and select appropriate type
-      document.getElementById('businessOwnerYes').checked = true;
-      this.toggleBusinessType();
+      // document.getElementById('businessOwnerYes').checked = true;
+      // this.toggleBusinessType();
 
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
@@ -373,6 +380,7 @@ class RegistrationForm {
   constructor() {
     this.currentTab = 0;
     this.formSections = document.querySelectorAll('.formTabs');
+    this.prevBtns = document.querySelectorAll('.previous-btn')
     this.urlParams = new URLSearchParams(window.location.search);
     this.category = this.urlParams.get('category');
     this.createdBy = this.urlParams.get('createdby');
@@ -394,10 +402,16 @@ class RegistrationForm {
   setupEventListeners() {
     // Form submissions
     // document.getElementById('validation-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 1));
-    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 2));
+    document.getElementById('continueBtn')?.addEventListener('click', (e) => this.handleFormSubmit(e, 2));
+    document.getElementById('continueBtn2')?.addEventListener('click', (e) => this.handleFormSubmit(e, 1));
     document.getElementById('CreateAccountBtn')?.addEventListener('click', (e) => this.handleFinalSubmit(e));
     document.querySelector(".back-btn")?.addEventListener("click", () => this.nextPrev(-1))
 
+    this.prevBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.nextPrev(-1);
+      });
+    });
     // Previous button
     document.getElementById('prev-btn')?.addEventListener('click', () => {
       // console.log('Going back');
@@ -467,7 +481,7 @@ class RegistrationForm {
 
   handleFormSubmit(e, nextStep) {
     e.preventDefault();
-
+    console.log(nextStep)
     if (this.validateCurrentTab()) {
       this.nextPrev(nextStep);
     }
@@ -542,10 +556,10 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
-        category: "Corporate",
+        category: this.getCategoryValue(),
         numberofstaff: "",
-        created_by: "enumerator",
-        by_account: userInfo2?.id || null,
+        created_by: this.createdBy || "self",
+        by_account: this.adminId || null,
       }
     };
 
@@ -600,6 +614,7 @@ class RegistrationForm {
           window.location.href = `taxpayer.html`;
         }
       });
+
       // if (this.createdBy === 'admin') {
       //   this.sendAdminEmail(response.id);
       // } else {

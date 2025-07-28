@@ -64,7 +64,7 @@
     <div class="row">
       <div class="bg-[#F9FAFB] md:block w-3/12 hidden">
         <div class="pl-4">
-          <img src="./assets/img/ind3.png" alt="">
+          <img src="./assets/img/reg1.png" alt="">
         </div>
       </div>
       <div class="md:w-9/12 w-full h-[110vh] bg-[url('./assets/img/slide3.png')] bg-no-repeat bg-bottom p-0">
@@ -139,7 +139,7 @@
   </section>
 
   <!-- Corporate Registration - Section 1 -->
-  <section class="reg formTabs firstForm headerBeginner">
+  <section class="reg formTabs firstForm headerBeginner" id="corporate-registration">
     <div class="row">
       <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-4">
@@ -147,6 +147,14 @@
         </div>
       </div>
       <div class="col-md-9 col-12 h-[110vh] bg-[url('./assets/img/slide3.png')] bg-no-repeat bg-bottom p-0">
+
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
         <div class="w-full h-[110vh] bg-white bg-opacity-90">
           <div class="md:px-40 px-20 pt-[40px]">
             <h4 class="text-[#101828] text-[30px]">Register Your Organization</h4>
@@ -195,8 +203,7 @@
               <div class="form-group mb-3 w-full">
                 <label>Tax Identification Number (TIN) <span class="text-gray-500">(Optional)</span></label>
                 <input class="form-control mt-1 regInputs" id="tinInput" data-name="tin" type="text"
-                  placeholder="Enter your 14 digits TIN (e.g., 1234567890-1111)" pattern="\d{10}(-\d{4})?"
-                  maxlength="15" />
+                  placeholder="Enter your TIN" pattern="\d{10,}?" maxlength="15" />
                 <small class="validate text-red-500 hidden"></small>
               </div>
 
@@ -211,7 +218,7 @@
 
               <!-- Continue Button -->
               <div class="pt-3">
-                <button type="button" class="button flex items-center gap-x-4 justify-center firstNext">
+                <button type="button" class="button flex items-center gap-x-4 justify-center" id="continueBtn">
                   Continue
                   <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
                 </button>
@@ -224,14 +231,22 @@
   </section>
 
   <!-- Corporate Registration - Section 2 -->
-  <section class="reg formTabs headerBeginner hidden">
+  <section class="reg formTabs headerBeginner" id="corporate-registration-step2">
     <div class="row">
       <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-4">
           <img src="./assets/img/reg2.png" alt="Registration Illustration">
         </div>
       </div>
-      <div class="col-md-9 col-12 h-[100vh] bg-[url('./assets/img/slide1.png')] bg-no-repeat p-0">
+      <div class="col-md-9 col-12 h-[100vh] bg-no-repeat p-0">
+
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
         <div class="w-full h-[100vh] bg-white bg-opacity-90">
           <div class="md:px-40 px-20 pt-[40px]">
             <h4 class="text-[#101828] text-[30px]">Register</h4>
@@ -276,7 +291,7 @@
 
               <!-- Continue Button -->
               <div class="w-[300px] pt-3">
-                <button type="button" class="button flex items-center gap-x-4 justify-center firstNext">
+                <button type="button" class="button flex items-center gap-x-4 justify-center" id="continueBtn2">
                   Continue
                   <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
                 </button>
@@ -289,7 +304,7 @@
   </section>
 
   <!-- Corporate Registration - Section 3 (Password) -->
-  <section class="reg formTabs headerBeginner hidden">
+  <section class="reg formTabs headerBeginner" id="corporate-registration-step3">
     <div class="row">
       <div class="col-md-3 col-12 bg-[#F9FAFB] md:block hidden">
         <div class="pl-6 pt-3">
@@ -297,6 +312,13 @@
         </div>
       </div>
       <div class="col-md-9 col-12 h-[88vh] bg-[url('./assets/img/slide4.png')] bg-no-repeat bg-center p-0">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2 previous-btn">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
         <div class="w-full h-[88vh] bg-white bg-opacity-90">
           <div class="md:px-40 px-20 pt-[40px]">
             <h4 class="text-[#101828] text-[30px]">Create Account</h4>
@@ -311,7 +333,7 @@
                     placeholder="Password" minlength="8" />
                   <small class="validate text-red-500 hidden"></small>
                   <div class="password-requirements mt-1 text-xs text-gray-600">
-                    Must be at least 8 characters with uppercase, lowercase, and number
+                    Must be at least 8 characters.
                   </div>
                 </div>
               </div>
@@ -330,18 +352,25 @@
 
               <!-- Navigation Buttons -->
               <div class="flex items-center mt-10 gap-4">
-                <button type="button" class="outline-btn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" class="outline-btn previous-btn">Previous</button>
                 <button type="button" class="button" id="CreateAccountBtn">Register</button>
               </div>
 
               <!-- Status Messages -->
-              <div id="msg_box" class="w-full mt-4"></div>
+              <div id="msg-box" class="w-full mt-4"></div>
             </form>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Loader Template -->
+  <div id="loader-template" class="hidden">
+    <div class="flex justify-center items-center">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  </div>
 
 
 
