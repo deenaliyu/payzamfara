@@ -63,7 +63,7 @@ function addInput() {
 
   let theStrng = generateRandomString()
 
-    $("#moreInput").append(`
+  $("#moreInput").append(`
         <div class="flex items-center gap-3 mb-4">
           <div class="form-group w-8/12">
             <label for="">Assessment Informations*</label>
@@ -73,7 +73,7 @@ function addInput() {
     
           <div class="form-group w-4/12">
             <label for="">Amount to be paid*</label>
-            <input type="text" class="form-control genInv thePaymentInput h-[40px] amountTopay" id="amountTopay">
+            <input type="text" class="form-control genInv thePaymentInput h-[40px] amountTopay" id="amountTopay" required>
           </div>
     
           
@@ -93,45 +93,45 @@ function addInput() {
             <iconify-icon icon="zondicons:minus-outline" class="cursor-pointer" id="${theStrng}" onclick="removeInpt(this)"></iconify-icon>
         </div>
     `)
-    
-    const amountInput = document.querySelectorAll('.amountTopay');
-    amountInput.forEach(element => {
-        element.addEventListener('input', function (e) {
-              let inputVal = e.target.value;
-        
-              // Immediately return if the first character is a dot to allow ".xx" inputs
-              if (inputVal === '.') {
-                return;
-              }
-        
-              // Normalize the input by removing commas and any non-numeric characters except for the decimal point
-              let normalizedInput = inputVal.replace(/,/g, '').replace(/[^0-9.]/g, '');
-        
-              // Split the input into whole and decimal parts
-              let [whole, decimal] = normalizedInput.split('.');
-        
-              // Ensure the whole part is only numeric
-              whole = whole.replace(/\D/g, '');
-        
-              // If there's a decimal part, limit it to two digits
-              if (decimal) {
-                decimal = decimal.substring(0, 2); // Limit decimal part to two digits
-              }
-        
-              // Format the whole part with commas
-              let formattedWhole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        
-              // Reconstruct the formatted value
-              e.target.value = decimal !== undefined ? `${formattedWhole}.${decimal}` : formattedWhole;
-        })
-    });
 
-    AllRevs.forEach(dd => {
-        $(`.${theStrng}`).append(`
+  const amountInput = document.querySelectorAll('.amountTopay');
+  amountInput.forEach(element => {
+    element.addEventListener('input', function (e) {
+      let inputVal = e.target.value;
+
+      // Immediately return if the first character is a dot to allow ".xx" inputs
+      if (inputVal === '.') {
+        return;
+      }
+
+      // Normalize the input by removing commas and any non-numeric characters except for the decimal point
+      let normalizedInput = inputVal.replace(/,/g, '').replace(/[^0-9.]/g, '');
+
+      // Split the input into whole and decimal parts
+      let [whole, decimal] = normalizedInput.split('.');
+
+      // Ensure the whole part is only numeric
+      whole = whole.replace(/\D/g, '');
+
+      // If there's a decimal part, limit it to two digits
+      if (decimal) {
+        decimal = decimal.substring(0, 2); // Limit decimal part to two digits
+      }
+
+      // Format the whole part with commas
+      let formattedWhole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // Reconstruct the formatted value
+      e.target.value = decimal !== undefined ? `${formattedWhole}.${decimal}` : formattedWhole;
+    })
+  });
+
+  AllRevs.forEach(dd => {
+    $(`.${theStrng}`).append(`
           <option value="${dd.id}">${dd.COL_4} (${dd.COL_3})</option>
         `)
-    })
-    $(`.${theStrng}`).select2()
+  })
+  $(`.${theStrng}`).select2()
 
 }
 
@@ -141,11 +141,11 @@ function removeInpt(theIpt) {
 
 $(".selCateg").on("change", function () {
   let theVal = $(this).val()
-  
+
   fetchRevHeads(theCateg[theVal])
-  
+
   $('#showcaseCateg').val(theCateg[theVal])
-  
+
 })
 
 
@@ -158,7 +158,7 @@ async function fetchZonalOffice(categ) {
   if (revHeads.status === 0) {
   } else {
     allZonalOffice = revHeads.message
-    
+
   }
 }
 
@@ -168,20 +168,20 @@ const lgaSelector = document.getElementById('LGAaas');
 const zonalOfficeSelect = document.getElementById('zonalOff');
 
 lgaSelector.addEventListener('change', (event) => {
-    const selectedLga = event.target.value;
-      // Clear previous options
-    zonalOfficeSelect.innerHTML = '';
+  const selectedLga = event.target.value;
+  // Clear previous options
+  zonalOfficeSelect.innerHTML = '';
 
-    if (selectedLga && allZonalOffice) {
-        const filteredZonalOffices = allZonalOffice.filter(office => office.lga.includes(selectedLga));
-        filteredZonalOffices.forEach(office => {
-          const option = document.createElement('option');
-          option.value = office.id;
-          option.textContent = office.office_name;
-          zonalOfficeSelect.appendChild(option);
-        });
-    }
-    
+  if (selectedLga && allZonalOffice) {
+    const filteredZonalOffices = allZonalOffice.filter(office => office.lga.includes(selectedLga));
+    filteredZonalOffices.forEach(office => {
+      const option = document.createElement('option');
+      option.value = office.id;
+      option.textContent = office.office_name;
+      zonalOfficeSelect.appendChild(option);
+    });
+  }
+
 });
 
 let All15Items = [
@@ -288,26 +288,26 @@ async function fetchRevHeads(categ) {
 
   if (revHeads.status === 0) {
   } else {
-      
+
     theRevs = revHeads.message
     // console.log(theRevs)
     $("#rev_heads").html(`
       <option disabled selected>Select--</option>
     `)
-    
+
     let revenueArr = []
-    
+
     revHeads.message.forEach((revHd, i) => {
-    //  if (revHd.COL_5 === categ) {
-        
-        revenueArr.push(revHd)
-        $("#rev_heads").append(`
+      //  if (revHd.COL_5 === categ) {
+
+      revenueArr.push(revHd)
+      $("#rev_heads").append(`
         <option value="${revHd["id"]}">${revHd["COL_4"]} (${revHd["COL_3"]})</option>
         `)
-    //  }
+      //  }
 
     });
-    
+
     AllRevs = revenueArr
 
   }
@@ -447,31 +447,31 @@ function fillManually() {
 
 // console.log(userInfo)
 function continuePage() {
-    let genInv = document.querySelectorAll(".payInputs")
-  
-    let phonenumber = document.querySelector("#phonenumber")
+  let genInv = document.querySelectorAll(".payInputs")
 
-    if (phonenumber.value.length !== 11) {
-        alert("Phone number should be equal to 11")
-        return;
+  let phonenumber = document.querySelector("#phonenumber")
+
+  if (phonenumber.value.length !== 11) {
+    alert("Phone number should be equal to 11")
+    return;
+  }
+
+  for (let i = 0; i < genInv.length; i++) {
+    const genn = genInv[i];
+
+    if (genn.required && genn.value === "") {
+      alert("Please fill all required field");
+      break;
     }
 
-    for (let i = 0; i < genInv.length; i++) {
-        const genn = genInv[i];
-    
-        if (genn.required && genn.value === "") {
-            alert("Please fill all required field");
-            break;
-        }
-        
-        if (i === genInv.length - 1) {
-            let theCategValue = document.getElementById("category").value
-            // console.log(theCateg[theCategValue])
-            fetchRevHeads(theCateg[theCategValue])
-            $('#showcaseCateg').val(theCateg[theCategValue])
-            nextPrev(1)
-        }
+    if (i === genInv.length - 1) {
+      let theCategValue = document.getElementById("category").value
+      // console.log(theCateg[theCategValue])
+      fetchRevHeads(theCateg[theCategValue])
+      $('#showcaseCateg').val(theCateg[theCategValue])
+      nextPrev(1)
     }
+  }
 
 }
 // theName
@@ -486,7 +486,7 @@ $("#rev_heads").on("change", function () {
 let aa = [];
 function setPrice(val) {
   let theRevenue = theRevs.filter(rr => rr.id === val)
-//   console.log(val, theRevenue)
+  //   console.log(val, theRevenue)
   $("#amountTopay").val()
   the_id = theRevenue[0].id
   aa["message"] = theRevenue;
@@ -548,31 +548,48 @@ let prevYearsAmount = []
 let revenueHeader = []
 
 function goToPreviewPage() {
+  let genInvInputs = document.querySelectorAll(".genInv")
+  for (let i = 0; i < genInvInputs.length; i++) {
+    const input = genInvInputs[i];
+    if (input.required && input.value.trim() === "") {
+      // Highlight empty required fields with a red border
+      input.style.border = "2px solid red";
+      // Optionally, scroll to the first invalid input
+      input.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Remove the red border when the user starts typing
+      input.addEventListener("input", function handler() {
+        input.style.border = "";
+        input.removeEventListener("input", handler);
+      });
+      return;
+    }
+  }
+
   amountto = []
   prevYears = []
   prevYearsAmount = []
   revenueHeader = []
-  
+
   let payInputs = document.querySelectorAll(".payInputs")
   let genInv2Inputs = document.querySelectorAll(".genInv2")
-  
+
 
   let thePayInputs = document.querySelectorAll(".thePaymentInput")
   let prevYearsAll = document.querySelectorAll(".prevYears")
   let prevYearsAllAmount = document.querySelectorAll(".prevAmounts")
   let allTheRevenues = document.querySelectorAll(".revenueHeader")
-  
+
   let revHeadsss = document.querySelectorAll(".revHeadsss")
-    //let mdaSelected = document.querySelector("#mda").value
+  //let mdaSelected = document.querySelector("#mda").value
   let previewAmount = 0
-  thePayInputs.forEach((payIn,i) => {
+  thePayInputs.forEach((payIn, i) => {
     let mm = payIn.value.replace(/,/g, '');
-    
+
     amountto.push(parseFloat(mm))
-    
+
     previewAmount += parseFloat(mm)
     previewAmount += prevYearsAllAmount[i].value === "" ? 0 : parseFloat(prevYearsAllAmount[i].value)
-    
+
     prevYears.push(prevYearsAll[i].value)
     prevYearsAmount.push(prevYearsAllAmount[i].value === "" ? 0 : parseFloat(prevYearsAllAmount[i].value))
     revenueHeader.push(allTheRevenues[i].value)
@@ -601,9 +618,9 @@ function goToPreviewPage() {
       <p>${categOfTax}</p>
     </div>
   `
-  
-    revHeadsss.forEach((revHd, i) => {
-      theSpace += `
+
+  revHeadsss.forEach((revHd, i) => {
+    theSpace += `
         <div class="flex space-x-3">
           <p>Item ${i + 1}:</p>
           <p>${revHd.options[revHd.selectedIndex].text}</p>
@@ -614,10 +631,10 @@ function goToPreviewPage() {
         </div>  
         <div class="flex space-x-3">
           <p>Outstanding Amount:</p>
-          <p>${ prevYearsAllAmount[i].value === "" ? formatMoney(0) : formatMoney(parseFloat(prevYearsAllAmount[i].value.replace(/,/g, '')))}</p>
+          <p>${prevYearsAllAmount[i].value === "" ? formatMoney(0) : formatMoney(parseFloat(prevYearsAllAmount[i].value.replace(/,/g, '')))}</p>
         </div>  
       `
-    })
+  })
 
 
 
@@ -631,14 +648,14 @@ function goToPreviewPage() {
   `
   $("#bill").html(theSpace)
   // console.log(aa)
-  
-    genInv2Inputs.forEach((inputt, i) => {
-        let theInputt = document.querySelector(`.payInputs2[data-name='${inputt.dataset.name}']`)
-        if (theInputt) {
-          theInputt.value = inputt.value
-        }
-    });
-      
+
+  genInv2Inputs.forEach((inputt, i) => {
+    let theInputt = document.querySelector(`.payInputs2[data-name='${inputt.dataset.name}']`)
+    if (theInputt) {
+      theInputt.value = inputt.value
+    }
+  });
+
   for (let i = 0; i < payInputs.length; i++) {
     const payinput = payInputs[i];
 
@@ -723,7 +740,7 @@ async function generateInvoiceNon() {
       })
 
       let StringedData = JSON.stringify(obj)
-    //   console.log(StringedData)
+      //   console.log(StringedData)
 
       $.ajax({
         type: "POST",
@@ -763,13 +780,13 @@ async function generateInvoiceNon() {
 async function generateInvoiceNum(taxNumber) {
 
   let description = document.querySelector("#thedescripInput").value
-//   let previous_year = document.querySelector("#previous_year").value
+  //   let previous_year = document.querySelector("#previous_year").value
   let file_no = document.querySelector("#file_no").value
   let business_own = document.querySelector("#business_own").value
-  
+
   let lga = $("#LGAaas").val()
   let zonalOff = $("#zonalOff").val()
-  
+
   $.ajax({
     type: "GET",
     url: `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${revenueHeader.join(',')}&price=${amountto.join(',')}&description=${description}&lga=${lga}&zonalOffice=${zonalOff}&business_type=${business_own}&previous_year=${prevYears.join(',')}&previous_year_value=${prevYearsAmount.join(',')}&file_no=${file_no}&invoice_type=demand notice`,
