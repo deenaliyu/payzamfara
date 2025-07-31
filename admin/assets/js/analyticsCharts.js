@@ -1021,7 +1021,7 @@ async function industriesPerformance() {
         datasets: [{
           label: 'Revenue Collected',
           data: revenueCollected,
-          backgroundColor: "#E6D9B9",
+          backgroundColor: "#0158279f",
           borderColor: "#015826",
           borderWidth: 2,
           barThickness: 30,
@@ -1442,7 +1442,7 @@ async function paymentChannel() {
   }
 
 }
-paymentChannel()
+// paymentChannel()
 
 // Preferred Payment Bank
 async function paymentBank() {
@@ -1614,7 +1614,7 @@ async function paymentMethod() {
     const ctx = document.getElementById('paymentMethod').getContext('2d');
 
     try {
-      const payment_channel = data[month].map(item => item.payment_method)
+      const payment_channel = data[month].map(item => item.payment_channel)
       const total_amount = data[month].map(item => item.percentage)
 
       const getRandomColor = () => {
@@ -1696,7 +1696,7 @@ async function amountInvgenerated() {
     const currentMonth = padNumberWithZero(date.getMonth() + 1); // JavaScript months are 0-based
     const currentMonthYear = `${currentYear}-${currentMonth}`;
 
-    const months = Object.keys(responseDta).map(key => {
+    const months = Object.keys(responseDta.data).map(key => {
       const [year, month] = key.split('-');
       const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       return { value: key, text: `${monthNames[parseInt(month) - 1]} ${year}` };
@@ -1716,11 +1716,11 @@ async function amountInvgenerated() {
 
     selectInput.addEventListener('change', function () {
       const selectedMonth = this.value;
-      updateChart(selectedMonth, responseDta);
+      updateChart(selectedMonth, responseDta.data);
     });
 
     const initialMonth = selectInput.value;
-    updateChart(initialMonth, responseDta);
+    updateChart(initialMonth, responseDta.data);
 
   } catch (error) {
     console.log(error)
@@ -1732,7 +1732,7 @@ async function amountInvgenerated() {
 
     try {
       const theCategories = data[month].map(item => item.user_category)
-      const theTotalPayments = data[month].map(item => item.total_monthly_revenue)
+      const theTotalPayments = data[month].map(item => item.total_monthly_revenue.replace(/,/g, ''))
 
       const chartData = {
         labels: theCategories,

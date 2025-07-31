@@ -94,6 +94,7 @@ async function fetchInvoice() {
           return row.first_name + " " + row.surname;
         }
       },
+      { data: 'category' },
       { data: 'invoice_number' },
       {
         data: null,
