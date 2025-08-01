@@ -8,12 +8,12 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>Payzamfara</title>
 
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
 
   <!-- Fonts -->
 
@@ -83,82 +83,87 @@
             </div>
 
             <div class="mt-4 flex gap-x-2">
-              
-            
 
-            <button class="flex gap-1 align-items-center mt-4" type="button" data-bs-toggle="modal"
-              data-bs-target="#filterInvoice">
-              <iconify-icon icon="mdi:filter-variant" style="font-size: 3vh"></iconify-icon>
-              Filter
-            </button>
-            <a href="#">
-              <button data-bs-toggle="modal" data-bs-target="#generateInvModal" onclick="tableToCSV()"
-                class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[37vh] md:text-[2.2vh] text-[2vh] hover:text-white flex justify-content-center align-items-center">
-                <iconify-icon icon="material-symbols:cloud-download-rounded"
-                  style="font-size: 3vh; padding-right: 1.5vh"></iconify-icon>
-                Download Report
-              </button></a>
 
-            <a class="mt-4 flex flex-row gap-2" href="./profile.html">
-              <div class="">
-                <img src="./assets/img/userprofile.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle"
-                  id="theProfImg1" />
-              </div>
-              <p id="mdName"></p>
-            </a>
-        </div>
-            
+
+              <button class="flex gap-1 align-items-center mt-4" type="button" data-bs-toggle="modal"
+                data-bs-target="#filterInvoice">
+                <iconify-icon icon="mdi:filter-variant" style="font-size: 3vh"></iconify-icon>
+                Filter
+              </button>
+              <a href="#">
+                <button onclick="exportData()"
+                  class="button mt-[3.2vh] md:py-0 py-2 w-[30vh] mx-3 md:w-[37vh] md:text-[2.2vh] text-[2vh] hover:text-white flex justify-content-center align-items-center">
+                  <iconify-icon icon="material-symbols:cloud-download-rounded"
+                    style="font-size: 3vh; padding-right: 1.5vh"></iconify-icon>
+                  Download Report
+                </button></a>
+
+              <a class="mt-4 flex flex-row gap-2" href="./profile.html">
+                <div class="">
+                  <img src="./assets/img/userprofile.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle"
+                    id="theProfImg1" />
+                </div>
+                <p id="mdName"></p>
+              </a>
+            </div>
+
           </div>
         </nav>
 
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <section class="content-wrapper bg-white border-t-2">
+        <section class="content-wrapper border-t-2">
           <div class="container-xxl flex-grow-1 container-p-y taxes">
-            <div class="border-1 px-4 rounded-xl">
-              <h1 class="text-2xl text-[#282828] fontBold mt-4">
-                Invoice Report
-              </h1>
-              <hr class="text-[#F4F4F4] my-3" />
-              <div class="table-responsive p-3">
-                <table class="table theTable table-striped" id="dataTable">
-                  <thead class="text-center">
-                    <th class="fontBold text-sm text-gray-500">
-                      <div class="flex flex-row">
-                        S/N
-                        <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
-                      </div>
-                    </th>
-                    <th class="fontBold text-sm text-gray-500">
-                      Revenued Head
-                    </th>
-                    <th class="fontBold text-sm text-gray-500">
-                      Name of citizen
-                    </th>
-                    <th class="fontBold text-sm text-gray-500">
-                      Primepay Invoice number
-                    </th>
 
-                    <th class="fontBold text-sm text-gray-500">Amount</th>
-
-                    <th class="fontBold text-gray-500">Invoice due date</th>
-                    <th class="fontBold text-gray-500">
-                      Payment Status
-                    </th>
-                    <th class="fontBold text-gray-500">Actions</th>
-                    <!-- <th class="fontBold text-gray-500">Payment status</th> -->
-                    <!-- <th class="fontBold text-gray-500">Download</th> -->
-                  </thead>
-                  <tbody id="showInvoices">
-
-                  </tbody>
-                </table>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="text-2xl text-[#282828] fontBold mt-4">
+                  Invoice Report
+                </h1>
               </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
-                loading...
+              <div class="card-body">
+                <div class="table-responsive p-3">
+                  <table class="table theTable" id="dataTable">
+                    <thead class="text-center">
+                      <th class="fontBold text-sm text-gray-500">
+                        <div class="flex flex-row">
+                          S/N
+                          <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
+                        </div>
+                      </th>
+                      <th class="fontBold text-sm text-gray-500">
+                        Revenued Head
+                      </th>
+                      <th class="fontBold text-sm text-gray-500">
+                        Name of citizen
+                      </th>
+                      <th class="fontBold text-sm text-gray-500">
+                        Primepay Invoice number
+                      </th>
+
+                      <th class="fontBold text-sm text-gray-500">Amount</th>
+
+                      <th class="fontBold text-gray-500">Invoice due date</th>
+                      <th class="fontBold text-gray-500">
+                        Payment Status
+                      </th>
+                      <th class="fontBold text-gray-500">Actions</th>
+                      <!-- <th class="fontBold text-gray-500">Payment status</th> -->
+                      <!-- <th class="fontBold text-gray-500">Download</th> -->
+                    </thead>
+                    <tbody id="showInvoices">
+
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-center items-center mt-4" id="loader">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                  loading...
+                </div>
               </div>
+
             </div>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
@@ -172,6 +177,54 @@
 
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
+    <div class="modal fade" id="filterInvoice" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header ">
+            <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Filter</h5>
+            <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+              aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
+          </div>
+          <div class="modal-body" style="overflow:hidden;">
+            <div class="flex justify-end">
+              <button class="btn btn-primary btn-sm" onclick="clearfilter()">clear filter</button>
+            </div>
+            <div class="row">
+              <div class="col mb-0" id="the_rev">
+                <label for="defaultSelect" class="form-label">Revenue Head</label>
+                <div class="form-group">
+                  <select name="" id="getRevs" class="form-select">
+                    <option selected value="">All</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col mb-0">
+                <label for="paymentStatusSelect" class="form-label">Payment status</label>
+                <select id="paymentStatusSelect" class="form-select">
+                  <option value="">All</option>
+                  <option value="paid">Paid</option>
+                  <option value="unpaid">Un-paid</option>
+                </select>
+              </div>
+            </div>
+            <div class="row g-2">
+              <label for="" class="mt-3">Date</label>
+              <div class="col mb-0">
+                <label for="emailLarge" class="form-label">From</label>
+                <input class="form-control" type="date" value="" id="fromDateInput">
+              </div>
+              <div class="col mb-0">
+                <label for="dobLarge" class="form-label">To</label>
+                <input class="form-control" type="date" value="" id="toDateInput">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer ">
+            <button type="button" class="btn btn-prime w-full" id="filterMda">Apply</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- / Layout wrapper -->
@@ -190,6 +243,7 @@
   <script src="./assets/js/session.js"></script>
   <!-- endbuild -->
   <script src="./assets/js/reports.js"></script>
+  <script src="./assets/js/filterInv.js"></script>
   <script>
     let theAtivo = document.querySelector(`.dggg`);
     theAtivo.parentElement.classList.add("active");
@@ -197,61 +251,37 @@
 
 
   <script>
-    function tableToCSV() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".table");
+    function exportData() {
+      var csv = [];
+      var table = document.getElementById("showInvoices");
 
-      /* Declaring array variable */
-      var rows = [];
-
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-
-
-
-
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7,
-
-
-          ]
-        );
-
+      // Add header to CSV
+      var header = [];
+      for (var h = 0; h < table.rows[0].cells.length; h++) {
+        header.push(table.rows[0].cells[h].innerText);
       }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
+      csv.push(header.join(','));
 
-      /* create a hidden <a> DOM node and set its download attribute */
+      // Add rows to CSV
+      for (var i = 1; i < table.rows.length; i++) {
+        var row = [], cols = table.rows[i].querySelectorAll('td, th');
+
+        for (var j = 0; j < cols.length; j++) {
+          row.push(cols[j].innerText);
+        }
+
+        csv.push(row.join(','));
+      }
+
+      // Download CSV file
+      var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
       var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Invoice_Report.csv");
+      var link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'invoice_report');
       document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
       link.click();
     }
-
   </script>
 
 

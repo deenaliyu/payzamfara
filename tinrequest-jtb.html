@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+
+    .entity-card {
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .entity-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .entity-card.selected {
+      border: 3px solid #0d6efd;
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
+
+  <section class="flex h-[89vh] overflow-y-scroll headerBeginner">
+
+    <div class="hidden md:block w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 pt-[100px] h-full">
+        <div>
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div class="active"></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Primary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Secondary Information</h1>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mb-4">
+            <div class="theRounder">
+              <div></div>
+            </div>
+            <div>
+              <h1 class="text-xl">Generate Reference</h1>
+            </div>
+          </div>
+
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+          <div class="imgTabs"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-white overflow-y-scroll">
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <button onclick="history.go(-1)" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <form action="" class="md:w-[70%] w-full">
+            <h1 class="fontBold text-2xl">JTB TIN Request</h1>
+            <h1 class="mb-3 mt-3">Primary Information</h1>
+
+            <div class="form-section">
+              <div class="form-group">
+                <label for="">Select User Category</label>
+                <select class="form-select" id="selectEntity">
+                  <option value="" selected disabled>Select Category --</option>
+                  <option value="Individual">Individual</option>
+                  <option value="Corporate">Corporate</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="form-section-main">
+              <!-- Applicant Information -->
+              <div class="form-section">
+                <h4 class="section-title">Applicant Information</h4>
+                <div class="row g-3">
+                  <!-- Common fields -->
+                  <div class="col-md-6 individual-field">
+                    <label for="fullName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="companyName" class="form-label">Company Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="companyName" name="companyName">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="address" class="form-label" id="addressLabel">Residential Address <span
+                        class="text-danger">*</span></label>
+                    <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+                  </div>
+                  <div class="col-md-6 individual-field">
+                    <label for="bvn" class="form-label">Bank Verification Number (BVN) <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="bvn" name="bvn" maxlength="11" required>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="cacNumber" class="form-label">CAC Registration Number <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="cacNumber" name="cacNumber">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Business Information -->
+              <div class="form-section">
+                <h4 class="section-title">Business Information</h4>
+                <div class="row g-3">
+                  <div class="col-md-6 individual-field">
+                    <label for="businessName" class="form-label">Business Name (if different)</label>
+                    <input type="text" class="form-control" id="businessName" name="businessName">
+                  </div>
+                  <div class="col-md-6 individual-field">
+                    <label for="businessAddress" class="form-label">Business Address</label>
+                    <textarea class="form-control" id="businessAddress" name="businessAddress" rows="2"></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="commencementDate" class="form-label">Business Commencement Date <span
+                        class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="commencementDate" name="commencementDate" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="natureOfBusiness" class="form-label">Nature of Business <span
+                        class="text-danger">*</span></label>
+                    <select class="form-select" id="natureOfBusiness" name="natureOfBusiness" required>
+                      <option value="" selected disabled>Select business type</option>
+                      <option value="retail">Retail Trade</option>
+                      <option value="wholesale">Wholesale Trade</option>
+                      <option value="manufacturing">Manufacturing</option>
+                      <option value="service">Service Provider</option>
+                      <option value="agriculture">Agriculture</option>
+                      <option value="ngo">NGO/Non-Profit</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="businessType" class="form-label">Type of Business Entity <span
+                        class="text-danger">*</span></label>
+                    <select class="form-select" id="businessType" name="businessType">
+                      <option value="" selected disabled>Select entity type</option>
+                      <option value="limited">Limited Liability Company</option>
+                      <option value="public">Public Limited Company</option>
+                      <option value="partnership">Partnership</option>
+                      <option value="ngo">NGO/Foundation</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="taxOffice" class="form-label">Preferred Tax Office <span
+                        class="text-danger">*</span></label>
+                    <select class="form-select" id="taxOffice" name="taxOffice">
+                      <option value="" selected disabled>Select tax office</option>
+                      <option value="lagos-main">Lagos Main</option>
+                      <option value="abuja-central">Abuja Central</option>
+                      <option value="port-harcourt">Port Harcourt</option>
+                      <option value="kano">Kano</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Documents Upload -->
+              <div class="form-section">
+                <h4 class="section-title">Documents Upload</h4>
+                <div class="row g-3">
+                  <div class="col-md-6 individual-field">
+                    <label for="validId" class="form-label">Valid ID <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="validId" name="validId" accept=".pdf,.jpg,.jpeg,.png"
+                      required>
+                    <small class="text-muted">(International Passport, Driver's License, National ID or Voter's
+                      Card)</small>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="cacCertificate" class="form-label">CAC Certificate <span
+                        class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="cacCertificate" name="cacCertificate"
+                      accept=".pdf,.jpg,.jpeg,.png">
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="cacForm" class="form-label">Form CAC2/CAC7 <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="cacForm" name="cacForm" accept=".pdf,.jpg,.jpeg,.png">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="utilityBill" class="form-label">Utility Bill or Tenancy Agreement <span
+                        class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="utilityBill" name="utilityBill"
+                      accept=".pdf,.jpg,.jpeg,.png" required>
+                  </div>
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="directorId" class="form-label">Director's Valid ID (Optional)</label>
+                    <input type="file" class="form-control" id="directorId" name="directorId"
+                      accept=".pdf,.jpg,.jpeg,.png">
+                  </div>
+                </div>
+              </div>
+
+
+
+              <button class="button w-full mb-20" type="button" onclick="nextPrev(1)">Submit Application</button>
+
+            </div>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a href="eservices.html" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
+        </div>
+
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <div action="" class="w-[70%] mt-10">
+            <h1 class="fontBold text-2xl">JTB TIN Request</h1>
+            <h1 class="mb-3 mt-3">Generate Reference</h1>
+
+            <h1 class="text-2xl" id="refNumber">323232</h1>
+
+            <p>Please Save your reference number after submitting your application to help track its progress. The
+              reference number will be used to identify and track your application throughout the review process. You
+              can generate the reference number by clicking on the button below.
+              Thank you for submitting your application, and we look forward to processing it.
+              Best regards,</p>
+
+            <div class="mt-5 gap-4">
+              <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
+                number</button> -->
+              <a href="eservices.html" class="outline-btn">Go Back</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div class="modal fade" id="refNumberModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="text-md">TIN reference</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+              </button>
+            </div>
+            <div class="modal-body px-5">
+
+              <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
+              <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
+              <p class="text-center text-[#555555]">Kindly check back later to know your application
+                status.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/tabHandler.js"></script>
+  <!-- <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script> -->
+  <!-- <script src="assets/js/tinrequest.js"></script> -->
+  <script>
+    function selectEntity(entityType) {
+      // document.getElementById(entityType).checked = true;
+
+      // // Highlight selected card
+      // document.querySelectorAll('.entity-card').forEach(card => {
+      //   card.classList.remove('selected');
+      // });
+      // document.getElementById(`${entityType}-card`).classList.add('selected');
+
+      // Show/hide fields based on entity type
+      const individualFields = document.querySelectorAll('.individual-field');
+      const corporateFields = document.querySelectorAll('.corporate-field');
+
+      if (entityType === 'individual') {
+        individualFields.forEach(field => field.classList.remove('d-none'));
+        corporateFields.forEach(field => field.classList.add('d-none'));
+        document.getElementById('addressLabel').textContent = 'Residential Address *';
+
+        document.getElementById('bvn').required = true;
+        document.getElementById('validId').required = true;
+        document.getElementById('cacNumber').required = false;
+        document.getElementById('cacCertificate').required = false;
+        document.getElementById('cacForm').required = false;
+        document.getElementById('businessType').required = false;
+        document.getElementById('taxOffice').required = false;
+      } else {
+        individualFields.forEach(field => field.classList.add('d-none'));
+        corporateFields.forEach(field => field.classList.remove('d-none'));
+        document.getElementById('addressLabel').textContent = 'Business Address *';
+
+        // Set required fields for corporate
+        document.getElementById('bvn').required = false;
+        document.getElementById('validId').required = false;
+        document.getElementById('cacNumber').required = true;
+        document.getElementById('cacCertificate').required = true;
+        document.getElementById('cacForm').required = true;
+        document.getElementById('businessType').required = true;
+        document.getElementById('taxOffice').required = true;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const formTabs = document.querySelector('.form-section-main');
+      const selectEntity = document.getElementById('selectEntity');
+
+      // Hide form initially if no selection
+      if (!selectEntity.value) {
+        formTabs.style.display = 'none';
+      }
+
+      // Listen for changes
+      selectEntity.addEventListener('change', function () {
+        if (this.value) {
+          formTabs.style.display = '';
+        } else {
+          formTabs.style.display = 'none';
+        }
+      });
+    });
+
+    $("#selectEntity").change(function () {
+      const selectedValue = $(this).val();
+      if (selectedValue === "Individual") {
+        selectEntity('individual');
+      } else if (selectedValue === "Corporate") {
+        selectEntity('corporate');
+      }
+    });
+
+  </script>
+</body>
+
+</html>

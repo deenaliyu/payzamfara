@@ -71,7 +71,7 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
+              <p class="text-sm text-black datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Users</h1>
             </div>
 
@@ -301,7 +301,21 @@
                               </div>
                             </div>
                           </div>
-                          
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Demand Notice</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input"
+                                    data-name="demand_notice_access" value="view_demand_notice"> View Demand Notices</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input"
+                                    data-name="demand_notice_access" value="create_demand_notice"> Create Demand Notice</label>
+                                <label class="block mb-2"><input type="checkbox" class="userInputsSel form-check-input"
+                                    data-name="demand_notice_access" value="download_notice_report"> Download Report</label>
+                              </div>
+                            </div>
+                          </div>
+
                           <!-- Enumeration Access -->
                           <div class="col-md-6">
                             <div class="form-group">

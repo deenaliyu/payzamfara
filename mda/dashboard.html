@@ -8,12 +8,12 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>Payzamfara</title>
 
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,12 +44,12 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="./assets/js/config.js"></script>
-  
+
   <style>
-      .chartBar {
-          max-width: 100%;
-          height: 400px;
-      }
+    .chartBar {
+      max-width: 100%;
+      height: 400px;
+    }
   </style>
 </head>
 
@@ -73,114 +73,89 @@
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <section class="content-wrapper border-t-2 border-grey-500 bg-white">
+        <section class="content-wrapper border-t-2 border-grey-500">
           <div class="container-xxl flex-grow-1 container-p-y">
             <section class="w-12/12 main_section">
-              <div class="p-2">
-                <div class="w-full">
-                  <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
-                    <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#d7a1271f] mr-auto">
-                          <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                        </div>
-                        <p class="text-gray-500 text-xs text-end ">
-                          TOTAL NUMBER OF INVOICE
-                        </p>
+              <div class="w-full">
+                <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
+                  <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                    <div class="flex items-center  justify-start">
+                      <div class="icoCont bg-[#d7a1271f] mr-auto">
+                        <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
                       </div>
-                      <p class="zanumbers text-end" id="totalInv">-</p>
-                    </div>
-
-                    <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#d7a1271f] mr-auto">
-                          <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                        </div>
-                        <p class=" text-gray-500 text-xs text-end">
-                          TOTAL REMITTANCE
-                        </p>
-                      </div>
-
-                      <p class="zanumbers text-end">
-                        <!-- &#8358; -->
-                        <span id="totalRem">0</span>
+                      <p class="text-gray-500 text-xs text-end ">
+                        TOTAL NUMBER OF INVOICE
                       </p>
                     </div>
+                    <p class="zanumbers text-end" id="totalInv">-</p>
                   </div>
 
-                  <div class="grid md:grid-cols-12 grid-cols-1 md:mt-8 md:space-x-4">
-                    <div class="col-span-1 md:col-span-6">
-                      <div class="w-full card mt-4 border-2">
-
-                        <div class="chartBar" id="dashboardPie"></div>
-
+                  <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                    <div class="flex items-center  justify-start">
+                      <div class="icoCont bg-[#d7a1271f] mr-auto">
+                        <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
                       </div>
+                      <p class=" text-gray-500 text-xs text-end">
+                        TOTAL REMITTANCE
+                      </p>
                     </div>
 
-                    <div class="col-span-1 md:col-span-6">
-                      <div class="w-full card mt-4 border-2">
-
-                        <div class="chartBar" id="dashboardPi"></div>
-
-                      </div>
-                    </div>
-
-                    <!-- </div> -->
+                    <p class="zanumbers text-end">
+                      <!-- &#8358; -->
+                      <span id="totalRem">0</span>
+                    </p>
                   </div>
-
-                  <div class="grid md:grid-cols-12 grid-cols-1 md:mt-8 md:space-x-4 mb-8">
-                    <!-- 
-                    <div class="col-span-6">
-                      <div class="card table-responsive border-2">
-                        <div class="flex flex-row my-2 mx-2 justify-content-between">
-                          <h1 class=" text-xl font-semibold text-black">
-                            User Acitvity Report
-                          </h1>
-                          <a href="./Users.html" class=" mt-2 text-[2vh] text-decoration-underline text-[#125826]">view
-                            more</a>
-                        </div>
-                        <table class="table table-striped">
-                          <thead class="text-center">
-                            <tr>
-                              <th>NAME OF USER</th>
-                              <th>LAST LOGIN</th>
-                              <th>TOTAL NO. OF INVOICE GENERATED</th>
-                            </tr>
-                          </thead>
-                          <tbody id="useractivity" class="text-center">
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div> -->
-
-                    <div class="col-span-12">
-                      <div class="card table-responsive  border-2">
-                        <h1 class="my-2 mx-2 text-xl font-semibold text-black">
-                          Recent Payment
-                        </h1>
-                        <div class="table-responsive p-2">
-                          <table class="table table-striped" id="dataTable">
-                            <thead class="text-center">
-                              <tr>
-                                <th>Payer Name</th>
-                                <th>Revenue Head</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                              </tr>
-                            </thead>
-                            <tbody id="recentPayment" class="text-center">
-
-                            </tbody>
-                          </table>
-                        </div>
-
-                      </div>
-                    </div>
-
-                  </div>
-
                 </div>
+
+                <div class="grid md:grid-cols-12 grid-cols-1 md:mt-8 md:space-x-4">
+                  <div class="col-span-1 md:col-span-6">
+                    <div class="w-full card mt-4">
+
+                      <div class="chartBar" id="dashboardPie"></div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-span-1 md:col-span-6">
+                    <div class="w-full card mt-4">
+
+                      <div class="chartBar" id="dashboardPi"></div>
+
+                    </div>
+                  </div>
+
+                  <!-- </div> -->
+                </div>
+
+
+
+                <div class="card mt-5">
+                  <div class="card-body">
+                    <h1 class="my-2 mx-2 text-xl font-semibold text-black">
+                      Recent Payments
+                    </h1>
+                    <div class="table-responsive p-2">
+                      <table class="table" id="dataTable">
+                        <thead>
+                          <tr>
+                            <th>S/N</th>
+                            <th>Payer Name</th>
+                            <th>Revenue Head</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody id="recentPayment">
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
             </section>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>

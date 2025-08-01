@@ -127,9 +127,9 @@ $("#createUser").on("click", function () {
                   <p class="text-success text-center mt-4 text-lg">${data.message}</p>
                 `);
 
-            setTimeout(() => {
-              window.location.href = "user.html";
-            }, 1000);
+            // setTimeout(() => {
+            //   window.location.href = "user.html";
+            // }, 1000);
           }
         },
         error: function (request, error) {
@@ -153,48 +153,7 @@ async function fetchUSER() {
   if (userInvoices.status === 1) {
     let theUSER = userInvoices.message.filter((tt) => tt.id === theUserID)[0];
 
-    $("#accessLevelview").html(`
-      <h1 class="text-lg fontBold mb-2">Access Level</h1>
 
-      <table class="table w-[50%]">
-        <tr>
-          <th>Dashboard Access</th>
-          <td>${theUSER.dashboard_access} Access</td>
-        </tr>
-        <tr>
-          <th>Analytics Access</th>
-          <td>${theUSER.analytics_access} Access</td>
-        </tr>
-        <tr>
-          <th>Mda Access</th>
-          <td>${theUSER.mda_access} Access</td>
-        </tr>
-        <tr>
-          <th>Report Access</th>
-          <td>${theUSER.reports_access} Access</td>
-        </tr>
-        <tr>
-          <th>Enumeration Access</th>
-          <td>${theUSER.enumeration_access} Access</td>
-        </tr>
-        <tr>
-          <th>Audit Trail Access</th>
-          <td>${theUSER.audit_trail_access} Access</td>
-        </tr>
-        <tr>
-          <th>Users Access</th>
-          <td>${theUSER.users_access} Access</td>
-        </tr>
-        <tr>
-          <th>Cms Access</th>
-          <td>${theUSER.cms_access} Access</td>
-        </tr>
-        <tr>
-          <th>Support Access</th>
-          <td>${theUSER.support} Access</td>
-        </tr>
-      </table>
-    `);
 
     let alluserInputs = document.querySelectorAll(".userInputs");
     let acclvls = document.querySelectorAll(".acclvl");

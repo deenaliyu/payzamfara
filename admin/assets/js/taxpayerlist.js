@@ -20,51 +20,40 @@ async function getTaxPayer() {
         <div class="flex gap-x-2">
         <img src="${theimg}" class="h-[70px] w-[70px] object-cover rounded-full" />
         <div class="mt-2">
-        <h6 class="font-bold text-[20px]">${taxPayerData.first_name} ${
-      taxPayerData.surname
-    }</h6>
-        <p><span class="font-bold">Payer ID:</span> ${
-          taxPayerData.tax_number
-        }</p>
+        <h6 class="font-bold text-[20px]">${taxPayerData.first_name} ${taxPayerData.surname
+      }</h6>
+        <p><span class="font-bold">Payer ID:</span> ${taxPayerData.tax_number
+      }</p>
         </div>
         </div>
            
             <div class="flex flex-wrap gap-x-5 gap-y-3 mt-2">
-              <p><span class="font-bold">Category:</span> ${
-                taxPayerData.category
-              }</p>
+              <p><span class="font-bold">Category:</span> ${taxPayerData.category
+      }</p>
               <p><span class="font-bold">State:</span> ${taxPayerData.state}</p>
               <p><span class="font-bold">LGA:</span> ${taxPayerData.lga}</p>
-              <p><span class="font-bold">Address:</span> ${
-                taxPayerData.address
-              }</p>
-              <p><span class="font-bold">Email address:</span> ${
-                taxPayerData.email
-              }</p>
-              <p><span class="font-bold">Contact:</span> ${
-                taxPayerData.phone
-              }</p>
-              <p><span class="font-bold">Tin Status:</span> ${
-                taxPayerData.tin_status
-              }</p>
-              <p><span class="font-bold">Tax Number:</span> ${
-                taxPayerData.tin == "" ? "-" : taxPayerData.tin
-              }</p>
-              <p><span class="font-bold">Business Type:</span> ${
-                taxPayerData.business_type == ""
-                  ? "-"
-                  : taxPayerData.business_type
-              }</p>
-              <p><span class="font-bold">Employment Status:</span> ${
-                taxPayerData.employment_status == ""
-                  ? "-"
-                  : taxPayerData.employment_status
-              }</p>
-              <p><span class="font-bold">Number of Staff:</span> ${
-                taxPayerData.number_of_staff == ""
-                  ? "-"
-                  : taxPayerData.number_of_staff
-              }</p>
+              <p><span class="font-bold">Address:</span> ${taxPayerData.address
+      }</p>
+              <p><span class="font-bold">Email address:</span> ${taxPayerData.email
+      }</p>
+              <p><span class="font-bold">Contact:</span> ${taxPayerData.phone
+      }</p>
+              <p><span class="font-bold">Tin Status:</span> ${taxPayerData.tin_status
+      }</p>
+              <p><span class="font-bold">Tax Number:</span> ${taxPayerData.tin == "" ? "-" : taxPayerData.tin
+      }</p>
+              <p><span class="font-bold">Business Type:</span> ${taxPayerData.business_type == ""
+        ? "-"
+        : taxPayerData.business_type
+      }</p>
+              <p><span class="font-bold">Employment Status:</span> ${taxPayerData.employment_status == ""
+        ? "-"
+        : taxPayerData.employment_status
+      }</p>
+              <p><span class="font-bold">Number of Staff:</span> ${taxPayerData.number_of_staff == ""
+        ? "-"
+        : taxPayerData.number_of_staff
+      }</p>
             </div>
 
         
@@ -118,6 +107,9 @@ if (enumerated) {
     getTaxesCateg().then((res) => {
       $(".dataTable").DataTable();
       $(".dataTable2").DataTable();
+
+
+
     });
   });
 } else {
@@ -210,7 +202,7 @@ async function getApplicableTaxes() {
   }
 }
 
-getApplicableTaxes().then((res) => {});
+getApplicableTaxes().then((res) => { });
 
 async function getTaxesCateg() {
   const response = await fetch(`${HOST}?getAllRevenueHeads`);
@@ -225,7 +217,7 @@ async function getTaxesCateg() {
       <tr>
         <td>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="">
+            <input class="form-check-input revenue-checkbox" type="checkbox" value="" id="${revenuehead.id}">
           </div>
         </td>
         <td>${revenuehead["COL_3"]}</td>
@@ -240,6 +232,183 @@ async function getTaxesCateg() {
   });
 };
 
+$(document).ready(function () {
+  const assignTaxBtn = $('#assign-tax');
+
+  // Tax payer information
+  const taxPayerInfo = {
+    tax_number: userIdo,
+    assigned_by: userInfo2?.id
+  };
+
+  // Assign tax button click handler
+  assignTaxBtn.on('click', async function () {
+    const checkboxes = $('.revenue-checkbox');
+
+    const selectedRevenues = checkboxes.filter(':checked').map(function () {
+      return $(this).attr('id');
+    }).get();
+
+    if (selectedRevenues.length === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No Selection',
+        text: 'Please select at least one revenue head to assign.',
+        confirmButtonColor: '#0d6efd'
+      });
+      return;
+    }
+
+    // Disable button during processing
+    assignTaxBtn.prop('disabled', true);
+    assignTaxBtn.text('Processing...');
+
+    try {
+      let successCount = 0;
+      let errorCount = 0;
+      const errorMessages = [];
+
+      // Process each selected revenue head
+      for (const revenueId of selectedRevenues) {
+        const payload = {
+          endpoint: "assignTaxToPayer",
+          data: {
+            tax_number: taxPayerInfo.tax_number,
+            revenue_head_id: parseInt(revenueId),
+            assigned_by: taxPayerInfo.assigned_by,
+            remarks: "Assigned based on new compliance review"
+          }
+        };
+
+        try {
+          const response = await callAssignTaxApi(payload);
+
+          if (response.status === 1) {
+            successCount++;
+          } else {
+            errorCount++;
+            errorMessages.push({
+              revenueId: revenueId,
+              message: response.error || 'Unknown error'
+            });
+          }
+        } catch (error) {
+          errorCount++;
+          errorMessages.push({
+            revenueId: revenueId,
+            message: error.message || 'API call failed'
+          });
+        }
+      }
+
+      // Show summary alert
+      if (errorCount === 0) {
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          html: `All ${successCount} tax assignments completed successfully!`,
+          confirmButtonColor: '#0d6efd'
+        });
+      } else if (successCount === 0) {
+        let errorList = errorMessages.map(e =>
+          `<li>Revenue ID ${e.revenueId}: ${e.message}</li>`
+        ).join('');
+
+        await Swal.fire({
+          icon: 'error',
+          title: 'All Assignments Failed',
+          html: `<p>No taxes were assigned successfully. Errors:</p><ul>${errorList}</ul>`,
+          confirmButtonColor: '#0d6efd'
+        });
+      } else {
+        let errorList = errorMessages.map(e =>
+          `<li>Revenue ID ${e.revenueId}: ${e.message}</li>`
+        ).join('');
+
+        await Swal.fire({
+          icon: 'warning',
+          title: 'Partial Success',
+          html: `
+                                <p>${successCount} tax assignments succeeded, ${errorCount} failed.</p>
+                                <p>Errors:</p>
+                                <ul>${errorList}</ul>
+                            `,
+          confirmButtonColor: '#0d6efd'
+        });
+      }
+
+      // Clear selections
+      checkboxes.prop('checked', false);
+
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An unexpected error occurred. Please try again.',
+        confirmButtonColor: '#0d6efd'
+      });
+    } finally {
+      assignTaxBtn.prop('disabled', false);
+      assignTaxBtn.text('Assign Tax');
+    }
+  });
+
+  // API call function using jQuery
+  function callAssignTaxApi(payload) {
+    return new Promise((resolve, reject) => {
+      // Mock API response - replace with actual AJAX call
+      setTimeout(() => {
+        // Simulate different responses
+        const randomResponse = Math.random() > 0.3 ?
+          { status: 1, message: "Tax successfully assigned to taxpayer." } :
+          { status: 0, error: "Duplicate entry: this tax has already been assigned to this taxpayer." };
+
+        resolve(randomResponse);
+
+
+        // Actual AJAX call would look like:
+        $.ajax({
+          url: HOST,
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(payload),
+          success: function (response) {
+            resolve(response);
+          },
+          error: function (xhr, status, error) {
+            reject(new Error(error || 'API call failed'));
+          }
+        });
+
+      }, 800);
+    });
+  }
+});
+
+async function assignedTaxesBody() {
+  try {
+    const response = await fetch(`${HOST}?fetchAssignedTaxesByTaxNumber&tax_number=${userIdo}`);
+    const theassignData = await response.json();
+
+    theassignData.data.forEach((item, i) => {
+      $("#assignedTaxesBody").append(`
+        <tr>
+          <td>${i + 1}</td>
+          <td>${item.revenue_head_id}</td>
+          <td>Individual</td>
+          <td>${item.assignment_date}</td>
+        </tr>
+      `);
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+assignedTaxesBody().then(res => {
+  $("#dataTable5").DataTable()
+})
 
 async function getAnalytics() {
   try {

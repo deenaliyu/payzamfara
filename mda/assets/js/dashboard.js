@@ -25,9 +25,10 @@ async function fetchPayment() {
       var formattedDate = year + '-' + month + '-' + day;
       $("#recentPayment").append(`
           <tr>
+          <td>${i + 1}</td>
           <td>${payment.first_name} ${payment.surname} </td>
           <td>${payment.COL_4} </td>
-          <td>&#8358;${payment.COL_6} </td>
+          <td>&#8358;${parseFloat(payment.amount_paid).toLocaleString()} </td>
           <td>${formattedDate}</td>
           </tr>
           `);
@@ -53,9 +54,10 @@ async function getDashboardAnalyticsAdmin() {
 
   const tttt = document.getElementById("dashboardPie")
 
+  $("#totalInv").html(dashboardAnalytics.total_invoice.toLocaleString())
+  $("#totalRem").html("₦" + dashboardAnalytics.total_amount_paid.toLocaleString())
 
-  $("#totalRem").html("₦" + dashboardAnalytics.total_amount.toLocaleString())
-  ttRem = dashboardAnalytics.total_amount
+
 
   var chartDom = document.getElementById('dashboardPie');
   var myChart = echarts.init(chartDom);
@@ -71,7 +73,7 @@ async function getDashboardAnalyticsAdmin() {
     },
     series: [
       {
-        name: 'Total Remitance',
+        name: 'Total',
         type: 'pie',
         radius: ['40%', '70%'],
         avoidLabelOverlap: false,
@@ -89,21 +91,24 @@ async function getDashboardAnalyticsAdmin() {
           show: false
         },
         data: [
-          { value: dashboardAnalytics.total_amount, name: 'Total Amount Invoiced' },
-          { value: dashboardAnalytics.total_amount, name: 'Total Amount Paid' },
-          { value: dashboardAnalytics.due_invoices, name: 'Due Invoices' },
-          { value: dashboardAnalytics.due_amount, name: 'Due Amount' },
+          { value: dashboardAnalytics.total_amount_invoiced, name: 'Total Amount Invoiced' },
+          { value: dashboardAnalytics.total_amount_paid, name: 'Total Amount Paid' }
+          // { value: dashboardAnalytics.due_invoices, },
+          // { value: dashboardAnalytics.due_amount,},
         ]
       }
     ]
   };
 
+
   option && myChart.setOption(option);
+
+  fetchInvoicess(dashboardAnalytics.due_invoices, dashboardAnalytics.total_invoice_paid)
 }
 
 getDashboardAnalyticsAdmin();
 
-async function fetchInvoicess() {
+async function fetchInvoicess(dash, dash1) {
   const response = await fetch(
     `${HOST}/php/index.php?AllInvoices`
   );
@@ -111,8 +116,8 @@ async function fetchInvoicess() {
 
   if (userInvoices.status === 1) {
     let theMDAInv = userInvoices.message.filter(inv => inv.COL_3 === mdaID)
-    $("#totalInv").html(theMDAInv.length)
-    // totalInv = theMDAInv.length
+    let totalInv = theMDAInv.length
+    // console.log(totalInv)
 
     var chartDom = document.getElementById('dashboardPi');
     var myChart = echarts.init(chartDom);
@@ -128,7 +133,7 @@ async function fetchInvoicess() {
       },
       series: [
         {
-          name: 'Total Remitance',
+          name: 'Total',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -146,20 +151,19 @@ async function fetchInvoicess() {
             show: false
           },
           data: [
-            { value: theMDAInv.length, name: 'Total Invoice' },
-            { value: ttRem, name: 'Total Remittance' }
+            { value: dash1, name: 'total invoice paid' },
+            { value: dash, name: 'due invoices' }
           ]
         }
       ]
     };
 
     option && myChart.setOption(option);
-  
+
   } else {
 
   }
 }
-fetchInvoicess()
 
 
 

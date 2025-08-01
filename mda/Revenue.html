@@ -13,7 +13,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
 
   <!-- Fonts -->
 
@@ -283,11 +283,11 @@
             </div>
 
             <div class="mt-4 flex gap-x-2">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31" />
-              </div>
+              </div> -->
             </div>
 
             <button
@@ -310,40 +310,35 @@
         <!-- Content wrapper -->
         <section class="content-wrapper border-t-2 border-grey-500 bg-white">
           <div class="container-xxl flex-grow-1 container-p-y taxes">
-            <div class="px-4 border-1 rounded-2xl">
-              <h1 class="text-xl text-[#282828] fontBold mt-4">
-                Revenue Head
-              </h1>
-              <hr class="text-[#F4F4F4] my-2" />
-              <div class="table-responsive p-2">
-                <table class="table theTable table-striped" id="dataTable">
-                  <thead class="text-[2.2vh] text-center">
-                    <th class="fontBold text-sm text-gray-500">
-                      <div class="flex flex-row gap-2">
-                        <iconify-icon icon="material-symbols:indeterminate-check-box-outline"
-                          style="font-size: 3vh"></iconify-icon>
-                        <div class="flex">
-                          <p>S/N</p>
-                          <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
-                        </div>
-                      </div>
-                    </th>
-                    <th class="fontBold text-gray-500">Revenue head</th>
-                    <th class="fontBold text-gray-500">Category</th>
-                    <th class="fontBold text-gray-500">Amount</th>
-                    <th class="fontBold text-gray-500">Frequency</th>
-                    <th class="fontBold text-gray-500">Status</th>
-                    <th></th>
-                  </thead>
-                  <tbody id="showPayment">
 
-                  </tbody>
-                </table>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="card-title text-xl">Revenue Head</h1>
               </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
-                loading...
+
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table theTable " id="dataTable">
+                    <thead>
+                      <th class="fontBold text-sm text-gray-500">S/N</th>
+                      <th class="fontBold text-gray-500">Revenue head</th>
+                      <th class="fontBold text-gray-500">Category</th>
+                      <th class="fontBold text-gray-500">Amount</th>
+                      <th class="fontBold text-gray-500">Frequency</th>
+                      <th class="fontBold text-gray-500">Status</th>
+                      <th></th>
+                    </thead>
+                    <tbody id="showPayment">
+
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-center items-center mt-4" id="loader">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                  loading...
+                </div>
               </div>
+
             </div>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>

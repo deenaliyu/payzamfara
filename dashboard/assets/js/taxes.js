@@ -10,11 +10,19 @@ async function getApplicableTaxes() {
 
   console.log(revenueHeads);
   $("#loaderr").remove();
-  for (const item of revenueHeads) {
 
-    let aa = ""
+  if (revenueHeads.length === 0) {
+    $(".apt").html(`
+      <div class="text-center mt-4">
+        <p class="text-lg text-gray-500">No applicable taxes found for your tax number.</p>
+      </div>
+      `)
+  } else {
+    for (const item of revenueHeads) {
 
-    aa += `
+      let aa = ""
+
+      aa += `
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${item.business_type_id}" aria-expanded="true" aria-controls="collapseOne">
@@ -37,11 +45,11 @@ async function getApplicableTaxes() {
                     <tbody>
     `
 
-    for(const key in item) {
+      for (const key in item) {
 
-      if(item[key].id) {
-        let i = key
-        aa += `
+        if (item[key].id) {
+          let i = key
+          aa += `
 
                       <tr>
                        <td><input class="form-check-input taxChecks" data-theidd="${item[key].id}" type="checkbox" value="" onchange="checkTax(this)"></td>
@@ -51,17 +59,17 @@ async function getApplicableTaxes() {
                        <td><button class="button text-sm" onclick="generateInv(${item[key].id})">Generate Invoice</button></td>
                        </tr>
       `
-      }else{
-        aa += `
+        } else {
+          aa += `
 
        
 `
-      }
-      
-    }
-    
+        }
 
-    aa +=`
+      }
+
+
+      aa += `
     </tbody>
     </table>
   </div>
@@ -71,8 +79,10 @@ async function getApplicableTaxes() {
       </div>
     `
 
-    $(".apt").append(aa)
+      $(".apt").append(aa)
+    }
   }
+
 }
 
 getApplicableTaxes().then((res) => {
@@ -118,9 +128,8 @@ async function getTaxes() {
               <iconify-icon icon="iwwa:option-horizontal" style="font-size: 24px"></iconify-icon>
             </button>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-              <button class="dropdown-item" onclick="generateInv(${
-                revenuehead.id
-              })">Generate Invoice</button>
+              <button class="dropdown-item" onclick="generateInv(${revenuehead.id
+      })">Generate Invoice</button>
             </div>
           </div>
         </td>
@@ -137,6 +146,31 @@ getTaxes().then((res) => {
   });
   $("#dataTable2").DataTable();
 });
+
+
+async function assignedTaxesBody() {
+  try {
+    const response = await fetch(`${HOST}?fetchAssignedTaxesByTaxNumber&tax_number=${tax_numberP}`);
+    const theassignData = await response.json();
+
+    theassignData.data.forEach((item, i) => {
+      $("#assignedTaxesBody").append(`
+        <tr>
+          <td>${i + 1}</td>
+          <td>${item.revenue_head_id}</td>
+          <td>Individual</td>
+          <td>${item.assignment_date}</td>
+        </tr>
+      `);
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+assignedTaxesBody().then(res => {
+  $("#dataTable4").DataTable()
+})
 
 // async function getPresumptiveTaxes() {
 //   const response = await fetch(
@@ -176,9 +210,9 @@ getTaxes().then((res) => {
 //       </td>
 //       `
 //       }
-      
+
 //     }
-    
+
 
 //     $("#showPresumptiveTax").append(aa)
 //   }
@@ -230,7 +264,7 @@ function generateInv(revid) {
     showCancelButton: true,
     confirmButtonText: "Generate Invoice",
     html:
-    '<input id="swal-input1" class="swal2-input"  placeholder=" Amount to be paid ">',
+      '<input id="swal-input1" class="swal2-input"  placeholder=" Amount to be paid ">',
     showLoaderOnConfirm: true,
     preConfirm: async () => {
       let price = document.getElementById('swal-input1').value

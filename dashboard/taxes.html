@@ -112,7 +112,14 @@
                 <li class="nav-item text-center" role="presentation">
                   <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                    All taxes
+                    All Taxes
+                  </button>
+                </li>
+
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="assigned-taxes-tab" data-bs-toggle="pill" data-bs-target="#assigned-taxes"
+                    type="button" role="tab" aria-controls="assigned-taxes" aria-selected="false">
+                    Assigned Taxes
                   </button>
                 </li>
               </ul>
@@ -127,9 +134,9 @@
 
 
                   <div class="accordion apt" id="accordionExample">
-                  
+
                   </div>
-                  
+
                 </div>
 
                 <!-- <div class="tab-pane fade" id="pills-tax" role="tabpanel" aria-labelledby="pills-tax-tab">
@@ -191,7 +198,27 @@
                   </div>
                 </div>
 
-                
+                <div class="tab-pane fade" id="assigned-taxes" role="tabpanel" aria-labelledby="assigned-taxes-tab">
+                  <div class="table-responsive">
+
+                    <table class="table" id="dataTable4">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>REVENUE HEAD</th>
+                          <th>CATEGORY</th>
+                          <th>Assignment Date</th>
+                        </tr>
+                      </thead>
+                      <tbody id="assignedTaxesBody">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
               </div>
             </div>
 

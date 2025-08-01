@@ -131,6 +131,34 @@ async function getRolesAdmin() {
     }
 
 
+  } else if (currentPage.includes("demandnotice.html") || currentPage.includes("generatedemand.html")) {
+    let demandRoles = userRoles.demand_notice_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_inv_list = demandRoles.find(ff => ff === "view_demand_notice")
+    let download_demand_report = demandRoles.find(ff => ff === "download_notice_report")
+    let create_demand_notice = demandRoles.find(ff => ff === "create_demand_notice")
+
+    if (view_inv_list === undefined) {
+      $("#reportDisplay").html(`
+        <p class="text-center text-xl fontBold">No Access to view demand notice !</p>
+      `)
+    }
+
+    if (download_demand_report === undefined) {
+      $("#invReportd").remove()
+    }
+
+    if (create_demand_notice === undefined) {
+      $("#newDemandNotice").remove()
+      $("#generate-demand-container").html(`
+          <p class="text-center text-xl fontBold my-5">No Access to view demand notice !</p>
+      `)
+    }
+
+
   } else if (currentPage.includes("taxpayer.html")) {
     let taxPayers = userRoles.tax_payer_access
 
@@ -152,11 +180,11 @@ async function getRolesAdmin() {
 
     if (view_tax_list === undefined) {
       $(".txTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+        < p class="text-center text-xl fontBold" > No Access to view list!</p >
+          `)
       $(".txTable2").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+          < p class="text-center text-xl fontBold" > No Access to view list!</p >
+            `)
     }
 
     if (view_tax_detail === undefined) {
@@ -184,8 +212,8 @@ async function getRolesAdmin() {
 
     if (view_enum_list === undefined) {
       $(".enumTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+            < p class="text-center text-xl fontBold" > No Access to view list!</p >
+              `)
     }
 
     if (updt_taxpayer === undefined) {
@@ -213,8 +241,8 @@ async function getRolesAdmin() {
 
     if (view_admin === undefined) {
       $(".userTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+              < p class="text-center text-xl fontBold" > No Access to view list!</p >
+                `)
     }
 
     if (create_new_user === undefined) {
@@ -238,15 +266,15 @@ async function getRolesAdmin() {
     if (create_gallery === undefined) {
       // $("#theCms").addClass("disabled")
       $(".selPage").html(`
-        <option value="" disabled selected>Select --</option>
-        <option value="news">News</option>
-        
+                < option value = "" disabled selected > Select--</option >
+                  <option value="news">News</option>
+
       `)
     } else if (create_gallery === undefined) {
       $(".selPage").html(`
-        <option value="" disabled selected>Select --</option>
-        <option value="gallery">Gallery</option>
-        
+        < option value = "" disabled selected > Select--</option >
+          <option value="gallery">Gallery</option>
+
       `)
     }
 
@@ -272,7 +300,7 @@ async function getRolesAdmin() {
 
 
     if (view_support === undefined) {
-      $("#supportContainer").html(`<p class="text-center text-xl fontBold">No Access !</p>`)
+      $("#supportContainer").html(`< p class="text-center text-xl fontBold" > No Access!</p > `)
     }
 
     if ((respond_ticket === undefined) || escalate_issues === undefined) {
@@ -293,8 +321,8 @@ async function getRolesAdmin() {
 
     if (view_audit === undefined) {
       $("#auditContainer").html(`
-        <p class="m-5 text-2xl fontBold text-center">No Access !!</p>
-      `)
+        < p class="m-5 text-2xl fontBold text-center" > No Access!!</p >
+          `)
     }
 
   } else if (currentPage.includes("etcc-management.html")) {
@@ -309,7 +337,7 @@ async function getRolesAdmin() {
 
     // Check if the user has no access
     if (!firstReviewer && !secondReviewer && !thirdReviewer) {
-      $(".main_section").html(`<p class="text-center text-xl fontBold m-5">No Access!</p>`);
+      $(".main_section").html(`< p class="text-center text-xl fontBold m-5" > No Access!</p > `);
       $("#initiateEtcc").remove();
     } else {
       // Handle role-based UI adjustments for multiple roles
@@ -350,15 +378,15 @@ async function getRolesAdmin() {
 
     if (full_access === undefined && no_access === undefined) {
       $("#serviceContainer").html(`
-            <p class="text-2xl m-5 text-center">No Access !!</p>
+        < p class="text-2xl m-5 text-center" > No Access!!</p >
           `)
 
     } else if (full_access) {
 
     } else if (no_access) {
       $("#serviceContainer").html(`
-            <p class="text-2xl m-5 text-center">No Access !!</p>
-          `)
+          < p class="text-2xl m-5 text-center" > No Access!!</p >
+            `)
 
     }
   } else if (currentPage.includes("direct")) {
