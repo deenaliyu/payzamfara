@@ -283,9 +283,9 @@ class CustomerValidation {
 
 
       let lgaSelector = document.querySelector('#LGAs')
-      if (lgaList2[formattedState]) {
+      if (lgaList[formattedState]) {
         lgaSelector.innerHTML = '<option>--Select LGA--</option>'
-        lgaList2[formattedState].forEach(lga => {
+        lgaList[formattedState].forEach(lga => {
           lgaSelector.innerHTML += `
               <option value="${lga}">${lga}</option>
               `;
@@ -550,7 +550,12 @@ class RegistrationForm {
     };
 
     inputs.forEach(input => {
-      const value = input.dataset.name === 'email' ? input.value.trim() : input.value;
+      let value;
+      if (input.dataset.name === 'email') {
+        value = input.value.trim() || `payzamfarageneraluser@gmail.com`;
+      } else {
+        value = input.value;
+      }
       data.data[input.dataset.name] = value;
     });
 
