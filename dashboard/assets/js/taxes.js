@@ -156,6 +156,7 @@ async function assignedTaxesBody() {
     theassignData.data.forEach((item, i) => {
       $("#assignedTaxesBody").append(`
         <tr>
+          <td><input class="form-check-input taxCheckso" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
           <td>${i + 1}</td>
           <td>${item.revenue_head_id}</td>
           <td>Individual</td>
@@ -170,6 +171,96 @@ async function assignedTaxesBody() {
 }
 assignedTaxesBody().then(res => {
   $("#dataTable4").DataTable()
+})
+
+$("#generateInvoiceBtn").on("click", function () {
+  let allSelected = document.querySelectorAll(".taxCheckso");
+  let theArray = [];
+  allSelected.forEach((slt) => {
+    if (slt.checked) {
+      theArray.push(slt.dataset.theidd);
+    }
+  });
+
+  if (theArray.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No Taxes Selected',
+      text: 'Please select at least one tax to generate an invoice.',
+    });
+  } else {
+    Swal.fire({
+      title: 'Generating Invoice',
+      text: 'Please wait while we generate your invoice.',
+      icon: 'info',
+      confirmButtonText: 'Generate Invoice',
+      confirmButtonColor: '#015826',
+      html: `
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Revenue Head</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${theArray.map((id, idx) => {
+                const revenueHead = $(`#assignedTaxesBody input[data-theidd="${id}"]`).closest('tr').find('td').eq(2).text();
+                return `
+                  <tr>
+                    <td>${revenueHead}</td>
+                    <td>
+                      <input type="number" min="0" class="swal2-input" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `,
+      preConfirm: async () => {
+        let prices = theArray.map(id => {
+          const val = document.getElementById(`swal-input-price-${id}`).value;
+          return val ? val : '';
+        });
+        if (prices.some(p => !p || isNaN(p) || Number(p) <= 0)) {
+          Swal.showValidationMessage('Please enter a valid amount for each selected tax.');
+          return false;
+        }
+        try {
+          const response = await fetch(`${HOST}?generateSingleInvoices&tax_number=${tax_numberP}&revenue_head_id=${theArray.join(",")}&price=${prices.join(",")}&zonalOffice=8&lga=Not Assigned&invoice_type=invoice`);
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return await response.json();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Invoice Generated Successfully!',
+          text: `Your invoice number is ${result.value.invoice_number}.`,
+          confirmButtonText: 'Open Invoice',
+          confirmButtonColor: '#015826',
+        }).then((result3) => {
+          if (result3.isConfirmed) {
+            window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+          }
+        });
+      }
+    });
+  }
+
+
+
 })
 
 // async function getPresumptiveTaxes() {
