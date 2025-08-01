@@ -82,6 +82,9 @@ class CustomerValidation {
             this.displayTaxpayerInfo(nonIndividual);
             return;
           }
+        } else {
+          // If only one record, display it
+          this.displayTaxpayerInfo(response.data);
         }
       }
 

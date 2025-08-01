@@ -156,9 +156,9 @@ async function assignedTaxesBody() {
     theassignData.data.forEach((item, i) => {
       $("#assignedTaxesBody").append(`
         <tr>
-          <td><input class="form-check-input taxCheckso" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
+          <td><input class="form-check-input taxCheckso" data-thename="${item.revenue_head_name}" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
           <td>${i + 1}</td>
-          <td>${item.revenue_head_id}</td>
+          <td>${item.revenue_head_name}</td>
           <td>Individual</td>
           <td>${item.assignment_date}</td>
         </tr>
@@ -211,7 +211,7 @@ $("#generateInvoiceBtn").on("click", function () {
                   <tr>
                     <td>${revenueHead}</td>
                     <td>
-                      <input type="number" min="0" class="swal2-input" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
+                      <input type="number" min="0" class="swal2-input form-control" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
                     </td>
                   </tr>
                 `;

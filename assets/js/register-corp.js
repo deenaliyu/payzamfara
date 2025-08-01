@@ -1,3 +1,49 @@
+const flatBusinessTypes = [];
+
+async function getBusinessType() {
+  try {
+    const response = await fetch(`${HOST}?getIndustryHierarchy`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 1) {
+      data.data.forEach(industry => {
+        industry.sectors.forEach(sector => {
+          sector.business_types.forEach(businessType => {
+            // Optionally store this info for lookup later
+            flatBusinessTypes.push({
+              business_type_id: businessType.business_type_id,
+              business_type_name: businessType.business_type_name,
+              sector_id: sector.sector_id,
+              sector_name: sector.sector_name,
+              industry_id: industry.industry_id,
+              industry_name: industry.industry_name,
+            });
+
+            $("#businessTypeSelect").append(`
+              <option value="${businessType.business_type_name}">${businessType.business_type_name}</option>
+            `)
+          });
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+getBusinessType().then(() => {
+  $("#businessTypeSelect").selectize({
+    create: false,
+    sortField: 'text',
+    placeholder: 'Search for your type of business',
+    dropdownParent: 'body'
+  });
+})
+
 let selectcategory = $(".cardi");
 selectcategory.each(function () {
   $(this).on("click", function () {
@@ -109,6 +155,9 @@ class CustomerValidation {
             this.displayTaxpayerInfo(nonIndividual);
             return;
           }
+        } else {
+          // If only one record, display it
+          this.displayTaxpayerInfo(response.data);
         }
       }
 
@@ -238,7 +287,6 @@ class CustomerValidation {
         }
       });
     } else {
-      console.log(taxpayer)
       const record = taxpayer.record;
 
       const details = [
@@ -348,9 +396,6 @@ class CustomerValidation {
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
 
-      // Set business type to "yes" and select appropriate type
-      // document.getElementById('businessOwnerYes').checked = true;
-      // this.toggleBusinessType();
 
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
@@ -393,9 +438,6 @@ class CustomerValidation {
     return date.toLocaleDateString();
   }
 
-  toggleBusinessType() {
-    // Implementation from previous code
-  }
 }
 
 // Initialize when DOM is loaded
@@ -420,7 +462,6 @@ class RegistrationForm {
   init() {
     this.setupEventListeners();
     this.showTab(this.currentTab);
-    this.setupBusinessOwnerToggle();
     this.setupPasswordToggle();
     this.setupTINFormatting();
     this.setupPhoneValidation();
@@ -433,7 +474,7 @@ class RegistrationForm {
     document.getElementById('continueBtn2')?.addEventListener('click', (e) => this.handleFormSubmit(e, 1));
     document.getElementById('CreateAccountBtn')?.addEventListener('click', (e) => this.handleFinalSubmit(e));
     document.querySelector(".back-btn")?.addEventListener("click", () => this.nextPrev(-1))
-    
+
     this.prevBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         this.nextPrev(-1);
@@ -445,10 +486,6 @@ class RegistrationForm {
       this.nextPrev(-1);
     });
 
-    // Business owner toggle
-    document.querySelectorAll('.checki').forEach(radio => {
-      radio.addEventListener('change', () => this.toggleBusinessType());
-    });
   }
 
   showTab(n) {
@@ -530,10 +567,10 @@ class RegistrationForm {
       return;
     }
 
-    // if (password.length < 8) {
-    //   this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
-    //   return;
-    // }
+    if (password.length < 8) {
+      this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
+      return;
+    }
 
     // if (!/[A-Z]/.test(password)) {
     //   this.showError(document.getElementById('pps'), 'Password must contain at least one uppercase letter');
@@ -563,7 +600,6 @@ class RegistrationForm {
 
       const response = await this.submitForm(formData);
 
-
       this.handleRegistrationResponse(response);
     } catch (error) {
       this.showMessage('An error occurred. Please try again.', 'error');
@@ -576,6 +612,13 @@ class RegistrationForm {
 
   collectFormData() {
     const inputs = document.querySelectorAll('.regInputs');
+    const businessTypeVal = $("#businessTypeSelect").val()
+    let businessTypedata;
+
+    if (businessTypeVal) {
+      businessTypedata = flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+    }
+
     const data = {
       endpoint: "createPayerAccount",
       data: {
@@ -583,6 +626,8 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
+        business_type_id: businessTypedata.business_type_id || null,
+        industry: businessTypedata.industry_name || null,
         category: this.getCategoryValue(),
         numberofstaff: "",
         created_by: this.createdBy || "self",
@@ -717,48 +762,6 @@ class RegistrationForm {
 
   validateTIN(tin) {
     return /^\d{10,}$/.test(tin);
-  }
-
-  setupBusinessOwnerToggle() {
-    this.toggleBusinessType(); // Initialize on load
-
-    document.querySelectorAll('.checki').forEach(radio => {
-      radio.addEventListener('change', () => this.toggleBusinessType());
-    });
-  }
-
-  toggleBusinessType() {
-    const businessType = document.getElementById('businessType');
-    const isBusinessOwner = document.getElementById('businessOwnerYes').checked;
-
-    if (isBusinessOwner) {
-      businessType.innerHTML = `
-        <div class="flex gap-x-10 pt-2 px-3 items-center md:flex-nowrap sm:flex-wrap">
-          <p>Type of business</p>
-          <div class="form-group mb-2 md:w-[320px] w-full">
-            <select class="form-select mt-1 regInputs" required data-name="typeofbusiness">
-              <option value="" selected disabled>-Select the name of the business--</option>
-              <option value="Commercial">Commercial</option>
-              <option value="Pool">Pool betting</option>
-              <option value="Education">Education</option>
-              <option value="Hospitality">Hospitality</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Retail">Retail</option>
-              <option value="Mining">Mining</option>
-              <option value="Services">Services</option>
-              <option value="Agriculture">Agriculture</option>
-              <option value="Housing">Housing/real estate/lands</option>
-              <option value="Transporting">Transporting</option>
-              <option value="Legal">Legal</option>
-              <option value="General">General</option>
-            </select>
-            <small class="validate text-red-500 hidden"></small>
-          </div>
-        </div>
-      `;
-    } else {
-      businessType.innerHTML = '<div></div>';
-    }
   }
 
   setupPasswordToggle() {

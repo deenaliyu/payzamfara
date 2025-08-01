@@ -395,7 +395,7 @@ async function assignedTaxesBody() {
       $("#assignedTaxesBody").append(`
         <tr>
           <td>${i + 1}</td>
-          <td>${item.revenue_head_id}</td>
+          <td>${item.revenue_head_name}</td>
           <td>Individual</td>
           <td>${item.assignment_date}</td>
         </tr>
