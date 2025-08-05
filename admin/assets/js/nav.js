@@ -167,12 +167,21 @@ $(".aside").html(`
           <div data-i18n="Basic">Enumeration</div>
         </a>
       </li>
+
       <li class="menu-item">
-      <a href="enduseraudit.html" class="menu-link auditt">
-      <i class='menu-icon tf-icons bx bxs-group' ></i>
-        <div data-i18n="Basic">Audit Trail</div>
-      </a>
-    </li>
+        <a href="enduseraudit.html" class="menu-link auditt">
+        <i class='menu-icon tf-icons bx bxs-group' ></i>
+          <div data-i18n="Basic">Audit Trail</div>
+        </a>
+      </li>
+
+      <li class="menu-item">
+        <a href="rdms-setup.html" class="menu-link rdmssetup">
+          <iconify-icon icon="qlementine-icons:page-setup-16" class="menu-icon"></iconify-icon>
+          <div data-i18n="Basic">RDMS Setup</div>
+        </a>
+      </li>
+
       <li class="menu-item">
         <a href="cms.html" class="menu-link mdo">
         <i class='menu-icon tf-icons bx bxs-group' ></i>

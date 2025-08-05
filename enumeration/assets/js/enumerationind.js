@@ -1,3 +1,36 @@
+const flatBusinessTypes = [];
+
+async function getBusinessType() {
+  try {
+    const response = await fetch(`${HOST}?getIndustryHierarchy`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    if (data.status === 1) {
+      data.data.forEach(industry => {
+        industry.sectors.forEach(sector => {
+          sector.business_types.forEach(businessType => {
+            // Optionally store this info for lookup later
+            flatBusinessTypes.push({
+              business_type_id: businessType.business_type_id,
+              business_type_name: businessType.business_type_name,
+              sector_id: sector.sector_id,
+              sector_name: sector.sector_name,
+              industry_id: industry.industry_id,
+              industry_name: industry.industry_name,
+            });
+          });
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 class CustomerValidation {
   constructor() {
     this.apiBaseUrl = 'https://payzamfara.com/php/JTD';
@@ -522,7 +555,6 @@ class RegistrationForm {
 
       const response = await this.submitForm(formData);
 
-
       this.handleRegistrationResponse(response);
     } catch (error) {
       this.showMessage('An error occurred. Please try again.', 'error');
@@ -535,6 +567,13 @@ class RegistrationForm {
 
   collectFormData() {
     const inputs = document.querySelectorAll('.regInputs');
+    const businessTypeVal = $("#businessTypeSelect").val()
+    let businessTypedata;
+
+    if (businessTypeVal) {
+      businessTypedata = flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+    }
+
     const data = {
       endpoint: "createPayerAccount",
       data: {
@@ -542,6 +581,8 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
+        business_type_id: businessTypedata.business_type_id || null,
+        industry: businessTypedata.industry_name || null,
         category: "Individual",
         numberofstaff: "",
         created_by: "enumerator",
@@ -707,34 +748,34 @@ class RegistrationForm {
     const businessType = document.getElementById('businessType');
     const isBusinessOwner = document.getElementById('businessOwnerYes').checked;
 
-    if (isBusinessOwner) {
-      businessType.innerHTML = `
+    getBusinessType().then(() => {
+      if (isBusinessOwner) {
+        businessType.innerHTML = `
         <div class="flex gap-x-10 pt-2 px-3 items-center md:flex-nowrap sm:flex-wrap">
           <p>Type of business</p>
           <div class="form-group mb-2 md:w-[320px] w-full">
-            <select class="form-select mt-1 regInputs" required data-name="typeofbusiness">
-              <option value="" selected disabled>-Select the name of the business--</option>
-              <option value="Commercial">Commercial</option>
-              <option value="Pool">Pool betting</option>
-              <option value="Education">Education</option>
-              <option value="Hospitality">Hospitality</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Retail">Retail</option>
-              <option value="Mining">Mining</option>
-              <option value="Services">Services</option>
-              <option value="Agriculture">Agriculture</option>
-              <option value="Housing">Housing/real estate/lands</option>
-              <option value="Transporting">Transporting</option>
-              <option value="Legal">Legal</option>
-              <option value="General">General</option>
+            <select class="mt-1 regInputs" required data-name="business_type" id="businessTypeSelect">
+              <option value="" selected disabled>-Select the type of the business--</option>
+              ${flatBusinessTypes.map(type => `
+                <option value="${type.business_type_name}">${type.business_type_name}</option>
+              `).join('')}
             </select>
             <small class="validate text-red-500 hidden"></small>
           </div>
         </div>
       `;
-    } else {
-      businessType.innerHTML = '<div></div>';
-    }
+
+        $("#businessTypeSelect").selectize({
+          create: false,
+          sortField: 'text',
+          placeholder: 'Search for your type of business',
+          dropdownParent: 'body'
+        });
+      } else {
+        businessType.innerHTML = '<div></div>';
+      }
+    })
+
   }
 
   setupPasswordToggle() {
