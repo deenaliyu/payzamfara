@@ -39,10 +39,24 @@
   <script src="./assets/js/config.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+    integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
 <body class="taxpayer">
+  <!-- Add this loader div near the top of your body -->
+  <div id="globalLoader" style="display: none;">
+    <div
+      class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-light bg-opacity-75"
+      style="z-index: 9999;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Layout wrapper -->
   <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
@@ -377,11 +391,11 @@
               <label for="revenueRateGroup" class="form-label">Group</label>
               <select class="form-select" id="revenueRateGroup" required>
                 <option value="">Select Group</option>
-                <option value="1">Group A</option>
-                <option value="2">Group B</option>
-                <option value="3">Group C</option>
-                <option value="4">Group D</option>
-                <option value="5">Group E</option>
+                <option value="1">Group 1</option>
+                <option value="2">Group 2</option>
+                <option value="3">Group 3</option>
+                <option value="4">Group 4</option>
+                <option value="5">Group 5</option>
               </select>
             </div>
             <div class="mb-3">
@@ -393,9 +407,10 @@
               <select class="form-select" id="revenueRateFrequency" required>
                 <option value="">Select Frequency</option>
                 <option value="monthly">Monthly</option>
-                <option value="quarterly">Quarterly</option>
-                <option value="annually">Annually</option>
-                <option value="one-off">One-off</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="quartely">Quartely</option>
+                <option value="yearly">Yearly</option>
               </select>
             </div>
           </form>
@@ -418,7 +433,10 @@
   <script src="./assets/js/jquery.datatables.min.js"></script>
   <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+    integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script>
     let theAtivo = document.querySelector(".rdmssetup")
@@ -427,12 +445,7 @@
 
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/vendor/js/menu.js"></script>
-  <!-- endbuild -->
 
-  <!-- Vendors JS -->
-  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-  <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v1.2"></script>
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/rdms-setup.js"></script>

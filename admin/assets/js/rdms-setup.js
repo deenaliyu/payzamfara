@@ -5,6 +5,26 @@ let businessTypes = [];
 let revenueRates = [];
 let revenueHeads = [];
 
+function showLoader(show) {
+  const loader = document.getElementById('globalLoader');
+  if (loader) {
+    loader.style.display = show ? 'block' : 'none';
+  }
+}
+
+// Global error handler
+function handleApiError(error, action = 'processing') {
+  console.error(`Error ${action}:`, error);
+  let errorMessage = error.message || `Failed to ${action}. Please try again.`;
+
+  // Check for specific error messages in response
+  if (error.response && error.response.message) {
+    errorMessage = error.response.message;
+  }
+
+  alert(errorMessage);
+}
+
 // Load data when page loads
 document.addEventListener('DOMContentLoaded', function () {
   fetchHierarchyData();
@@ -88,7 +108,25 @@ function renderTables() {
   renderBusinessTypesTable();
   populateIndustryDropdowns();
   renderRevenueRatesTable();
-  populateRevenueRateDropdowns();
+  populateRevenueRateDropdowns().then(() => {
+    // if (document.getElementById('revenueRateHead')) {
+    //   $("#revenueRateHead").selectize({
+    //     create: false,
+    //     sortField: 'text',
+    //     placeholder: 'Search for revenue head',
+    //     // dropdownParent: 'body'
+    //   });
+    // }
+
+    // if (document.getElementById('revenueRateBusinessType')) {
+    //   $("#revenueRateBusinessType").selectize({
+    //     create: false,
+    //     sortField: 'text',
+    //     placeholder: 'Search for your type of business',
+    //     // dropdownParent: 'body'
+    //   });
+    // }
+  });
 }
 
 // Render industries table
@@ -105,7 +143,7 @@ function renderIndustriesTable() {
                         <button class="btn btn-sm btn-link" onclick="editIndustry('${industry.id}')">
                           <iconify-icon icon="tabler:edit" width="16" height="16"></iconify-icon>
                         </button>
-                        <button class="btn btn-sm btn-link" onclick="deleteIndustry('${industry.id}')">
+                        <button class="btn btn-sm btn-link" onclick="deleteIndustry('${industry.id}')" disabled>
                           <iconify-icon icon="material-symbols:delete-outline-rounded" width="16" height="16"></iconify-icon>
                         </button>
                     </td>
@@ -129,7 +167,7 @@ function renderSectorsTable() {
                         <button class="btn btn-sm btn-link" onclick="editSector('${sector.id}')">
                             <iconify-icon icon="tabler:edit" width="16" height="16"></iconify-icon>
                         </button>
-                        <button class="btn btn-sm btn-link" onclick="deleteSector('${sector.id}')">
+                        <button class="btn btn-sm btn-link" onclick="deleteSector('${sector.id}')" disabled>
                             <iconify-icon icon="material-symbols:delete-outline-rounded" width="16" height="16"></iconify-icon>
                         </button>
                     </td>
@@ -154,7 +192,7 @@ function renderBusinessTypesTable() {
                         <button class="btn btn-sm btn-link" onclick="editBusinessType('${businessType.id}')">
                           <iconify-icon icon="tabler:edit" width="16" height="16"></iconify-icon>
                         </button>
-                        <button class="btn btn-sm btn-link" onclick="deleteBusinessType('${businessType.id}')">
+                        <button class="btn btn-sm btn-link" onclick="deleteBusinessType('${businessType.id}')" disabled>
                           <iconify-icon icon="material-symbols:delete-outline-rounded" width="16" height="16"></iconify-icon>
                         </button>
                     </td>
@@ -185,7 +223,7 @@ function renderRevenueRatesTable() {
                 <button class="btn btn-sm btn-link" onclick="editRevenueRate('${rate.id}')">
                   <iconify-icon icon="tabler:edit" width="16" height="16"></iconify-icon>
                 </button>
-                <button class="btn btn-sm btn-link" onclick="deleteRevenueRate('${rate.id}')">
+                <button class="btn btn-sm btn-link" onclick="deleteRevenueRate('${rate.id}')" disabled>
                   <iconify-icon icon="material-symbols:delete-outline-rounded" width="16" height="16"></iconify-icon>
                 </button>
             </td>
@@ -195,7 +233,7 @@ function renderRevenueRatesTable() {
 }
 
 // Add this function to populate dropdowns in revenue rate modal
-function populateRevenueRateDropdowns() {
+async function populateRevenueRateDropdowns() {
   const revenueHeadSelect = document.getElementById('revenueRateHead');
   const businessTypeSelect = document.getElementById('revenueRateBusinessType');
 
@@ -214,6 +252,7 @@ function populateRevenueRateDropdowns() {
     option.textContent = type.name;
     businessTypeSelect.appendChild(option);
   });
+
 }
 
 // Add these functions for revenue rate CRUD operations
@@ -240,108 +279,6 @@ function showRevenueRateModal(rateId = null) {
   }
 
   modal.show();
-}
-
-async function saveRevenueRate() {
-  const id = document.getElementById('revenueRateId').value;
-  const revenueHeadId = document.getElementById('revenueRateHead').value;
-  const businessTypeId = document.getElementById('revenueRateBusinessType').value;
-  const groupId = document.getElementById('revenueRateGroup').value;
-  const amount = document.getElementById('revenueRateAmount').value;
-  const frequency = document.getElementById('revenueRateFrequency').value;
-
-  if (!revenueHeadId || !businessTypeId || !groupId || !amount || !frequency) {
-    alert('Please fill all required fields');
-    return;
-  }
-
-  try {
-    const endpoint = id ? 'updateRevenueRate' : 'createRevenueRate';
-    const payload = {
-      endpoint: endpoint,
-      data: {
-        revenue_head_id: revenueHeadId,
-        business_type_id: businessTypeId,
-        group_id: groupId,
-        amount: amount,
-        frequency: frequency
-      }
-    };
-
-    if (id) {
-      payload.data.id = id;
-    }
-
-    // In a real implementation, you would call your API here
-    console.log('Saving revenue rate:', payload);
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // For demo purposes, we'll just update the local data
-    const revenueHead = revenueHeads.find(h => h.id === revenueHeadId);
-    const businessType = businessTypes.find(b => b.id === businessTypeId);
-
-    if (id) {
-      // Update existing rate
-      const index = revenueRates.findIndex(r => r.id == id);
-      if (index !== -1) {
-        revenueRates[index] = {
-          ...revenueRates[index],
-          revenue_head_id: revenueHeadId,
-          business_type_id: businessTypeId,
-          group_id: groupId,
-          amount: amount,
-          frequency: frequency,
-          revenue_head_name: revenueHead ? revenueHead.COL_4 : ''
-        };
-      }
-    } else {
-      // Add new rate
-      const newId = Math.max(...revenueRates.map(r => parseInt(r.id))) + 1;
-      revenueRates.push({
-        id: newId.toString(),
-        revenue_head_id: revenueHeadId,
-        revenue_head_name: revenueHead ? revenueHead.COL_4 : '',
-        business_type_id: businessTypeId,
-        group_id: groupId,
-        amount: amount,
-        frequency: frequency
-      });
-    }
-
-    renderRevenueRatesTable();
-    bootstrap.Modal.getInstance(document.getElementById('revenueRateModal')).hide();
-  } catch (error) {
-    console.error('Error saving revenue rate:', error);
-    alert('Failed to save revenue rate');
-  }
-}
-
-function editRevenueRate(id) {
-  showRevenueRateModal(id);
-}
-
-async function deleteRevenueRate(id) {
-  if (!confirm('Are you sure you want to delete this revenue rate?')) {
-    return;
-  }
-
-  try {
-    // In a real implementation, you would call your API here
-    console.log('Deleting revenue rate:', id);
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // For demo purposes, we'll just update the local data
-    revenueRates = revenueRates.filter(r => r.id != id);
-
-    renderRevenueRatesTable();
-  } catch (error) {
-    console.error('Error deleting revenue rate:', error);
-    alert('Failed to delete revenue rate');
-  }
 }
 
 // Populate industry dropdowns in modals
@@ -452,7 +389,6 @@ function showBusinessTypeModal(businessTypeId = null) {
   modal.show();
 }
 
-// Save industry
 async function saveIndustry() {
   const id = document.getElementById('industryId').value;
   const name = document.getElementById('industryName').value.trim();
@@ -461,6 +397,8 @@ async function saveIndustry() {
     alert('Please enter industry name');
     return;
   }
+
+  showLoader(true);
 
   try {
     const endpoint = id ? 'updateIndustry' : 'createIndustry';
@@ -473,37 +411,31 @@ async function saveIndustry() {
       payload.data.id = id;
     }
 
-    // In a real implementation, you would call your API here
-    console.log('Saving industry:', payload);
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const result = await response.json();
 
-    // For demo purposes, we'll just update the local data
-    if (id) {
-      // Update existing industry
-      const index = industries.findIndex(i => i.id === id);
-      if (index !== -1) {
-        industries[index].name = name;
-      }
-    } else {
-      // Add new industry
-      const newId = Math.max(...industries.map(i => parseInt(i.id))) + 1;
-      industries.push({
-        id: newId.toString(),
-        name
-      });
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to save industry');
     }
 
-    renderTables();
+    // Refresh data after successful operation
+    await fetchHierarchyData();
     bootstrap.Modal.getInstance(document.getElementById('industryModal')).hide();
   } catch (error) {
-    console.error('Error saving industry:', error);
-    alert('Failed to save industry');
+    handleApiError(error, 'saving industry');
+  } finally {
+    showLoader(false);
   }
 }
 
-// Save sector
+// Updated saveSector function with API integration
 async function saveSector() {
   const id = document.getElementById('sectorId').value;
   const name = document.getElementById('sectorName').value.trim();
@@ -513,6 +445,8 @@ async function saveSector() {
     alert('Please fill all required fields');
     return;
   }
+
+  showLoader(true);
 
   try {
     const endpoint = id ? 'updateSector' : 'createSector';
@@ -528,43 +462,30 @@ async function saveSector() {
       payload.data.id = id;
     }
 
-    // In a real implementation, you would call your API here
-    console.log('Saving sector:', payload);
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const result = await response.json();
 
-    // For demo purposes, we'll just update the local data
-    const industry = industries.find(i => i.id === industryId);
-
-    if (id) {
-      // Update existing sector
-      const index = sectors.findIndex(s => s.id === id);
-      if (index !== -1) {
-        sectors[index].name = name;
-        sectors[index].industry_id = industryId;
-        sectors[index].industry_name = industry.name;
-      }
-    } else {
-      // Add new sector
-      const newId = Math.max(...sectors.map(s => parseInt(s.id))) + 1;
-      sectors.push({
-        id: newId.toString(),
-        name,
-        industry_id: industryId,
-        industry_name: industry.name
-      });
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to save sector');
     }
 
-    renderTables();
+    await fetchHierarchyData();
     bootstrap.Modal.getInstance(document.getElementById('sectorModal')).hide();
   } catch (error) {
-    console.error('Error saving sector:', error);
-    alert('Failed to save sector');
+    handleApiError(error, 'saving sector');
+  } finally {
+    showLoader(false);
   }
 }
 
-// Save business type
+// Updated saveBusinessType function with API integration
 async function saveBusinessType() {
   const id = document.getElementById('businessTypeId').value;
   const name = document.getElementById('businessTypeName').value.trim();
@@ -574,6 +495,8 @@ async function saveBusinessType() {
     alert('Please fill all required fields');
     return;
   }
+
+  showLoader(true);
 
   try {
     const endpoint = id ? 'updateBusinessType' : 'createBusinessType';
@@ -589,43 +512,228 @@ async function saveBusinessType() {
       payload.data.id = id;
     }
 
-    // In a real implementation, you would call your API here
-    console.log('Saving business type:', payload);
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const result = await response.json();
 
-    // For demo purposes, we'll just update the local data
-    const sector = sectors.find(s => s.id === sectorId);
-
-    if (id) {
-      // Update existing business type
-      const index = businessTypes.findIndex(b => b.id === id);
-      if (index !== -1) {
-        businessTypes[index].name = name;
-        businessTypes[index].sector_id = sectorId;
-        businessTypes[index].sector_name = sector.name;
-        businessTypes[index].industry_id = sector.industry_id;
-        businessTypes[index].industry_name = sector.industry_name;
-      }
-    } else {
-      // Add new business type
-      const newId = Math.max(...businessTypes.map(b => parseInt(b.id))) + 1;
-      businessTypes.push({
-        id: newId.toString(),
-        name,
-        sector_id: sectorId,
-        sector_name: sector.name,
-        industry_id: sector.industry_id,
-        industry_name: sector.industry_name
-      });
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to save business type');
     }
 
-    renderTables();
+    await fetchHierarchyData();
     bootstrap.Modal.getInstance(document.getElementById('businessTypeModal')).hide();
   } catch (error) {
-    console.error('Error saving business type:', error);
-    alert('Failed to save business type');
+    handleApiError(error, 'saving business type');
+  } finally {
+    showLoader(false);
+  }
+}
+
+// Updated saveRevenueRate function with API integration
+async function saveRevenueRate() {
+  const id = document.getElementById('revenueRateId').value;
+  const revenueHeadId = document.getElementById('revenueRateHead').value;
+  const businessTypeId = document.getElementById('revenueRateBusinessType').value;
+  const groupId = document.getElementById('revenueRateGroup').value;
+  const amount = document.getElementById('revenueRateAmount').value;
+  const frequency = document.getElementById('revenueRateFrequency').value;
+
+  if (!revenueHeadId || !businessTypeId || !groupId || !amount || !frequency) {
+    alert('Please fill all required fields');
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const endpoint = id ? 'updateRevenueRate' : 'createRevenueRate';
+    const payload = {
+      endpoint: endpoint,
+      data: {
+        revenue_head_id: revenueHeadId,
+        business_type_id: businessTypeId,
+        group_id: groupId,
+        amount: amount,
+        frequency: frequency
+      }
+    };
+
+    if (id) {
+      payload.data.id = id;
+    }
+
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to save revenue rate');
+    }
+
+    // Refresh revenue rates data
+    const ratesResponse = await fetch('https://payzamfara.com/php/index.php?getRevenueRates');
+    const ratesData = await ratesResponse.json();
+    if (ratesData.status === 1) {
+      revenueRates = ratesData.rates;
+      renderRevenueRatesTable();
+    }
+
+    bootstrap.Modal.getInstance(document.getElementById('revenueRateModal')).hide();
+  } catch (error) {
+    handleApiError(error, 'saving revenue rate');
+  } finally {
+    showLoader(false);
+  }
+}
+
+// Updated delete functions with API integration
+async function deleteIndustry(id) {
+  if (!confirm('Are you sure you want to delete this industry? This will also delete all associated sectors and business types.')) {
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        endpoint: 'deleteIndustry',
+        data: { id }
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to delete industry');
+    }
+
+    await fetchHierarchyData();
+  } catch (error) {
+    handleApiError(error, 'deleting industry');
+  } finally {
+    showLoader(false);
+  }
+}
+
+async function deleteSector(id) {
+  if (!confirm('Are you sure you want to delete this sector? This will also delete all associated business types.')) {
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        endpoint: 'deleteSector',
+        data: { id }
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to delete sector');
+    }
+
+    await fetchHierarchyData();
+  } catch (error) {
+    handleApiError(error, 'deleting sector');
+  } finally {
+    showLoader(false);
+  }
+}
+
+async function deleteBusinessType(id) {
+  if (!confirm('Are you sure you want to delete this business type?')) {
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        endpoint: 'deleteBusinessType',
+        data: { id }
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to delete business type');
+    }
+
+    await fetchHierarchyData();
+  } catch (error) {
+    handleApiError(error, 'deleting business type');
+  } finally {
+    showLoader(false);
+  }
+}
+
+async function deleteRevenueRate(id) {
+  if (!confirm('Are you sure you want to delete this revenue rate?')) {
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const response = await fetch('https://payzamfara.com/php/index.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        endpoint: 'deleteRevenueRate',
+        data: { id }
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.status !== 1) {
+      throw new Error(result.message || 'Failed to delete revenue rate');
+    }
+
+    // Refresh revenue rates data
+    const ratesResponse = await fetch('https://payzamfara.com/php/index.php?getRevenueRates');
+    const ratesData = await ratesResponse.json();
+    if (ratesData.status === 1) {
+      revenueRates = ratesData.rates;
+      renderRevenueRatesTable();
+    }
+  } catch (error) {
+    handleApiError(error, 'deleting revenue rate');
+  } finally {
+    showLoader(false);
   }
 }
 
