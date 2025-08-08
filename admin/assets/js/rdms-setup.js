@@ -39,7 +39,6 @@ async function fetchHierarchyData() {
     if (data.status === 1) {
       hierarchyData = data.data;
       processHierarchyData();
-      renderTables();
     } else {
       console.error('Failed to load hierarchy data');
     }
@@ -57,7 +56,7 @@ async function fetchHierarchyData() {
       revenueHeads = headsData.message;
     }
 
-    processHierarchyData();
+    // Only call renderTables once after all data is loaded
     renderTables();
   } catch (error) {
     console.error('Error fetching hierarchy data:', error);
@@ -108,24 +107,25 @@ function renderTables() {
   renderBusinessTypesTable();
   populateIndustryDropdowns();
   renderRevenueRatesTable();
+  
   populateRevenueRateDropdowns().then(() => {
-    // if (document.getElementById('revenueRateHead')) {
-    //   $("#revenueRateHead").selectize({
-    //     create: false,
-    //     sortField: 'text',
-    //     placeholder: 'Search for revenue head',
-    //     // dropdownParent: 'body'
-    //   });
-    // }
+    if (document.getElementById('revenueRateHead')) {
+      $("#revenueRateHead").selectize({
+        create: false,
+        sortField: 'text',
+        placeholder: 'Search for revenue head',
+        // dropdownParent: 'body'
+      });
+    }
 
-    // if (document.getElementById('revenueRateBusinessType')) {
-    //   $("#revenueRateBusinessType").selectize({
-    //     create: false,
-    //     sortField: 'text',
-    //     placeholder: 'Search for your type of business',
-    //     // dropdownParent: 'body'
-    //   });
-    // }
+    if (document.getElementById('revenueRateBusinessType')) {
+      $("#revenueRateBusinessType").selectize({
+        create: false,
+        sortField: 'text',
+        placeholder: 'Search for your type of business',
+        // dropdownParent: 'body'
+      });
+    }
   });
 }
 
@@ -207,13 +207,13 @@ function renderRevenueRatesTable() {
   const tbody = document.getElementById('revenueRatesTableBody');
   tbody.innerHTML = '';
 
-  revenueRates.forEach(rate => {
+  revenueRates.forEach((rate, index) => {
     const businessType = businessTypes.find(b => b.id === rate.business_type_id.toString());
     const revenueHead = revenueHeads.find(h => h.id === rate.revenue_head_id.toString());
 
     const row = document.createElement('tr');
     row.innerHTML = `
-            <td>${rate.id}</td>
+            <td>${index + 1}</td>
             <td>${revenueHead ? revenueHead.COL_4 : 'N/A'}</td>
             <td>${businessType ? businessType.name : 'N/A'}</td>
             <td>Group ${rate.group_id}</td>
@@ -266,9 +266,20 @@ function showRevenueRateModal(rateId = null) {
     document.getElementById('revenueRateId').value = rateId;
 
     const rate = revenueRates.find(r => r.id == rateId);
+
     if (rate) {
-      document.getElementById('revenueRateHead').value = rate.revenue_head_id;
-      document.getElementById('revenueRateBusinessType').value = rate.business_type_id;
+      // For selectize inputs, use the selectize API to set values
+      const revenueHeadSelectize = $('#revenueRateHead')[0].selectize;
+      const businessTypeSelectize = $('#revenueRateBusinessType')[0].selectize;
+      
+      if (revenueHeadSelectize) {
+        revenueHeadSelectize.setValue(rate.revenue_head_id);
+      }
+      if (businessTypeSelectize) {
+        businessTypeSelectize.setValue(rate.business_type_id);
+      }
+      
+      // Regular inputs can use .value
       document.getElementById('revenueRateGroup').value = rate.group_id;
       document.getElementById('revenueRateAmount').value = rate.amount;
       document.getElementById('revenueRateFrequency').value = rate.frequency;
@@ -384,6 +395,13 @@ function showBusinessTypeModal(businessTypeId = null) {
     document.getElementById('businessTypeModalTitle').textContent = 'Create Business Type';
     document.getElementById('businessTypeId').value = '';
     document.getElementById('businessTypeSector').innerHTML = '<option value="">Select Sector</option>';
+    
+    sectors.forEach(businessType => { 
+      const option = document.createElement('option');
+      option.value = businessType.id;
+      option.textContent = businessType.name;
+      document.getElementById('businessTypeSector').appendChild(option);
+    });
   }
 
   modal.show();
@@ -745,6 +763,10 @@ function editIndustry(id) {
 // Edit sector
 function editSector(id) {
   showSectorModal(id);
+}
+
+function editRevenueRate(id) {
+  showRevenueRateModal(id);
 }
 
 // Edit business type
