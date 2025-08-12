@@ -86,7 +86,7 @@ async function getRolesAdmin() {
     if (approve_revenue === undefined) {
       $("#aprrv").addClass("disabled")
     }
-  } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html")) {
+  } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html") || currentPage.includes("presumptive.html")) {
     let ReportRoles = userRoles.reports_access
 
     $('#reportDisplay').removeClass('hidden')

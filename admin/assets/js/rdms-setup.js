@@ -107,7 +107,7 @@ function renderTables() {
   renderBusinessTypesTable();
   populateIndustryDropdowns();
   renderRevenueRatesTable();
-  
+
   populateRevenueRateDropdowns().then(() => {
     if (document.getElementById('revenueRateHead')) {
       $("#revenueRateHead").selectize({
@@ -150,6 +150,17 @@ function renderIndustriesTable() {
                 `;
     tbody.appendChild(row);
   });
+
+  if ($.fn.DataTable.isDataTable('#industriesTable')) {
+    $('#industriesTable').DataTable().destroy();
+  }
+
+  // Initialize DataTable
+  $('#industriesTable').DataTable({
+    responsive: true,
+    pageLength: 20,
+    ordering: false
+  });
 }
 
 // Render sectors table
@@ -173,6 +184,17 @@ function renderSectorsTable() {
                     </td>
                 `;
     tbody.appendChild(row);
+  });
+
+  if ($.fn.DataTable.isDataTable('#sectorsTable')) {
+    $('#sectorsTable').DataTable().destroy();
+  }
+
+  // Initialize DataTable
+  $('#sectorsTable').DataTable({
+    responsive: true,
+    pageLength: 20,
+    ordering: false
   });
 }
 
@@ -199,6 +221,17 @@ function renderBusinessTypesTable() {
                 `;
     tbody.appendChild(row);
   });
+
+  if ($.fn.DataTable.isDataTable('#businessTypesTable')) {
+    $('#businessTypesTable').DataTable().destroy();
+  }
+
+  // Initialize DataTable
+  $('#businessTypesTable').DataTable({
+    responsive: true,
+    pageLength: 20,
+    ordering: false
+  });
 }
 
 // Render Revenu Rates
@@ -210,13 +243,14 @@ function renderRevenueRatesTable() {
   revenueRates.forEach((rate, index) => {
     const businessType = businessTypes.find(b => b.id === rate.business_type_id.toString());
     const revenueHead = revenueHeads.find(h => h.id === rate.revenue_head_id.toString());
+    const groupmerger = { "1": "A", "2": "B", "3": "C", "4": "D", "5": "E" }
 
     const row = document.createElement('tr');
     row.innerHTML = `
             <td>${index + 1}</td>
             <td>${revenueHead ? revenueHead.COL_4 : 'N/A'}</td>
             <td>${businessType ? businessType.name : 'N/A'}</td>
-            <td>Group ${rate.group_id}</td>
+            <td>Group ${groupmerger[rate.group_id]}</td>
             <td>₦${parseFloat(rate.amount).toLocaleString()}</td>
             <td>${rate.frequency}</td>
             <td class="action-btns">
@@ -229,6 +263,17 @@ function renderRevenueRatesTable() {
             </td>
         `;
     tbody.appendChild(row);
+  });
+
+  if ($.fn.DataTable.isDataTable('#revenueRatesTable')) {
+    $('#revenueRatesTable').DataTable().destroy();
+  }
+
+  // Initialize DataTable
+  $('#revenueRatesTable').DataTable({
+    responsive: true,
+    pageLength: 20,
+    ordering: false
   });
 }
 
@@ -271,14 +316,14 @@ function showRevenueRateModal(rateId = null) {
       // For selectize inputs, use the selectize API to set values
       const revenueHeadSelectize = $('#revenueRateHead')[0].selectize;
       const businessTypeSelectize = $('#revenueRateBusinessType')[0].selectize;
-      
+
       if (revenueHeadSelectize) {
         revenueHeadSelectize.setValue(rate.revenue_head_id);
       }
       if (businessTypeSelectize) {
         businessTypeSelectize.setValue(rate.business_type_id);
       }
-      
+
       // Regular inputs can use .value
       document.getElementById('revenueRateGroup').value = rate.group_id;
       document.getElementById('revenueRateAmount').value = rate.amount;
@@ -385,6 +430,9 @@ function showBusinessTypeModal(businessTypeId = null) {
     if (businessType) {
       document.getElementById('businessTypeName').value = businessType.name;
       document.getElementById('businessTypeSector').value = businessType.sector_id;
+
+      // $('#businessTypeSector')[0].selectize.setValue(businessType.sector_id);
+
       // Update sectors dropdown based on industry
       const sector = sectors.find(s => s.id === businessType.sector_id);
       if (sector) {
@@ -395,15 +443,25 @@ function showBusinessTypeModal(businessTypeId = null) {
     document.getElementById('businessTypeModalTitle').textContent = 'Create Business Type';
     document.getElementById('businessTypeId').value = '';
     document.getElementById('businessTypeSector').innerHTML = '<option value="">Select Sector</option>';
-    
-    sectors.forEach(businessType => { 
+
+    sectors.forEach(businessType => {
       const option = document.createElement('option');
       option.value = businessType.id;
       option.textContent = businessType.name;
       document.getElementById('businessTypeSector').appendChild(option);
     });
+
+
   }
 
+  if (document.getElementById('businessTypeSector')) {
+    $("#businessTypeSector").selectize({
+      create: false,
+      sortField: 'text',
+      placeholder: 'Search for sector',
+      // dropdownParent: 'body'
+    });
+  }
   modal.show();
 }
 

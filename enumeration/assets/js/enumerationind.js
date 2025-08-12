@@ -1,4 +1,5 @@
 const flatBusinessTypes = [];
+const presumptiveBusiness = []
 
 async function getBusinessType() {
   try {
@@ -30,6 +31,36 @@ async function getBusinessType() {
     console.log(error)
   }
 }
+
+async function fetchBusiness() {
+  try {
+    const response = await fetch(`${HOST}?getPresumptiveTax`)
+    const data = await response.json()
+
+    // console.log(data)
+
+    if (data.status === 1) {
+
+      data.message.forEach(dta => {
+        presumptiveBusiness.push(dta)
+      })
+      // data.message.forEach(busness => {
+      //   businessTypes += `
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `
+
+      //   $("#busiType").append(`
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `)
+      // })
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+fetchBusiness()
 
 class CustomerValidation {
   constructor() {
@@ -571,7 +602,7 @@ class RegistrationForm {
     let businessTypedata;
 
     if (businessTypeVal) {
-      businessTypedata = flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+      businessTypedata = presumptiveBusiness.find(ee => ee.business_type === businessTypeVal)
     }
 
     const data = {
@@ -581,8 +612,8 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
-        business_type_id: businessTypedata.business_type_id || null,
-        industry: businessTypedata.industry_name || null,
+        business_type_id: businessTypedata ? businessTypedata.id : null,
+        industry: null,
         category: "Individual",
         numberofstaff: "",
         created_by: "enumerator",
@@ -600,6 +631,7 @@ class RegistrationForm {
       data.data[input.dataset.name] = value;
     });
 
+    // console.log(data)
     return data;
   }
 
@@ -756,8 +788,8 @@ class RegistrationForm {
           <div class="form-group mb-2 md:w-[320px] w-full">
             <select class="mt-1 regInputs" required data-name="business_type" id="businessTypeSelect">
               <option value="" selected disabled>-Select the type of the business--</option>
-              ${flatBusinessTypes.map(type => `
-                <option value="${type.business_type_name}">${type.business_type_name}</option>
+              ${presumptiveBusiness.map(type => `
+                <option value="${type.business_type}">${type.business_type}</option>
               `).join('')}
             </select>
             <small class="validate text-red-500 hidden"></small>
@@ -767,7 +799,7 @@ class RegistrationForm {
 
         $("#businessTypeSelect").selectize({
           create: false,
-          sortField: 'text',
+          // sortField: 'text',
           placeholder: 'Search for your type of business',
           dropdownParent: 'body'
         });

@@ -1,4 +1,5 @@
 const flatBusinessTypes = [];
+const presumptiveBusiness = []
 
 async function getBusinessType() {
   try {
@@ -35,14 +36,55 @@ async function getBusinessType() {
   }
 }
 
-getBusinessType().then(() => {
+// getBusinessType().then(() => {
+//   $("#businessTypeSelect").selectize({
+//     create: false,
+//     sortField: 'text',
+//     placeholder: 'Search for your type of business',
+//     dropdownParent: 'body'
+//   });
+// })
+
+async function fetchBusiness() {
+  try {
+    const response = await fetch(`${HOST}?getPresumptiveTax`)
+    const data = await response.json()
+
+    // console.log(data)
+
+    if (data.status === 1) {
+
+      data.message.forEach(dta => {
+        presumptiveBusiness.push(dta)
+        $("#businessTypeSelect").append(`
+              <option value="${dta.business_type}">${dta.business_type}</option>
+            `)
+      })
+      // data.message.forEach(busness => {
+      //   businessTypes += `
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `
+
+      //   $("#busiType").append(`
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `)
+      // })
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+fetchBusiness().then(e => {
   $("#businessTypeSelect").selectize({
     create: false,
-    sortField: 'text',
+    // sortField: 'text',
     placeholder: 'Search for your type of business',
     dropdownParent: 'body'
   });
 })
+
 
 class CustomerValidation {
   constructor() {
@@ -593,7 +635,7 @@ class RegistrationForm {
     let businessTypedata;
 
     if (businessTypeVal) {
-      businessTypedata = flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+      businessTypedata = presumptiveBusiness.find(ee => ee.business_type === businessTypeVal)
     }
 
     const data = {
@@ -603,8 +645,8 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
-        business_type_id: businessTypedata.business_type_id || null,
-        industry: businessTypedata.industry_name || null,
+        business_type_id: businessTypedata ? businessTypedata.id : null,
+        industry: null,
         category: this.getCategoryValue(),
         numberofstaff: "",
         created_by: "enumerator",
@@ -621,7 +663,6 @@ class RegistrationForm {
       }
       data.data[input.dataset.name] = value;
     });
-
     return data;
   }
 
