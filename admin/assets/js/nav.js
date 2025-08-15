@@ -67,11 +67,11 @@ $(".aside").html(`
               <div data-i18n="Input groups">Collection Report</div>
             </a>
           </li>
-          <li class="menu-item">
+          <!--<li class="menu-item">
             <a href="presumptive.html" class="menu-link">
               <div data-i18n="Input groups">Presumptive Report</div>
             </a>
-          </li>
+          </li>-->
 
         </ul>
       </li>

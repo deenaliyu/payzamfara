@@ -130,79 +130,78 @@ function exportTablee(element, thetable) {
   });
 }
 
-async function getApplicableTaxes() {
-  let userInfo = JSON.parse(localStorage.getItem("singleUser"));
-  const userTax = userInfo.tax_number;
-  const response = await fetch(
-    `${HOST}?getApplicableTaxes&tax_number=${userTax}`
-  );
-  const revenueHeads = await response.json();
+async function displayApplicableTaxes(taxNumber) {
+  try {
+    const response = await fetch(`https://payzamfara.com/php/index.php?calculateApplicableTaxesCompliance&tax_number=${taxNumber}`);
+    const data = await response.json();
 
-  // console.log(revenueHeads);
-  $("#loaderr").remove();
-  for (const item of revenueHeads) {
-    let aa = "";
+    if (data.status === 1) {
+      const taxesContainer = document.getElementById('taxes-container');
 
-    aa += `
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${item.business_type_id}" aria-expanded="true" aria-controls="collapseOne">
-          ${item.business_type}
-      </button>
-    </h2>
-     <div id="collapse${item.business_type_id}" class="accordion-collapse collapse mee" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-     <div class="accordion-body">
-     <div class="table-responsive -mt-6">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>S/N</th>
-                        <th>Description</th>
-                        <th>Frequency</th>
-                        <th>Amount</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody id="showTaxes">
-    `;
+      console.log(taxesContainer)
+      taxesContainer.innerHTML = `
+        <div class="applicable-taxes-container">
+          <h4>Applicable Taxes for Payer ID: ${data.tax_number}</h4>
 
-    for (const key in item) {
-      if (item[key].id) {
-        aa += `
+          <div class="table-responsive mt-5">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>S/N</th>
+                  <th>Revenue Head</th>
+                  <th>Frequency</th>
+                  <th>Amount (₦)</th>
+                  <th>Periods Due</th>
+                  <th>Total Due (₦)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.revenue_breakdown.map((item, index) => `
+                  <tr>
+                    <td>${index + 1}</td>
+                    <td>${item.revenue_head}</td>
+                    <td>${item.frequency}</td>
+                    <td>₦ ${item.amount.toLocaleString()}</td>
+                    <td>${item.non_compliant_periods.join(', ')}</td>
+                    <td>₦ ${item.total_due.toLocaleString()}</td>
+                    <td>
+                      <span class="badge ${item.status === 'Non-compliant' ? 'bg-danger' : 'bg-success'}">
+                        ${item.status}
+                      </span>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-                      <tr>
-                       <td><input class="form-check-input taxChecks" data-theidd="${item[key].id}" type="checkbox" value="" onchange="checkTax(this)"></td>
-                       <td>hhh</td>
-                       <td>${item[key].COL_4}</td>
-                       <td>Monthly</td>
-                       <td>${item[key].COL_6}</td>
-                       <td><button class="button text-sm" onclick="generateInv(${item[key].id})">Generate Invoice</button></td>
-                       </tr>
+         ${data.total_due > 0 ? `
+            <div class="alert alert-danger text-center mt-4">
+              <i class="fas fa-exclamation-triangle"></i> 
+              You have outstanding taxes totaling ₦${data.total_due.toLocaleString()}
+            </div>
+          ` : `
+            <div class="alert alert-success text-center mt-4">
+              <i class="fas fa-check-circle"></i> 
+              You are fully compliant with all tax obligations
+            </div>
+          `}
       `;
-      } else {
-        aa += `
-
-       
-`;
-      }
+    } else {
+      document.getElementById('taxes-container').innerHTML = `
+        <div class="alert alert-primary text-center">No tax information found for this tax number</div>
+      `;
     }
-
-    aa += `
-    </tbody>
-    </table>
-  </div>
-
-</div>
-      </div>
-      </div>
+  } catch (error) {
+    document.getElementById('taxes-container').innerHTML = `
+      <div class="alert alert-danger">Error loading tax information: ${error.message}</div>
     `;
-
-    $(".apt").append(aa);
   }
 }
 
-getApplicableTaxes().then((res) => { });
+displayApplicableTaxes(userIdo);
 
 async function getTaxesCateg() {
   const response = await fetch(`${HOST}?getAllRevenueHeads`);

@@ -39,7 +39,7 @@
   <script src="./assets/js/config.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/polyfills.umd.js"></script> -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-  
+
 
 </head>
 
@@ -74,7 +74,7 @@
             </div>
 
             <div class="mt-4 flex gap-x-5 absolute right-24">
-    
+
               <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
                 data-bs-target="#filterInvoice">
                 <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
@@ -95,11 +95,16 @@
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <section class="content-wrapper">   
-        <div class="container-xxl flex-grow-1 container-p-y taxes">
+        <section class="content-wrapper">
+          <div class="flex justify-center items-center mt-4" id="theLoader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>
+
+          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="reportDisplay">
             <p class="font-bold text-2xl text-black">Presumptive Tax Report</p>
             <div class="flex justify-content-end mt-3">
-              <a class="button" href="../generatepresumptiveinvoice.html" id="generatePresumptiveBtn">Generate Presumptive Tax </a>
+              <a class="button" href="../generatepresumptiveinvoice.html" id="generatePresumptiveBtn">Generate
+                Presumptive Tax </a>
             </div>
             <div class="grid grid-cols-3 gap-3 mt-2" id="cardsForSummaray">
 
@@ -129,7 +134,7 @@
 
             </div>
 
-            <div class="card py-4 mt-6"> 
+            <div class="card py-4 mt-6">
               <div class="table-responsive p-2">
                 <table class="table invoiceTable" id="dataTable">
                   <thead>
@@ -153,36 +158,36 @@
 
                   </tbody>
                 </table>
-                
-                
+
+
               </div>
-              
+
             </div>
 
           </div>
-          
-           <table class="table invoiceTable hidden" id="invoiceTableFull">
-              <thead>
-                <tr class="text-center">
-                  <th></th>
-                    <th>MDAS</th>
-                    <th>Revenue Head</th>
-                    <th>Name</th>
-                    <th>Office</th>
-                    <th>TIN</th>
-                    <th>Invoice Number</th>
-                    <th>Amount Paid</th>
-                    <th>Payment Channel</th>
-                    <th>Payment Refrence Number</th>
-                    <th>Receipt Number</th>
-                    <th>Payment Date</th>
-                </tr>
-              </thead>
-              <tbody class="table-border-bottom-0" id="showThem2">
 
-              </tbody>
-            </table>
-          
+          <table class="table invoiceTable hidden" id="invoiceTableFull">
+            <thead>
+              <tr class="text-center">
+                <th></th>
+                <th>MDAS</th>
+                <th>Revenue Head</th>
+                <th>Name</th>
+                <th>Office</th>
+                <th>TIN</th>
+                <th>Invoice Number</th>
+                <th>Amount Paid</th>
+                <th>Payment Channel</th>
+                <th>Payment Refrence Number</th>
+                <th>Receipt Number</th>
+                <th>Payment Date</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0" id="showThem2">
+
+            </tbody>
+          </table>
+
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
 
           </section>
@@ -207,9 +212,9 @@
             aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
         </div>
         <div class="modal-body">
-            
-            <div class="flex justify-end">
-              <button class="btn btn-primary btn-sm" onclick="clearfilter2()">clear filter</button>
+
+          <div class="flex justify-end">
+            <button class="btn btn-primary btn-sm" onclick="clearfilter2()">clear filter</button>
           </div>
           <div class="row">
             <div class="col mb-3" id="mdass">
@@ -221,7 +226,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col mb-0" id="the_rev">
               <label for="defaultSelect" class="form-label">Revenue Head</label>
@@ -231,17 +236,17 @@
                 </select>
               </div>
             </div>
-             <div class="col mb-0" id="payment_channel">
+            <div class="col mb-0" id="payment_channel">
               <label for="defaultSelect" class="form-label">Payment Channel</label>
               <div class="form-group">
                 <select name="" id="getPayment" class="form-select ">
-                  <option  selected>--- All---</option>
+                  <option selected>--- All---</option>
                 </select>
               </div>
             </div>
-            
+
           </div>
-          
+
           <div class="row g-2">
             <label for="" class="mt-3">Date</label>
             <div class="col mb-0">
@@ -253,7 +258,7 @@
               <input class="form-control" type="date" value="" id="toDateInput">
             </div>
           </div>
-          
+
         </div>
         <div class="modal-footer ">
           <button type="button" class="btn btn-prime w-full" id="filterMda2">Apply</button>

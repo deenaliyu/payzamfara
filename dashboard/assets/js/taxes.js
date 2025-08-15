@@ -104,7 +104,6 @@ async function displayApplicableTaxes(taxNumber) {
     if (data.status === 1) {
       const taxesContainer = document.getElementById('taxes-container');
 
-      console.log(taxesContainer)
       taxesContainer.innerHTML = `
         <div class="applicable-taxes-container">
           <h4>Applicable Taxes for Payer ID: ${data.tax_number}</h4>
@@ -113,6 +112,7 @@ async function displayApplicableTaxes(taxNumber) {
             <table class="table">
               <thead>
                 <tr>
+                  <th></th>
                   <th>S/N</th>
                   <th>Revenue Head</th>
                   <th>Frequency</th>
@@ -125,6 +125,7 @@ async function displayApplicableTaxes(taxNumber) {
               <tbody>
                 ${data.revenue_breakdown.map((item, index) => `
                   <tr>
+                    <td><input class="form-check-input taxChecksAppl" data-thedueamount="${item.total_due}" data-thename="${item.revenue_head}" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
                     <td>${index + 1}</td>
                     <td>${item.revenue_head}</td>
                     <td>${item.frequency}</td>
@@ -167,6 +168,7 @@ async function displayApplicableTaxes(taxNumber) {
   }
 }
 
+displayApplicableTaxes(tax_numberP);
 // function showPeriodDetails(index, item) {
 //   const modalBody = document.getElementById('periodsModalBody');
 //   const isCompliant = item.status === 'Compliant';
@@ -184,7 +186,7 @@ async function displayApplicableTaxes(taxNumber) {
 //           </span>
 //         </div>
 //       </div>
-      
+
 //       <div class="row">
 //         <div class="col-md-6">
 //           <div class="card ${isCompliant ? 'border-success' : 'border-warning'}">
@@ -209,7 +211,7 @@ async function displayApplicableTaxes(taxNumber) {
 //             </div>
 //           </div>
 //         </div>
-        
+
 //         <div class="col-md-6">
 //           <div class="card border-info">
 //             <div class="card-header bg-info text-white">
@@ -229,7 +231,7 @@ async function displayApplicableTaxes(taxNumber) {
 //   $('#periodsModal').modal('show');
 // }
 // Example usage:
-displayApplicableTaxes('ZAI-0000061743');
+
 
 async function getTaxes() {
   const response = await fetch(`${HOST}?getAllRevenueHeads`);
@@ -309,6 +311,101 @@ assignedTaxesBody().then(res => {
   $("#dataTable4").DataTable()
 })
 
+$("#generateInvoiceBtnAppl").on("click", function () {
+  let allSelected = document.querySelectorAll(".taxChecksAppl");
+  let theArray = [];
+  allSelected.forEach((slt) => {
+    if (slt.checked) {
+      theArray.push({
+        id: slt.dataset.theidd,
+        revenueHead: slt.dataset.thename,
+        revenueAmount: slt.dataset.thedueamount
+      });
+    }
+  });
+
+  if (theArray.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No Taxes Selected',
+      text: 'Please select at least one tax to generate an invoice.',
+    });
+  } else {
+    Swal.fire({
+      title: 'Generating Invoice',
+      text: 'Please wait while we generate your invoice.',
+      icon: 'info',
+      confirmButtonText: 'Generate Invoice',
+      confirmButtonColor: '#015826',
+      html: `
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Revenue Head</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${theArray.map((id, idx) => {
+        return `
+                  <tr>
+                    <td colspan="2">${id.revenueHead}</td>
+                    <td>
+                      <input type="number" min="0" class="swal2-inpt form-control" id="swal-input-price-${id.id}" value="${id.revenueAmount}" placeholder="${id.revenueAmount}" readonly>
+                    </td>
+                  </tr>
+                `;
+      }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `,
+      preConfirm: async () => {
+        let revArray = []
+        let prices = theArray.map(id => {
+          revArray.push(id.id)
+          const val = document.getElementById(`swal-input-price-${id.id}`).value;
+          return val ? val : '';
+        });
+        if (prices.some(p => !p || isNaN(p) || Number(p) <= 0)) {
+          Swal.showValidationMessage('Please enter a valid amount for each selected tax.');
+          return false;
+        }
+        try {
+          const response = await fetch(`${HOST}?generateSingleInvoices&tax_number=${tax_numberP}&revenue_head_id=${revArray.join(",")}&price=${prices.join(",")}&zonalOffice=8&lga=Not Assigned&invoice_type=invoice`);
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return await response.json();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Invoice Generated Successfully!',
+          text: `Your invoice number is ${result.value.invoice_number}.`,
+          confirmButtonText: 'Open Invoice',
+          confirmButtonColor: '#015826',
+        }).then((result3) => {
+          if (result3.isConfirmed) {
+            window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+          }
+        });
+      }
+    });
+  }
+
+
+
+})
+
 $("#generateInvoiceBtn").on("click", function () {
   let allSelected = document.querySelectorAll(".taxCheckso");
   let theArray = [];
@@ -343,11 +440,12 @@ $("#generateInvoiceBtn").on("click", function () {
             <tbody>
               ${theArray.map((id, idx) => {
         const revenueHead = $(`#assignedTaxesBody input[data-theidd="${id}"]`).closest('tr').find('td').eq(2).text();
+        const revenueAmount = $(`#assignedTaxesBody input[data-theidd="${id}"]`).val();
         return `
                   <tr>
                     <td>${revenueHead}</td>
                     <td>
-                      <input type="number" min="0" class="swal2-input form-control" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
+                      <input type="number" min="0" class="swal2-inpt form-control" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
                     </td>
                   </tr>
                 `;
@@ -398,6 +496,8 @@ $("#generateInvoiceBtn").on("click", function () {
 
 
 })
+
+
 
 // async function getPresumptiveTaxes() {
 //   const response = await fetch(

@@ -86,7 +86,7 @@ async function getRolesAdmin() {
     if (approve_revenue === undefined) {
       $("#aprrv").addClass("disabled")
     }
-  } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html") || currentPage.includes("presumptive.html")) {
+  } else if (currentPage.includes("invoice.html") || currentPage.includes("collection.html") || currentPage.includes("settlement.html")) {
     let ReportRoles = userRoles.reports_access
 
     $('#reportDisplay').removeClass('hidden')
@@ -131,6 +131,32 @@ async function getRolesAdmin() {
     }
 
 
+  } else if (currentPage.includes("presumptive-tax.html")) {
+    let ReportRoles = userRoles.presumptive_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_inv_list = ReportRoles.find(ff => ff === "view_presumptive_tax")
+    let generate_inv_report = ReportRoles.find(ff => ff === "create_presumptive_tax")
+    let download_presum_report = ReportRoles.find(ff => ff === "download_presumptive_report")
+
+    if (view_inv_list === undefined) {
+      $(".invoiceTable").html(`
+        <p class="text-center text-xl fontBold">No Access to view list !</p>
+      `)
+    }
+
+    if (download_presum_report === undefined) {
+      $("#collReportd").addClass("disabled")
+    }
+
+    if (generate_inv_report === undefined) {
+      $("#generatePresumptiveBtn").remove()
+    }
+
+
+
   } else if (currentPage.includes("demandnotice.html") || currentPage.includes("generatedemand.html")) {
     let demandRoles = userRoles.demand_notice_access
 
@@ -156,6 +182,35 @@ async function getRolesAdmin() {
       $("#generate-demand-container").html(`
           <p class="text-center text-xl fontBold my-5">No Access to view demand notice !</p>
       `)
+    }
+
+
+  } else if (currentPage.includes("rdms-setup.html")) {
+    let rdmdRoles = userRoles.rdms_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_rdms = rdmdRoles.find(ff => ff === "view_rdms")
+    let modify_rdms = rdmdRoles.find(ff => ff === "modify_rdms")
+
+    if (view_rdms === undefined) {
+      $("#reportDisplay").html(`
+        <p class="text-center text-xl fontBold">No Access to view RDMS setup !</p>
+      `)
+    }
+
+    if (modify_rdms === undefined) {
+      let allcreatebtn = document.querySelectorAll(".createbtn")
+      let allModals = document.querySelectorAll(".modal")
+
+      allcreatebtn.forEach(crbtn => {
+        crbtn.remove()
+      })
+
+      allModals.forEach(mdl => {
+        mdl.remove()
+      })
     }
 
 
@@ -334,34 +389,70 @@ async function getRolesAdmin() {
     const firstReviewer = etccRoles.includes("first_reviewer");
     const secondReviewer = etccRoles.includes("second_reviewer");
     const thirdReviewer = etccRoles.includes("third_reviewer");
+    const fourthReviewer = etccRoles.includes("fourth_reviewer");
 
     // Check if the user has no access
-    if (!firstReviewer && !secondReviewer && !thirdReviewer) {
-      $(".main_section").html(`< p class="text-center text-xl fontBold m-5" > No Access!</p > `);
+    if (!firstReviewer && !secondReviewer && !thirdReviewer && !fourthReviewer) {
+      $(".main_section").html(`<p class="text-center text-xl fontBold m-5"> No Access!</p> `);
       $("#initiateEtcc").remove();
     } else {
       // Handle role-based UI adjustments for multiple roles
-      if (thirdReviewer && secondReviewer && firstReviewer) {
-        // All three roles are present, no need to remove anything
-      } else if (thirdReviewer && secondReviewer) {
-        // If both thirdReviewer and secondReviewer are present
+      if (fourthReviewer && thirdReviewer && secondReviewer && firstReviewer) {
+        // All four roles are present, no need to remove anything
+      } else if (fourthReviewer && thirdReviewer && secondReviewer) {
+        // If fourth, third, and second reviewers are present
         $("#first_reviewer").remove();
-      } else if (secondReviewer && firstReviewer) {
-        // If both secondReviewer and firstReviewer are present
-        $("#third_reviewer").remove();
-      } else if (thirdReviewer && firstReviewer) {
-        // If both thirdReviewer and firstReviewer are present
+      } else if (fourthReviewer && thirdReviewer && firstReviewer) {
+        // If fourth, third, and first reviewers are present
         $("#second_reviewer").remove();
+      } else if (fourthReviewer && secondReviewer && firstReviewer) {
+        // If fourth, second, and first reviewers are present
+        $("#third_reviewer").remove();
+      } else if (thirdReviewer && secondReviewer && firstReviewer) {
+        // If third, second, and first reviewers are present
+        $("#fourth_reviewer").remove();
+      } else if (fourthReviewer && thirdReviewer) {
+        // If both fourth and third reviewers are present
+        $("#second_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (fourthReviewer && secondReviewer) {
+        // If both fourth and second reviewers are present
+        $("#third_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (fourthReviewer && firstReviewer) {
+        // If both fourth and first reviewers are present
+        $("#third_reviewer").remove();
+        $("#second_reviewer").remove();
+      } else if (thirdReviewer && secondReviewer) {
+        // If both third and second reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (thirdReviewer && firstReviewer) {
+        // If both third and first reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#second_reviewer").remove();
+      } else if (secondReviewer && firstReviewer) {
+        // If both second and first reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#third_reviewer").remove();
+      } else if (fourthReviewer) {
+        // If only fourth reviewer is present
+        $("#third_reviewer").remove();
+        $("#second_reviewer").remove();
+        $("#first_reviewer").remove();
       } else if (thirdReviewer) {
-        // If only thirdReviewer is present
+        // If only third reviewer is present
+        $("#fourth_reviewer").remove();
         $("#second_reviewer").remove();
         $("#first_reviewer").remove();
       } else if (secondReviewer) {
-        // If only secondReviewer is present
+        // If only second reviewer is present
+        $("#fourth_reviewer").remove();
         $("#third_reviewer").remove();
         $("#first_reviewer").remove();
       } else if (firstReviewer) {
-        // If only firstReviewer is present
+        // If only first reviewer is present
+        $("#fourth_reviewer").remove();
         $("#second_reviewer").remove();
         $("#third_reviewer").remove();
       }

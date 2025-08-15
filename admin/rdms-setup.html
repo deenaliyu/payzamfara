@@ -110,11 +110,11 @@
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
-          <!-- <div class="flex justify-center items-center mt-4" id="theLoader">
+          <div class="flex justify-center items-center mt-4" id="theLoader">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-          </div> -->
+          </div>
 
-          <div class="container-xxl flex-grow-1 container-p-y taxes " id="reportDisplay">
+          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="reportDisplay">
 
             <div class="card py-4">
               <div class="card-header">
@@ -144,7 +144,7 @@
                   <div class="tab-pane fade show active" id="industries" role="tabpanel">
                     <div class="d-flex justify-content-between mb-3">
                       <h4 class="fontBold text-lg">Industries</h4>
-                      <button class="btn btn-primary" onclick="showIndustryModal()">
+                      <button class="btn btn-primary createbtn" onclick="showIndustryModal()">
                         <i class="fas fa-plus"></i> Create Industry
                       </button>
                     </div>
@@ -176,7 +176,7 @@
                   <div class="tab-pane fade" id="sectors" role="tabpanel">
                     <div class="d-flex justify-content-between mb-3">
                       <h4 class="fontBold text-lg">Sectors</h4>
-                      <button class="btn btn-primary" onclick="showSectorModal()">
+                      <button class="btn btn-primary createbtn" onclick="showSectorModal()">
                         <i class="fas fa-plus"></i> Create Sector
                       </button>
                     </div>
@@ -201,7 +201,7 @@
                   <div class="tab-pane fade" id="businessTypes" role="tabpanel">
                     <div class="d-flex justify-content-between mb-3">
                       <h4 class="fontBold text-lg">Business Types</h4>
-                      <button class="btn btn-primary" onclick="showBusinessTypeModal()">
+                      <button class="btn btn-primary createbtn" onclick="showBusinessTypeModal()">
                         <i class="fas fa-plus"></i> Create Business Type
                       </button>
                     </div>
@@ -227,7 +227,7 @@
                   <div class="tab-pane fade" id="revenueRates" role="tabpanel">
                     <div class="d-flex justify-content-between mb-3">
                       <h4>Revenue Rates</h4>
-                      <button class="btn btn-primary" onclick="showRevenueRateModal()">
+                      <button class="btn btn-primary createbtn" onclick="showRevenueRateModal()">
                         <i class="fas fa-plus"></i> Create Revenue Rate
                       </button>
                     </div>

@@ -144,9 +144,8 @@
                     </button>
                   </li>
                   <li class="nav-item text-center" role="presentation">
-                    <button class="nav-link" id="assigned-tax-tab" data-bs-toggle="pill"
-                      data-bs-target="#assigned-tax" type="button" role="tab" aria-controls="assigned-tax"
-                      aria-selected="false">
+                    <button class="nav-link" id="assigned-tax-tab" data-bs-toggle="pill" data-bs-target="#assigned-tax"
+                      type="button" role="tab" aria-controls="assigned-tax" aria-selected="false">
                       Assigned Taxes
                     </button>
                   </li>
@@ -173,11 +172,14 @@
                       </table>
                     </div>
                   </div>
+
                   <div class="tab-pane fade" id="pills-app" role="tabpanel" aria-labelledby="pills-app-tab">
                     <!-- <button onclick="exportTablee('showtaxess', '.dataTable')" class="button mb-3">Export CSV</button> -->
 
-                    <div class="accordion apt" id="accordionExample">
-
+                    <div id="taxes-container">
+                      <div class="flex justify-center items-center mt-4">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                      </div>
                     </div>
                   </div>
 
@@ -339,7 +341,7 @@
   <script src="./assets/vendor/libs/export-table/src/tableHTMLExport.js"></script>
   <script src="./assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="./assets/js/taxpayerlist.js?v=1.3"></script>
+  <script src="./assets/js/taxpayerlist.js"></script>
   <script src="./assets/js/table2CSV.js"></script>
   <script src="./assets/js/filtertaxpayer.js"></script>
   <script src="./assets/js/taxes.js"></script>
