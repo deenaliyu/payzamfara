@@ -469,7 +469,7 @@ async function getRolesAdmin() {
 
     if (full_access === undefined && no_access === undefined) {
       $("#serviceContainer").html(`
-        < p class="text-2xl m-5 text-center" > No Access!!</p >
+        <p class="text-2xl m-5 text-center"> No Access!!</p>
           `)
 
     } else if (full_access) {

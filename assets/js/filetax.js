@@ -20,6 +20,20 @@ function nextPrev(n) {
 $("#selectAccType").on("change", function () {
   let val = $(this).val()
   if (val === "2") {
+    $("#nameCont").html(`
+        <div class="form-group md:w-6/12 w-full">
+          <label for="">First name*</label>
+          <input type="text" class="form-control taxFInput" data-name="first_name" required
+            placeholder="Enter your first name">
+        </div>
+
+        <div class="form-group  md:w-6/12 w-full">
+          <label for="">Surname*</label>
+          <input type="text" class="form-control taxFInput" data-name="surname" required
+            placeholder="Enter your last name">
+        </div>
+      `)
+
     $("#indivCorporate").html(`
       <div class="md:flex gap-3 mt-3">
         <div class="form-group md:w-6/12  w-full">
@@ -40,6 +54,19 @@ $("#selectAccType").on("change", function () {
     `)
 
   } else {
+    $("#nameCont").html(`
+      <div class="form-group w-full">
+        <label for="">Organization Name*</label>
+        <input type="text" class="form-control taxFInput" data-name="first_name" required
+          placeholder="Enter your organization name">
+      </div>
+
+      <div class="form-group  md:w-6/12 w-full hidden">
+        <label for="">Surname*</label>
+        <input type="text" class="form-control taxFInput" data-name="surname"
+          placeholder="Enter your last name">
+      </div>
+    `)
 
     $("#indivCorporate").html(`
       <div class="md:flex gap-3 mt-3">

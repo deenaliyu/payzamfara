@@ -74,7 +74,7 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
+              <p class="text-sm text-black datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">E-services</h1>
             </div>
 
@@ -105,32 +105,125 @@
         <section class="content-wrapper">
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="flex align-items-center gap-1 mb-3">
-                <a type="button" style='color: #005826; font-weight: 500;' href="service.html">Back to
-                  taxfilling</a>
-              </div>
-            <section class="md:w-8/12 main_section">
-              <div class="p-2">
-                <div class="w-full">
-                      <div class="card card-body">
-                        <div class="table-responsive p-2">
-                          <table class="table invoiceTable" id="dataTable4">
-                            
-                            <tbody class="table-border-bottom-0" id="showdetails">
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="flex justify-center items-center mt-4" id="loader">
-                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                        </div>
-                        <div class="flex justify-center mt-4" >
-                            <div class="" id="showbtn">
-                               
-                                
-                            </div>
-                        </div>
-                        <div id="msg_box" class="w-full mt-3"></div>
-                      </div>
+              <a type="button" style='color: #005826; font-weight: 500;' href="service.html">Back to
+                taxfilling</a>
+            </div>
+
+            <section class="w-full main_section">
+              <div class="card card-body">
+                <div class="table-responsive p-2">
+                  <table class="table invoiceTable" id="dataTable4">
+
+                    <tbody class="table-border-bottom-0" id="showdetails">
+                    </tbody>
+                  </table>
                 </div>
+
+
+                <div id="viewuserTaxes">
+                  <h4 class="font-bold text-lg">User Tax Filings</h4>
+
+                  <!-- Tabs -->
+                  <ul class="nav nav-pills" id="taxTabs" role="tablist">
+                    <li class="nav-item">
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#invoice_tab" type="button"
+                        role="tab">Invoice</button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#demand_notice_tab" type="button"
+                        role="tab">Demand Notice</button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#presumptive_tab" type="button"
+                        role="tab">Presumptive</button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#direct_tab" type="button"
+                        role="tab">Direct</button>
+                    </li>
+
+                  </ul>
+
+                  <!-- Tab content -->
+                  <div class="tab-content border mt-5" id="taxTabsContent">
+                    <div class="tab-pane fade show active" id="invoice_tab" role="tabpanel">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>S/N</th>
+                            <th>Revenue Head</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="invoiceTable"></tbody>
+                      </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="demand_notice_tab" role="tabpanel">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Revenue Head</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="demandNoticeTable"></tbody>
+                      </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="presumptive_tab" role="tabpanel">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Revenue Head</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="presumptiveTable"></tbody>
+                      </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="direct_tab" role="tabpanel">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Revenue Head</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="directTable"></tbody>
+                      </table>
+                    </div>
+
+
+
+                  </div>
+                </div>
+
+
+                <div class="flex justify-center items-center mt-4" id="loader">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                </div>
+                <div class="flex justify-center mt-4">
+                  <div class="" id="showbtn">
+
+
+                  </div>
+                </div>
+                <div id="msg_box" class="w-full mt-3"></div>
+              </div>
             </section>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
@@ -163,7 +256,7 @@
   <script src="./assets/js/nav.js"></script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/veiwservice.js"></script>
+  <script src="./assets/js/viewtaxfiling.js"></script>
   <script>
     let theAtivo = document.querySelector(".mdol")
     theAtivo.parentElement.classList.add("active")

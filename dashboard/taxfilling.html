@@ -78,7 +78,7 @@
               </div> -->
               <a href="../filetax.html" class="button">
                 <iconify-icon class="align-middle" icon="ic:baseline-plus"></iconify-icon> File Tax</a>
-              
+
 
               <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
                 class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
@@ -104,9 +104,108 @@
                 <span>Go back</span>
               </a>
 
-              <h4 class="text-[#101828] font-bold text-[20px] mt-4">Tax Fillings</h4>
+              <div id="viewuserTaxes">
+                <h4 class="text-[#101828] font-bold text-[20px] mt-4 mb-2">Tax Fillings</h4>
+                <!-- Tabs -->
+                <ul class="nav nav-pills" id="taxTabs" role="tablist">
+                  <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#invoice_tab" type="button"
+                      role="tab">Invoice</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#demand_notice_tab" type="button"
+                      role="tab">Demand Notice</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#presumptive_tab" type="button"
+                      role="tab">Presumptive</button>
+                  </li>
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#direct_tab" type="button"
+                      role="tab">Direct</button>
+                  </li>
 
-              <div class="table-responsive p-3 mt-4">
+                </ul>
+                <!-- <div class="flex justify-end">
+                  <button class="button" id="generateInvoiceBtnFiling">Generate Invoice</button>
+                </div> -->
+
+                <!-- Tab content -->
+                <div class="tab-content border mt-5" id="taxTabsContent">
+                  <div class="tab-pane fade show active" id="invoice_tab" role="tabpanel">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>Revenue Head</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Due Date</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="invoiceTable"></tbody>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade" id="demand_notice_tab" role="tabpanel">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>Revenue Head</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Due Date</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="demandNoticeTable"></tbody>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade" id="presumptive_tab" role="tabpanel">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>Revenue Head</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Due Date</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="presumptiveTable"></tbody>
+                    </table>
+                  </div>
+
+                  <div class="tab-pane fade" id="direct_tab" role="tabpanel">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>S/N</th>
+                          <th>Revenue Head</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Due Date</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="directTable"></tbody>
+                    </table>
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+
+              <h4 class="text-[#101828] font-bold text-[20px] mt-4">Tax Fillings History</h4>
+
+              <div class="table-responsive p-3">
 
                 <table class="table theTable" id="dataTable">
                   <thead>
@@ -157,7 +256,7 @@
   <!-- build:js assets/vendor/js/core.js -->
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="./assets/vendor/js/bootstrap.js"></script>
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>

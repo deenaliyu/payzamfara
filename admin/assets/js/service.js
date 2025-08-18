@@ -29,6 +29,7 @@ async function fetchInvoice() {
       addd += `
         <tr class="relative">
         <td>${userInvoice.created_at}</td>
+        <td>${userInvoice.tax_number || 'N/A'}</td>
         <td>${userInvoice.first_name} ${userInvoice.surname}</td>
         <td>${userInvoice.email}</td>
         <td>${userInvoice.due_date || 'N/A'}</td>
@@ -53,7 +54,7 @@ async function fetchInvoice() {
 
       addd += `
           <td>
-            <a href="viewtaxfilling.html?id=${userInvoice.id}&load=true" target="_blank" class="btn btn-primary btn-sm viewUser" >View</a>
+            <a href="viewtaxfilling.html?id=${userInvoice.id}&load=true&tax_number=${userInvoice.tax_number}" class="btn btn-primary btn-sm viewUser">View</a>
           </td>
           </tr>
           `;
