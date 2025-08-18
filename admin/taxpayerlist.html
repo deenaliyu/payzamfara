@@ -174,7 +174,10 @@
                   </div>
 
                   <div class="tab-pane fade" id="pills-app" role="tabpanel" aria-labelledby="pills-app-tab">
-                    <!-- <button onclick="exportTablee('showtaxess', '.dataTable')" class="button mb-3">Export CSV</button> -->
+
+                    <div class="flex justify-end">
+                      <button class="button" id="generateInvoiceBtnDemand">Generate Demand Note</button>
+                    </div>
 
                     <div id="taxes-container">
                       <div class="flex justify-center items-center mt-4">
@@ -358,59 +361,7 @@
       table.search($(this).val()).draw();
     });
   </script>
-  <script>
-    function tableToCSV() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".table");
 
-      /* Declaring array variable */
-      var rows = [];
-
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-
-
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7
-          ]
-        );
-
-      }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
-
-      /* create a hidden <a> DOM node and set its download attribute */
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Taxpayer_List.csv");
-      document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
-      link.click();
-    }
-
-  </script>
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->

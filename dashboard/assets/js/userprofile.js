@@ -5,116 +5,116 @@ let businessTypes = [];
 
 // DOM Elements
 const elements = {
-    mainInfo: document.querySelector(".mainInfo"),
-    prof: document.querySelector(".prof"),
-    contactInfo: document.querySelector(".contactInfo"),
-    updtProfile: document.querySelector("#updtProfile"),
-    selectState: document.querySelector("#selectState"),
-    selectLGA: document.querySelector("#selectLGA"),
-    updateProfile: document.querySelector("#updateProfile"),
-    msgBox: document.querySelector("#msg_box"),
-    msgBox2: document.querySelector("#msg_box2"),
-    updatePass: document.querySelector("#updatePass"),
-    profilePicInput: document.querySelector("#profile_picIn"),
-    previewImg: document.querySelector("#preview"),
-    theProfImg: document.querySelector("#theProfImg"),
-    theProfImg2: document.querySelector("#theProfImg2"),
-    proffer: document.querySelector("#proffer"),
-    updatePic: document.querySelector("#updatePic"),
-    msgCenter: document.querySelector("#msg_center")
+  mainInfo: document.querySelector(".mainInfo"),
+  prof: document.querySelector(".prof"),
+  contactInfo: document.querySelector(".contactInfo"),
+  updtProfile: document.querySelector("#updtProfile"),
+  selectState: document.querySelector("#selectState"),
+  selectLGA: document.querySelector("#selectLGA"),
+  updateProfile: document.querySelector("#updateProfile"),
+  msgBox: document.querySelector("#msg_box"),
+  msgBox2: document.querySelector("#msg_box2"),
+  updatePass: document.querySelector("#updatePass"),
+  profilePicInput: document.querySelector("#profile_picIn"),
+  previewImg: document.querySelector("#preview"),
+  theProfImg: document.querySelector("#theProfImg"),
+  theProfImg2: document.querySelector("#theProfImg2"),
+  proffer: document.querySelector("#proffer"),
+  updatePic: document.querySelector("#updatePic"),
+  msgCenter: document.querySelector("#msg_center")
 };
 
 // Utility Functions
 const showLoader = (show) => {
-    const loader = document.getElementById("globalLoader");
-    loader.style.display = show ? "flex" : "none";
+  const loader = document.getElementById("globalLoader");
+  loader.style.display = show ? "flex" : "none";
 };
 
 const displayError = (message, element) => {
-    element.innerHTML = `<p class="text-danger text-center mt-4 text-lg">${message}</p>`;
+  element.innerHTML = `<p class="text-danger text-center mt-4 text-lg">${message}</p>`;
 };
 
 const displaySuccess = (message, element) => {
-    element.innerHTML = `<p class="text-success text-center mt-4 text-lg">${message}</p>`;
+  element.innerHTML = `<p class="text-success text-center mt-4 text-lg">${message}</p>`;
 };
 
 // API Functions
 const fetchData = async (url, options = {}) => {
-    try {
-        const response = await fetch(url, options);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return await response.json();
-    } catch (error) {
-        console.error('Fetch error:', error);
-        throw error;
-    }
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error;
+  }
 };
 
 const fetchUserDetails = async () => {
-    try {
-        const data = await fetchData(`${HOST}?userProfile&id=${userData.tax_number}`);
-        return data.user;
-    } catch (error) {
-        console.error('Error fetching user details:', error);
-        return null;
-    }
+  try {
+    const data = await fetchData(`${HOST}?userProfile&id=${userData.tax_number}`);
+    return data.user;
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    return null;
+  }
 };
 
 const fetchIndustryHierarchy = async () => {
-    try {
-        const data = await fetchData(`${HOST}?getIndustryHierarchy`);
-        if (data.status === 1) return data.data;
-        throw new Error(data.message || 'Failed to load industry hierarchy');
-    } catch (error) {
-        console.error('Error fetching industry hierarchy:', error);
-        return [];
-    }
+  try {
+    const data = await fetchData(`${HOST}?getIndustryHierarchy`);
+    if (data.status === 1) return data.data;
+    throw new Error(data.message || 'Failed to load industry hierarchy');
+  } catch (error) {
+    console.error('Error fetching industry hierarchy:', error);
+    return [];
+  }
 };
 
 // Data Processing
 const processIndustryHierarchy = (data) => {
-    const industries = [];
-    const businessTypes = [];
+  const industries = [];
+  const businessTypes = [];
 
-    data.forEach(industry => {
-        industries.push({
-            id: industry.industry_id,
-            name: industry.industry_name
-        });
-
-        industry.sectors.forEach(sector => {
-            sector.business_types.forEach(businessType => {
-                businessTypes.push({
-                    id: businessType.business_type_id,
-                    name: businessType.business_type_name,
-                    industry_id: industry.industry_id,
-                    industry_name: industry.industry_name,
-                    sector_id: sector.sector_id,
-                    sector_name: sector.sector_name
-                });
-            });
-        });
+  data.forEach(industry => {
+    industries.push({
+      id: industry.industry_id,
+      name: industry.industry_name
     });
 
-    return { industries, businessTypes };
+    industry.sectors.forEach(sector => {
+      sector.business_types.forEach(businessType => {
+        businessTypes.push({
+          id: businessType.business_type_id,
+          name: businessType.business_type_name,
+          industry_id: industry.industry_id,
+          industry_name: industry.industry_name,
+          sector_id: sector.sector_id,
+          sector_name: sector.sector_name
+        });
+      });
+    });
+  });
+
+  return { industries, businessTypes };
 };
 
 // DOM Rendering
 const renderProfileInfo = (userInfo) => {
-    if (!userInfo) return;
+  if (!userInfo) return;
 
-    // Main Info
-    elements.mainInfo.innerHTML = `
+  // Main Info
+  elements.mainInfo.innerHTML = `
         <h4 class="text-[18px] text-[#2E2F5B]">${userInfo.first_name} ${userInfo.surname}</h4>
         <p class="text-[14px] text-[#667085] pt-2">Payer ID: ${userInfo.tax_number}</p>
     `;
 
-    // Profile Info
-    elements.prof.innerHTML = `
+  // Profile Info
+  elements.prof.innerHTML = `
         <div class="flex justify-between md:w-[550px]">
             <label class="w-[195px]">Tax Identification Number</label>
             <div class="form-group md:w-[454px] w-full">
-                <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.tin || ''}" maxlength="15" />
+                <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.tax_number || ''}" maxlength="15" />
             </div>
         </div>
         <div class="flex justify-between md:w-[550px] mt-2 items-center">
@@ -137,8 +137,8 @@ const renderProfileInfo = (userInfo) => {
         </div>
     `;
 
-    // Contact Info
-    elements.contactInfo.innerHTML = `
+  // Contact Info
+  elements.contactInfo.innerHTML = `
         <div class="flex justify-between md:w-[550px]">
             <label class="w-[195px]">Email</label>
             <div class="form-group md:w-[454px] w-full">
@@ -173,16 +173,16 @@ const renderProfileInfo = (userInfo) => {
 };
 
 const renderEditProfileForm = (userInfo, businessTypes) => {
-    let profileForm = userInfo.tin ? '' : `
+  let profileForm = userInfo.tin ? '' : `
         <div class="flex justify-between">
             <label class="w-4/12">Tax Identification Number</label>
             <div class="form-group w-8/12">
-                <input class="form-control mt-1 regInputs" type="text" value="${userInfo.tin || ''}" maxlength="15" />
+                <input class="form-control mt-1 regInputs" type="text" value="${userInfo.tax_number || ''}" maxlength="15" readonly />
             </div>
         </div>
     `;
 
-    profileForm += `
+  profileForm += `
         <div class="flex justify-between mt-2 items-center">
             <label class="w-4/12">Employment status</label>
             <select class="form-select mt-1 w-8/12 updtProf" data-name="employment_status" required>
@@ -207,7 +207,7 @@ const renderEditProfileForm = (userInfo, businessTypes) => {
         </div>
         <div class="flex justify-between mt-2 items-center">
             <label class="w-4/12">Type of business</label>
-            <select class="form-select mt-1 w-8/12 updtProf" data-name="business_type" required>
+            <select class="form-select mt-1 w-8/12 updtProf" id="businessTypeSelect" data-name="business_type" required>
                 <option value="" ${!userInfo.business_type ? 'selected' : ''}>-Select--</option>
                 ${businessTypes.map(type => `
                     <option value="${type.name}" ${userInfo.business_type === type.name ? 'selected' : ''}>
@@ -255,219 +255,240 @@ const renderEditProfileForm = (userInfo, businessTypes) => {
         </div>
     `;
 
-    elements.updtProfile.innerHTML = profileForm;
+  elements.updtProfile.innerHTML = profileForm;
 };
 
 // Event Handlers
 const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-    showLoader(true);
-    elements.msgBox.innerHTML = `
+  e.preventDefault();
+  showLoader(true);
+  elements.msgBox.innerHTML = `
         <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
         </div>
     `;
-    elements.updateProfile.classList.add("hidden");
+  elements.updateProfile.classList.add("hidden");
 
-    const allInputs = document.querySelectorAll(".updtProf");
-    const updateData = { ...userData };
+  const allInputs = document.querySelectorAll(".updtProf");
+  const updateData = { ...userData };
 
-    // Remove unnecessary fields
-    delete updateData.verification_code;
-    delete updateData.verification_status;
-    delete updateData.timeIn;
-    delete updateData.industry;
-    delete updateData.img;
-    delete updateData.password;
+  // Remove unnecessary fields
+  delete updateData.verification_code;
+  delete updateData.verification_status;
+  delete updateData.timeIn;
+  delete updateData.industry;
+  delete updateData.img;
+  delete updateData.password;
 
-    allInputs.forEach(input => {
-        if (input.value) {
-            updateData[input.dataset.name] = input.value;
-        }
-    });
+  
 
-    try {
-        const queryString = new URLSearchParams(updateData).toString();
-        const data = await fetchData(`${HOST}?updateTaxPayer&${queryString}`);
-
-        if (data.status === 1) {
-            displaySuccess(data.message, elements.msgBox);
-            localStorage.setItem("userDataPrime", JSON.stringify(updateData));
-            setTimeout(() => window.location.reload(), 1000);
-        } else {
-            displayError(data.message || 'Failed to update profile', elements.msgBox);
-            elements.updateProfile.classList.remove("hidden");
-        }
-    } catch (error) {
-        displayError('An error occurred while updating profile', elements.msgBox);
-        elements.updateProfile.classList.remove("hidden");
-    } finally {
-        showLoader(false);
+  allInputs.forEach(input => {
+    if (input.value) {
+      updateData[input.dataset.name] = input.value;
     }
+  });
+
+  const businessTypeVal = $("#businessTypeSelect").val();
+  const selectedBusinessType = businessTypes.find(bt => bt.name === businessTypeVal);
+
+  // Remove any keys that are empty, null, or undefined
+  Object.keys(updateData).forEach(key => {
+    if (updateData[key] === "" || updateData[key] === null || updateData[key] === undefined) {
+      delete updateData[key];
+    }
+  });
+
+  if (selectedBusinessType) {
+    updateData['business_type'] = selectedBusinessType.name;
+    updateData['business_type_id'] = selectedBusinessType.id;
+    updateData['industry'] = selectedBusinessType.industry_name;
+  }
+
+
+  // console.log(updateData)
+
+  try {
+    const queryString = new URLSearchParams(updateData).toString();
+    const data = await fetchData(`${HOST}?updateTaxPayer&${queryString}`);
+
+    if (data.status === 1) {
+      displaySuccess(data.message, elements.msgBox);
+      localStorage.setItem("userDataPrime", JSON.stringify(updateData));
+      setTimeout(() => window.location.reload(), 1000);
+    } else {
+      displayError(data.message || 'Failed to update profile', elements.msgBox);
+      elements.updateProfile.classList.remove("hidden");
+    }
+  } catch (error) {
+    displayError('An error occurred while updating profile', elements.msgBox);
+    elements.updateProfile.classList.remove("hidden");
+  } finally {
+    showLoader(false);
+  }
 };
 
 const handlePasswordUpdate = async (e) => {
-    e.preventDefault();
-    showLoader(true);
-    elements.msgBox2.innerHTML = `
+  e.preventDefault();
+  showLoader(true);
+  elements.msgBox2.innerHTML = `
         <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
         </div>
     `;
-    elements.updatePass.classList.add("hidden");
+  elements.updatePass.classList.add("hidden");
 
-    const oldPass = document.querySelector("#oldPass").value;
-    const newPass = document.querySelector("#newPass").value;
-    const confirmPass = document.querySelector("#newPass2").value;
+  const oldPass = document.querySelector("#oldPass").value;
+  const newPass = document.querySelector("#newPass").value;
+  const confirmPass = document.querySelector("#newPass2").value;
 
-    if (!oldPass || !newPass || !confirmPass) {
-        displayError("Fields can't be empty!", elements.msgBox2);
-        elements.updatePass.classList.remove("hidden");
-        showLoader(false);
-        return;
+  if (!oldPass || !newPass || !confirmPass) {
+    displayError("Fields can't be empty!", elements.msgBox2);
+    elements.updatePass.classList.remove("hidden");
+    showLoader(false);
+    return;
+  }
+
+  if (oldPass !== userData.password) {
+    displayError("Current password not correct!", elements.msgBox2);
+    elements.updatePass.classList.remove("hidden");
+    showLoader(false);
+    return;
+  }
+
+  if (newPass !== confirmPass) {
+    displayError("Confirm password didn't match password!", elements.msgBox2);
+    elements.updatePass.classList.remove("hidden");
+    showLoader(false);
+    return;
+  }
+
+  try {
+    const data = await fetchData(`${HOST}?userPassword&id=${userData.id}&password=${newPass}`);
+
+    if (data.status === 1) {
+      displaySuccess("Password changed successfully!", elements.msgBox2);
+      setTimeout(() => {
+        localStorage.removeItem('userDataPrime');
+        window.location.href = "../signin.html";
+      }, 1000);
+    } else {
+      displayError(data.message || 'Failed to update password', elements.msgBox2);
+      elements.updatePass.classList.remove("hidden");
     }
-
-    if (oldPass !== userData.password) {
-        displayError("Current password not correct!", elements.msgBox2);
-        elements.updatePass.classList.remove("hidden");
-        showLoader(false);
-        return;
-    }
-
-    if (newPass !== confirmPass) {
-        displayError("Confirm password didn't match password!", elements.msgBox2);
-        elements.updatePass.classList.remove("hidden");
-        showLoader(false);
-        return;
-    }
-
-    try {
-        const data = await fetchData(`${HOST}?userPassword&id=${userData.id}&password=${newPass}`);
-        
-        if (data.status === 1) {
-            displaySuccess("Password changed successfully!", elements.msgBox2);
-            setTimeout(() => {
-                localStorage.removeItem('userDataPrime');
-                window.location.href = "../signin.html";
-            }, 1000);
-        } else {
-            displayError(data.message || 'Failed to update password', elements.msgBox2);
-            elements.updatePass.classList.remove("hidden");
-        }
-    } catch (error) {
-        displayError('Something went wrong!', elements.msgBox2);
-        elements.updatePass.classList.remove("hidden");
-    } finally {
-        showLoader(false);
-    }
+  } catch (error) {
+    displayError('Something went wrong!', elements.msgBox2);
+    elements.updatePass.classList.remove("hidden");
+  } finally {
+    showLoader(false);
+  }
 };
 
 const handleProfilePicChange = () => {
-    elements.proffer.classList.remove("hidden");
-    const file = elements.profilePicInput.files[0];
-    
-    if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            elements.previewImg.src = reader.result;
-        };
-    }
+  elements.proffer.classList.remove("hidden");
+  const file = elements.profilePicInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      elements.previewImg.src = reader.result;
+    };
+  }
 };
 
 const handleProfilePicUpdate = async () => {
-    showLoader(true);
-    elements.msgCenter.innerHTML = `
+  showLoader(true);
+  elements.msgCenter.innerHTML = `
         <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
         </div>
     `;
-    elements.updatePic.classList.add("hidden");
+  elements.updatePic.classList.add("hidden");
 
-    const file = elements.profilePicInput.files[0];
-    if (!file) {
-        displayError('Please select a file', elements.msgCenter);
+  const file = elements.profilePicInput.files[0];
+  if (!file) {
+    displayError('Please select a file', elements.msgCenter);
+    elements.updatePic.classList.remove("hidden");
+    showLoader(false);
+    return;
+  }
+
+  try {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const imgData = reader.result;
+      const payload = {
+        endpoint: "updatePix",
+        data: {
+          id: userData.id,
+          img: imgData
+        }
+      };
+
+      const response = await fetch(HOST, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+
+      if (data.status === 1) {
+        elements.theProfImg.src = imgData;
+        elements.theProfImg2.src = imgData;
+
+        const storedData = JSON.parse(localStorage.getItem("userDataPrime"));
+        storedData.img = imgData;
+        localStorage.setItem("userDataPrime", JSON.stringify(storedData));
+
+        displaySuccess("Picture updated successfully!", elements.msgCenter);
+
+        setTimeout(() => {
+          elements.proffer.classList.add("hidden");
+          elements.msgCenter.innerHTML = ``;
+          elements.updatePic.classList.remove("hidden");
+          window.location.reload();
+        }, 1000);
+      } else {
+        displayError("Network Error, Try again", elements.msgCenter);
         elements.updatePic.classList.remove("hidden");
-        showLoader(false);
-        return;
-    }
-
-    try {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        
-        reader.onload = async () => {
-            const imgData = reader.result;
-            const payload = {
-                endpoint: "updatePix",
-                data: {
-                    id: userData.id,
-                    img: imgData
-                }
-            };
-
-            const response = await fetch(HOST, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-            const data = await response.json();
-
-            if (data.status === 1) {
-                elements.theProfImg.src = imgData;
-                elements.theProfImg2.src = imgData;
-                
-                const storedData = JSON.parse(localStorage.getItem("userDataPrime"));
-                storedData.img = imgData;
-                localStorage.setItem("userDataPrime", JSON.stringify(storedData));
-
-                displaySuccess("Picture updated successfully!", elements.msgCenter);
-                
-                setTimeout(() => {
-                    elements.proffer.classList.add("hidden");
-                    elements.msgCenter.innerHTML = ``;
-                    elements.updatePic.classList.remove("hidden");
-                    window.location.reload();
-                }, 1000);
-            } else {
-                displayError("Network Error, Try again", elements.msgCenter);
-                elements.updatePic.classList.remove("hidden");
-            }
-        };
-    } catch (error) {
-        displayError("Something went wrong! Try again", elements.msgCenter);
-        elements.updatePic.classList.remove("hidden");
-    } finally {
-        showLoader(false);
-    }
+      }
+    };
+  } catch (error) {
+    displayError("Something went wrong! Try again", elements.msgCenter);
+    elements.updatePic.classList.remove("hidden");
+  } finally {
+    showLoader(false);
+  }
 };
 
 // Initialization
 const init = async () => {
-    // Load industry hierarchy and business types
-    const hierarchyData = await fetchIndustryHierarchy();
-    const processedData = processIndustryHierarchy(hierarchyData);
-    businessTypes = processedData.businessTypes;
+  // Load industry hierarchy and business types
+  const hierarchyData = await fetchIndustryHierarchy();
+  const processedData = processIndustryHierarchy(hierarchyData);
+  businessTypes = processedData.businessTypes;
 
-    // Load user details
-    const userDetails = await fetchUserDetails();
-    if (userDetails) {
-        userData = { ...userData, ...userDetails };
-        localStorage.setItem("userDataPrime", JSON.stringify(userData));
-    }
+  // Load user details
+  const userDetails = await fetchUserDetails();
+  if (userDetails) {
+    userData = { ...userData, ...userDetails };
+    localStorage.setItem("userDataPrime", JSON.stringify(userData));
+  }
 
-    // Render profile
-    renderProfileInfo(userData);
-    renderEditProfileForm(userData, businessTypes);
+  // Render profile
+  renderProfileInfo(userData);
+  renderEditProfileForm(userData, businessTypes);
 
-    // Set up event listeners
-    elements.updateProfile.addEventListener("click", handleProfileUpdate);
-    elements.updatePass.addEventListener("click", handlePasswordUpdate);
-    document.querySelector("#openUpload").addEventListener("click", () => elements.profilePicInput.click());
-    elements.profilePicInput.addEventListener("change", handleProfilePicChange);
-    elements.updatePic.addEventListener("click", handleProfilePicUpdate);
+  // Set up event listeners
+  elements.updateProfile.addEventListener("click", handleProfileUpdate);
+  elements.updatePass.addEventListener("click", handlePasswordUpdate);
+  document.querySelector("#openUpload").addEventListener("click", () => elements.profilePicInput.click());
+  elements.profilePicInput.addEventListener("change", handleProfilePicChange);
+  elements.updatePic.addEventListener("click", handleProfilePicUpdate);
 };
 
 // Start the application
