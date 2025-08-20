@@ -216,3 +216,194 @@ $("#generateReferenceNum").on("click", function () {
 
 
 })
+
+function proceedToFile() {
+  // Check login status
+  const userDATA = JSON.parse(localStorage.getItem("userDataPrime"));
+  if (!userDATA || !userDATA.id || !userDATA.tax_number) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Not logged in',
+      text: 'Please sign in to continue.',
+      confirmButtonText: 'Go to Sign in',
+      confirmButtonColor: '#015826'
+    }).then(() => {
+      window.location.href = './signin.html';
+    });
+    return;
+  }
+
+  const today = new Date();
+
+  const fetchApplicableTaxes = () =>
+    fetch(`${HOST}?calculateApplicableTaxesCompliance&tax_number=${userDATA.tax_number}`)
+      .then(r => r.json())
+      .catch(() => ({ status: 0 }));
+
+  const fetchUserFiling = () =>
+    fetch(`${HOST}?getUserTaxFiling&tax_number=${userDATA.tax_number}`)
+      .then(r => r.json())
+      .catch(() => ({ status: 0 }));
+
+  const formatMoney = (amount) => {
+    const num = Number(amount || 0);
+    return num.toLocaleString('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 2 });
+  };
+
+  const rowsHtml = (items) => items.map((it, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td>${it.revenue_head || it.revenueHead || it.COL_4 || '-'}</td>
+        <td>${it.invoice_number || '-'}</td>
+        <td>${formatMoney(it.amount_paid)}</td>
+        <td>${it.due_date || '-'}</td>
+        <td>${it.payment_status || '-'}</td>
+      </tr>
+    `).join('');
+
+  Swal.fire({
+    title: 'Checking your status…',
+    html: '<div class="flex justify-center items-center mt-2"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div></div>',
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    didOpen: async () => {
+      try {
+        const [applicableRes, filingRes] = await Promise.all([
+          fetchApplicableTaxes(),
+          fetchUserFiling()
+        ]);
+
+        // Parse compliance response
+        const compliance = (applicableRes && applicableRes.status === 1) ? applicableRes : null;
+        const breakdown = Array.isArray(compliance?.revenue_breakdown) ? compliance.revenue_breakdown : [];
+        const complianceDue = Number(compliance?.total_due || 0);
+
+        // Parse invoices/filing response
+        const filing = (filingRes && filingRes.status === 1 && filingRes.filing_details) ? filingRes.filing_details : {};
+        const allBuckets = ['demand_notice', 'presumptive', 'direct', 'invoice'];
+        const allItems = allBuckets.flatMap(k => Array.isArray(filing[k]) ? filing[k] : []);
+
+        const unpaid = allItems.filter(x => String(x.payment_status).toLowerCase() !== 'paid');
+        const overdue = unpaid.filter(x => {
+          const d = x.due_date ? new Date(x.due_date) : null;
+          return d && d < today;
+        });
+
+        // If user is non-compliant on applicable taxes, show a detailed modal
+        if (complianceDue > 0 && breakdown.length > 0) {
+          const bdRows = breakdown.map((b, i) => `
+            <tr>
+              <td>${i + 1}</td>
+              <td>${b.revenue_head}</td>
+              <td>${b.frequency}</td>
+              <td>${formatMoney(b.amount)}</td>
+              <td>${(b.non_compliant_periods || []).join(', ') || '-'}</td>
+              <td>${formatMoney(b.total_due)}</td>
+              <td><span class="badge ${String(b.status).toLowerCase() === 'non-compliant' ? 'bg-danger' : 'bg-success'}">${b.status}</span></td>
+            </tr>
+          `).join('');
+
+          await Swal.fire({
+            icon: 'warning',
+            title: 'Compliance Required',
+            width: '900px',
+            html: `
+              <div class="text-left">
+                <p class="mb-2">You have outstanding compliance items totalling <strong>${formatMoney(complianceDue)}</strong>.</p>
+                <p class="mb-2">Please resolve your Applicable Taxes before filing.</p>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Revenue Head</th>
+                        <th>Frequency</th>
+                        <th>Amount</th>
+                        <th>Non-compliant Periods</th>
+                        <th>Total Due</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>${bdRows}</tbody>
+                  </table>
+                </div>
+              </div>
+            `,
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            confirmButtonText: 'Open Applicable Taxes',
+            confirmButtonColor: '#015826'
+          }).then((r) => {
+            if (r.isConfirmed) {
+              window.location.href = './dashboard/taxes.html';
+            }
+          });
+          return; // Block proceeding when there are due compliances
+        }
+
+        // Only handle unpaid invoices (includes any overdue ones)
+
+        // If there are any unpaid invoices (including overdue), ask user to pay
+        if (unpaid.length > 0) {
+          await Swal.fire({
+            icon: 'info',
+            title: 'Unpaid invoices',
+            width: '900px',
+            html: `
+              <div class="text-left">
+                <p class="mb-2">You have unpaid invoices. Please pay before filing your tax.</p>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Revenue Head</th>
+                        <th>Invoice No</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${rowsHtml(unpaid)}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            `,
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            confirmButtonText: 'View Invoices',
+            confirmButtonColor: '#015826'
+          }).then((r) => {
+            if (r.isConfirmed) {
+              const first = unpaid[0];
+              if (first && first.invoice_number) {
+                window.location.href = `./dashboard/invoice.html`;
+              }
+            }
+          });
+          return; // stop here; cannot proceed to file
+        }
+
+        // No unpaid invoices; allow filing
+        await Swal.fire({
+          icon: 'success',
+          title: 'All clear!',
+          text: 'You have no unpaid invoices. You can proceed to file your tax.',
+          confirmButtonText: 'Proceed',
+          confirmButtonColor: '#015826'
+        });
+
+        // Advance to next step in the wizard if available
+        try { nextPrev(1); } catch (e) {}
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Unable to check status',
+          text: 'Please try again later.'
+        });
+      }
+    }
+  });
+}

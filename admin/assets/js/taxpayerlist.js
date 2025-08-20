@@ -224,10 +224,10 @@ $("#generateInvoiceBtnDemand").on("click", function () {
     });
   } else {
     Swal.fire({
-      title: 'Generating Invoice',
-      text: 'Please wait while we generate your invoice.',
+      title: 'Generating Demand Notice',
+      text: 'Please wait while we generate your demand notice.',
       icon: 'info',
-      confirmButtonText: 'Generate Invoice',
+      confirmButtonText: 'Generate Demand Notice',
       confirmButtonColor: '#015826',
       html: `
         <div>
@@ -282,8 +282,8 @@ $("#generateInvoiceBtnDemand").on("click", function () {
         Swal.fire({
           icon: 'success',
           title: 'Demand Notice Generated Successfully!',
-          text: `Your invoice number is ${result.value.invoice_number}.`,
-          confirmButtonText: 'Open Invoice',
+          text: `Your demand notice number is ${result.value.invoice_number}.`,
+          confirmButtonText: 'Open Demand Notice',
           confirmButtonColor: '#015826',
         }).then((result3) => {
           if (result3.isConfirmed) {

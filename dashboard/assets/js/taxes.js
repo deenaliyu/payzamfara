@@ -98,7 +98,7 @@ let tax_numberP = userInfo.tax_number;
 
 async function displayApplicableTaxes(taxNumber) {
   try {
-    const response = await fetch(`https://payzamfara.com/php/index.php?calculateApplicableTaxesCompliance&tax_number=${taxNumber}`);
+    const response = await fetch(`${HOST}?calculateApplicableTaxesCompliance&tax_number=${taxNumber}`);
     const data = await response.json();
 
     if (data.status === 1) {

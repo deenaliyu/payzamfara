@@ -108,7 +108,7 @@ const renderProfileInfo = (userInfo) => {
         <h4 class="text-[18px] text-[#2E2F5B]">${userInfo.first_name} ${userInfo.surname}</h4>
         <p class="text-[14px] text-[#667085] pt-2">Payer ID: ${userInfo.tax_number}</p>
     `;
-
+  const groupMapper = { "1": "A", "2": "B", "3": "C", "4": "D", "5": "E" }
   // Profile Info
   elements.prof.innerHTML = `
         <div class="flex justify-between md:w-[550px]">
@@ -133,6 +133,12 @@ const renderProfileInfo = (userInfo) => {
             <label class="w-[195px]">Type of business</label>
             <div class="form-group md:w-[454px] w-full">
                 <input class="form-control mt-1 regInputs" readonly type="text" value="${userInfo.business_type || ''}" maxlength="15" />
+            </div>
+        </div>
+        <div class="flex justify-between md:w-[550px] mt-2 items-center">
+            <label class="w-[195px]">Group</label>
+            <div class="form-group md:w-[454px] w-full">
+                <input class="form-control mt-1 regInputs" readonly type="text" value="Group ${groupMapper[userInfo.group_id] || ''}" maxlength="15" />
             </div>
         </div>
     `;
@@ -205,7 +211,7 @@ const renderEditProfileForm = (userInfo, businessTypes) => {
                 <label class="form-check-label" for="flexRadioDefault2">No</label>
             </div>
         </div>
-        <div class="flex justify-between mt-2 items-center">
+                <div class="flex justify-between mt-2 items-center">
             <label class="w-4/12">Type of business</label>
             <select class="form-select mt-1 w-8/12 updtProf" id="businessTypeSelect" data-name="business_type" required>
                 <option value="" ${!userInfo.business_type ? 'selected' : ''}>-Select--</option>
@@ -214,6 +220,18 @@ const renderEditProfileForm = (userInfo, businessTypes) => {
                         ${type.name}
                     </option>
                 `).join('')}
+            </select>
+        </div>
+
+        <div class="flex justify-between mt-2 items-center">
+            <label class="w-4/12">Group</label>
+            <select class="form-select mt-1 w-8/12 updtProf" data-name="group_id" required>
+                <option value="" ${!userInfo.group_id ? 'selected' : ''}>-Select--</option>
+                <option value="1" ${userInfo.group_id === '1' ? 'selected' : ''}>Group A</option>
+                <option value="2" ${userInfo.group_id === '2' ? 'selected' : ''}>Group B</option>
+                <option value="3" ${userInfo.group_id === '3' ? 'selected' : ''}>Group C</option>
+                <option value="4" ${userInfo.group_id === '4' ? 'selected' : ''}>Group D</option>
+                <option value="5" ${userInfo.group_id === '5' ? 'selected' : ''}>Group E</option>
             </select>
         </div>
 
@@ -280,7 +298,7 @@ const handleProfileUpdate = async (e) => {
   delete updateData.img;
   delete updateData.password;
 
-  
+
 
   allInputs.forEach(input => {
     if (input.value) {

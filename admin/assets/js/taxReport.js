@@ -126,7 +126,8 @@ function fetchTaxPayers() {
         render: function (data, type, row) {
           return `
           <div class="flex items-center gap-3">
-            <button data-theid="${row.tax_number}" onclick="editThis(this)" data-usertype="payer_user" class="EditUser txView"><iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon></button>
+            <a href="./managetaxpayer.html?id=${row.tax_number}" class=" viewUser txEdit"><iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon></a>
+            <!-- <button data-theid="${row.tax_number}" onclick="editThis(this)" data-usertype="payer_user" class="EditUser txView"><iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon></button> -->
             <a href="./taxpayerlist.html?id=${row.tax_number}" class="btn btn-primary btn-sm viewUser txView">View</a>
           </div>`
         }
