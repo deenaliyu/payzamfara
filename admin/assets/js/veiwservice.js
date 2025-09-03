@@ -2,24 +2,24 @@ const urlParams = new URLSearchParams(window.location.search);
 const userIdo = urlParams.get('id');
 
 async function fetchTaxfillers() {
-    $("#showdetails").html("");
-    $("#loader").css("display", "flex");
-  
-    let config = {
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "*",
-      },
-    };
-    const response = await fetch(`${HOST}?getTaxFilingById&id=${userIdo}`);
-    const userInvoices = await response.json();
-    $("#loader").css("display", "none");
-    if (userInvoices.status === 1) {
-      userInvoices.message.reverse().forEach((userInvoice, i) => {
-        let addd = "";
-        addd += `
+  $("#showdetails").html("");
+  $("#loader").css("display", "flex");
+
+  let config = {
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+    },
+  };
+  const response = await fetch(`${HOST}?getTaxFilingById&id=${userIdo}`);
+  const userInvoices = await response.json();
+  $("#loader").css("display", "none");
+  if (userInvoices.status === 1) {
+    userInvoices.message.reverse().forEach((userInvoice, i) => {
+      let addd = "";
+      addd += `
           <tr class="relative">
           <td>First Name</td>
           <td>${userInvoice.first_name}</td>
@@ -45,8 +45,8 @@ async function fetchTaxfillers() {
           <td>${userInvoice.tax_to_file}</td>
           </tr>
               `;
-        if (userInvoice.category === "individual") {
-          addd += `
+      if (userInvoice.category === "individual") {
+        addd += `
           <tr class="relative">
           <td>Form assessment upload</td>
           <td>${userInvoice.form_assessment_upload}</td>
@@ -56,132 +56,133 @@ async function fetchTaxfillers() {
           <td>${userInvoice.tax_income_upload}</td>
           </tr>
           <tr class="relative">
-          <td>Evidence of Tax Payment</td>
-          <td>${userInvoice.evidence_of_tax_payment}</td>
+            <td>Evidence of Tax Payment</td>
+            <td>${userInvoice.evidence_of_tax_payment} o</td>
           </tr>
                 
                 `;
-        } else {
-          addd += `
-          <tr class="relative">
-          <td>Form assessment upload</td>
-          <a href="${userInvoice.form_assessment_upload}">${userInvoice.form_assessment_upload}</a>
-          </tr>
-          <tr class="relative">
-          <td>Tax Income Upload</td>
-          <a href="${userInvoice.tax_income_upload}">${userInvoice.tax_income_upload}</a>
-          </tr>
-          <tr class="relative">
-          <td>Evidence of Tax Payment</td>
-          <a href="${userInvoice.evidence_of_tax_payment}">${userInvoice.evidence_of_tax_payment}</a>
-          </tr>
-          <tr class="relative">
-          <td>Form HI</td>
-          <a href="${userInvoice.form_upload_4}">${userInvoice.form_upload_4}</a>
-          </tr>
-          <tr class="relative">
-          <td>Schedule of Tax Deduction</td>
-          <a href="${userInvoice.form_upload_5}">${userInvoice.form_upload_5}</a>
-                `;
-        }
-        $("#showdetails").append(addd);
-        if (userInvoice.application_status === "pending") {
-            $("#showbtn").append(`
+      } else {
+        addd += `
+            <tr class="relative">
+              <td>Form assessment upload</td>
+              <td><a href="${userInvoice.form_assessment_upload}">${userInvoice.form_assessment_upload}</a></td>
+            </tr>
+            <tr class="relative">
+              <td>Tax Income Upload</td>
+              <td><a href="${userInvoice.tax_income_upload}">${userInvoice.tax_income_upload}</a></td>
+            </tr>
+            <tr class="relative">
+              <td>Evidence of Tax Payment</td>
+              <td><a href="${userInvoice.evidence_of_tax_payment}">${userInvoice.evidence_of_tax_payment}</a></td>
+            </tr>
+            <tr class="relative">
+              <td>Form HI</td>
+              <td><a href="${userInvoice.form_upload_4}">${userInvoice.form_upload_4}</a></td>
+            </tr>
+            <tr class="relative">
+              <td>Schedule of Tax Deduction</td>
+              <td><a href="${userInvoice.form_upload_5}">${userInvoice.form_upload_5}</a></td>
+            </tr>  
+          `;
+      }
+      $("#showdetails").append(addd);
+      if (userInvoice.application_status === "pending") {
+        $("#showbtn").append(`
             <div class="text-center mb-2">
             <label for="" class="font-bold">Amount to be paid</label>
             <input type="text" class="form-control rounded-md w-72 mt-2" id="amount" placeholder="0.00">
         </div>
             <button class="button w-72" id="submitApp">Approve</button>
                   `);
-          } else {
-            $("#showbtn").append(`
+      } else {
+        $("#showbtn").append(`
 
                   `);
-          }
-      });
-    } else {
-      // $("#showInvoice").html("<tr></tr>");
-      $("#dataTable").DataTable();
-    }
-  }
-  
-  fetchTaxfillers().then((uu) => {
+      }
+    });
+  } else {
+    // $("#showInvoice").html("<tr></tr>");
     $("#dataTable").DataTable();
+  }
+}
+
+fetchTaxfillers().then((uu) => {
+  $("#dataTable").DataTable();
 
 
-    $("#submitApp").on("click", (e) => {
+  $("#submitApp").on("click", (e) => {
 
-        let amount = document.querySelector("#amount").value
-      console.log(amount);
-        e.preventDefault()
-        $("#msg_box").html(`
+    let amount = document.querySelector("#amount").value
+    console.log(amount);
+    e.preventDefault()
+    $("#msg_box").html(`
           <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
           </div>
         `)
-      
-        $("#submitApp").addClass("hidden")
-      
-        $.ajax({
-          type: "GET",
-          url: `${HOST}/?approveTaxFiling&id=${userIdo}&amount=${amount}`,
-          dataType: 'json',
-          success: function (data) {
-            if (data.status === 2) {
-              $("#msg_box4").html(`
+
+    $("#submitApp").addClass("hidden")
+
+    $.ajax({
+      type: "GET",
+      url: `${HOST}/?approveTaxFiling&id=${userIdo}&amount=${amount}`,
+      dataType: 'json',
+      success: function (data) {
+        if (data.status === 2) {
+          $("#msg_box4").html(`
                 <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
               `)
-              $("#submitApp").removeClass("hidden")
-      
-            } else if (data.status === 1) {
-              $("#msg_box").html(`
+          $("#submitApp").removeClass("hidden")
+
+        } else if (data.status === 1) {
+          $("#msg_box").html(`
                 <p class="text-success text-center mt-4 text-lg">Approved Successfully</p>
               `)
-              setTimeout(() => {
-                window.location.href = "./service.html"
-              }, 1000);
-      
-            } else if (data.status === 0) {
-              $("#msg_box").html(`
+          setTimeout(() => {
+            window.location.href = "./service.html"
+          }, 1000);
+
+        } else if (data.status === 0) {
+          $("#msg_box").html(`
                 <p class="text-warning text-center mt-4 text-base">${data.message}</p>
               `)
-              $("#submitApp").removeClass("hidden")
-            }
-          },
-          error: function (request, error) {
-            console.log(error);
-            $("#msg_box").html(`
+          $("#submitApp").removeClass("hidden")
+        }
+      },
+      error: function (request, error) {
+        console.log(error);
+        $("#msg_box").html(`
               <p class="text-danger text-center mt-4 text-lg">Something went wrong try again !</p>
             `)
-            $("#submitApp").removeClass("hidden")
-          }
-        });
-      
-      })
-      
+        $("#submitApp").removeClass("hidden")
+      }
+    });
 
-  });
+  })
 
-  async function fetchTinSingle() {
-    $("#showtinRequest").html("");
-    $("#loader2").css("display", "flex");
-  
-    let config = {
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "*",
-      },
-    };
-    const response = await fetch(`${HOST}?getTinRequestById&id=${userIdo}`);
-    const tinRequest = await response.json();
-    $("#loader2").css("display", "none");
-    if (tinRequest.status === 1) {
-        tinRequest.message.reverse().forEach((tinRequests, i) => {
-        let addd = "";
-        let dd = "";
-        addd += `
+
+});
+
+async function fetchTinSingle() {
+  $("#showtinRequest").html("");
+  $("#loader2").css("display", "flex");
+
+  let config = {
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+    },
+  };
+  const response = await fetch(`${HOST}?getTinRequestById&id=${userIdo}`);
+  const tinRequest = await response.json();
+  $("#loader2").css("display", "none");
+  if (tinRequest.status === 1) {
+    tinRequest.message.reverse().forEach((tinRequests, i) => {
+      let addd = "";
+      let dd = "";
+      addd += `
         <div>
         <h6 class="font-bold mb-1">Title</h6>
         <p>${tinRequests.title}</p>
@@ -354,8 +355,8 @@ async function fetchTaxfillers() {
           </div>
           </div>
               `;
-        $("#showtinRequest").append(addd);
-        $("#showtinRequest2").html(`
+      $("#showtinRequest").append(addd);
+      $("#showtinRequest2").html(`
         <div>
         <h6 class="font-bold mb-1">Tax Representative Details</h6>
         </div>
@@ -489,7 +490,7 @@ async function fetchTaxfillers() {
           <p>${tinRequests.sponser_tin}</p>
           </div>  
         `);
-        dd += `
+      dd += `
           <div class="flex justify-between mt-2">
           <div>
           <h6 class="font-bold mb-1">Form assessment upload</h6>
@@ -511,93 +512,93 @@ async function fetchTaxfillers() {
           </div>
           </div>
         `
-        $("#showtinRequest3").append(dd);
-        if (tinRequests.application_status === "pending") {
-            $("#showbt").append(`
+      $("#showtinRequest3").append(dd);
+      if (tinRequests.application_status === "pending") {
+        $("#showbt").append(`
             <button class="button w-72" id="submitAppi">Approve</button>
                   `);
-          } else {
-            $("#showbt").append(`
+      } else {
+        $("#showbt").append(`
 
                   `);
-          }
-          
-      });
-    } else {
-      // $("#showInvoice").html("<tr></tr>");
-      $("#dataTable2").DataTable();
-    }
-  }
-  
-  fetchTinSingle().then((uu) => {
+      }
+
+    });
+  } else {
+    // $("#showInvoice").html("<tr></tr>");
     $("#dataTable2").DataTable();
+  }
+}
+
+fetchTinSingle().then((uu) => {
+  $("#dataTable2").DataTable();
 
 
-    $("#submitAppi").on("click", (e) => {
+  $("#submitAppi").on("click", (e) => {
 
-  
-        e.preventDefault()
-        $("#msg_box").html(`
+
+    e.preventDefault()
+    $("#msg_box").html(`
           <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
           </div>
         `)
-      
-        $("#submitAppi").addClass("hidden")
-      
-        $.ajax({
-          type: "GET",
-          url: `${HOST}/?approveTinRequest&id=${userIdo}`,
-          dataType: 'json',
-          success: function (data) {
-            if (data.status === 2) {
-              $("#msg_box4").html(`
+
+    $("#submitAppi").addClass("hidden")
+
+    $.ajax({
+      type: "GET",
+      url: `${HOST}/?approveTinRequest&id=${userIdo}`,
+      dataType: 'json',
+      success: function (data) {
+        if (data.status === 2) {
+          $("#msg_box4").html(`
                 <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
               `)
-              $("#submitAppi").removeClass("hidden")
-      
-            } else if (data.status === 1) {
-              $("#msg_box").html(`
+          $("#submitAppi").removeClass("hidden")
+
+        } else if (data.status === 1) {
+          $("#msg_box").html(`
                 <p class="text-success text-center mt-4 text-lg">Approved Successfully</p>
               `)
-              setTimeout(() => {
-                window.location.href = `./tinrequestmail.html?id=${userIdo}`
-              }, 1000);
-      
-            } else if (data.status === 0) {
-              $("#msg_box").html(`
+          setTimeout(() => {
+            window.location.href = `./tinrequestmail.html?id=${userIdo}`
+          }, 1000);
+
+        } else if (data.status === 0) {
+          $("#msg_box").html(`
                 <p class="text-warning text-center mt-4 text-base">${data.message}</p>
               `)
-              $("#submitAppi").removeClass("hidden")
-            }
-          },
-          error: function (request, error) {
-            console.log(error);
-            $("#msg_box").html(`
+          $("#submitAppi").removeClass("hidden")
+        }
+      },
+      error: function (request, error) {
+        console.log(error);
+        $("#msg_box").html(`
               <p class="text-danger text-center mt-4 text-lg">Something went wrong try again !</p>
             `)
-            $("#submitAppi").removeClass("hidden")
-          }
-        });
-      
-      })
-      
+        $("#submitAppi").removeClass("hidden")
+      }
+    });
 
-  });
+  })
 
-  let reference_number = ""
-  async function fetchTaxSingle() {
-   
-    $("#showtaxclearance").html("");
-    $("#loader2").css("display", "flex");
-    const response = await fetch(`${HOST}?getTaxClearanceById&id=${userIdo}`);
-    const taxRequest = await response.json();
-    $("#loader2").css("display", "none");
-    if (taxRequest.status === 1) {
-      taxRequest.message.reverse().forEach((taxRequests, i) => {
-        let addd = "";
-        let dd = "";
-        addd += `
+
+});
+
+let reference_number = ""
+async function fetchTaxSingle() {
+
+  $("#showtaxclearance").html("");
+  $("#loader2").css("display", "flex");
+  const response = await fetch(`${HOST}?getTaxClearanceById&id=${userIdo}`);
+  const taxRequest = await response.json();
+  $("#loader2").css("display", "none");
+  if (taxRequest.status === 1) {
+    taxRequest.message.reverse().forEach((taxRequests, i) => {
+      let addd = "";
+      let dd = "";
+      addd += `
         <div>
         <h6 class="font-bold mb-1">Title</h6>
         <p>${taxRequests.title}</p>
@@ -750,8 +751,8 @@ async function fetchTaxfillers() {
           </div>
           </div>
               `;
-        $("#showtaxclearance").append(addd);
-        $("#showtaxclearance2").html(`
+      $("#showtaxclearance").append(addd);
+      $("#showtaxclearance2").html(`
         <div>
         <h6 class="font-bold mb-1">Tax Representative Details</h6>
         </div>
@@ -861,7 +862,7 @@ async function fetchTaxfillers() {
           </div>
           </div>
         `);
-        dd += `
+      dd += `
           <div class="flex justify-between mt-2">
           <div>
           <h6 class="font-bold mb-1">Audit_report</h6>
@@ -887,78 +888,77 @@ async function fetchTaxfillers() {
           </div>
           </div>
         `
-        $("#showtaxclearance3").append(dd);
-        if (taxRequests.application_status === "pending") {
-            $("#showbut").append(`
+      $("#showtaxclearance3").append(dd);
+      if (taxRequests.application_status === "pending") {
+        $("#showbut").append(`
             <button class="button w-72" id="submitAppa">Proceed to TCC</button>
                   `);
-          } else {
-            $("#showbt").append(`
+      } else {
+        $("#showbt").append(`
 
                   `);
-          }
-          reference_number = taxRequests.reference_number
-      });
-    } else {
-      // $("#showInvoice").html("<tr></tr>");
-      $("#dataTable2").DataTable();
-    }
-  }
-  
-  fetchTaxSingle().then((uu) => {
+      }
+      reference_number = taxRequests.reference_number
+    });
+  } else {
+    // $("#showInvoice").html("<tr></tr>");
     $("#dataTable2").DataTable();
+  }
+}
+
+fetchTaxSingle().then((uu) => {
+  $("#dataTable2").DataTable();
 
 
-    $("#submitAppa").on("click", (e) => {
+  $("#submitAppa").on("click", (e) => {
 
-  
-        e.preventDefault()
-        $("#msg_box").html(`
+
+    e.preventDefault()
+    $("#msg_box").html(`
           <div class="flex justify-center items-center mt-4">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
           </div>
         `)
-      
-        $("#submitAppa").addClass("hidden")
-      
-        $.ajax({
-          type: "GET",
-          url: `${HOST}/?approveTaxcert&id=${userIdo}`,
-          dataType: 'json',
-          success: function (data) {
-            if (data.status === 2) {
-              $("#msg_box4").html(`
+
+    $("#submitAppa").addClass("hidden")
+
+    $.ajax({
+      type: "GET",
+      url: `${HOST}/?approveTaxcert&id=${userIdo}`,
+      dataType: 'json',
+      success: function (data) {
+        if (data.status === 2) {
+          $("#msg_box4").html(`
                 <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
               `)
-              $("#submitAppa").removeClass("hidden")
-      
-            } else if (data.status === 1) {
-              $("#msg_box").html(`
+          $("#submitAppa").removeClass("hidden")
+
+        } else if (data.status === 1) {
+          $("#msg_box").html(`
                 <p class="text-success text-center mt-4 text-lg">Approved Successfully</p>
               `)
-              setTimeout(() => {
-                window.location.href = `./viewtaxclearancecert.html?reference=${reference_number}`
-              }, 1000);
-      
-            } else if (data.status === 0) {
-              $("#msg_box").html(`
+          setTimeout(() => {
+            window.location.href = `./viewtaxclearancecert.html?reference=${reference_number}`
+          }, 1000);
+
+        } else if (data.status === 0) {
+          $("#msg_box").html(`
                 <p class="text-warning text-center mt-4 text-base">${data.message}</p>
               `)
-              $("#submitAppa").removeClass("hidden")
-            }
-          },
-          error: function (request, error) {
-            console.log(error);
-            $("#msg_box").html(`
+          $("#submitAppa").removeClass("hidden")
+        }
+      },
+      error: function (request, error) {
+        console.log(error);
+        $("#msg_box").html(`
               <p class="text-danger text-center mt-4 text-lg">Something went wrong try again !</p>
             `)
-            $("#submitAppa").removeClass("hidden")
-          }
-        });
-      
-      })
-      
+        $("#submitAppa").removeClass("hidden")
+      }
+    });
 
-  });
+  })
 
- 
+
+});
+

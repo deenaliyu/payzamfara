@@ -63,18 +63,17 @@
             </a>
           </div>
 
-           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+          <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black datei" id="datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Users</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <button data-bs-toggle="modal" data-bs-target="#generateInvModal" class="button flex gap-x-1"
-                  onclick="tableToCSV()" id="txdReport">
+              <button class="button flex gap-x-1" onclick="exportData()">
 
-                  <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
-                  Report</button>
+                <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
+                Report</button>
 
 
               <div class="avatar avatar-online">
@@ -85,8 +84,8 @@
             </div>
 
           </div>
-          
-            
+
+
         </nav>
 
         <!-- / Navbar -->
@@ -100,11 +99,16 @@
           <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="taxpContainer">
 
             <div>
-              <h2 class="text-xl fontBold mb-4">Summary</h2>
+              <div class="flex justify-between items-center mb-5">
+                <h2 class="text-xl fontBold mb-4">Summary</h2>
+
+                <button id="createTaxBtn" class="button">Create New Taxpayer</button>
+              </div>
+
 
               <div class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-3">
 
-                <div class="dashCards card md:w-[180px]">
+                <div class="dashCards card">
                   <div class="flex items-center gap-3">
                     <div class="icoCont bg-[#1c315c1f] p-2">
                       <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
@@ -112,10 +116,10 @@
                     <p class="text-[#000] text-[15px]">Registered Taxpayers</p>
                   </div>
 
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4 registered">-</span></p>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4 registered" id="allregistered">0</span></p>
                 </div>
 
-                <div class="dashCards card md:w-[180px]">
+                <div class="dashCards card">
                   <div class="flex items-center gap-3">
                     <div class="icoCont bg-[#1c315c1f] p-2">
                       <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
@@ -123,11 +127,21 @@
                     <p class="text-[#000] text-[15px]">Self Registered</p>
                   </div>
 
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="selfRegis">-</span></p>
-
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="selfRegis">0</span></p>
                 </div>
 
-                <div class="dashCards card md:w-[180px]">
+                <div class="dashCards card">
+                  <div class="flex items-center gap-3">
+                    <div class="icoCont bg-[#1c315c1f] p-2">
+                      <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                    </div>
+                    <p class="text-[#000] text-[15px]">Admin Registered</p>
+                  </div>
+
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="adminReg">0</span></p>
+                </div>
+
+                <div class="dashCards card">
                   <div class="flex items-center gap-3">
                     <div class="icoCont bg-[#1c315c1f] p-2">
                       <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
@@ -135,11 +149,11 @@
                     <p class="text-[#000] text-[15px]">Enumerated</p>
                   </div>
 
-                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="enumRegs">-</span></p>
+                  <p class="zanumbers text-end mt-4"><span class="fontBold mt-4" id="enumRegs">0</span></p>
 
                 </div>
 
-                <div class="dashCards card md:w-[180px]">
+                <!-- <div class="dashCards card md:w-[180px]">
                   <div class="flex items-center gap-3">
                     <div class="icoCont bg-[#1c315c1f] p-2">
                       <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
@@ -159,7 +173,7 @@
                   </div>
                   <p class="zanumbers text-end mt-4"><span class="fontBold mt-4">0</span></p>
 
-                </div>
+                </div> -->
 
 
               </div>
@@ -176,7 +190,8 @@
                   </button>
                 </li>
                 <li class="nav-item text-center" role="presentation">
-                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-enumRegs" type="button" role="tab">
+                  <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-enumRegs" type="button"
+                    role="tab">
                     Enumerated
                   </button>
                 </li>
@@ -198,6 +213,8 @@
                           <th>Category</th>
                           <th>TIN</th>
                           <th>Email</th>
+                          <th>Phone</th>
+                          <th>Created by</th>
                           <th>TIN Status</th>
                           <th>Date created</th>
                           <th>Manage</th>
@@ -208,9 +225,9 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="flex justify-center items-center mt-4" id="loader">
+                  <!-- <div class="flex justify-center items-center mt-4" id="loader">
                     <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                  </div>
+                  </div> -->
 
                 </div>
                 <div class="tab-pane fade" id="pills-enumRegs" role="tabpanel" aria-labelledby="pills-app-tab">
@@ -242,7 +259,25 @@
                   </div>
                 </div>
 
-                
+                <table class="table invoiceTable hidden" id="invoiceTableFull">
+                  <thead>
+                    <tr class="text-center">
+                      <th></th>
+                      <!-- <th>Picture</th> -->
+                      <th>Payer ID</th>
+                      <th>Name of Tax payer</th>
+                      <th>Category</th>
+                      <th>TIN</th>
+                      <th>Email</th>
+                      <th>TIN Status</th>
+                      <th>Date created</th>
+
+                    </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0" id="showThem2">
+
+                  </tbody>
+                </table>
               </div>
 
             </div>
@@ -304,8 +339,8 @@
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="./assets/js/taxReport.js"></script>
-  <script src="./assets/js/taxReportList.js"></script>
+  <script src="./assets/js/taxReport.js?v3.0"></script>
+  <script src="./assets/js/taxReportList.js?v1.2"></script>
   <script src="./assets/js/table2CSV.js"></script>
   <script src="./assets/js/filtertaxpayer.js"></script>
   <!-- endbuild -->
@@ -319,59 +354,7 @@
       table.search($(this).val()).draw();
     });
   </script>
-  <script>
-    function tableToCSV() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".table");
 
-      /* Declaring array variable */
-      var rows = [];
-
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-
-
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7
-          ]
-        );
-
-      }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
-
-      /* create a hidden <a> DOM node and set its download attribute */
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Taxpayer_List.csv");
-      document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
-      link.click();
-    }
-
-  </script>
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->

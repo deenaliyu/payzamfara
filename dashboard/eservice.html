@@ -66,13 +66,13 @@
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
               </div>
               <a href="taxes.html" class="button ">
-                <iconify-icon icon="ic:baseline-plus"></iconify-icon>Tax Filling</a>
+                <iconify-icon icon="ic:baseline-plus"></iconify-icon>Tax Filling</a> -->
 
               <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
                 class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
@@ -91,7 +91,7 @@
         <div class="content-wrapper">
 
           <div class="container-xxl flex-grow-1 container-p-y service">
-            <div class="card p-4">
+            <div class="card p-4 h-full">
               <h4 class="text-[#101828] text-[20px]">Check application status</h4>
               <p class="text-[16px] mt-2">Input your reference number to check your application status</p>
 
@@ -104,7 +104,7 @@
                 <div id="msg_box"></div>
               </div>
 
-              <div class="mt-4">
+              <div class="mt-10">
                 <h4 class="text-[#101828] font-bold text-[20px]">E-Services</h4>
                 <div class="grid grid-cols-3 mt-3 w-[610px]">
                   <a class="cardoo w-[180px] p-4  text-center" href="taxfilling.html">
@@ -114,11 +114,11 @@
                     </div>
                     <p class="text-[16px] mt-2">Tax Filing</p>
                   </a>
-                  <a class="cardoo w-[180px] text-center p-4" href="../tinrequest.html">
+                  <a class="cardoo w-[180px] text-center p-4" href="../tinrequest-jtb.html">
                     <div class="flex justify-center">
                       <iconify-icon icon="mdi:contact" class="text-[#005826]" width="32" height="32"></iconify-icon>
                     </div>
-                    <p class="text-[16px] mt-2">TIN Request</p>
+                    <p class="text-[16px] mt-2">New TIN Request</p>
                   </a>
                   <a class="cardoo w-[180px] text-center p-4" href="./etcc-page.html">
                     <div class="flex justify-center">
@@ -130,28 +130,6 @@
                 </div>
               </div>
 
-              <div class="table-responsive p-3 mt-4">
-
-                <table class="table theTable" id="dataTable">
-                  <thead>
-                    <th class="fontBold text-sm text-gray-500">Date sent</th>
-                    <th class="fontBold text-gray-500">Next due date</th>
-                    <th class="fontBold text-gray-500">Refence number</th>
-                    <th class="fontBold text-gray-500">Tax filed</th>
-                    <th class="fontBold text-gray-500">Status</th>
-                    <!-- <th class="fontBold text-gray-500"></th> -->
-
-                  </thead>
-                  <tbody id="eservicesTable">
-                    
-
-                  </tbody>
-                </table>
-
-              </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <!-- <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div> -->
-              </div>
             </div>
           </div>
 
@@ -215,7 +193,7 @@
   </script>
   <script src="./assets/vendor/js/menu.js"></script>
   <script src="./assets/js/session.js"></script>
-  <script src="../assets/js/eservices.js"></script>
+  <script src="../assets/js/eservices.js?v=1.0"></script>
   <!-- endbuild -->
 
   <!-- Vendors JS -->

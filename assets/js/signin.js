@@ -23,6 +23,16 @@ $("#LoginNow").on("click", (e) => {
         `)
         $("#LoginNow").removeClass("hidden")
 
+      } else if (data.status === 3) {
+        $("#msg_box4").html(`
+          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
+        `)
+        
+        setTimeout(() => {
+            window.location.href = `verification.html?id=${data.user.id}&email=${data.user.email}&phone=${data.user.phone}`
+        }, 1500);
+        // $("#LoginNow").removeClass("hidden")
+
       } else if (data.status === 1) {
         $("#msg_box4").html(`
           <p class="text-success text-center mt-4 text-lg">${data.message}</p>
@@ -53,7 +63,8 @@ $("#LoginNow").on("click", (e) => {
 $("#LoginAmin").on("click", (e) => {
   // alert("done")
   let emailAdd = document.querySelector("#emailAdm").value
-  let password = document.querySelector("#passwordm").value
+ let password = document.querySelector("#passwordm").value
+ let pass =  encodeURIComponent(password)
   e.preventDefault()
   $(".msg_box").html(`
     <div class="flex justify-center items-center mt-4">
@@ -65,7 +76,7 @@ $("#LoginAmin").on("click", (e) => {
 
   $.ajax({
     type: "GET",
-    url: `${HOST}/?loginAdmin&email=${emailAdd}&password=${password}`,
+    url: `${HOST}/?loginAdmin&email=${emailAdd}&password=${pass}`,
     dataType: 'json',
     success: function (data) {
       if (data.status === 2) {
@@ -73,6 +84,11 @@ $("#LoginAmin").on("click", (e) => {
           <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
         `)
         $("#LoginAmin").removeClass("hidden")
+
+      } else if (data.status === 3) {
+        $(".msg_box").html(`
+          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
+        `)
 
       } else if (data.status === 1) {
         $(".msg_box").html(`
@@ -83,7 +99,7 @@ $("#LoginAmin").on("click", (e) => {
 
         localStorage.setItem("adminDataPrime", JSON.stringify(data.user))
         setTimeout(() => {
-          window.location.href = "./admin/dashboard.html"
+          window.location.href = "./dashboard.html"
         }, 1000);
 
       } else if (data.status === 0) {

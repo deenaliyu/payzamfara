@@ -2,89 +2,237 @@ let userInfo = JSON.parse(localStorage.getItem("userDataPrime"));
 // console.log(userInfo);
 let tax_numberP = userInfo.tax_number;
 
-async function getApplicableTaxes() {
-  const response = await fetch(
-    `${HOST}?getApplicableTaxes&tax_number=${tax_numberP}`
-  );
-  const revenueHeads = await response.json();
+// async function getApplicableTaxes() {
+//   const response = await fetch(
+//     `${HOST}?getApplicableTaxes&tax_number=${tax_numberP}`
+//   );
+//   const revenueHeads = await response.json();
 
-  console.log(revenueHeads);
-  $("#loaderr").remove();
-  for (const item of revenueHeads) {
+//   console.log(revenueHeads);
+//   $("#loaderr").remove();
 
-    let aa = ""
+//   if (revenueHeads.length === 0) {
+//     $(".apt").html(`
+//       <div class="text-center mt-4">
+//         <p class="text-lg text-gray-500">No applicable taxes found for your tax number.</p>
+//       </div>
+//       `)
+//   } else {
+//     for (const item of revenueHeads) {
 
-    aa += `
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${item.business_type_id}" aria-expanded="true" aria-controls="collapseOne">
-          ${item.business_type}
-      </button>
-    </h2>
-     <div id="collapse${item.business_type_id}" class="accordion-collapse collapse mee" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-     <div class="accordion-body">
-     <div class="table-responsive mt-4">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <td></th>
-                        <td>Description</th>
-                        <td>Frequency</th>
-                        <td>Amount</th>
-                        <td></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-    `
+//       let aa = ""
 
-    for(const key in item) {
+//       aa += `
+//     <div class="accordion-item">
+//       <h2 class="accordion-header" id="headingOne">
+//       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${item.business_type_id}" aria-expanded="true" aria-controls="collapseOne">
+//           ${item.business_type}
+//       </button>
+//     </h2>
+//      <div id="collapse${item.business_type_id}" class="accordion-collapse collapse mee" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+//      <div class="accordion-body">
+//      <div class="table-responsive mt-4">
+//                   <table class="table">
+//                     <thead>
+//                       <tr>
+//                         <td></th>
+//                         <td>Description</th>
+//                         <td>Frequency</th>
+//                         <td>Amount</th>
+//                         <td></th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//     `
 
-      if(item[key].id) {
-        let i = key
-        aa += `
+//       for (const key in item) {
 
-                      <tr>
-                       <td><input class="form-check-input taxChecks" data-theidd="${item[key].id}" type="checkbox" value="" onchange="checkTax(this)"></td>
-                       <td>${item[key].COL_4}</td>
-                       <td>Monthly</td>
-                       <td>${item[key].COL_6}</td>
-                       <td><button class="button text-sm" onclick="generateInv(${item[key].id})">Generate Invoice</button></td>
-                       </tr>
-      `
-      }else{
-        aa += `
+//         if (item[key].id) {
+//           let i = key
+//           aa += `
 
-       
-`
-      }
-      
+//                       <tr>
+//                        <td><input class="form-check-input taxChecks" data-theidd="${item[key].id}" type="checkbox" value="" onchange="checkTax(this)"></td>
+//                        <td>${item[key].COL_4}</td>
+//                        <td>Monthly</td>
+//                        <td>${item[key].COL_6}</td>
+//                        <td><button class="button text-sm" onclick="generateInv(${item[key].id})">Generate Invoice</button></td>
+//                        </tr>
+//       `
+//         } else {
+//           aa += `
+
+
+// `
+//         }
+
+//       }
+
+
+//       aa += `
+//     </tbody>
+//     </table>
+//   </div>
+
+// </div>
+//       </div>
+//       </div>
+//     `
+
+//       $(".apt").append(aa)
+//     }
+//   }
+
+// }
+
+// getApplicableTaxes().then((res) => {
+//   // $("#dataTable3").DataTable({
+//   //   'processing': true,
+//   //   'paging': false,
+//   //   'serverSide': false,
+//   // });
+//   // $("#dataTable3").DataTable();
+// });
+
+// console.log(tax_numberP)
+
+async function displayApplicableTaxes(taxNumber) {
+  try {
+    const response = await fetch(`${HOST}?calculateApplicableTaxesCompliance&tax_number=${taxNumber}`);
+    const data = await response.json();
+
+    if (data.status === 1) {
+      const taxesContainer = document.getElementById('taxes-container');
+
+      taxesContainer.innerHTML = `
+        <div class="applicable-taxes-container">
+          <h4>Applicable Taxes for Payer ID: ${data.tax_number}</h4>
+
+          <div class="table-responsive mt-5">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>S/N</th>
+                  <th>Revenue Head</th>
+                  <th>Frequency</th>
+                  <th>Amount (₦)</th>
+                  <th>Periods Due</th>
+                  <th>Total Due (₦)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.revenue_breakdown.map((item, index) => `
+                  <tr>
+                    <td><input class="form-check-input taxChecksAppl" data-thedueamount="${item.total_due}" data-thename="${item.revenue_head}" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
+                    <td>${index + 1}</td>
+                    <td>${item.revenue_head}</td>
+                    <td>${item.frequency}</td>
+                    <td>₦ ${item.amount.toLocaleString()}</td>
+                    <td>${item.non_compliant_periods.join(', ')}</td>
+                    <td>₦ ${item.total_due.toLocaleString()}</td>
+                    <td>
+                      <span class="badge ${item.status === 'Non-compliant' ? 'bg-danger' : 'bg-success'}">
+                        ${item.status}
+                      </span>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+         ${data.total_due > 0 ? `
+            <div class="alert alert-danger text-center mt-4">
+              <i class="fas fa-exclamation-triangle"></i> 
+              You have outstanding taxes totaling ₦${data.total_due.toLocaleString()}
+            </div>
+          ` : `
+            <div class="alert alert-success text-center mt-4">
+              <i class="fas fa-check-circle"></i> 
+              You are fully compliant with all tax obligations
+            </div>
+          `}
+      `;
+    } else {
+      document.getElementById('taxes-container').innerHTML = `
+        <div class="alert alert-primary text-center">No tax information found for this tax number</div>
+      `;
     }
-    
-
-    aa +=`
-    </tbody>
-    </table>
-  </div>
-
-</div>
-      </div>
-      </div>
-    `
-
-    $(".apt").append(aa)
+  } catch (error) {
+    document.getElementById('taxes-container').innerHTML = `
+      <div class="alert alert-danger">Error loading tax information: ${error.message}</div>
+    `;
   }
 }
 
-getApplicableTaxes().then((res) => {
-  // $("#dataTable3").DataTable({
-  //   'processing': true,
-  //   'paging': false,
-  //   'serverSide': false,
-  // });
-  // $("#dataTable3").DataTable();
-});
+displayApplicableTaxes(tax_numberP);
+// function showPeriodDetails(index, item) {
+//   const modalBody = document.getElementById('periodsModalBody');
+//   const isCompliant = item.status === 'Compliant';
 
-// console.log(tax_numberP)
+//   modalBody.innerHTML = `
+//     <div class="container-fluid">
+//       <div class="row mb-3">
+//         <div class="col-md-6">
+//           <h5>${item.revenue_head}</h5>
+//           <p><strong>Frequency:</strong> ${item.frequency}</p>
+//         </div>
+//         <div class="col-md-6 text-right">
+//           <span class="badge ${isCompliant ? 'badge-success' : 'badge-warning'} p-2">
+//             ${item.status}
+//           </span>
+//         </div>
+//       </div>
+
+//       <div class="row">
+//         <div class="col-md-6">
+//           <div class="card ${isCompliant ? 'border-success' : 'border-warning'}">
+//             <div class="card-header ${isCompliant ? 'bg-success text-white' : 'bg-warning text-dark'}">
+//               <h6 class="mb-0">${isCompliant ? 'Paid Periods' : 'Due Periods'}</h6>
+//             </div>
+//             <div class="card-body">
+//               ${(isCompliant ? item.paid_periods : item.non_compliant_periods).length > 0 ?
+//       `<ul class="list-group">
+//                   ${(isCompliant ? item.paid_periods : item.non_compliant_periods).map(period => `
+//                     <li class="list-group-item d-flex justify-content-between align-items-center">
+//                       ${period}
+//                       ${isCompliant ?
+//           '<span class="badge badge-success badge-pill"><i class="fas fa-check"></i></span>' :
+//           '<span class="badge badge-danger badge-pill"><i class="fas fa-exclamation"></i></span>'
+//         }
+//                     </li>
+//                   `).join('')}
+//                 </ul>` :
+//       `<p class="text-muted">No ${isCompliant ? 'paid' : 'due'} periods</p>`
+//     }
+//             </div>
+//           </div>
+//         </div>
+
+//         <div class="col-md-6">
+//           <div class="card border-info">
+//             <div class="card-header bg-info text-white">
+//               <h6 class="mb-0">Summary</h6>
+//             </div>
+//             <div class="card-body">
+//               <p><strong>Amount per period:</strong> ₦${item.amount.toLocaleString()}</p>
+//               <p><strong>Total due:</strong> ₦${item.total_due.toLocaleString()}</p>
+//               <p><strong>Total periods:</strong> ${item.total_expected_periods}</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   `;
+
+//   $('#periodsModal').modal('show');
+// }
+// Example usage:
+
+
 async function getTaxes() {
   const response = await fetch(`${HOST}?getAllRevenueHeads`);
   const revenueHeads = await response.json();
@@ -118,9 +266,8 @@ async function getTaxes() {
               <iconify-icon icon="iwwa:option-horizontal" style="font-size: 24px"></iconify-icon>
             </button>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="filtermda">
-              <button class="dropdown-item" onclick="generateInv(${
-                revenuehead.id
-              })">Generate Invoice</button>
+              <button class="dropdown-item" onclick="generateInv(${revenuehead.id
+      })">Generate Invoice</button>
             </div>
           </div>
         </td>
@@ -137,6 +284,220 @@ getTaxes().then((res) => {
   });
   $("#dataTable2").DataTable();
 });
+
+
+async function assignedTaxesBody() {
+  try {
+    const response = await fetch(`${HOST}?fetchAssignedTaxesByTaxNumber&tax_number=${tax_numberP}`);
+    const theassignData = await response.json();
+
+    theassignData.data.forEach((item, i) => {
+      $("#assignedTaxesBody").append(`
+        <tr>
+          <td><input class="form-check-input taxCheckso" data-thename="${item.revenue_head_name}" data-theidd="${item.revenue_head_id}" type="checkbox"></td>
+          <td>${i + 1}</td>
+          <td>${item.revenue_head_name}</td>
+          <td>Individual</td>
+          <td>${item.assignment_date}</td>
+        </tr>
+      `);
+    })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+assignedTaxesBody().then(res => {
+  $("#dataTable4").DataTable()
+})
+
+$("#generateInvoiceBtnAppl").on("click", function () {
+  let allSelected = document.querySelectorAll(".taxChecksAppl");
+  let theArray = [];
+  allSelected.forEach((slt) => {
+    if (slt.checked) {
+      theArray.push({
+        id: slt.dataset.theidd,
+        revenueHead: slt.dataset.thename,
+        revenueAmount: slt.dataset.thedueamount
+      });
+    }
+  });
+
+  if (theArray.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No Taxes Selected',
+      text: 'Please select at least one tax to generate an invoice.',
+    });
+  } else {
+    Swal.fire({
+      title: 'Generating Invoice',
+      text: 'Please wait while we generate your invoice.',
+      icon: 'info',
+      confirmButtonText: 'Generate Invoice',
+      confirmButtonColor: '#015826',
+      html: `
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Revenue Head</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${theArray.map((id, idx) => {
+        return `
+                  <tr>
+                    <td colspan="2">${id.revenueHead}</td>
+                    <td>
+                      <input type="number" min="0" class="swal2-inpt form-control" id="swal-input-price-${id.id}" value="${id.revenueAmount}" placeholder="${id.revenueAmount}" readonly>
+                    </td>
+                  </tr>
+                `;
+      }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `,
+      preConfirm: async () => {
+        let revArray = []
+        let prices = theArray.map(id => {
+          revArray.push(id.id)
+          const val = document.getElementById(`swal-input-price-${id.id}`).value;
+          return val ? val : '';
+        });
+        if (prices.some(p => !p || isNaN(p) || Number(p) <= 0)) {
+          Swal.showValidationMessage('Please enter a valid amount for each selected tax.');
+          return false;
+        }
+        try {
+          const response = await fetch(`${HOST}?generateSingleInvoices&tax_number=${tax_numberP}&revenue_head_id=${revArray.join(",")}&price=${prices.join(",")}&zonalOffice=8&lga=Not Assigned&invoice_type=invoice`);
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return await response.json();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Invoice Generated Successfully!',
+          text: `Your invoice number is ${result.value.invoice_number}.`,
+          confirmButtonText: 'Open Invoice',
+          confirmButtonColor: '#015826',
+        }).then((result3) => {
+          if (result3.isConfirmed) {
+            window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+          }
+        });
+      }
+    });
+  }
+
+
+
+})
+
+$("#generateInvoiceBtn").on("click", function () {
+  let allSelected = document.querySelectorAll(".taxCheckso");
+  let theArray = [];
+  allSelected.forEach((slt) => {
+    if (slt.checked) {
+      theArray.push(slt.dataset.theidd);
+    }
+  });
+
+  if (theArray.length === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No Taxes Selected',
+      text: 'Please select at least one tax to generate an invoice.',
+    });
+  } else {
+    Swal.fire({
+      title: 'Generating Invoice',
+      text: 'Please wait while we generate your invoice.',
+      icon: 'info',
+      confirmButtonText: 'Generate Invoice',
+      confirmButtonColor: '#015826',
+      html: `
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Revenue Head</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${theArray.map((id, idx) => {
+        const revenueHead = $(`#assignedTaxesBody input[data-theidd="${id}"]`).closest('tr').find('td').eq(2).text();
+        const revenueAmount = $(`#assignedTaxesBody input[data-theidd="${id}"]`).val();
+        return `
+                  <tr>
+                    <td>${revenueHead}</td>
+                    <td>
+                      <input type="number" min="0" class="swal2-inpt form-control" id="swal-input-price-${id}" placeholder="Enter amount for ${revenueHead}">
+                    </td>
+                  </tr>
+                `;
+      }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `,
+      preConfirm: async () => {
+        let prices = theArray.map(id => {
+          const val = document.getElementById(`swal-input-price-${id}`).value;
+          return val ? val : '';
+        });
+        if (prices.some(p => !p || isNaN(p) || Number(p) <= 0)) {
+          Swal.showValidationMessage('Please enter a valid amount for each selected tax.');
+          return false;
+        }
+        try {
+          const response = await fetch(`${HOST}?generateSingleInvoices&tax_number=${tax_numberP}&revenue_head_id=${theArray.join(",")}&price=${prices.join(",")}&zonalOffice=8&lga=Not Assigned&invoice_type=invoice`);
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return await response.json();
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+        }
+      },
+      allowOutsideClick: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Invoice Generated Successfully!',
+          text: `Your invoice number is ${result.value.invoice_number}.`,
+          confirmButtonText: 'Open Invoice',
+          confirmButtonColor: '#015826',
+        }).then((result3) => {
+          if (result3.isConfirmed) {
+            window.location.href = `../viewinvoice.html?invnumber=${result.value.invoice_number}&load=true`;
+          }
+        });
+      }
+    });
+  }
+
+
+
+})
+
+
 
 // async function getPresumptiveTaxes() {
 //   const response = await fetch(
@@ -176,9 +537,9 @@ getTaxes().then((res) => {
 //       </td>
 //       `
 //       }
-      
+
 //     }
-    
+
 
 //     $("#showPresumptiveTax").append(aa)
 //   }
@@ -230,7 +591,7 @@ function generateInv(revid) {
     showCancelButton: true,
     confirmButtonText: "Generate Invoice",
     html:
-    '<input id="swal-input1" class="swal2-input"  placeholder=" Amount to be paid ">',
+      '<input id="swal-input1" class="swal2-input"  placeholder=" Amount to be paid ">',
     showLoaderOnConfirm: true,
     preConfirm: async () => {
       let price = document.getElementById('swal-input1').value

@@ -84,6 +84,39 @@ $("#developmentLevy").on('change', function () {
     $("#devLevyContainer").html('');
   }
 });
+
+$("#bprCheckInput").on('change', function () {
+  if ($(this).is(":checked")) {
+    $("#bprCheckContainer").html(`
+      <div class="col-md-6">
+        <select class="form-select bprSelectInput">
+          <option value="306">BPR (MINISTRY OF COMMERCE AND INDUSTRIES)</option>
+          <option value="357">BPR (ZAMFARA STATE MARKET DEVELOPMENT AND MANAGEMENT AGENCY)</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <input type="number" min="1000" class="form-control bprSelectInputAmount enumInputB" placeholder="Enter Amount" required>
+        <small class="text-danger d-none" id="bprError">Amount must be at least 1000</small>
+      </div>  
+    `);
+
+    // Attach validation listener to new input
+    $(".bprSelectInputAmount").on("input", function () {
+      const value = parseInt($(this).val(), 10);
+      if (value < 1000) {
+        $("#bprError").removeClass("d-none");
+        $(this).addClass("is-invalid");
+      } else {
+        $("#bprError").addClass("d-none");
+        $(this).removeClass("is-invalid");
+      }
+    });
+
+  } else {
+    $("#bprCheckContainer").html('');
+  }
+});
+
 // function addBusiness() {
 //   $("#businessCnt").append(`
 //     <div class="businessNums mt-3">
@@ -404,6 +437,7 @@ function goToPreviewPage() {
   async function displayInfo(business_type, amount, categories) {
     let categOfTax = document.querySelector(".selCateg option:checked").textContent
     let developmentLevyAmount = document.querySelector(".developlevyAmount")
+    let bprSelectInputAmount = document.querySelector(".bprSelectInputAmount")
 
     if (categOfTax === "Corporate") {
       $("#theName2").html(`
@@ -427,7 +461,7 @@ function goToPreviewPage() {
       <p>${categOfTax}</p>
     </div>
       <div class="flex space-x-3">
-        <p>Name of Business:</p>
+        <p>Type of Business:</p>
         <p>${business_type}</p>
       </div>
        <div class="flex space-x-3">
@@ -445,6 +479,15 @@ function goToPreviewPage() {
         <div class="flex space-x-3">
           <p>Development Levy:</p>
           <p>${formatMoney(parseFloat(developmentLevyAmount.value))}</p>
+        </div>
+      `
+    }
+
+    if (bprSelectInputAmount) {
+      theSpace += `
+        <div class="flex space-x-3">
+          <p>${$(".bprSelectInput option:selected").text()}:</p>
+          <p>${formatMoney(parseFloat(bprSelectInputAmount.value))}</p>
         </div>
       `
     }
@@ -568,7 +611,7 @@ async function generateInvoiceNum(taxNumber) {
 
   let description = document.querySelector("#thedescripInput").value
   let developmentLevyAmount = document.querySelector(".developlevyAmount")
-
+  let bprSelectInputAmount = document.querySelector(".bprSelectInputAmount")
 
   let timer;
 
@@ -599,10 +642,20 @@ async function generateInvoiceNum(taxNumber) {
 };
 
 // If development levy is present
+let revenueIds = [the_id];
+let prices = [amt];
+
 if (developmentLevyAmount && developmentLevyAmount.value !== "") {
-  dataToSendOut.revenue_head_id = `${the_id},800`;
-  dataToSendOut.price = `${amt},${developmentLevyAmount.value}`;
+  revenueIds.push(800);
+  prices.push(developmentLevyAmount.value);
 }
+if (bprSelectInputAmount && bprSelectInputAmount.value !== "") {
+  revenueIds.push($(".bprSelectInput").val());
+  prices.push(bprSelectInputAmount.value);
+}
+
+dataToSendOut.revenue_head_id = revenueIds.join(",");
+dataToSendOut.price = prices.join(",");
 
   $.ajax({
     type: "GET",

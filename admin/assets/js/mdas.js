@@ -39,7 +39,7 @@ async function fetchMDAs() {
           <td>${i + 1}</td>
           <td><a class="text-primary" href="./mdadetails.html?id=${MDA.id}&name=${MDA.fullname}">${MDA.fullname}</a></td>
           <td>${MDA.state}</td>
-          <td>${MDA["COUNT(*)"]}</td>
+          <td>${MDA.total_count}</td>
           <td> ${(MDA.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(MDA.total_gen_revenue)))}</td>
           <td>${MDA.time_in}</td>
           `;

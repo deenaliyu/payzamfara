@@ -131,6 +131,89 @@ async function getRolesAdmin() {
     }
 
 
+  } else if (currentPage.includes("presumptive-tax.html")) {
+    let ReportRoles = userRoles.presumptive_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_inv_list = ReportRoles.find(ff => ff === "view_presumptive_tax")
+    let generate_inv_report = ReportRoles.find(ff => ff === "create_presumptive_tax")
+    let download_presum_report = ReportRoles.find(ff => ff === "download_presumptive_report")
+
+    if (view_inv_list === undefined) {
+      $(".invoiceTable").html(`
+        <p class="text-center text-xl fontBold">No Access to view list !</p>
+      `)
+    }
+
+    if (download_presum_report === undefined) {
+      $("#collReportd").addClass("disabled")
+    }
+
+    if (generate_inv_report === undefined) {
+      $("#generatePresumptiveBtn").remove()
+    }
+
+
+
+  } else if (currentPage.includes("demandnotice.html") || currentPage.includes("generatedemand.html")) {
+    let demandRoles = userRoles.demand_notice_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_inv_list = demandRoles.find(ff => ff === "view_demand_notice")
+    let download_demand_report = demandRoles.find(ff => ff === "download_notice_report")
+    let create_demand_notice = demandRoles.find(ff => ff === "create_demand_notice")
+
+    if (view_inv_list === undefined) {
+      $("#reportDisplay").html(`
+        <p class="text-center text-xl fontBold">No Access to view demand notice !</p>
+      `)
+    }
+
+    if (download_demand_report === undefined) {
+      $("#invReportd").remove()
+    }
+
+    if (create_demand_notice === undefined) {
+      $("#newDemandNotice").remove()
+      $("#generate-demand-container").html(`
+          <p class="text-center text-xl fontBold my-5">No Access to view demand notice !</p>
+      `)
+    }
+
+
+  } else if (currentPage.includes("rdms-setup.html")) {
+    let rdmdRoles = userRoles.rdms_access
+
+    $('#reportDisplay').removeClass('hidden')
+    $('#theLoader').remove()
+
+    let view_rdms = rdmdRoles.find(ff => ff === "view_rdms")
+    let modify_rdms = rdmdRoles.find(ff => ff === "modify_rdms")
+
+    if (view_rdms === undefined) {
+      $("#reportDisplay").html(`
+        <p class="text-center text-xl fontBold">No Access to view RDMS setup !</p>
+      `)
+    }
+
+    if (modify_rdms === undefined) {
+      let allcreatebtn = document.querySelectorAll(".createbtn")
+      let allModals = document.querySelectorAll(".modal")
+
+      allcreatebtn.forEach(crbtn => {
+        crbtn.remove()
+      })
+
+      allModals.forEach(mdl => {
+        mdl.remove()
+      })
+    }
+
+
   } else if (currentPage.includes("taxpayer.html")) {
     let taxPayers = userRoles.tax_payer_access
 
@@ -152,11 +235,11 @@ async function getRolesAdmin() {
 
     if (view_tax_list === undefined) {
       $(".txTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+        < p class="text-center text-xl fontBold" > No Access to view list!</p >
+          `)
       $(".txTable2").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+          < p class="text-center text-xl fontBold" > No Access to view list!</p >
+            `)
     }
 
     if (view_tax_detail === undefined) {
@@ -184,8 +267,8 @@ async function getRolesAdmin() {
 
     if (view_enum_list === undefined) {
       $(".enumTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+            < p class="text-center text-xl fontBold" > No Access to view list!</p >
+              `)
     }
 
     if (updt_taxpayer === undefined) {
@@ -213,8 +296,8 @@ async function getRolesAdmin() {
 
     if (view_admin === undefined) {
       $(".userTable").html(`
-        <p class="text-center text-xl fontBold">No Access to view list !</p>
-      `)
+              < p class="text-center text-xl fontBold" > No Access to view list!</p >
+                `)
     }
 
     if (create_new_user === undefined) {
@@ -238,15 +321,15 @@ async function getRolesAdmin() {
     if (create_gallery === undefined) {
       // $("#theCms").addClass("disabled")
       $(".selPage").html(`
-        <option value="" disabled selected>Select --</option>
-        <option value="news">News</option>
-        
+                < option value = "" disabled selected > Select--</option >
+                  <option value="news">News</option>
+
       `)
     } else if (create_gallery === undefined) {
       $(".selPage").html(`
-        <option value="" disabled selected>Select --</option>
-        <option value="gallery">Gallery</option>
-        
+        < option value = "" disabled selected > Select--</option >
+          <option value="gallery">Gallery</option>
+
       `)
     }
 
@@ -272,7 +355,7 @@ async function getRolesAdmin() {
 
 
     if (view_support === undefined) {
-      $("#supportContainer").html(`<p class="text-center text-xl fontBold">No Access !</p>`)
+      $("#supportContainer").html(`< p class="text-center text-xl fontBold" > No Access!</p > `)
     }
 
     if ((respond_ticket === undefined) || escalate_issues === undefined) {
@@ -293,8 +376,8 @@ async function getRolesAdmin() {
 
     if (view_audit === undefined) {
       $("#auditContainer").html(`
-        <p class="m-5 text-2xl fontBold text-center">No Access !!</p>
-      `)
+        < p class="m-5 text-2xl fontBold text-center" > No Access!!</p >
+          `)
     }
 
   } else if (currentPage.includes("etcc-management.html")) {
@@ -306,34 +389,70 @@ async function getRolesAdmin() {
     const firstReviewer = etccRoles.includes("first_reviewer");
     const secondReviewer = etccRoles.includes("second_reviewer");
     const thirdReviewer = etccRoles.includes("third_reviewer");
+    const fourthReviewer = etccRoles.includes("fourth_reviewer");
 
     // Check if the user has no access
-    if (!firstReviewer && !secondReviewer && !thirdReviewer) {
-      $(".main_section").html(`<p class="text-center text-xl fontBold m-5">No Access!</p>`);
+    if (!firstReviewer && !secondReviewer && !thirdReviewer && !fourthReviewer) {
+      $(".main_section").html(`<p class="text-center text-xl fontBold m-5"> No Access!</p> `);
       $("#initiateEtcc").remove();
     } else {
       // Handle role-based UI adjustments for multiple roles
-      if (thirdReviewer && secondReviewer && firstReviewer) {
-        // All three roles are present, no need to remove anything
-      } else if (thirdReviewer && secondReviewer) {
-        // If both thirdReviewer and secondReviewer are present
+      if (fourthReviewer && thirdReviewer && secondReviewer && firstReviewer) {
+        // All four roles are present, no need to remove anything
+      } else if (fourthReviewer && thirdReviewer && secondReviewer) {
+        // If fourth, third, and second reviewers are present
         $("#first_reviewer").remove();
-      } else if (secondReviewer && firstReviewer) {
-        // If both secondReviewer and firstReviewer are present
-        $("#third_reviewer").remove();
-      } else if (thirdReviewer && firstReviewer) {
-        // If both thirdReviewer and firstReviewer are present
+      } else if (fourthReviewer && thirdReviewer && firstReviewer) {
+        // If fourth, third, and first reviewers are present
         $("#second_reviewer").remove();
+      } else if (fourthReviewer && secondReviewer && firstReviewer) {
+        // If fourth, second, and first reviewers are present
+        $("#third_reviewer").remove();
+      } else if (thirdReviewer && secondReviewer && firstReviewer) {
+        // If third, second, and first reviewers are present
+        $("#fourth_reviewer").remove();
+      } else if (fourthReviewer && thirdReviewer) {
+        // If both fourth and third reviewers are present
+        $("#second_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (fourthReviewer && secondReviewer) {
+        // If both fourth and second reviewers are present
+        $("#third_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (fourthReviewer && firstReviewer) {
+        // If both fourth and first reviewers are present
+        $("#third_reviewer").remove();
+        $("#second_reviewer").remove();
+      } else if (thirdReviewer && secondReviewer) {
+        // If both third and second reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#first_reviewer").remove();
+      } else if (thirdReviewer && firstReviewer) {
+        // If both third and first reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#second_reviewer").remove();
+      } else if (secondReviewer && firstReviewer) {
+        // If both second and first reviewers are present
+        $("#fourth_reviewer").remove();
+        $("#third_reviewer").remove();
+      } else if (fourthReviewer) {
+        // If only fourth reviewer is present
+        $("#third_reviewer").remove();
+        $("#second_reviewer").remove();
+        $("#first_reviewer").remove();
       } else if (thirdReviewer) {
-        // If only thirdReviewer is present
+        // If only third reviewer is present
+        $("#fourth_reviewer").remove();
         $("#second_reviewer").remove();
         $("#first_reviewer").remove();
       } else if (secondReviewer) {
-        // If only secondReviewer is present
+        // If only second reviewer is present
+        $("#fourth_reviewer").remove();
         $("#third_reviewer").remove();
         $("#first_reviewer").remove();
       } else if (firstReviewer) {
-        // If only firstReviewer is present
+        // If only first reviewer is present
+        $("#fourth_reviewer").remove();
         $("#second_reviewer").remove();
         $("#third_reviewer").remove();
       }
@@ -350,15 +469,15 @@ async function getRolesAdmin() {
 
     if (full_access === undefined && no_access === undefined) {
       $("#serviceContainer").html(`
-            <p class="text-2xl m-5 text-center">No Access !!</p>
+        <p class="text-2xl m-5 text-center"> No Access!!</p>
           `)
 
     } else if (full_access) {
 
     } else if (no_access) {
       $("#serviceContainer").html(`
-            <p class="text-2xl m-5 text-center">No Access !!</p>
-          `)
+          < p class="text-2xl m-5 text-center" > No Access!!</p >
+            `)
 
     }
   } else if (currentPage.includes("direct")) {
@@ -373,14 +492,14 @@ async function getRolesAdmin() {
       third_reviewer: "#thirdReview"
     };
 
-    const hasAccess = Object.keys(roles).some(role => directRoles?.includes(role));
+    // const hasAccess = Object.keys(roles).some(role => directRoles?.includes(role));
 
-    if (!hasAccess) {
-      $("#directContainer").html(`
-        <p class="text-2xl m-5 text-center">No Access !!</p>
-      `);
-      return;
-    }
+    // if (!hasAccess) {
+    //   $("#directContainer").html(`
+    //     <p class="text-2xl m-5 text-center">No Access !!</p>
+    //   `);
+    //   return;
+    // }
 
     for (const [role, selector] of Object.entries(roles)) {
       if (!directRoles?.includes(role)) {
@@ -399,14 +518,14 @@ async function getRolesAdmin() {
       third_reviewer: "#thirdReview"
     };
 
-    const hasAccess = Object.keys(roles).some(role => payeRoles?.includes(role));
+    // const hasAccess = Object.keys(roles).some(role => payeRoles?.includes(role));
 
-    if (!hasAccess) {
-      $("#payeContainer").html(`
-        <p class="text-2xl m-5 text-center">No Access !!</p>
-      `);
-      return;
-    }
+    // if (!hasAccess) {
+    //   $("#payeContainer").html(`
+    //     <p class="text-2xl m-5 text-center">No Access !!</p>
+    //   `);
+    //   return;
+    // }
 
     for (const [role, selector] of Object.entries(roles)) {
       if (!payeRoles?.includes(role)) {

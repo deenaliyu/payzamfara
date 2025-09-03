@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payzamfara</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/responsive.css" />
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+  <link ref="stylesheet" href="./assets/css/print2.css" media="print" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+
+  <style>
+    .formTabs {
+      display: none;
+    }
+
+    .imgTabs {
+      display: none;
+    }
+
+    table.invTable {
+      border-collapse: collapse;
+    }
+
+    table.invTable th,
+    table.invTable td {
+      border: 1px solid #000;
+    }
+
+    .invTa tr td {
+      padding-left: 0;
+      padding-bottom: 0px;
+      font-size: 14px;
+    }
+
+    #lastly-button {
+      background-color: #fff;
+      width: 380px;
+      color: #115926 !important;
+      border: 3px solid #115926;
+      border-radius: 100px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    .demanInvoiceBody {
+      background: url('./assets/img/demandbg.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .select2.select2-container {
+      width: 100% !important;
+    }
+
+    #myTab .nav-link.active {
+      background: #005826 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <section class="flex h-[100vh] overflow-y-scroll">
+
+    <div class="md:block hidden w-3/12 bg-[#F9FAFB] p-3">
+
+      <div class="flex px-1 h-full">
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg1.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg2.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg3.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg4.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg5.png" />
+        </div>
+        <div class="mt-5 imgTabs">
+          <img src="./assets/img/dmdimg5.png" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="md:w-9/12 w-full bg-[url('../assets/img/slideimg.png')] bg-center overflow-y-scroll" id="generate-demand-container">
+
+      <section class="formTabs h-full">
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[80%]">
+            <div id="text-color">
+              <h1 class="fontBold text-3xl">New Demand Notice</h1>
+              <h1 class="mb-10 mt-3">Personal Details</h1>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="tin/email">Enter Email*</label>
+              <input type="text" class="form-control" id="tinOrEmail" required>
+            </div>
+
+            <div class="form-group flex gap-4 mt-10" id="theFetchBtns">
+              <button type="button" class="button w-6/12" onclick="fillManually()">Fill Manually</button>
+              <button id="lastly-button" onclick="fetchUserDetails()" class="btn-only w-6/12" type="button">Fetch
+                Details</button>
+            </div>
+            <div id="msg_box001"></div>
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-full">
+
+          <form action="" class="md:w-[60%] w-[80%]">
+            <h1 class="fontBold text-2xl">New Demand Notice</h1>
+            <h1 class="mb-3 mt-3">Personal Details</h1>
+
+            <div class="form-group mb-4">
+              <label for="">Select your category*</label>
+              <select class="form-select payInputs selCateg" required id="category">
+                <option disabled selected>Select--</option>
+                <option value="2">Individual</option>
+                <option value="1">Corporate</option>
+                <option value="3">State Agency</option>
+                <option value="4">Federal Agency</option>
+              </select>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2" id="theName">
+              <div class="form-group w-full">
+                <label for="">First name *</label>
+                <input type="text" class="form-control payInputs" required data-name="first_name"
+                  placeholder="Enter your first name">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Surname *</label>
+                <input type="text" class="form-control payInputs" required data-name="surname"
+                  placeholder="Enter your surname">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2" id="theEmail">
+              <div class="form-group w-full">
+                <label for="">Email *</label>
+                <input type="text" class="form-control payInputs" required data-name="email"
+                  placeholder="Enter your Email Address">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Phone number *</label>
+                <input type="number" class="form-control payInputs" id="phonenumber" minlength="11" maxlength="11"
+                  required data-name="phone" placeholder="Your 11-digits phone number">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full" id="theTin">
+                <label for="">TIN*</label>
+                <input type="text" class="form-control payInputs" id="tin" data-name="tin" required
+                  placeholder="Enter your TIN">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">State*</label>
+                <select name="" id="STATES" class="form-select payInputs" data-name="state">
+                  <option value="Abia">Abia</option>
+                  <option value="Adamawa">Adamawa</option>
+                  <option value="Akwa Ibom">Akwa Ibom</option>
+                  <option value="Anambra">Anambra</option>
+                  <option value="Bauchi">Bauchi</option>
+                  <option value="Bayelsa">Bayelsa</option>
+                  <option value="Benue">Benue</option>
+                  <option value="Borno">Borno</option>
+                  <option value="Cross River">Cross River</option>
+                  <option value="Delta">Delta</option>
+                  <option value="Ebonyi">Ebonyi</option>
+                  <option value="Edo">Edo</option>
+                  <option value="Ekiti">Ekiti</option>
+                  <option value="Enugu">Enugu</option>
+                  <option value="FCT">Federal Capital Territory</option>
+                  <option value="Gombe">Gombe</option>
+                  <option value="Imo">Imo</option>
+                  <option value="Jigawa">Jigawa</option>
+                  <option value="Kaduna">Kaduna</option>
+                  <option value="Kano">Kano</option>
+                  <option value="Katsina">Katsina</option>
+                  <option value="Kebbi">Kebbi</option>
+                  <option value="Kogi">Kogi</option>
+                  <option value="Kwara">Kwara</option>
+                  <option value="Lagos">Lagos</option>
+                  <option value="Nasarawa">Nasarawa</option>
+                  <option value="Niger">Niger</option>
+                  <option value="Ogun">Ogun</option>
+                  <option value="Ondo">Ondo</option>
+                  <option value="Osun">Osun</option>
+                  <option value="Oyo">Oyo</option>
+                  <option value="Plateau">Plateau</option>
+                  <option value="Rivers">Rivers</option>
+                  <option value="Sokoto">Sokoto</option>
+                  <option value="Taraba">Taraba</option>
+                  <option value="Yobe">Yobe</option>
+                  <option value="Zamfara" selected>Zamfara</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">LGA*</label>
+                <select name="" id="LGAs" class="form-select payInputs" required data-name="lga">
+                </select>
+              </div>
+
+              <div class="form-group w-full" id="theLga">
+                <label for="">Address*</label>
+                <input type="text" class="form-control payInputs" minlength="10" required data-name="address"
+                  placeholder=" Enter your address">
+              </div>
+            </div>
+
+
+
+
+            <button class="button w-full" type="button" onclick="continuePage()">Continue</button>
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs">
+        <div class="pt-10 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+        <div class="flex justify-center items-center h-full mt-10">
+
+          <form action="" class="md:w-[70%] secondForm pb-4">
+            <h1 class="fontBold text-2xl">New Demand Notice</h1>
+            <h1 class="mb-3 mt-3">Assessment Information</h1>
+
+
+
+            <div class="form-group mb-4">
+              <label for="">Category of Tax*</label>
+              <input class="form-control" readonly id="showcaseCateg" />
+
+            </div>
+
+
+            <hr class="my-3" />
+
+            <div class="flex items-center gap-2 mb-4">
+
+              <div class="form-group w-8/12">
+                <label for="">Assessment Informations*</label>
+                <select onchange="updateSelectedOption()"
+                  class="revHeadInputSel h-[40px] form-select genInv revHeadsss revenueHeader" required name=""
+                  id="rev_heads">
+
+                </select>
+              </div>
+
+              <div class="form-group w-4/12">
+                <label for="">Amount to be paid*</label>
+                <input type="text" class="form-control genInv h-[40px] thePaymentInput amountTopay amountTopa"
+                  id="amountTopay" required>
+              </div>
+
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="form-group w-full">
+                <label for="">Previous Year *</label>
+                <input type="text" class="form-control genInv prevYears" id="previous_year" placeholder="Previous Year"
+                  required>
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Previous Year Amount *</label>
+                <input type="text" class="form-control genInv prevAmounts" id="previous_year_value"
+                  placeholder="Previous Year Amount" required>
+              </div>
+            </div>
+
+            <div id="moreInput" class="mb-2 mt-4">
+
+            </div>
+
+            <div class="flex justify-end" id="otherSec">
+              <button onclick="addInput()" type="button" class="textPrimary flex gap-2 items-center"><iconify-icon
+                  icon="ic:outline-plus"></iconify-icon> Add Item</button>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="form-group w-full">
+                  <label for="">File Number *</label>
+                  <input type="text" class="form-control genInv genInv2" data-name="file_no" id="file_no"
+                    placeholder="File Number" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group w-full">
+                  <label for="">Business Type*</label>
+                  <select class="form-select genInv genInv2" data-name="business_own" id="business_own" required>
+                    <option value="" selected=""> -Select --</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="Pool">Pool betting</option>
+                    <option value="Education">Education</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Mining">Mining</option>
+                    <option value="Services">Services</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Housing">Housing/real estate/lands</option>
+                    <option value="Transporting">Transporting</option>
+                    <option value="Legal">Legal</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">LGAs*</label>
+                  <select class="form-select genInv" id="LGAaas" required>
+                    <option disabled selected>Select--</option>
+                    <option value="Shinkafi">Shinkafi</option>
+                    <option value="Zurmi">Zurmi</option>
+                    <option value="Birnin Magaji">Birnin Magaji</option>
+                    <option value="Kaura Namoda">Kaura Namoda</option>
+                    <option value="Gusau">Gusau</option>
+                    <option value="Bungudu">Bungudu</option>
+                    <option value="Maru">Maru</option>
+                    <option value="Tsafe">Tsafe</option>
+                    <option value="Anka">Anka</option>
+                    <option value="Bukkuyum">Bukkuyum</option>
+                    <option value="Gummi">Gummi</option>
+                    <option value="Bakura">Bakura</option>
+                    <option value="Maradun">Maradun</option>
+                    <option value="Talata Mafara">Talata Mafara</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="">Zonal Office*</label>
+                  <select class="form-select genInv" id="zonalOff" required>
+                    <option disabled selected>Select--</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3 hidden">
+              <label for="description">Description*</label>
+              <input type="text" class="form-control genInv hidden" id="thedescripInput">
+            </div>
+
+            <button class="button w-full" type="button" onclick="goToPreviewPage()">Continue</button>
+
+
+          </form>
+
+        </div>
+      </section>
+
+      <section class="formTabs">
+
+        <div class="md:pt-20 md:px-10 px-4">
+          <button class="flex items-center gap-2" onclick="nextPrev(-1)">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </button>
+        </div>
+
+        <div class="flex justify-center items-center h-full mt-10">
+          <form action="" class="md:w-[70%] secondForm">
+            <h1 class="fontBold text-2xl">New Demand Notice</h1>
+
+            <h1 class="mb-3 mt-3">Assessment Details</h1>
+            <div class="shadow-md p-3 bg-[#E9ECEF]" id="bill">
+              <div class="flex space-x-3">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+            <h1 class="mb-3 mt-3">User Details</h1>
+            <div class="flex items-center mb-4 gap-2" id="theName2">
+              <div class="form-group w-full">
+                <label for="">First name</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="first_name">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Surname</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="surname">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">Email</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="email">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Phone number *</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="phone">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">File Number</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="file_no">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Business Type</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="business_own">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">TIN (Optional)</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="tin">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">State</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="state">
+              </div>
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+              <div class="form-group w-full">
+                <label for="">LGA</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="lga">
+              </div>
+
+              <div class="form-group w-full">
+                <label for="">Address</label>
+                <input type="text" class="form-control payInputs2" readonly data-name="address">
+              </div>
+            </div>
+
+
+
+
+            <button class="button w-full" type="button" id="generating_inv"
+              onclick="generateInvoiceNon()">Continue</button>
+            <div id="msg_box"></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="formTabs pb-5">
+        <div class="flex justify-center mb-3">
+          <ul class="nav nav-pills" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Demand Notice Invoice</a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="sencond-tab" data-bs-toggle="tab" href="#sencondTab" role="tab"
+                aria-controls="home" aria-selected="true">Demand Notice Assessment</a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
+                aria-controls="profile" aria-selected="false">Invoice</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="invoiceContainer flex justify-center">
+              <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
+                <!-- COMING FROM JS invoice.js -->
+              </div>
+            </div>
+
+            <div class="flex justify-center px-4">
+              <div>
+                <div class="flex justify-between mt-4 gap-3">
+                  <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
+                    <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                    <span>Download Demand Invoice</span>
+                  </button>
+                  <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                    <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                    <span>Print Demand Invoice</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="sencondTab" role="tabpanel" aria-labelledby="home-tab">
+            <div class="invoiceContainer flex justify-center">
+              <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="assessmentDemandNotice">
+                <!-- COMING FROM JS invoice.js -->
+              </div>
+            </div>
+
+            <div class="flex justify-center px-4">
+              <div>
+                <div class="flex justify-between mt-4 gap-3">
+                  <button class="outline-btn flex gap-3 items-center px-10"
+                    onclick="downloadInvoice('assessmentDemandNotice')">
+                    <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                    <span>Download Demand Notice Assessment</span>
+                  </button>
+                  <button class="outline-btn flex gap-3 items-center px-10"
+                    onclick="printInvoice('assessmentDemandNotice')">
+                    <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                    <span>Print Demand Notice Assessment</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <section class="p-5">
+              <div class="invoiceContainer flex justify-center">
+                <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCardSecond">
+                  <!-- COMING FROM JS invoice.js -->
+                </div>
+              </div>
+
+              <div class="flex justify-center px-4">
+                <div>
+                  <div class="flex justify-between mt-4 gap-3">
+                    <button class="outline-btn flex gap-3 items-center px-10"
+                      onclick="downloadInvoice('invoiceCardSecond')">
+                      <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                      <span>Download Invoice</span>
+                    </button>
+                    <button class="outline-btn flex gap-3 items-center px-10"
+                      onclick="printInvoice('invoiceCardSecond')">
+                      <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                      <span>Print Invoice</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </section>
+
+
+
+
+  <script src="../assets/js/jquery.js"></script>
+  <script src="../assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/Joe12387/detectIncognito@main/dist/es5/detectIncognito.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      //change selectboxes to selectize mode to be searchable
+      $(".revHeadInputSel").select2();
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadInvoice(thecard) {
+      const element = document.getElementById(thecard);
+
+      var HTML_Width = $("#" + thecard).width();
+      var HTML_Height = $("#" + thecard).height();
+      var top_left_margin = 15;
+      var PDF_Width = HTML_Width + (top_left_margin * 2);
+      var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+      var canvas_image_width = HTML_Width;
+      var canvas_image_height = HTML_Height;
+
+      var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+      html2canvas($("#" + thecard)[0]).then(function (canvas) {
+        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+        for (var i = 1; i <= totalPDFPages; i++) {
+          pdf.addPage(PDF_Width, PDF_Height);
+          pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+        }
+        pdf.save(thecard + ".pdf");
+      });
+
+    }
+  </script>
+  <script>
+    const amountInput = document.getElementById('amountTopay');
+
+    amountInput.addEventListener('input', function (e) {
+      let inputVal = e.target.value;
+
+      // Immediately return if the first character is a dot to allow ".xx" inputs
+      if (inputVal === '.') {
+        return;
+      }
+
+      // Normalize the input by removing commas and any non-numeric characters except for the decimal point
+      let normalizedInput = inputVal.replace(/,/g, '').replace(/[^0-9.]/g, '');
+
+      // Split the input into whole and decimal parts
+      let [whole, decimal] = normalizedInput.split('.');
+
+      // Ensure the whole part is only numeric
+      whole = whole.replace(/\D/g, '');
+
+      // If there's a decimal part, limit it to two digits
+      if (decimal) {
+        decimal = decimal.substring(0, 2); // Limit decimal part to two digits
+      }
+
+      // Format the whole part with commas
+      let formattedWhole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // Reconstruct the formatted value
+      e.target.value = decimal !== undefined ? `${formattedWhole}.${decimal}` : formattedWhole;
+    });
+
+  </script>
+
+
+  <script src="assets/js/nav.js?v=2.0"></script>
+  <script src="./assets/js/accessLevel.js?v1.2"></script>
+  <!--<script src="assets/js/payment.js?v=1.6"></script>-->
+  <script src="../assets/js/tabHandler.js"></script>
+  <script src="../assets/js/invoice.js?v=8.0"></script>
+  <script src="assets/js/generatedemand.js"></script>
+
+</body>
+
+</html>

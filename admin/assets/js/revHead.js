@@ -2,128 +2,113 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const mdaId = urlParams.get('id');
 const mdn = urlParams.get('name');
-let ALLREV = ""
-let adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"))
+let ALLREV = [];
+let ALLREVS = [];
+
+const adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime")) || {};
+
+// Utility function to format currency
 function formatMoney(amount) {
   return amount.toLocaleString('en-US', {
     style: 'currency',
-    currency: 'NGN', // Change this to your desired currency code
+    currency: 'NGN',
     minimumFractionDigits: 2,
   });
 }
-async function fetchRevHeads() {
-  $("#revHeadsShow").html("")
-  $("#loader").css("display", "flex")
-  let status = 'approved';
-  const response = await fetch(`${HOST}/?getRevenueHeadByStatus&mdaName=${mdn}&status=${status}`)
-  const revHeads = await response.json()
-  ALLREV = revHeads
 
-  $("#loader").css("display", "none")
+// Cache DOM elements
+const elements = {
+  loader: $("#loader"),
+  revHeadsShow: $("#revHeadsShow"),
+  revHeadsShow2: $("#revHeadsShow2"),
+  msgBox: $("#msg_box"),
+  msgBox2: $("#msg_box2"),
+  msgBox22: $("#msg_box22"),
+  createRevenueBtn: $("#createRevenue"),
+  editRevenueBtn: $("#editRevenue"),
+  bulkCreateRevBtn: $("#bulkCreateRev"),
+  dataTable: $('#dataTable'),
+  dataTable1: $('#dataTable1')
+};
 
-  if (revHeads.status === 0) {
-    // $("#revHeadsShow").html("<tr></tr>")
-    $('#dataTable').DataTable();
-  } else {
-    revHeads.message.forEach((revHd, i) => {
-      let addd = ""
-
-      addd += `
-        <tr class="relative">
-          <td>${i + 1}</td>
-          <td>${revHd["COL_4"]}</td>
-          <td>${revHd["COL_5"]}</td>
-          <td>${revHd["frequency"]}</td>
-          <td>${ formatMoney(parseInt(revHd["COL_6"]))}</td>
-          <td> ${(revHd.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(revHd.total_gen_revenue)))}</td>
-          <td>
-            <div class="flex items-center gap-3" id="updtCont">
-            `
-            addd += `
-              <button onclick="deleteRev(this)" data-revid="${revHd.id}"><iconify-icon icon="material-symbols:delete-outline-rounded"></iconify-icon></button>
-              <button onclick="editRevFunc(this)" data-revid="${revHd.id}" data-bs-toggle="modal" data-bs-target="#editRev"><iconify-icon 
-                icon="material-symbols:edit-square-outline"></iconify-icon></button>
-            `
-          addd + `
-            </div>
-          </td>
-        </tr>
-      `
-
-      $("#revHeadsShow").append(addd)
-
-      if (i === revHeads.message.length - 1) {
-        $('#dataTable').DataTable();
-      }
-    });
-
+// Generic error handler
+function handleError(error, element, originalText = "") {
+  console.error(error);
+  if (element) {
+    element.html(`<p class="text-danger text-center mt-4 text-lg">Something went wrong!</p>`);
+    if (originalText) element.removeClass("hidden");
   }
-
 }
 
-fetchRevHeads()
+// Fetch revenue heads with status
+async function fetchRevenueHeads(status) {
+  try {
+    const targetElement = status === 'approved' ? elements.revHeadsShow : elements.revHeadsShow2;
+    targetElement.html("");
+    elements.loader.css("display", "flex");
 
-async function fetchRevHeadsPending() {
-  $("#revHeadsShow2").html("")
-  $("#loader").css("display", "flex")
-  let status = 'pending';
-  const response = await fetch(`${HOST}/?getRevenueHeadByStatus&mdaName=${mdn}&status=${status}`)
-  const revHeads = await response.json()
-  ALLREV = revHeads
-  console.log(revHeads)
+    const response = await fetch(`${HOST}/?getRevenueHeadByStatus&mdaName=${mdn}&status=${status}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const revHeads = await response.json();
+    if (status === 'approved') {
+      ALLREV = revHeads;
+    } else {
+      ALLREVS = revHeads;
+    }
 
-  $("#loader").css("display", "none")
-
-  if (revHeads.status === 0) {
-    // $("#revHeadsShow").html("<tr></tr>")
-    $('#dataTable1').DataTable();
-  } else {
-    revHeads.message.forEach((revHd, i) => {
-      let addd = ""
-
-      addd += `
-        <tr class="relative">
-          <td>${i + 1}</td>
-          <td>${revHd["COL_4"]}</td>
-          <td>${revHd["COL_5"]}</td>
-          <td>${revHd["frequency"]}</td>
-          <td>${ formatMoney(parseInt(revHd["COL_6"]))}</td>
-          <td> ${(revHd.total_gen_revenue === "" ? `&#8358 0` :  formatMoney(parseInt(revHd.total_gen_revenue)))}</td>
-          <td>
-            <div class="flex items-center gap-3">
-            `
-      if (adminInfo2.mda_access === "view") {
-
-      } else {
-        addd += `
-        <button onclick="deleteRev(this)" data-revid="${revHd.id}"><iconify-icon icon="material-symbols:delete-outline-rounded"></iconify-icon></button>
-          <button onclick="editRevFunc(this)" data-revid="${revHd.id}" data-bs-toggle="modal" data-bs-target="#editRev"><iconify-icon 
-          icon="material-symbols:edit-square-outline"></iconify-icon></button>
-        `
-      }
-
-      addd + `
-            </div>
-          </td>
-        </tr>
-      `
-
-      $("#revHeadsShow2").append(addd)
-
-      if (i === revHeads.message.length - 1) {
-        $('#dataTable1').DataTable();
-      }
-    });
-
+    if (revHeads.status === 0) {
+      status === 'approved' ? elements.dataTable.DataTable() : elements.dataTable1.DataTable();
+    } else {
+      renderRevenueHeads(revHeads.message, status);
+    }
+  } catch (error) {
+    handleError(error, elements.loader);
+  } finally {
+    elements.loader.css("display", "none");
   }
-
 }
 
-fetchRevHeadsPending()
+// Render revenue heads to the table
+function renderRevenueHeads(revHeads, status) {
+  const targetElement = status === 'approved' ? elements.revHeadsShow : elements.revHeadsShow2;
+  const isAdmin = adminInfo2.mda_access !== "view";
 
+  revHeads.forEach((revHd, i) => {
+    const row = `
+      <tr class="relative">
+        <td>${i + 1}</td>
+        <td>${revHd.COL_4 || ''}</td>
+        <td>${revHd.COL_5 || ''}</td>
+        ${status === 'approved' ? `<td>${revHd.demand_notice || ''}</td>` : ''}
+        <td>${revHd.remita_code || ''}</td>
+        <td>${revHd.frequency || ''}</td>
+        <td>${formatMoney(parseInt(revHd.COL_6) || 0)}</td>
+        <td>${revHd.total_gen_revenue ? formatMoney(parseInt(revHd.total_gen_revenue)) : '₦ 0'}</td>
+        <td>
+          <div class="flex items-center gap-3">
+            ${isAdmin ? `
+              <button onclick="deleteRev(this)" data-revid="${revHd.id}">
+                <iconify-icon icon="material-symbols:delete-outline-rounded"></iconify-icon>
+              </button>
+              <button onclick="editRevFunc(this)" data-revid="${revHd.id}" data-bs-toggle="modal" data-bs-target="#editRev">
+                <iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon>
+              </button>
+            ` : ''}
+          </div>
+        </td>
+      </tr>
+    `;
+    targetElement.append(row);
+  });
+
+  status === 'approved' ? elements.dataTable.DataTable() : elements.dataTable1.DataTable();
+}
+
+// Delete revenue head
 function deleteRev(e) {
-  let theRevId = e.dataset.revid
-  console.log(theRevId)
+  const theRevId = e.dataset.revid;
+  
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -138,331 +123,269 @@ function deleteRev(e) {
         type: "GET",
         url: `${HOST}?deleteRevenueHead&id=${theRevId}`,
         dataType: "json",
-        success: function (data) {
-          console.log(data)
+        success: (data) => {
           if (data.status === 1) {
-            Swal.fire(
-              'Deleted!',
-              'Revenue Head has been deleted.',
-              'success'
-            )
-            setTimeout(() => {
-              window.location.reload()
-            }, 1000);
+            Swal.fire('Deleted!', 'Revenue Head has been deleted.', 'success');
+            setTimeout(() => window.location.reload(), 1000);
           } else {
-            Swal.fire(
-              'Try again!',
-              'Something went wrong, try again !',
-              'error'
-            )
+            Swal.fire('Error!', 'Something went wrong, try again!', 'error');
           }
         },
-        error: function (request, error) {
-          Swal.fire(
-            'Try again!',
-            'Something went wrong, try again !',
-            'error'
-          )
-        }
+        error: () => Swal.fire('Error!', 'Something went wrong, try again!', 'error')
       });
-
     }
-  })
+  });
 }
 
+// Edit revenue function
 function editRevFunc(e) {
-  let editaID = e.dataset.revid
-  console.log(editaID)
-  sessionStorage.setItem("revUpdate", editaID)
+  const editaID = e.dataset.revid;
+  sessionStorage.setItem("revUpdate", editaID);
 
-  let theREV = ALLREV.message.filter(dd => dd.id === editaID)[0]
-
-  let allInputss = document.querySelectorAll(".revInput2")
-  allInputss[0].value = theREV["COL_4"]
-  allInputss[1].value = theREV["COL_6"]
-  allInputss[2].value = theREV["COL_5"]
-  allInputss[3].value = theREV["status"]
-  allInputss[4].value = theREV["frequency"]
-  allInputss[5].value = theREV["due_date"]
-}
-
-
-async function fetchMDAs() {
-  $("#showThem").html("")
-  $("#loader").css("display", "flex")
-  const response = await fetch(`${HOST}/?getMDAs`)
-  const MDAs = await response.json()
-
-  $("#loader").css("display", "none")
-
-  if (MDAs.status === 0) {
-
-  } else {
-    let theMDA = MDAs.message.filter(mda => mda.id === mdaId)
-    // $("#titleThe").html(theMDA[0].fullname)
-    $("#industryy").html(theMDA[0].fullname)
-
-    $("#otherInfo").html(`
-      <h1 class="text-2xl">${theMDA[0].fullname}</h1>
-      <p><span class="font-bold">Email Address:</span> <span>${theMDA[0].email}</span></p>
-      <p><span class="font-bold">LGA:</span> <span>${theMDA[0].lga}</span></p>
-      <p><span class="font-bold">Number of Revenue heads:</span> <span>${theMDA[0]["COUNT(*)"]}</span></p>
-      <p><span class="font-bold">Date created:</span> <span>${theMDA[0]["time_in"]}</span></p>
-      <p><span class="font-bold">Contact:</span> <span>${theMDA[0]["phone"]}</span></p>
-      
-    `)
-
-
-    if (theMDA[0].status === "active") {
-      $("#actBtn").html(`
-        <button class="btn btn-danger">Deactivate</button>
-      `)
-      $("#otherInfo").append(`
-        <p><span class="font-bold">Status:</span> <span class="badge bg-primary">active</span></p>
-      `)
-    } else {
-      $("#actBtn").html(`
-       <button class="btn btn-success">Activate</button>
-      `)
-      $("#otherInfo").append(`
-      <p><span class="font-bold">Status:</span> <span class="badge bg-danger">Inactive</span></p>
-      `)
-    }
-
-    if (theMDA[0].allow_payment === "yes") {
-      $("#allow_payment").html(`
-      <p>No</p>
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
-      <p>Yes</p>
-      `)
-    } else {
-      $("#allow_payment").html(`
-      <p>No</p>
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <p>Yes</p>
-      `)
-    }
-
-    if (theMDA[0].office_creation === "yes") {
-      $("#user_creation").html(`
-      <p>No</p>
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
-      <p>Yes</p>
-      `)
-    } else {
-      $("#user_creation").html(`
-      <p>No</p>
-      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <p>Yes</p>
-      `)
-    }
-
+  const allItems = [...(ALLREV.message || []), ...(ALLREVS.message || [])];
+  const theREV = allItems.find(dd => dd.id === editaID);
+  
+  if (theREV) {
+    const allInputss = document.querySelectorAll(".revInput2");
+    const fields = [
+      theREV.COL_4,        // 0
+      theREV.COL_6,        // 1
+      theREV.remita_code,  // 2
+      theREV.COL_2,        // 3
+      theREV.COL_5,        // 4
+      theREV.demand_notice,// 5
+      theREV.status,       // 6
+      theREV.frequency     // 7
+    ];
+    
+    allInputss.forEach((input, index) => {
+      if (fields[index]) input.value = fields[index];
+    });
   }
-
 }
-fetchMDAs()
 
+// Fetch MDA information
+async function fetchMDAs() {
+  try {
+    $("#showThem").html("");
+    elements.loader.css("display", "flex");
 
-$("#createRevenue").on("click", () => {
+    const response = await fetch(`${HOST}/?getMDAs`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const MDAs = await response.json();
+    elements.loader.css("display", "none");
 
-  $("#msg_box").html(`
-      <div class="flex justify-center items-center mt-4">
-        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-      </div>
-    `)
-  $("#createRevenue").addClass("hidden")
+    if (MDAs.status !== 0) {
+      const theMDA = MDAs.message.find(mda => mda.id === mdaId);
+      if (theMDA) {
+        renderMDAInfo(theMDA);
+      }
+    }
+  } catch (error) {
+    handleError(error, elements.loader);
+  }
+}
 
-  let allInputs = document.querySelectorAll(".revInput")
-  let categInputs = document.querySelectorAll(".form-check-input")
-  let obj = {
-    "endpoint": "createMDArHead",
+// Render MDA information
+function renderMDAInfo(mda) {
+  $("#industryy").html(mda.fullname);
+  
+  $("#otherInfo").html(`
+    <h1 class="text-2xl">${mda.fullname}</h1>
+    <p><span class="font-bold">Email Address:</span> <span>${mda.email || 'N/A'}</span></p>
+    <p><span class="font-bold">LGA:</span> <span>${mda.lga || 'N/A'}</span></p>
+    <p><span class="font-bold">Number of Revenue heads:</span> <span>${mda.total_count || 0}</span></p>
+    <p><span class="font-bold">Date created:</span> <span>${mda.time_in || 'N/A'}</span></p>
+    <p><span class="font-bold">Contact:</span> <span>${mda.phone || 'N/A'}</span></p>
+    <p><span class="font-bold">Status:</span> <span class="badge ${mda.status === "active" ? 'bg-primary' : 'bg-danger'}">${mda.status}</span></p>
+  `);
+
+  $("#actBtn").html(mda.status === "active" 
+    ? `<button class="btn btn-danger">Deactivate</button>`
+    : `<button class="btn btn-success">Activate</button>`
+  );
+
+  renderToggle("#allow_payment", mda.allow_payment === "yes");
+  renderToggle("#user_creation", mda.office_creation === "yes");
+}
+
+function renderToggle(selector, isChecked) {
+  $(selector).html(`
+    <p>No</p>
+    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" ${isChecked ? 'checked' : ''}>
+    <p>Yes</p>
+  `);
+}
+
+// Create revenue head
+function createRevenueHead() {
+  elements.msgBox.html(`
+    <div class="flex justify-center items-center mt-4">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  `);
+  elements.createRevenueBtn.addClass("hidden");
+
+  const allInputs = document.querySelectorAll(".revInput");
+  const categInputs = document.querySelectorAll(".form-check-input");
+  
+  const obj = {
+    endpoint: "createMDArHead",
     data: {
       mda_id: mdn,
-      "economicCode": "045RF",
-      "adminCode": "22",
-      "status": "active"
+      economicCode: "045RF",
+      adminCode: "22",
+      status: "active"
     }
-  }
-  allInputs.forEach(allInput => {
-    obj.data[allInput.dataset.name] = allInput.value
-  })
-  let categga = []
-  categInputs.forEach(catego => {
-    if (catego.checked) {
-      categga.push(catego.value)
-    }
-  })
-  obj.data["category"] = categga.join(",")
+  };
 
-  let stringedOBJ = JSON.stringify(obj)
-  // console.log(stringedOBJ)
+  allInputs.forEach(input => {
+    obj.data[input.dataset.name] = input.value;
+  });
+
+  const categories = Array.from(categInputs)
+    .filter(input => input.checked)
+    .map(input => input.value);
+  obj.data.category = categories.join(",");
 
   $.ajax({
     type: "POST",
     url: HOST,
     dataType: 'json',
-    data: stringedOBJ,
-    success: function (data) {
-      // console.log(data)
-      $("#msg_box").html("")
-
-      for (const key in data) {
-        const element = data[key];
-
-        if (element.status === 1) {
-          $("#msg_box").append(`
-            <p class="text-success text-center mt-4 text-lg">${key}: ${element.message}</p>
-          `)
-        } else {
-          $("#msg_box").append(`
-            <p class="text-warning text-center mt-4 text-lg">${key}: ${element.message}</p>
-          `)
-        }
-
-
+    data: JSON.stringify(obj),
+    success: (data) => {
+      elements.msgBox.html("");
+      
+      for (const [key, value] of Object.entries(data)) {
+        const className = value.status === 1 ? "text-success" : "text-warning";
+        elements.msgBox.append(`<p class="${className} text-center mt-4 text-lg">${key}: ${value.message}</p>`);
       }
-      // $("#createRevenue").removeClass("hidden")
+      
       setTimeout(() => {
         $('#createRevenueHead').modal('hide');
-        window.location.reload()
+        window.location.reload();
       }, 1000);
     },
-    error: function (request, error) {
-      $("#msg_box").html(`
-        <p class="text-danger text-center mt-4 text-lg">Something is wrong!</p>
-      `)
-      $("#createRevenue").removeClass("hidden")
-      console.log(error);
+    error: (error) => {
+      handleError(error, elements.msgBox, "Create Revenue");
     }
   });
+}
 
-})
-
-$("#editRevenue").on("click", () => {
-  let theRevId = sessionStorage.getItem("revUpdate")
-  $("#msg_box2").html(`
+// Update revenue head
+function updateRevenueHead() {
+  const theRevId = sessionStorage.getItem("revUpdate");
+  elements.msgBox2.html(`
     <div class="flex justify-center items-center mt-4">
       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
     </div>
-  `)
-  $("#editRevenue").addClass("hidden")
+  `);
+  elements.editRevenueBtn.addClass("hidden");
 
-  let allInputs = document.querySelectorAll(".revInput2")
+  const allInputs = document.querySelectorAll(".revInput2");
+  const data = { id: theRevId };
 
-  let obj = {
-    data: {
-      id: theRevId,
-    }
-  }
-  allInputs.forEach(allInput => {
-    obj.data[allInput.dataset.name] = allInput.value
-  })
-  let queryString = $.param(obj.data);
+  allInputs.forEach(input => {
+    data[input.dataset.name] = input.value;
+  });
+
+  const queryString = $.param(data);
 
   $.ajax({
     type: "GET",
-    url: `${HOST}?updateRevenueHead&` + queryString,
+    url: `${HOST}?updateRevenueHead&${queryString}`,
     dataType: "json",
-    success: function (data) {
-      console.log(data)
+    success: (data) => {
       if (data.status === 2) {
-        $("#msg_box2").html(`
-          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#editRevenue").removeClass("hidden")
-
+        elements.msgBox2.html(`<p class="text-warning text-center mt-4 text-lg">${data.message}</p>`);
+        elements.editRevenueBtn.removeClass("hidden");
       } else if (data.status === 1) {
-        $("#msg_box2").html(`
-          <p class="text-success text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#editMDAs").removeClass("hidden")
+        elements.msgBox2.html(`<p class="text-success text-center mt-4 text-lg">${data.message}</p>`);
         setTimeout(() => {
           $('#editMda').modal('hide');
-          window.location.reload()
+          window.location.reload();
         }, 1000);
-
       }
     },
-    error: function (request, error) {
-      $("#msg_box2").html(`
-        <p class="text-danger text-center mt-4 text-lg">Something went wrong, Try again !</p>
-      `)
-      $("#editRevenue").removeClass("hidden")
-      console.log(error);
+    error: (error) => {
+      handleError(error, elements.msgBox2, "Edit Revenue");
     }
   });
-})
+}
 
-const input = document.getElementById('csv-file');
-let theMDAData = {}
-input.addEventListener('change', (event) => {
+// Handle CSV file upload
+function handleCSVUpload(event) {
   const file = event.target.files[0];
+  if (!file) return;
+
   const reader = new FileReader();
-
   reader.onload = (event) => {
-    const contents = event.target.result;
-
-    // Parse the CSV data into an array of objects
-    const parsedData = Papa.parse(contents, { header: true }).data;
-
-    // Convert the array of objects to a JSON string
-    const jsonData = JSON.stringify(parsedData);
-
-    // Output the JSON string to the console
-    theMDAData = JSON.parse(jsonData)
-    console.log(jsonData);
+    try {
+      const parsedData = Papa.parse(event.target.result, { header: true }).data;
+      // Remove empty last row if exists
+      if (parsedData.length > 0 && !parsedData[parsedData.length - 1].status) {
+        parsedData.pop();
+      }
+      window.theMDAData = parsedData;
+    } catch (error) {
+      console.error("Error parsing CSV:", error);
+    }
   };
-
   reader.readAsText(file);
-});
+}
 
-$("#bulkCreateRev").on("click", function () {
-  let lastObj = theMDAData[theMDAData.length - 1]
-  console.log(lastObj)
-
-  if (!lastObj.status) {
-    theMDAData.splice(theMDAData.length - 1, 1);
+// Bulk create revenue heads
+function bulkCreateRevenueHeads() {
+  if (!window.theMDAData || window.theMDAData.length === 0) {
+    elements.msgBox22.html(`<p class="text-warning text-center mt-4 text-lg">No data to upload!</p>`);
+    return;
   }
 
-  console.log(theMDAData)
-  let datatoPush = {
+  elements.msgBox22.html(`
+    <div class="flex justify-center items-center mt-4">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  `);
+  elements.bulkCreateRevBtn.addClass("hidden");
+
+  const datatoPush = {
     endpoint: "createMultplerHead",
-    data: theMDAData
-  }
+    data: window.theMDAData
+  };
 
   $.ajax({
     type: "POST",
     url: HOST,
     dataType: 'json',
     data: JSON.stringify(datatoPush),
-    success: function (data) {
-      console.log(data)
+    success: (data) => {
       if (data.status === 2) {
-        $("#msg_box22").html(`
-          <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#bulkCreateRev").removeClass("hidden")
-
+        elements.msgBox22.html(`<p class="text-warning text-center mt-4 text-lg">${data.message}</p>`);
       } else if (data.status === 1) {
-        $("#msg_box22").html(`
-          <p class="text-success text-center mt-4 text-lg">${data.message}</p>
-        `)
-        $("#bulkCreateRev").removeClass("hidden")
-
+        elements.msgBox22.html(`<p class="text-success text-center mt-4 text-lg">${data.message}</p>`);
         setTimeout(() => {
           $('#bulkCreateRevModal').modal('hide');
-          window.location.reload()
+          window.location.reload();
         }, 1000);
-
       }
+      elements.bulkCreateRevBtn.removeClass("hidden");
     },
-    error: function (request, error) {
-      $("#msg_box22").html(`
-        <p class="text-danger text-center mt-4 text-lg">An error occured !</p>
-      `)
-      $("#bulkCreate").removeClass("hidden")
-      console.log(error);
+    error: (error) => {
+      handleError(error, elements.msgBox22, "Bulk Create");
     }
   });
+}
 
-})
+// Event listeners
+document.getElementById('csv-file')?.addEventListener('change', handleCSVUpload);
+elements.createRevenueBtn.on("click", createRevenueHead);
+elements.editRevenueBtn.on("click", updateRevenueHead);
+elements.bulkCreateRevBtn.on("click", bulkCreateRevenueHeads);
+
+// Initial data loading
+$(document).ready(() => {
+  fetchRevenueHeads('approved');
+  fetchRevenueHeads('pending');
+  fetchMDAs();
+});

@@ -62,7 +62,10 @@
 
       <section class="formTabs pb-5">
         <div class="md:pt-14 pt-5 md:px-10 px-4" id="thePay">
-
+            <button onclick="history.go(-1)" class="flex items-center gap-2 w-fit">
+              <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+              <span>Go Home</span>
+            </button>
         </div>
 
         <div class="invoiceContainer flex justify-center">
@@ -129,7 +132,7 @@
         </div>
 
         <div class="invoiceContainer flex justify-center mt-5 pr-10">
-          <div class="invoice bg-white w-[70%] shadow-md -mt-12" id="receiptCard">
+          <div class="invoice bg-white md:w-[70%] w-full shadow-md -mt-12" id="receiptCard">
 
           </div>
           <!-- RECEIPT -->
@@ -139,7 +142,7 @@
         </div>
 
         <div class="flex justify-center pr-10">
-          <div class="w-[70%]">
+          <div class="md:w-[70%] w-full">
             <!-- <div class="mt-4">
               <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
             </div> -->
@@ -183,11 +186,11 @@
   <script>
     AOS.init();
   </script>
-  <script src="assets/js/nav.js?v=1.3"></script>
-  <script src="assets/js/payment.js?v=1.6"></script>
+  <script src="assets/js/nav.js?v=2.4"></script>
+  <script src="assets/js/payment.js?v=21.0"></script>
   <script src="assets/js/tabHandler.js"></script>
-  <script src="assets/js/viewinvoice.js?v=1.7"></script>
-  <script src="assets/js/invoice.js?v=1.7"></script>
+  <script src="assets/js/viewinvoice.js?v=3.9"></script>
+  <script src="assets/js/invoice.js?v=9.8"></script>
   <script src="assets/js/landingcms.js"></script>
 </body>
 

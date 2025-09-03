@@ -1,1173 +1,833 @@
-$(".checki").on("change", function () {
-  let val = $(this).val()
+let selectcategory = $(".cardi");
+const flatBusinessTypes = [];
 
-  if (val === "yes") {
-    $("#businessType").html(`
-    <div class="flex gap-x-10 pt-2 px-3 items-center md:flex-nowrap sm:flex-wrap">
-    <p>Type of business</p>
-    <div class="form-group mb-2 md:w-[320px] w-full">
-        <select class="form-select mt-1 regInputs" required data-name="typeofbusiness">
-          <option value="" selected>-Select the name of the business--</option>
-          <option value="Commercial">Commercial</option>
-          <option value="Pool">Pool betting</option>
-          <option value="Education">Education</option>
-          <option value="Hospitality">Hospitality</option>
-          <option value="Manufacturing">Manufacturing</option>
-          <option value="Retail">Retail</option>
-          <option value="Mining">Mining</option>
-          <option value="Services">Services</option>
-          <option value="Agriculture">Agriculture</option>
-          <option value="Housing">Housing/real estate/lands</option>
-          <option value="Transporting">Transporting</option>
-          <option value="Legal">Legal</option>
-          <option value="General">General</option>
-        </select>
-        <small class="validate text-[red]"></small>
-      </div>
-</div>
-    `)
-
-  } else {
-
-    $("#businessType").html(`
-    <div class=""></div>
-    `)
-
-  }
-})
-let selectcategory = document.querySelectorAll(".cardi")
-selectcategory.forEach(selecti => {
-  selecti.addEventListener("click", () => {
-    selectcategory.forEach(element => {
-      element.classList.remove("selectedcat");
-    });
-    selecti.classList.add("selectedcat");
-    let btnclicked = document.querySelector(".bb");
-    btnclicked.classList.remove("disabled");
-    var dataId = selecti.getAttribute("data-name");
-    // console.log(dataId)
-    if (dataId === "individual") {
-      $(".bb").on("click", (e) => {
-        window.location.href = `register.html?category=${dataId}`;
-      })
-    } else {
-      $(".bb").on("click", (e) => {
-        window.location.href = `registerform.html?category=${dataId}`;
-      })
+async function getBusinessType() {
+  try {
+    const response = await fetch(`${HOST}?getIndustryHierarchy`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  })
-})
 
-var currentTab = 0;
-showTab(currentTab);
+    const data = await response.json();
 
-function showTab(n) {
-  var x = document.getElementsByClassName("formTabs");
-  x[n].style.display = "block";
-
-  // fixStepIndicator(n)
+    if (data.status === 1) {
+      data.data.forEach(industry => {
+        industry.sectors.forEach(sector => {
+          sector.business_types.forEach(businessType => {
+            // Optionally store this info for lookup later
+            flatBusinessTypes.push({
+              business_type_id: businessType.business_type_id,
+              business_type_name: businessType.business_type_name,
+              sector_id: sector.sector_id,
+              sector_name: sector.sector_name,
+              industry_id: industry.industry_id,
+              industry_name: industry.industry_name,
+            });
+          });
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-function nextPrev(n) {
-  var x = document.getElementsByClassName("formTabs");
-  x[currentTab].style.display = "none";
-  currentTab = currentTab + n;
+selectcategory.each(function () {
+  $(this).on("click", function () {
+    selectcategory.removeClass("selectedcat");
+    $(this).addClass("selectedcat");
+    let btnclicked = $(".bb");
+    btnclicked.removeClass("disabled");
+    let dataId = $(this).attr("data-name");
+    let urlParams = `category=${dataId}`;
 
-
-  showTab(currentTab);
-}
-
-$("#tinInput").on("keydown", function () {
-  let theVlla = $(this).val()
-  var key = event.keyCode || event.charCode;
-
-  if (key == 8 || key == 46) {
-
-  } else {
-    if (theVlla.length === 10) {
-      $(this).val(theVlla += "-")
+    if (typeof createdBy !== "undefined" && createdBy) {
+      urlParams += `&createdby=${createdBy}`;
     }
-  }
+    if (typeof adminId !== "undefined" && adminId) {
+      urlParams += `&admin_id=${adminId}`;
+    }
 
-
-
-})
-
-let allFirstNext = document.querySelectorAll(".firstNext")
-if (allFirstNext) {
-
-  allFirstNext.forEach(allFirst => {
-    allFirst.addEventListener("click", () => {
-      let firstNextMom = allFirst.parentElement.parentElement
-      let reginputs = firstNextMom.querySelectorAll(".regInputs")
-
-      // let TINinput = document.querySelector("#tinInput")
-      // let validateInput = TINinput.nextElementSibling
-
-      // if (TINinput.value.length !== 15) {
-      //   validateInput.innerHTML = "Please enter a valid TIN"
-      //   return false;
-      // } else {
-      for (let i = 0; i < reginputs.length; i++) {
-        const reginput = reginputs[i];
-        let theSmall = reginput.nextElementSibling
-        if (reginput.required && reginput.value === "") {
-          theSmall.textContent = "This field is required"
-          break;
-        }
-
-        if (i === reginputs.length - 1) {
-          nextPrev(1)
-          let allTheSmal = document.querySelectorAll("small.validate")
-          allTheSmal.forEach(theSmall => {
-            theSmall.textContent = ""
-          })
-
-        }
-
+    btnclicked.off("click").on("click", function () {
+      if (dataId === "individual") {
+        window.location.href = `register.html?${urlParams}`;
+      } else {
+        window.location.href = `registerform.html?${urlParams}`;
       }
-      // }
+    });
+  });
+});
 
+class CustomerValidation {
+  constructor() {
+    this.apiBaseUrl = 'https://payzamfara.com/php/JTD';
+    this.form = document.getElementById('validation-form');
+    this.validationInput = document.getElementById('validationInput');
+    this.validateBtn = document.getElementById('validate-btn');
+    this.proceedBtn = document.getElementById('proceed-btn');
+    this.taxpayerSummary = document.getElementById('taxpayer-summary');
+    this.taxpayerOptions = document.getElementById('taxpayer-options');
+    this.taxpayerDetails = document.getElementById('taxpayer-details');
+    this.selectedTaxpayer = null;
 
-
-    })
-  })
-}
-
-function checkTin() {
-
-
-
-}
-
-const urlParams = new URLSearchParams(window.location.search);
-let myParam = urlParams.get('category');
-if (myParam == "individual") {
-  myParam = 2;
-} else if (myParam == "corporate") {
-  myParam = 1;
-} else if (myParam == "state") {
-  myParam = 3;
-} else {
-  myParam = 4;
-}
-// console.log(myParam);
-$("#CreateAccountBtn").on("click", (e) => {
-  e.preventDefault()
-
-
-  let allInputs = document.querySelectorAll(".regInputs")
-  let ppsword = document.querySelector("#pps").value
-  let ppsword2 = document.querySelector("#pps2").value
-
-  var lowerCaseLetters = /[a-z]/g;
-  var upperCaseLetters = /[A-Z]/g;
-  var numbers = /[0-9]/g;
-
-  let valPas = document.querySelector("#valPas")
-
-  if (ppsword === "") {
-    valPas.innerHTML = "Password cannot be empty"
-
+    this.init();
   }
-  // else if (ppsword.length < 8) {
-  //   valPas.innerHTML = "Password must be at least 8 characters long."
 
-  // }
-  // else if (!ppsword.match(lowerCaseLetters) || !ppsword.match(upperCaseLetters) || !ppsword.match(numbers)) {
-  //   valPas.innerHTML = "Password must contain at least 1 lowercase letter, 1 uppercase letter, and 1 number."
-
-  // } 
-  else if (ppsword2 !== ppsword) {
-    valPas.innerHTML = "Confirm password must match password !"
-
+  init() {
+    this.setupEventListeners();
+    this.updateInputPlaceholder();
   }
-  else {
-    $(".valPas").html("")
-    $("#msg_box").html(`
-      <div class="flex justify-center items-center mt-4">
-        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-      </div>
-    `)
 
-    $("#CreateAccountBtn").addClass("hidden")
-    let obj = {
+  setupEventListeners() {
+    // Radio button change
+    document.querySelectorAll('input[name="identificationMethod"]').forEach(radio => {
+      radio.addEventListener('change', () => this.updateInputPlaceholder());
+    });
+
+    // Form submission
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.validateTaxpayer();
+    });
+
+    // Proceed button
+    this.proceedBtn.addEventListener('click', () => this.proceedToNextStep());
+  }
+
+  updateInputPlaceholder() {
+    const method = document.querySelector('input[name="identificationMethod"]:checked').value;
+    const input = this.validationInput;
+
+    switch (method) {
+      case 'tin':
+        input.placeholder = 'Enter your TIN (e.g., 0123456789)';
+        input.dataset.name = 'tin';
+        break;
+      case 'registration_number':
+        input.placeholder = 'Enter your RC Number (e.g., RC123456)';
+        input.dataset.name = 'registration_number';
+        break;
+      case 'nin':
+        input.placeholder = 'Enter your NIN (e.g., 12345678901)';
+        input.dataset.name = 'nin';
+        break;
+      case 'phone_no':
+        input.placeholder = 'Enter your Phone (e.g., 08012345678)';
+        input.dataset.name = 'phone_no';
+        break;
+    }
+  }
+
+  async validateTaxpayer() {
+    const method = document.querySelector('input[name="identificationMethod"]:checked').value;
+    const value = this.validationInput.value.trim();
+
+    if (!value) {
+      this.showError(this.validationInput, 'This field is required');
+      return;
+    }
+
+    this.showLoader();
+
+    try {
+      const response = await this.fetchTaxpayer(method, value);
+
+      if (response.status === 'error') {
+        this.handleTaxpayerNotFound();
+      } else {
+        this.displayTaxpayerInfo(response.data); // response.data is now the object
+      }
+
+    } catch (error) {
+      console.error('Validation error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'An error occurred while validating. Please try again.',
+        icon: 'error'
+      });
+    } finally {
+      this.hideLoader();
+    }
+  }
+
+  async fetchTaxpayer(method, value) {
+    const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+  }
+
+  handleTaxpayerNotFound() {
+    Swal.fire({
+      title: 'Taxpayer Not Found',
+      text: 'No taxpayer record was found with the provided information. Would you like to register manually?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Register Manually',
+      cancelButtonText: 'Try Again'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.proceedToNextStep();
+      }
+    });
+  }
+
+  displayTaxpayerInfo(taxpayerData) {
+    // Show the summary section
+    this.taxpayerSummary.classList.remove('hidden');
+
+    // Clear previous content
+    this.taxpayerOptions.innerHTML = '';
+    this.taxpayerDetails.innerHTML = '';
+
+    // Render the single taxpayer details
+    this.renderTaxpayerDetails(taxpayerData);
+    this.selectedTaxpayer = taxpayerData;
+  }
+
+  renderTaxpayerOptions(taxpayers) {
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'mb-4';
+
+    const label = document.createElement('label');
+    label.className = 'block text-sm font-medium text-gray-700 mb-2';
+    label.textContent = 'Multiple records found. Please select one:';
+    optionsDiv.appendChild(label);
+
+    taxpayers.forEach((taxpayer, index) => {
+      const div = document.createElement('div');
+      div.className = 'flex items-center mb-2';
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'taxpayerOption';
+      input.id = `taxpayer-${index}`;
+      input.value = index;
+      input.className = 'mr-2';
+      input.addEventListener('change', () => {
+        this.selectedTaxpayer = taxpayer;
+        this.renderTaxpayerDetails(taxpayer);
+      });
+
+      if (index === 0) {
+        input.checked = true;
+        this.selectedTaxpayer = taxpayer;
+        this.renderTaxpayerDetails(taxpayer);
+      }
+
+      const label = document.createElement('label');
+      label.htmlFor = `taxpayer-${index}`;
+      label.className = 'text-sm';
+
+      if (taxpayer.type === 'individual') {
+        label.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+      } else {
+        label.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+      }
+
+      div.appendChild(input);
+      div.appendChild(label);
+      optionsDiv.appendChild(div);
+    });
+
+    this.taxpayerOptions.appendChild(optionsDiv);
+  }
+
+  renderTaxpayerDetails(taxpayer) {
+    this.taxpayerDetails.innerHTML = '';
+
+    if (taxpayer.type === 'individual') {
+      const record = taxpayer.record;
+
+      const details = [
+        { label: 'Full Name', value: `${record.Title} ${record.first_name} ${record.middle_name || ''} ${record.last_name}` },
+        { label: 'TIN', value: record.tin },
+        { label: 'Gender', value: record.GenderName },
+        { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
+        { label: 'Marital Status', value: record.MaritalStatus },
+        { label: 'Occupation', value: record.Occupation },
+        { label: 'Phone Number', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName },
+        { label: 'Tax Authority', value: record.TaxAuthorityName },
+      ];
+
+      details.forEach(detail => {
+        if (detail.value) {
+          this.addDetailRow(detail.label, detail.value);
+        }
+      });
+    } else {
+      console.log(taxpayer)
+      const record = taxpayer.record;
+
+      const details = [
+        { label: 'Registered Name', value: record.registered_name },
+        { label: 'Trade Name', value: record.main_trade_name },
+        { label: 'TIN', value: record.tin },
+        { label: 'RC Number', value: record.registration_number },
+        { label: 'Organization Type', value: record.org_type_name },
+        { label: 'Phone Number', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName },
+        { label: 'Date of Incorporation', value: this.formatDate(record.date_of_incorporation) },
+        { label: 'Director', value: `${record.director_name} (${record.director_phone})` },
+      ];
+
+      details.forEach(detail => {
+        if (detail.value) {
+          this.addDetailRow(detail.label, detail.value);
+        }
+      });
+    }
+  }
+
+  addDetailRow(label, value) {
+    const div = document.createElement('div');
+    div.className = 'mb-2';
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'font-semibold text-sm';
+    labelSpan.textContent = `${label}: `;
+
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'text-sm';
+    valueSpan.textContent = value;
+
+    div.appendChild(labelSpan);
+    div.appendChild(valueSpan);
+    this.taxpayerDetails.appendChild(div);
+  }
+
+  proceedToNextStep() {
+    // Store the taxpayer data for use in the next steps
+    if (this.selectedTaxpayer) {
+      sessionStorage.setItem('taxpayerData', JSON.stringify(this.selectedTaxpayer));
+    }
+
+    // Hide the validation form and show the next section
+    document.getElementById('customer-validation').style.display = 'none';
+    document.getElementById('contact-info').style.display = 'block';
+
+    // If we have taxpayer data, pre-fill the next form
+    if (this.selectedTaxpayer) {
+      this.prefillNextForm();
+    }
+  }
+
+  prefillNextForm() {
+    const taxpayer = this.selectedTaxpayer;
+    const record = taxpayer.record;
+
+    // Set state and LGA if available in your form
+    if (document.getElementById('selectState')) {
+      let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
+
+      let formattedLGA = record.LGAName
+        ? record.LGAName
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+        : '';
+
+      document.getElementById('selectState').value = formattedState;
+
+
+      let lgaSelector = document.querySelector('#selectLGA')
+      if (lgaList2[formattedState]) {
+        lgaSelector.innerHTML = '<option>--Select LGA--</option>'
+        lgaList2[formattedState].forEach(lga => {
+          lgaSelector.innerHTML += `
+              <option value="${lga}">${lga}</option>
+              `;
+        });
+      }
+
+      document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
+    }
+
+    if (taxpayer.type === 'individual') {
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
+
+
+
+      document.querySelector('.regInputs[data-name="address"]').value =
+        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+    } else {
+      // For non-individual taxpayers
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.registered_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
+
+      // Set business type to "yes" and select appropriate type
+      document.getElementById('businessOwnerYes').checked = true;
+      this.toggleBusinessType();
+
+      document.querySelector('.regInputs[data-name="address"]').value =
+        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+    }
+  }
+
+  showLoader() {
+    this.validateBtn.disabled = true;
+    this.validateBtn.innerHTML = `
+      Validating...
+      <iconify-icon icon="eos-icons:loading"></iconify-icon>
+    `;
+  }
+
+  hideLoader() {
+    this.validateBtn.disabled = false;
+    this.validateBtn.innerHTML = `
+      Validate
+      <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+    `;
+  }
+
+  showError(input, message) {
+    const errorElement = input.nextElementSibling;
+    errorElement.textContent = message;
+    errorElement.classList.remove('hidden');
+    input.classList.add('border-red-500');
+  }
+
+  hideError(input) {
+    const errorElement = input.nextElementSibling;
+    errorElement.textContent = '';
+    errorElement.classList.add('hidden');
+    input.classList.remove('border-red-500');
+  }
+
+  formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
+
+  toggleBusinessType() {
+    // Implementation from previous code
+  }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new CustomerValidation();
+});
+
+class RegistrationForm {
+  constructor() {
+    this.currentTab = 0;
+    this.formSections = document.querySelectorAll('.formTabs');
+    this.urlParams = new URLSearchParams(window.location.search);
+    this.category = this.urlParams.get('category');
+    this.createdBy = this.urlParams.get('createdby');
+    this.adminId = this.urlParams.get('admin_id');
+    // this.HOST = ''; // Set your API host here
+
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    this.showTab(this.currentTab);
+    this.setupBusinessOwnerToggle();
+    this.setupPasswordToggle();
+    this.setupTINFormatting();
+    this.setupPhoneValidation();
+  }
+
+  setupEventListeners() {
+    // Form submissions
+    // document.getElementById('validation-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 1));
+    document.getElementById('contact-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 2));
+    document.getElementById('CreateAccountBtn')?.addEventListener('click', (e) => this.handleFinalSubmit(e));
+    document.querySelector(".back-btn")?.addEventListener("click", () => this.nextPrev(-1))
+
+    // Previous button
+    document.getElementById('prev-btn')?.addEventListener('click', () => {
+      // console.log('Going back');
+      this.nextPrev(-1);
+    });
+
+    // Business owner toggle
+    document.querySelectorAll('.checki').forEach(radio => {
+      radio.addEventListener('change', () => this.toggleBusinessType());
+    });
+  }
+
+  showTab(n) {
+    this.formSections.forEach((section, index) => {
+      section.style.display = index === n ? 'block' : 'none';
+    });
+  }
+
+  nextPrev(n) {
+    if (n < 0) {
+      this.formSections[this.currentTab].style.display = 'none';
+      this.currentTab += n;
+      if (this.currentTab < 0) this.currentTab = 0;
+      this.showTab(this.currentTab);
+      return;
+    }
+
+    if (this.validateCurrentTab()) {
+      this.formSections[this.currentTab].style.display = 'none';
+      this.currentTab += n;
+
+      if (this.currentTab >= this.formSections.length) {
+        return false;
+      }
+
+      this.showTab(this.currentTab);
+    }
+  }
+
+  validateCurrentTab() {
+    const currentSection = this.formSections[this.currentTab];
+    const inputs = currentSection.querySelectorAll('.regInputs[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      const errorElement = input.nextElementSibling;
+
+      if (!input.value.trim()) {
+        this.showError(input, 'This field is required');
+        isValid = false;
+      } else if (input.type === 'email' && !this.validateEmail(input.value)) {
+        this.showError(input, 'Please enter a valid email address');
+        isValid = false;
+      } else if (input.id === 'phonenumber' && !this.validatePhone(input.value)) {
+        this.showError(input, 'Phone number must be 11 digits');
+        isValid = false;
+      } else if (input.id === 'tinInput' && input.value && !this.validateTIN(input.value)) {
+        this.showError(input, 'Please enter a valid TIN (format: 1234567890)');
+        isValid = false;
+      } else {
+        this.hideError(input);
+      }
+    });
+
+    return isValid;
+  }
+
+  handleFormSubmit(e, nextStep) {
+    e.preventDefault();
+
+    if (this.validateCurrentTab()) {
+      this.nextPrev(nextStep);
+    }
+  }
+
+  async handleFinalSubmit(e) {
+    e.preventDefault();
+
+    const password = document.getElementById('pps').value;
+    const confirmPassword = document.getElementById('pps2').value;
+    const msgBox = document.getElementById('msg-box');
+
+    // Clear previous messages
+    msgBox.innerHTML = '';
+
+    // Validate password
+    if (!password) {
+      this.showError(document.getElementById('pps-cont'), 'Password cannot be empty');
+      return;
+    }
+
+    // if (password.length < 8) {
+    //   this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
+    //   return;
+    // }
+
+    // if (!/[A-Z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one uppercase letter');
+    //   return;
+    // }
+
+    // if (!/[a-z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one lowercase letter');
+    //   return;
+    // }
+
+    // if (!/[0-9]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one number');
+    //   return;
+    // }
+
+    if (password !== confirmPassword) {
+      this.showError(document.getElementById('pps2-cont'), 'Passwords do not match');
+      return;
+    }
+
+    // All validations passed - proceed with registration
+    this.showLoader();
+    $("#createAccountBtn").prop('disabled', true);
+    try {
+      const formData = this.collectFormData();
+
+      const response = await this.submitForm(formData);
+
+
+      this.handleRegistrationResponse(response);
+    } catch (error) {
+      this.showMessage('An error occurred. Please try again.', 'error');
+      console.error('Registration error:', error);
+    } finally {
+      this.hideLoader();
+      $("#createAccountBtn").prop('disabled', false);
+    }
+  }
+
+  collectFormData() {
+    const inputs = document.querySelectorAll('.regInputs');
+
+    const businessTypeVal = $("#businessTypeSelect").val()
+    let businessTypedata;
+
+    if (businessTypeVal) {
+      businessTypedata = flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+    }
+    const data = {
       endpoint: "createPayerAccount",
       data: {
         verification_status: "nil",
-        "surname": "",
-        "img": "assets/img/userprofile.png",
-        "tax_number": "",
-        "category": myParam,
-        "numberofstaff": ""
+        surname: "",
+        img: "assets/img/userprofile.png",
+        tax_number: "",
+        business_type_id: businessTypedata.business_type_id || null,
+        industry: businessTypedata.industry_name || null,
+        category: this.getCategoryValue(),
+        numberofstaff: "",
+        created_by: this.createdBy || "self",
+        by_account: this.adminId || null,
       }
+    };
+
+    inputs.forEach(input => {
+      const value = input.dataset.name === 'email' ? input.value.trim() : input.value;
+      data.data[input.dataset.name] = value;
+    });
+
+    console.log(data)
+    return data;
+  }
+
+  getCategoryValue() {
+    switch (this.category) {
+      case 'individual': return 2;
+      case 'corporate': return 1;
+      case 'state': return 3;
+      default: return 4;
     }
-    
-    allInputs.forEach(allInput => {
-      if(allInput.dataset.name === "email") {
-        obj.data[allInput.dataset.name] = allInput.value.trim()
-      } else {
-        obj.data[allInput.dataset.name] = allInput.value
-      }
-    })
+  }
 
-    let StringedData = JSON.stringify(obj)
-    $.ajax({
-      type: "POST",
-      url: HOST,
-      dataType: 'json',
-      data: StringedData,
-      success: function (data) {
-        console.log(data)
-        if (data.status === 2) {
-          $("#msg_box").html(`
-            <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
-          `)
-          $("#CreateAccountBtn").removeClass("hidden")
-
-        } else {
-          $("#msg_box").html(`
-            <p class="text-success text-center mt-4 text-lg">${data.message}</p>
-          `)
-          setTimeout(() => {
-            window.location.href = `verification.html?id=${data.id}&email=${obj.data.email}&phone=${obj.data.phone}`
-          }, 1000);
-        } 
+  async submitForm(data) {
+    const response = await fetch(HOST, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      error: function (request, error) {
-        console.log(error);
-        $("#msg_box").html(`
-          <p class="text-danger text-center mt-4 text-lg">An error occured !</p>
-        `)
-        $("#CreateAccountBtn").removeClass("hidden")
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+  }
+
+  handleRegistrationResponse(response) {
+    const msgBox = document.getElementById('msg-box');
+
+    if (response.status === 1) {
+      msgBox.innerHTML = `<p class="text-success text-lg">${response.message}</p>`;
+
+      if (this.createdBy === 'admin') {
+        this.sendAdminEmail(response.id);
+      } else {
+        setTimeout(() => {
+          window.location.href = `verification.html?id=${response.id}&email=${response.data.email}&phone=${response.data.phone}`;
+        }, 1500);
       }
+
+    } else if (response.status === 2) {
+      msgBox.innerHTML = `
+        <p class="text-warning text-lg">${response.message}</p>
+        <p class="text-success text-lg mt-2">
+          <a href="forgetpass.html" class="underline">Click here to reset your password</a>
+        </p>
+      `;
+    } else {
+      msgBox.innerHTML = `<p class="text-warning text-lg">${response.message}</p>`;
+    }
+  }
+
+  async sendAdminEmail(userId) {
+    const msgBox = document.getElementById('msg-box');
+
+    try {
+      await fetch(`${HOST}?sendEmail&id=${userId}`);
+      msgBox.innerHTML += `
+        <p class="text-success text-lg mt-2">An email has been sent to the User.</p>
+        <div class="flex justify-center mt-4">
+          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+        </div>
+      `;
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      msgBox.innerHTML += `
+        <div class="flex justify-center mt-4">
+          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+        </div>
+      `;
+    }
+  }
+
+  // Helper methods
+  showError(input, message) {
+    const errorElement = input.nextElementSibling;
+    if (errorElement && errorElement.classList.contains('validate')) {
+      errorElement.textContent = message;
+      errorElement.classList.remove('hidden');
+      input.classList.add('border-red-500');
+    }
+  }
+
+  hideError(input) {
+    const errorElement = input.nextElementSibling;
+    if (errorElement && errorElement.classList.contains('validate')) {
+      errorElement.textContent = '';
+      errorElement.classList.add('hidden');
+      input.classList.remove('border-red-500');
+    }
+  }
+
+  showLoader() {
+    const msgBox = document.getElementById('msg-box');
+    const loaderTemplate = document.getElementById('loader-template').cloneNode(true);
+    loaderTemplate.classList.remove('hidden');
+    msgBox.appendChild(loaderTemplate);
+    document.getElementById('CreateAccountBtn').disabled = true;
+  }
+
+  hideLoader() {
+    document.getElementById('CreateAccountBtn').disabled = false;
+  }
+
+  showMessage(message, type = 'success') {
+    const msgBox = document.getElementById('msg-box');
+    msgBox.innerHTML = `<p class="text-${type} text-lg">${message}</p>`;
+  }
+
+  validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  validatePhone(phone) {
+    return /^\d{11}$/.test(phone);
+  }
+
+  validateTIN(tin) {
+    return /^\d{10,}$/.test(tin);
+  }
+
+  setupBusinessOwnerToggle() {
+    this.toggleBusinessType(); // Initialize on load
+
+    document.querySelectorAll('.checki').forEach(radio => {
+      radio.addEventListener('change', () => this.toggleBusinessType());
     });
   }
 
-})
-
-let STATES = `
-  <option disabled selected>--Select State--</option>
-  <option value="Abia">Abia</option>
-  <option value="Adamawa">Adamawa</option>
-  <option value="Akwa Ibom">Akwa Ibom</option>
-  <option value="Anambra">Anambra</option>
-  <option value="Bauchi">Bauchi</option>
-  <option value="Bayelsa">Bayelsa</option>
-  <option value="Benue">Benue</option>
-  <option value="Borno">Borno</option>
-  <option value="Cross River">Cross River</option>
-  <option value="Delta">Delta</option>
-  <option value="Ebonyi">Ebonyi</option>
-  <option value="Edo">Edo</option>
-  <option value="Ekiti">Ekiti</option>
-  <option value="Enugu">Enugu</option>
-  <option value="FCT">Federal Capital Territory</option>
-  <option value="Gombe">Gombe</option>
-  <option value="Imo">Imo</option>
-  <option value="Jigawa">Jigawa</option>
-  <option value="Kaduna">Kaduna</option>
-  <option value="Kano">Kano</option>
-  <option value="Katsina">Katsina</option>
-  <option value="Kebbi">Kebbi</option>
-  <option value="Kogi">Kogi</option>
-  <option value="Kwara">Kwara</option>
-  <option value="Lagos">Lagos</option>
-  <option value="Nasarawa">Nasarawa</option>
-  <option value="Niger">Niger</option>
-  <option value="Ogun">Ogun</option>
-  <option value="Ondo">Ondo</option>
-  <option value="Osun">Osun</option>
-  <option value="Oyo">Oyo</option>
-  <option value="Plateau">Plateau</option>
-  <option value="Rivers">Rivers</option>
-  <option value="Sokoto">Sokoto</option>
-  <option value="Taraba">Taraba</option>
-  <option value="Yobe">Yobe</option>
-  <option value="Zamfara" selected>Zamfara</option>
-`
-let lgaList = {
-  Abia: [
-    "Aba North",
-    "Aba South",
-    "Arochukwu",
-    "Bende",
-    "Ikwuano",
-    "Isiala Ngwa North",
-    "Isiala Ngwa South",
-    "Isuikwuato",
-    "Obi Ngwa",
-    "Ohafia",
-    "Osisioma",
-    "Ugwunagbo",
-    "Ukwa East",
-    "Ukwa West",
-    "Umuahia North",
-    "muahia South",
-    "Umu Nneochi"
-  ],
-  Adamawa: [
-    "Demsa",
-    "Fufure",
-    "Ganye",
-    "Gayuk",
-    "Gombi",
-    "Grie",
-    "Hong",
-    "Jada",
-    "Larmurde",
-    "Madagali",
-    "Maiha",
-    "Mayo Belwa",
-    "Michika",
-    "Mubi North",
-    "Mubi South",
-    "Numan",
-    "Shelleng",
-    "Song",
-    "Toungo",
-    "Yola North",
-    "Yola South"
-  ],
-  AkwaIbom: [
-    "Abak",
-    "Eastern Obolo",
-    "Eket",
-    "Esit Eket",
-    "Essien Udim",
-    "Etim Ekpo",
-    "Etinan",
-    "Ibeno",
-    "Ibesikpo Asutan",
-    "Ibiono-Ibom",
-    "Ika",
-    "Ikono",
-    "Ikot Abasi",
-    "Ikot Ekpene",
-    "Ini",
-    "Itu",
-    "Mbo",
-    "Mkpat-Enin",
-    "Nsit-Atai",
-    "Nsit-Ibom",
-    "Nsit-Ubium",
-    "Obot Akara",
-    "Okobo",
-    "Onna",
-    "Oron",
-    "Oruk Anam",
-    "Udung-Uko",
-    "Ukanafun",
-    "Uruan",
-    "Urue-Offong Oruko",
-    "Uyo"
-  ],
-  Anambra: [
-    "Aguata",
-    "Anambra East",
-    "Anambra West",
-    "Anaocha",
-    "Awka North",
-    "Awka South",
-    "Ayamelum",
-    "Dunukofia",
-    "Ekwusigo",
-    "Idemili North",
-    "Idemili South",
-    "Ihiala",
-    "Njikoka",
-    "Nnewi North",
-    "Nnewi South",
-    "Ogbaru",
-    "Onitsha North",
-    "Onitsha South",
-    "Orumba North",
-    "Orumba South",
-    "Oyi"
-  ],
-
-  Bauchi: [
-    "Alkaleri",
-    "Bauchi",
-    "Bogoro",
-    "Damban",
-    "Darazo",
-    "Dass",
-    "Gamawa",
-    "Ganjuwa",
-    "Giade",
-    "Itas-Gadau",
-    "Jama are",
-    "Katagum",
-    "Kirfi",
-    "Misau",
-    "Ningi",
-    "Shira",
-    "Tafawa Balewa",
-    " Toro",
-    " Warji",
-    " Zaki"
-  ],
-
-  Bayelsa: [
-    "Brass",
-    "Ekeremor",
-    "Kolokuma Opokuma",
-    "Nembe",
-    "Ogbia",
-    "Sagbama",
-    "Southern Ijaw",
-    "Yenagoa"
-  ],
-  Benue: [
-    "Agatu",
-    "Apa",
-    "Ado",
-    "Buruku",
-    "Gboko",
-    "Guma",
-    "Gwer East",
-    "Gwer West",
-    "Katsina-Ala",
-    "Konshisha",
-    "Kwande",
-    "Logo",
-    "Makurdi",
-    "Obi",
-    "Ogbadibo",
-    "Ohimini",
-    "Oju",
-    "Okpokwu",
-    "Oturkpo",
-    "Tarka",
-    "Ukum",
-    "Ushongo",
-    "Vandeikya"
-  ],
-  Borno: [
-    "Abadam",
-    "Askira-Uba",
-    "Bama",
-    "Bayo",
-    "Biu",
-    "Chibok",
-    "Damboa",
-    "Dikwa",
-    "Gubio",
-    "Guzamala",
-    "Gwoza",
-    "Hawul",
-    "Jere",
-    "Kaga",
-    "Kala-Balge",
-    "Konduga",
-    "Kukawa",
-    "Kwaya Kusar",
-    "Mafa",
-    "Magumeri",
-    "Maiduguri",
-    "Marte",
-    "Mobbar",
-    "Monguno",
-    "Ngala",
-    "Nganzai",
-    "Shani"
-  ],
-  "Cross River": [
-    "Abi",
-    "Akamkpa",
-    "Akpabuyo",
-    "Bakassi",
-    "Bekwarra",
-    "Biase",
-    "Boki",
-    "Calabar Municipal",
-    "Calabar South",
-    "Etung",
-    "Ikom",
-    "Obanliku",
-    "Obubra",
-    "Obudu",
-    "Odukpani",
-    "Ogoja",
-    "Yakuur",
-    "Yala"
-  ],
-
-  Delta: [
-    "Aniocha North",
-    "Aniocha South",
-    "Bomadi",
-    "Burutu",
-    "Ethiope East",
-    "Ethiope West",
-    "Ika North East",
-    "Ika South",
-    "Isoko North",
-    "Isoko South",
-    "Ndokwa East",
-    "Ndokwa West",
-    "Okpe",
-    "Oshimili North",
-    "Oshimili South",
-    "Patani",
-    "Sapele",
-    "Udu",
-    "Ughelli North",
-    "Ughelli South",
-    "Ukwuani",
-    "Uvwie",
-    "Warri North",
-    "Warri South",
-    "Warri South West"
-  ],
-
-  Ebonyi: [
-    "Abakaliki",
-    "Afikpo North",
-    "Afikpo South",
-    "Ebonyi",
-    "Ezza North",
-    "Ezza South",
-    "Ikwo",
-    "Ishielu",
-    "Ivo",
-    "Izzi",
-    "Ohaozara",
-    "Ohaukwu",
-    "Onicha"
-  ],
-  Edo: [
-    "Akoko-Edo",
-    "Egor",
-    "Esan Central",
-    "Esan North-East",
-    "Esan South-East",
-    "Esan West",
-    "Etsako Central",
-    "Etsako East",
-    "Etsako West",
-    "Igueben",
-    "Ikpoba Okha",
-    "Orhionmwon",
-    "Oredo",
-    "Ovia North-East",
-    "Ovia South-West",
-    "Owan East",
-    "Owan West",
-    "Uhunmwonde"
-  ],
-
-  Ekiti: [
-    "Ado Ekiti",
-    "Efon",
-    "Ekiti East",
-    "Ekiti South-West",
-    "Ekiti West",
-    "Emure",
-    "Gbonyin",
-    "Ido Osi",
-    "Ijero",
-    "Ikere",
-    "Ikole",
-    "Ilejemeje",
-    "Irepodun-Ifelodun",
-    "Ise-Orun",
-    "Moba",
-    "Oye"
-  ],
-  Enugu: [
-    "Aninri",
-    "Awgu",
-    "Enugu East",
-    "Enugu North",
-    "Enugu South",
-    "Ezeagu",
-    "Igbo Etiti",
-    "Igbo Eze North",
-    "Igbo Eze South",
-    "Isi Uzo",
-    "Nkanu East",
-    "Nkanu West",
-    "Nsukka",
-    "Oji River",
-    "Udenu",
-    "Udi",
-    "Uzo Uwani"
-  ],
-  FCT: [
-    "Abaji",
-    "Bwari",
-    "Gwagwalada",
-    "Kuje",
-    "Kwali",
-    "Municipal Area Council"
-  ],
-  Gombe: [
-    "Akko",
-    "Balanga",
-    "Billiri",
-    "Dukku",
-    "Funakaye",
-    "Gombe",
-    "Kaltungo",
-    "Kwami",
-    "Nafada",
-    "Shongom",
-    "Yamaltu-Deba"
-  ],
-  Imo: [
-    "Aboh Mbaise",
-    "Ahiazu Mbaise",
-    "Ehime Mbano",
-    "Ezinihitte",
-    "Ideato North",
-    "Ideato South",
-    "Ihitte-Uboma",
-    "Ikeduru",
-    "Isiala Mbano",
-    "Isu",
-    "Mbaitoli",
-    "Ngor Okpala",
-    "Njaba",
-    "Nkwerre",
-    "Nwangele",
-    "Obowo",
-    "Oguta",
-    "Ohaji-Egbema",
-    "Okigwe",
-    "Orlu",
-    "Orsu",
-    "Oru East",
-    "Oru West",
-    "Owerri Municipal",
-    "Owerri North",
-    "Owerri West",
-    "Unuimo"
-  ],
-  Jigawa: [
-    "Auyo",
-    "Babura",
-    "Biriniwa",
-    "Birnin Kudu",
-    "Buji",
-    "Dutse",
-    "Gagarawa",
-    "Garki",
-    "Gumel",
-    "Guri",
-    "Gwaram",
-    "Gwiwa",
-    "Hadejia",
-    "Jahun",
-    "Kafin Hausa",
-    "Kazaure",
-    "Kiri Kasama",
-    "Kiyawa",
-    "Kaugama",
-    "Maigatari",
-    "Malam Madori",
-    "Miga",
-    "Ringim",
-    "Roni",
-    "Sule Tankarkar",
-    "Taura",
-    "Yankwashi"
-  ],
-  Kaduna: [
-    "Birnin Gwari",
-    "Chikun",
-    "Giwa",
-    "Igabi",
-    "Ikara",
-    "Jaba",
-    "Jema a",
-    "Kachia",
-    "Kaduna North",
-    "Kaduna South",
-    "Kagarko",
-    "Kajuru",
-    "Kaura",
-    "Kauru",
-    "Kubau",
-    "Kudan",
-    "Lere",
-    "Makarfi",
-    "Sabon Gari",
-    "Sanga",
-    "Soba",
-    "Zangon Kataf",
-    "Zaria"
-  ],
-  Kano: [
-    "Ajingi",
-    "Albasu",
-    "Bagwai",
-    "Bebeji",
-    "Bichi",
-    "Bunkure",
-    "Dala",
-    "Dambatta",
-    "Dawakin Kudu",
-    "Dawakin Tofa",
-    "Doguwa",
-    "Fagge",
-    "Gabasawa",
-    "Garko",
-    "Garun Mallam",
-    "Gaya",
-    "Gezawa",
-    "Gwale",
-    "Gwarzo",
-    "Kabo",
-    "Kano Municipal",
-    "Karaye",
-    "Kibiya",
-    "Kiru",
-    "Kumbotso",
-    "Kunchi",
-    "Kura",
-    "Madobi",
-    "Makoda",
-    "Minjibir",
-    "Nasarawa",
-    "Rano",
-    "Rimin Gado",
-    "Rogo",
-    "Shanono",
-    "Sumaila",
-    "Takai",
-    "Tarauni",
-    "Tofa",
-    "Tsanyawa",
-    "Tudun Wada",
-    "Ungogo",
-    "Warawa",
-    "Wudil"
-  ],
-  Katsina: [
-    "Bakori",
-    "Batagarawa",
-    "Batsari",
-    "Baure",
-    "Bindawa",
-    "Charanchi",
-    "Dandume",
-    "Danja",
-    "Dan Musa",
-    "Daura",
-    "Dutsi",
-    "Dutsin Ma",
-    "Faskari",
-    "Funtua",
-    "Ingawa",
-    "Jibia",
-    "Kafur",
-    "Kaita",
-    "Kankara",
-    "Kankia",
-    "Katsina",
-    "Kurfi",
-    "Kusada",
-    "Mai Adua",
-    "Malumfashi",
-    "Mani",
-    "Mashi",
-    "Matazu",
-    "Musawa",
-    "Rimi",
-    "Sabuwa",
-    "Safana",
-    "Sandamu",
-    "Zango"
-  ],
-  Kebbi: [
-    "Aleiro",
-    "Arewa Dandi",
-    "Argungu",
-    "Augie",
-    "Bagudo",
-    "Birnin Kebbi",
-    "Bunza",
-    "Dandi",
-    "Fakai",
-    "Gwandu",
-    "Jega",
-    "Kalgo",
-    "Koko Besse",
-    "Maiyama",
-    "Ngaski",
-    "Sakaba",
-    "Shanga",
-    "Suru",
-    "Wasagu Danko",
-    "Yauri",
-    "Zuru"
-  ],
-  Kogi: [
-    "Adavi",
-    "Ajaokuta",
-    "Ankpa",
-    "Bassa",
-    "Dekina",
-    "Ibaji",
-    "Idah",
-    "Igalamela Odolu",
-    "Ijumu",
-    "Kabba Bunu",
-    "Kogi",
-    "Lokoja",
-    "Mopa Muro",
-    "Ofu",
-    "Ogori Magongo",
-    "Okehi",
-    "Okene",
-    "Olamaboro",
-    "Omala",
-    "Yagba East",
-    "Yagba West"
-  ],
-  Kwara: [
-    "Asa",
-    "Baruten",
-    "Edu",
-    "Ekiti",
-    "Ifelodun",
-    "Ilorin East",
-    "Ilorin South",
-    "Ilorin West",
-    "Irepodun",
-    "Isin",
-    "Kaiama",
-    "Moro",
-    "Offa",
-    "Oke Ero",
-    "Oyun",
-    "Pategi"
-  ],
-  Lagos: [
-    "Agege",
-    "Ajeromi-Ifelodun",
-    "Alimosho",
-    "Amuwo-Odofin",
-    "Apapa",
-    "Badagry",
-    "Epe",
-    "Eti Osa",
-    "Ibeju-Lekki",
-    "Ifako-Ijaiye",
-    "Ikeja",
-    "Ikorodu",
-    "Kosofe",
-    "Lagos Island",
-    "Lagos Mainland",
-    "Mushin",
-    "Ojo",
-    "Oshodi-Isolo",
-    "Shomolu",
-    "Surulere"
-  ],
-  Nasarawa: [
-    "Akwanga",
-    "Awe",
-    "Doma",
-    "Karu",
-    "Keana",
-    "Keffi",
-    "Kokona",
-    "Lafia",
-    "Nasarawa",
-    "Nasarawa Egon",
-    "Obi",
-    "Toto",
-    "Wamba"
-  ],
-  Niger: [
-    "Agaie",
-    "Agwara",
-    "Bida",
-    "Borgu",
-    "Bosso",
-    "Chanchaga",
-    "Edati",
-    "Gbako",
-    "Gurara",
-    "Katcha",
-    "Kontagora",
-    "Lapai",
-    "Lavun",
-    "Magama",
-    "Mariga",
-    "Mashegu",
-    "Mokwa",
-    "Moya",
-    "Paikoro",
-    "Rafi",
-    "Rijau",
-    "Shiroro",
-    "Suleja",
-    "Tafa",
-    "Wushishi"
-  ],
-  Ogun: [
-    "Abeokuta North",
-    "Abeokuta South",
-    "Ado-Odo Ota",
-    "Egbado North",
-    "Egbado South",
-    "Ewekoro",
-    "Ifo",
-    "Ijebu East",
-    "Ijebu North",
-    "Ijebu North East",
-    "Ijebu Ode",
-    "Ikenne",
-    "Imeko Afon",
-    "Ipokia",
-    "Obafemi Owode",
-    "Odeda",
-    "Odogbolu",
-    "Ogun Waterside",
-    "Remo North",
-    "Shagamu"
-  ],
-  Ondo: [
-    "Akoko North-East",
-    "Akoko North-West",
-    "Akoko South-West",
-    "Akoko South-East",
-    "Akure North",
-    "Akure South",
-    "Ese Odo",
-    "Idanre",
-    "Ifedore",
-    "Ilaje",
-    "Ile Oluji-Okeigbo",
-    "Irele",
-    "Odigbo",
-    "Okitipupa",
-    "Ondo East",
-    "Ondo West",
-    "Ose",
-    "Owo"
-  ],
-  Osun: [
-    "Atakunmosa East",
-    "Atakunmosa West",
-    "Aiyedaade",
-    "Aiyedire",
-    "Boluwaduro",
-    "Boripe",
-    "Ede North",
-    "Ede South",
-    "Ife Central",
-    "Ife East",
-    "Ife North",
-    "Ife South",
-    "Egbedore",
-    "Ejigbo",
-    "Ifedayo",
-    "Ifelodun",
-    "Ila",
-    "Ilesa East",
-    "Ilesa West",
-    "Irepodun",
-    "Irewole",
-    "Isokan",
-    "Iwo",
-    "Obokun",
-    "Odo Otin",
-    "Ola Oluwa",
-    "Olorunda",
-    "Oriade",
-    "Orolu",
-    "Osogbo"
-  ],
-  Oyo: [
-    "Afijio",
-    "Akinyele",
-    "Atiba",
-    "Atisbo",
-    "Egbeda",
-    "Ibadan North",
-    "Ibadan North-East",
-    "Ibadan North-West",
-    "Ibadan South-East",
-    "Ibadan South-West",
-    "Ibarapa Central",
-    "Ibarapa East",
-    "Ibarapa North",
-    "Ido",
-    "Irepo",
-    "Iseyin",
-    "Itesiwaju",
-    "Iwajowa",
-    "Kajola",
-    "Lagelu",
-    "Ogbomosho North",
-    "Ogbomosho South",
-    "Ogo Oluwa",
-    "Olorunsogo",
-    "Oluyole",
-    "Ona Ara",
-    "Orelope",
-    "Ori Ire",
-    "Oyo",
-    "Oyo East",
-    "Saki East",
-    "Saki West",
-    "Surulere"
-  ],
-  Plateau: [
-    "Bokkos",
-    "Barkin Ladi",
-    "Bassa",
-    "Jos East",
-    "Jos North",
-    "Jos South",
-    "Kanam",
-    "Kanke",
-    "Langtang South",
-    "Langtang North",
-    "Mangu",
-    "Mikang",
-    "Pankshin",
-    "Qua an Pan",
-    "Riyom",
-    "Shendam",
-    "Wase"
-  ],
-  Rivers: [
-    "Port Harcourt",
-    "Obio-Akpor",
-    "Okrika",
-    "Ogu–Bolo",
-    "Eleme",
-    "Tai",
-    "Gokana",
-    "Khana",
-    "Oyigbo",
-    "Opobo–Nkoro",
-    "Andoni",
-    "Bonny",
-    "Degema",
-    "Asari-Toru",
-    "Akuku-Toru",
-    "Abua–Odual",
-    "Ahoada West",
-    "Ahoada East",
-    "Ogba–Egbema–Ndoni",
-    "Emohua",
-    "Ikwerre",
-    "Etche",
-    "Omuma"
-  ],
-  Sokoto: [
-    "Binji",
-    "Bodinga",
-    "Dange Shuni",
-    "Gada",
-    "Goronyo",
-    "Gudu",
-    "Gwadabawa",
-    "Illela",
-    "Isa",
-    "Kebbe",
-    "Kware",
-    "Rabah",
-    "Sabon Birni",
-    "Shagari",
-    "Silame",
-    "Sokoto North",
-    "Sokoto South",
-    "Tambuwal",
-    "Tangaza",
-    "Tureta",
-    "Wamako",
-    "Wurno",
-    "Yabo"
-  ],
-  Taraba: [
-    "Ardo Kola",
-    "Bali",
-    "Donga",
-    "Gashaka",
-    "Gassol",
-    "Ibi",
-    "Jalingo",
-    "Karim Lamido",
-    "Kumi",
-    "Lau",
-    "Sardauna",
-    "Takum",
-    "Ussa",
-    "Wukari",
-    "Yorro",
-    "Zing"
-  ],
-  Yobe: [
-    "Bade",
-    "Bursari",
-    "Damaturu",
-    "Fika",
-    "Fune",
-    "Geidam",
-    "Gujba",
-    "Gulani",
-    "Jakusko",
-    "Karasuwa",
-    "Machina",
-    "Nangere",
-    "Nguru",
-    "Potiskum",
-    "Tarmuwa",
-    "Yunusari",
-    "Yusufari"
-  ],
-  Zamfara: [
-    "Anka",
-    "Bakura",
-    "Birnin Magaji Kiyaw",
-    "Bukkuyum",
-    "Bungudu",
-    "Gummi",
-    "Gusau",
-    "Kaura Namoda",
-    "Maradun",
-    "Maru",
-    "Shinkafi",
-    "Talata Mafara",
-    "Chafe",
-    "Zurmi"
-  ]
-}
 
 
-let stateSelect = document.querySelector("#selectState")
-let lgaSelect = document.querySelector('#selectLGA')
+  toggleBusinessType() {
+    const businessType = document.getElementById('businessType');
+    const isBusinessOwner = document.getElementById('businessOwnerYes').checked;
 
-if (stateSelect) {
+    getBusinessType().then(() => {
+      if (isBusinessOwner) {
+        businessType.innerHTML = `
+        <div class="flex gap-x-10 pt-2 px-3 items-center md:flex-nowrap sm:flex-wrap">
+          <p>Type of business</p>
+          <div class="form-group mb-2 md:w-[320px] w-full">
+            <select class="mt-1 regInputs" required data-name="business_type" id="businessTypeSelect">
+              <option value="" selected disabled>-Select the type of the business--</option>
+              ${flatBusinessTypes.map(type => `
+                <option value="${type.business_type_name}">${type.business_type_name}</option>
+              `).join('')}
+            </select>
+            <small class="validate text-red-500 hidden"></small>
+          </div>
+        </div>
+      `;
 
-  stateSelect.innerHTML = STATES
-  lgaSelect.innerHTML = ""
-  lgaList["Zamfara"].forEach(lga => {
-    lgaSelect.innerHTML += `
-      <option value="${lga}">${lga}</option>
-    `
-  })
-
-  stateSelect.addEventListener('change', function () {
-    let selectedState = $(this).val()
-
-    let arrStates = Object.values(lgaList)
-    let finalarrState = arrStates[stateSelect.selectedIndex - 1]
-
-    lgaSelect.innerHTML = ''
-
-    finalarrState.forEach((opt, ii) => {
-      lgaSelect.innerHTML += `
-      <option value="${opt}">${opt}</option>
-    `
+        $("#businessTypeSelect").selectize({
+          create: false,
+          sortField: 'text',
+          placeholder: 'Search for your type of business',
+          dropdownParent: 'body'
+        });
+      } else {
+        businessType.innerHTML = '<div></div>';
+      }
     })
-  })
+
+  }
+
+  setupPasswordToggle() {
+    document.querySelectorAll('.togglePassword').forEach(icon => {
+      icon.addEventListener('click', function () {
+        const input = this.previousElementSibling;
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        this.classList.toggle('bi-eye');
+        this.classList.toggle('bi-eye-slash');
+      });
+    });
+  }
+
+  setupTINFormatting() {
+    const tinInput = document.getElementById('tinInput');
+    if (tinInput) {
+      tinInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 10) {
+          value = value.slice(0, 10) + '-' + value.slice(10, 14);
+        }
+        e.target.value = value;
+      });
+    }
+  }
+
+  setupPhoneValidation() {
+    const phoneInput = document.getElementById('phonenumber');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function (e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 11);
+      });
+    }
+  }
 }
+
+// Initialize the form when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new RegistrationForm();
+});

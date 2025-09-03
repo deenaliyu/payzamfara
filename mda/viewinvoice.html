@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrimeGuage</title>
+  <title>Payzamfara</title>
 
   <!-- FAVION ICON -->
-  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
@@ -62,6 +62,10 @@
           <div class="flex justify-between mt-4 gap-3">
             <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
               <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+              <span>Download Invoice</span>
+            </button>
+            <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
               <span>Print Invoice</span>
             </button>
           </div>
@@ -89,7 +93,7 @@
     AOS.init();
   </script>
   <!-- <script src="assets/js/payment.js"></script> -->
-  <script src="assets/js/viewinvoice.js"></script>
+  <script src="../assets/js/invoice.js"></script>
 </body>
 
 </html>

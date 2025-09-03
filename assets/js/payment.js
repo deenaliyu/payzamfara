@@ -1,4 +1,4 @@
- // var flutter_script = document.createElement('script')
+// var flutter_script = document.createElement('script')
 // flutter_script.setAttribute('src', 'https://checkout.flutterwave.com/v3.js')
 // document.head.appendChild(flutter_script)
 
@@ -7,7 +7,8 @@ flutter_script.setAttribute('src', 'https://js.paystack.co/v1/inline.js')
 document.head.appendChild(flutter_script)
 
 var remita_script = document.createElement('script')
-remita_script.setAttribute('src', 'https://remitademo.net/payment/v1/remita-pay-inline.bundle.js')
+remita_script.setAttribute('src', 'https://login.remita.net/payment/v1/remita-pay-inline.bundle.js')
+remita_script.setAttribute('type', 'text/javascript')
 document.head.appendChild(remita_script)
 
 var qr_codeScript = document.createElement('script')
@@ -18,261 +19,346 @@ document.head.appendChild(qr_codeScript)
 // html2pdff.setAttribute('src', 'https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js')
 // document.head.appendChild(html2pdff)
 
-$("#makePayment").html(`
-<p class="text-2xl fontBold text-center">Make Payment</p>
-<p class="text-center">Select your preferred method</p>
+let urlParamsAnother = new URLSearchParams(window.location.search);
+const remitaPage = urlParamsAnother.get('redirected')
 
-<div class="flex items-center flex-wrap justify-center mt-4 gap-3 px-5">
+function sumArray(numbers) {
+  return numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
 
-    <div class="payCards active">
-        <div class="flex justify-center">
-          <iconify-icon icon="ph:bank-fill" class="textPrimary"></iconify-icon>
-        </div>
-        <p class="text-center">Bank Branch</p>
-    </div>
+if (remitaPage === "remita") {
+  $("#makePayment").html(`
+    <p class="text-2xl fontBold text-center">Make Payment</p>
+    <p class="text-center">Select your preferred method</p>
+    
+    <div class="flex items-center flex-wrap justify-center mt-4 gap-3 px-5">
+    
         
-    <div class="payCards">
-        <div class="flex justify-center">
-          <img src="./assets/img/credo.png" alt="etransact" width="30" />
+        <div class="payCards active">
+            <div class="flex justify-center">
+              <img src="./assets/img/remita-icon.png" alt="Remita" width="30" />
+            </div>
+            <p class="text-center">Remita </p>
         </div>
-        <p class="text-center">eTransanct</p>
+    
+  
     </div>
     
-    <div class="payCards">
-        <div class="flex justify-center">
-          <img src="./assets/img/interswitch.png" alt="paystack" width="30" />
+    <div id="tabcontainer" class="mt-10 mb-10">
+    
+        <div class="px-20 tab_steps active">
+            <p class="fontBold text-center text-lg">Follow the steps below to make online payments with Remita</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-2">
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 1</h1>
+                    <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+                 </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 2</h1>
+                    <p>Select your preferred payment method from the options provided.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 3</h1>
+                    <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 4</h1>
+                    <p>Confirm the payment amount.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 5</h1>
+                    <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+                </div>
+                  
+                  
+                <div class="flex justify-center">
+                    <button class="button w-[60%] mt-3" id="makePaymentRemitaMain" onclick="makePaymentRemitaMain()">Proceed</button> 
+                </div>
+                <div id="msg_boxas"></div>
         </div>
-        <p class="text-center">Interswitch</p>
+        
+    
+    
+    
+
+    
     </div>
-  
-    <div class="payCards">
-        <div class="flex justify-center">
-          <img src="./assets/img/paystack.svg" alt="paystack" width="30" />
+`)
+
+} else {
+  $("#makePayment").html(`
+    <p class="text-2xl fontBold text-center">Make Payment</p>
+    <p class="text-center">Select your preferred method</p>
+    
+    <div class="flex items-center flex-wrap justify-center mt-4 gap-3 px-5">
+    
+        <div class="payCards active">
+            <div class="flex justify-center">
+              <iconify-icon icon="ph:bank-fill" class="textPrimary"></iconify-icon>
+            </div>
+            <p class="text-center">Bank Branch</p>
         </div>
-        <p class="text-center">PayStack </p>
-    </div>
-
-
-    <div class="payCards">
-        <div class="flex justify-center">
-          <iconify-icon icon="mdi:naira" class="textPrimary"></iconify-icon>
+            
+        <div class="payCards">
+            <div class="flex justify-center">
+              <img src="./assets/img/credo.png" alt="etransact" width="30" />
+            </div>
+            <p class="text-center">eTransanct</p>
         </div>
-        <p class="text-center">e-Naira</p>
+        
+        <div class="payCards">
+            <div class="flex justify-center">
+              <img src="./assets/img/interswitch.png" alt="paystack" width="30" />
+            </div>
+            <p class="text-center">Interswitch</p>
+        </div>
+      
+        <div class="payCards">
+            <div class="flex justify-center">
+              <img src="./assets/img/paystack.svg" alt="paystack" width="30" />
+            </div>
+            <p class="text-center">PayStack </p>
+        </div>
+        
+        <div class="payCards">
+            <div class="flex justify-center">
+              <img src="./assets/img/remita-icon.png" alt="Remita" width="30" />
+            </div>
+            <p class="text-center">Remita </p>
+        </div>
+    
+        <div class="payCards">
+            <div class="flex justify-center">
+              <iconify-icon icon="mdi:naira" class="textPrimary"></iconify-icon>
+            </div>
+            <p class="text-center">e-Naira</p>
+        </div>
+    
     </div>
-
-</div>
-
-<div id="tabcontainer" class="mt-10 mb-10">
-
-     <div class="px-20 tab_steps active">
-        <p class="fontBold text-center text-lg">Follow the steps below to make Bank Branch payments</p>
+    
+    <div id="tabcontainer" class="mt-10 mb-10">
+    
+         <div class="px-20 tab_steps active">
+            <p class="fontBold text-center text-lg">Follow the steps below to make Bank Branch payments</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-10">
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 1</h1>
+                <p class="mt-1">Choose 'Bank Branch' as your preferred method.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 2</h1>
+                <p class="mt-1">Visit the designated bank branch.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 3</h1>
+                <p class="mt-1">Go to your bank branch and present your invoice number or invoice.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 4</h1>
+                <p class="mt-1">Make the payment in person using the invoice number on the invoice.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 5</h1>
+                <p class="mt-1">Retain the receipt as proof of payment.</p>
+              </div>
+              
+            </div>
+          </div>
+          
+        <div class="px-20 tab_steps">
+            <p class="fontBold text-center text-lg">Follow the steps below to make payments using eTransact.</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-2">
+    
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 1</h1>
+                <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 2</h1>
+                <p>Select your preferred payment method from the options provided.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 3</h1>
+                <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 4</h1>
+                <p>Confirm the payment amount.</p>
+              </div>
+              
+              <div class="mb-2">
+                <h1 class="text-lg fontBold">Step 5</h1>
+                <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+              </div>
+            
+              <div class="flex justify-center">
+                <button class="button w-[60%] mt-3" id="makePBtn" onclick="makePaymentRemita2()">Proceed</button>
+              </div>
+              
+              <div id='msg_boxx'></div>
+              
+            </div>
+          </div>
+          
+          <div class="px-20 tab_steps">
+            <p class="fontBold text-center text-lg">Follow the steps below to make payment using Interswitch</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-2">
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 1</h1>
+                    <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 2</h1>
+                    <p>Select your preferred payment method from the options provided.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 3</h1>
+                    <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 4</h1>
+                    <p>Confirm the payment amount.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 5</h1>
+                    <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+                  </div>
+                  
+                  
+                  
+            </div>
+          </div>
+    
+        <div class="px-20 tab_steps">
+            <p class="fontBold text-center text-lg">Follow the steps below to make online payments with PayStack</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-2">
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 1</h1>
+                    <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 2</h1>
+                    <p>Select your preferred payment method from the options provided.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 3</h1>
+                    <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 4</h1>
+                    <p>Confirm the payment amount.</p>
+                  </div>
+                  
+                  <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 5</h1>
+                    <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+                  </div>
+                  
+                  
+                  <div class="flex justify-center">
+                  <button class="button w-[60%] mt-3" id="paystackPayBtn" onclick="makePayment()">Proceed</button>
+                </div>
+                <div id="msg_box_paystack"></div>
+            </div>
+        
+            
+    
+        </div>
+      
+        <div class="px-20 tab_steps">
+            <p class="fontBold text-center text-lg">Follow the steps below to make online payments with Remita</p>
+            <div class="flex justify-center mt-2">
+              <img src="./assets/img/linebig.png" alt="">
+            </div>
+        
+            <div class="mt-2">
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 1</h1>
+                    <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
+                 </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 2</h1>
+                    <p>Select your preferred payment method from the options provided.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 3</h1>
+                    <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 4</h1>
+                    <p>Confirm the payment amount.</p>
+                </div>
+                  
+                <div class="mb-2">
+                    <h1 class="text-lg fontBold">Step 5</h1>
+                    <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
+                </div>
+                  
+                  
+                <div class="flex justify-center">
+                    <button class="button w-[60%] mt-3" id="makePaymentRemitaMain" onclick="makePaymentRemitaMain()">Proceed</button> 
+                </div>
+                <div id="msg_boxas"></div>
+        </div>
+        
+    
+    
+    
+      <div class="px-20 tab_steps">
+        <p class="fontBold text-center text-lg">Follow the steps below to make e-Naira payments</p>
         <div class="flex justify-center mt-2">
           <img src="./assets/img/linebig.png" alt="">
         </div>
     
         <div class="mt-10">
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 1</h1>
-            <p class="mt-1">Choose 'Bank Branch' as your preferred method.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 2</h1>
-            <p class="mt-1">Visit the designated bank branch.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 3</h1>
-            <p class="mt-1">Go to your bank branch and present your invoice number or invoice.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 4</h1>
-            <p class="mt-1">Make the payment in person using the invoice number on the invoice.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 5</h1>
-            <p class="mt-1">Retain the receipt as proof of payment.</p>
-          </div>
-          
+          <p>Details coming soon</p>
         </div>
       </div>
-      
-    <div class="px-20 tab_steps">
-        <p class="fontBold text-center text-lg">Follow the steps below to make payments using eTransact.</p>
-        <div class="flex justify-center mt-2">
-          <img src="./assets/img/linebig.png" alt="">
-        </div>
     
-        <div class="mt-2">
-
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 1</h1>
-            <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 2</h1>
-            <p>Select your preferred payment method from the options provided.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 3</h1>
-            <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 4</h1>
-            <p>Confirm the payment amount.</p>
-          </div>
-          
-          <div class="mb-2">
-            <h1 class="text-lg fontBold">Step 5</h1>
-            <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
-          </div>
-        
-          <div class="flex justify-center">
-            <button class="button w-[60%] mt-3" id="makePBtn" onclick="makePaymentRemita2()">Proceed</button>
-          </div>
-          
-          <div id='msg_boxx'></div>
-          
-        </div>
-      </div>
-      
-      <div class="px-20 tab_steps">
-        <p class="fontBold text-center text-lg">Follow the steps below to make payment using Interswitch</p>
-        <div class="flex justify-center mt-2">
-          <img src="./assets/img/linebig.png" alt="">
-        </div>
-    
-        <div class="mt-2">
-            <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 1</h1>
-                <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 2</h1>
-                <p>Select your preferred payment method from the options provided.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 3</h1>
-                <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 4</h1>
-                <p>Confirm the payment amount.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 5</h1>
-                <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
-              </div>
-              
-              
-              
-        </div>
-      </div>
-
-    <div class="px-20 tab_steps">
-        <p class="fontBold text-center text-lg">Follow the steps below to make online payments with PayStack</p>
-        <div class="flex justify-center mt-2">
-          <img src="./assets/img/linebig.png" alt="">
-        </div>
-<<<<<<< HEAD
-    
-        <div class="mt-2">
-            <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 1</h1>
-                <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 2</h1>
-                <p>Select your preferred payment method from the options provided.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 3</h1>
-                <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 4</h1>
-                <p>Confirm the payment amount.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 5</h1>
-                <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
-              </div>
-              
-              
-              <div class="flex justify-center">
-              <button class="button w-[60%] mt-3" onclick="makePayment()">Proceed</button>
-            </div>
-        </div>
-    
-=======
-    
-        <div class="mt-2">
-            <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 1</h1>
-                <p>When you click on proceed, you'll be redirected to a secure payment gateway.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 2</h1>
-                <p>Select your preferred payment method from the options provided.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 3</h1>
-                <p>Follow the prompt and provide all necessary details as it relates to the payment method chosen.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 4</h1>
-                <p>Confirm the payment amount.</p>
-              </div>
-              
-              <div class="mb-2">
-                <h1 class="text-lg fontBold">Step 5</h1>
-                <p>Once the payment is processed successfully, you will receive a confirmation and and a receipt is generated.</p>
-              </div>
-              
-              
-              <div class="flex justify-center">
-              <button class="button w-[60%] mt-3" onclick="makePayment()">Proceed</button>
-            </div>
-        </div>
-    
->>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
-        
-
     </div>
-  
-    
-
-
-
-  <div class="px-20 tab_steps">
-    <p class="fontBold text-center text-lg">Follow the steps below to make e-Naira payments</p>
-    <div class="flex justify-center mt-2">
-      <img src="./assets/img/linebig.png" alt="">
-    </div>
-
-    <div class="mt-10">
-      <p>Details coming soon</p>
-    </div>
-  </div>
-
-</div>
 `)
+}
 
 
 
@@ -291,82 +377,113 @@ if (payCards) {
 }
 
 
-// function makePaymentRemita() {
-//   let thePay = document.querySelector("#theBal").textContent
-//   console.log(thePay)
+// function makePaymentRemitaMain() {
+//   let thePay = document.querySelector("#theBal")
+//   let finalPay = thePay.dataset.money
+
+//     $("#msg_boxas").html(`
+//         <div class="flex justify-center items-center mt-4">
+//           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+//         </div>
+//     `)
+//     $("#makePaymentRemitaMain").addClass("hidden")
+
 
 //   async function openInvoice(invoicenum) {
-//     const response = await fetch(
-//       // `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-//       `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-//     );
-//     const userInvoices = await response.json();
-//     console.log(userInvoices);
+//     try {
+//         const response = await fetch(`${HOST}?getSingleInvoice&invoiceNumber=${invoicenum}`);
+//         const userInvoices = await response.json();
+//         console.log(userInvoices);
 
-//     if (userInvoices.status === 1) {
-//       if (userInvoices.message[0].payment_status === "paid") {
-//         alert("This Invoice has already been paid")
-//       } else {
+//         if (userInvoices.status === 1) {
+//             if (userInvoices.message[0].payment_status === "paid") {
+//                 // alert("This Invoice has already been paid")
+//                 $("#msg_boxas").html(`
+//                     <p class="text-warning text-center mt-4 text-lg">This Invoice has already been paid</p>
+//                 `)
+//                 $("#makePaymentRemitaMain").removeClass("hidden")
+//             } else {
+
+//                 let invoiceDetails = userInvoices.message[0]
+
+//                 var paymentEngine = RmPaymentEngine.init({
+//                     key: "WkFNQklSfDM1Njc5MTEwNzN8MTIwN2U5NDUxOGQxNDhjZmJhMTRiNDQzZDI3MzlmMWU2YjhkZjZjNmIyMjFjOTc1ZjYzZWU0ODE1NGI4YTMxYjk0MWY3ZjNiODM1MGFjYmQyNGVhOWYzODUxNWZmMTY3NGNkYmFkN2E0MGQ2ZGI4MDg3MDI0YzdmMzAwOWYxY2Q=",
+//                     processRrr: true,
+//                     transactionId: Math.floor(Math.random() * 1101233), //you are expected to generate new values for the transactionId for each transaction processing.
+//                     // channel: "Remita", //this field is used to filter what card channels you want enabled on the payment modal
+//                     extendedData: {
+//                       customFields: [
+//                         {
+//                           name: "rrr",
+//                           value: invoiceDetails.rrr //rrr to be processed.
+//                         }
+//                       ]
+//                     },
+//                     onSuccess: function (response) {
+
+//                         alert("payment success")
+//                         nextPrev(1)
+//                         openReceipt(invoicenum)
+//                         // let dataToPush = {
+//                         //   "endpoint": "createInvidualPayment",
+//                         //   "data": {
+//                         //     "invoice_number": invoicenum,
+//                         //     "payment_channel": "Remita",
+//                         //     "payment_reference_number": response.paymentReference,
+//                         //     "receipt_number": response.paymentReference,
+//                         //     "amount_paid": finalPay
+//                         //   }
+//                         // }
+//                         // $.ajax({
+//                         //   type: "POST",
+//                         //   url: HOST,
+//                         //   dataType: 'json',
+//                         //   data: JSON.stringify(dataToPush),
+//                         //   success: function (data) {
+//                         //     console.log(data)
+//                         //     alert("payment success")
+//                         //     nextPrev(1)
+//                         //     openReceipt(invoicenum)
+//                         //   },
+//                         //   error: function (request, error) {
+//                         //     console.log(error)
+//                         //     $("#msg_boxas").html(`
+//                         //         <p class="text-warning text-danger mt-4 text-lg">Payment not processed, contact support if you've been debited.</p>
+//                         //     `)
+//                         //     $("#makePaymentRemitaMain").removeClass("hidden")
+//                         //   }
+//                         // });
+
+//                     },
+//                     onError: function (response) {
+//                         $("#msg_boxas").html(`
+//                             <p class="text-warning text-danger mt-4 text-lg text-center">Error while processing payment, try other payment channels.</p>
+//                         `)
+//                         $("#makePaymentRemitaMain").removeClass("hidden")
+//                     },
+//                     onClose: function () {
+//                       console.log("closed");
+//                         $("#msg_boxas").html("")
+//                         $("#makePaymentRemitaMain").removeClass("hidden")
+//                     }
+//                 });
+
+//                 paymentEngine.showPaymentWidget();
 
 
-//         let invoiceDetails = userInvoices.message[0]
-
-
-//         var paymentEngine = RmPaymentEngine.init({
-//           key: 'QzAwMDAyNzEyNTl8MTEwNjE4NjF8OWZjOWYwNmMyZDk3MDRhYWM3YThiOThlNTNjZTE3ZjYxOTY5NDdmZWE1YzU3NDc0ZjE2ZDZjNTg1YWYxNWY3NWM4ZjMzNzZhNjNhZWZlOWQwNmJhNTFkMjIxYTRiMjYzZDkzNGQ3NTUxNDIxYWNlOGY4ZWEyODY3ZjlhNGUwYTY=',
-//           transactionId: Math.floor(Math.random() * 1101233), // Replace with a reference you generated or remove the entire field for us to auto-generate a reference for you. Note that you will be able to check the status of this transaction using this transaction Id
-//           customerId: invoiceDetails.email,
-//           firstName: invoiceDetails.first_name,
-//           lastName: invoiceDetails.surname,
-//           email: invoiceDetails.email,
-//           amount: parseFloat(thePay),
-//           narration: invoiceDetails.COL_4,
-//           onSuccess: function (response) {
-//             console.log('callback Successful Response', response);
-
-//             let dataToPush = {
-//               "endpoint": "createInvidualPayment",
-//               "data": {
-//                 "invoice_number": invoicenum,
-//                 "payment_channel": "paystack",
-//                 "payment_reference_number": reference,
-//                 "receipt_number": reference,
-//                 "amount_paid": thePay
-//               }
 //             }
-//             $.ajax({
-//               type: "POST",
-//               url: HOST,
-//               dataType: 'json',
-//               data: JSON.stringify(dataToPush),
-//               success: function (data) {
-//                 console.log(data)
-//                 alert("payment success")
-//                 nextPrev(1)
-//                 openReceipt(invoicenum)
-//               },
-//               error: function (request, error) {
-//                 console.log(error)
-//               }
-//             });
-//           },
-//           onError: function (response) {
-//             console.log('callback Error Response', response);
-
-//           },
-//           onClose: function () {
-//             console.log("closed");
-//           },
-//         });
-//         paymentEngine.showPaymentWidget();
-//         // let bbButton = document.querySelector("#js-payment-tabs > li.branch.payment-nav > a")
-//         // if (bbButton) {
-//         //   bbButton.click()
-//         // }
-
-//       }
-//     } else {
-//       alert("Wrong Invoice")
+//         } else {
+//           alert("Wrong Invoice")
+//           $("#msg_boxas").html("")
+//           $("#makePaymentRemitaMain").removeClass("hidden")
+//         }
+//     }  catch (error) {
+//         // alert('Unable to process Invoice, try other payment channels')
+//         console.log(error)
+//         $("#msg_boxas").html(`
+//             <p class="text-warning text-danger mt-4 text-lg text-center">Unable to process Invoice, try other payment channels.</p>
+//         `)
+//         $("#makePaymentRemitaMain").removeClass("hidden")
 //     }
 //   }
 //   let invoicenn = sessionStorage.getItem("invoice_number")
@@ -375,12 +492,142 @@ if (payCards) {
 
 // }
 
+async function makePaymentRemitaMain() {
+  // Check if Remita Payment Engine is available
+  if (typeof RmPaymentEngine === 'undefined') {
+    showError("Payment service is currently unavailable. Please try another payment method.");
+    return;
+  }
+
+  const thePay = document.querySelector("#theBal");
+  const finalPay = thePay.dataset.money;
+  const invoiceNum = sessionStorage.getItem("invoice_number");
+
+  if (!invoiceNum) {
+    showError("Invoice information not found. Please try again.");
+    return;
+  }
+
+  showLoading();
+
+  try {
+    const invoice = await fetchInvoice(invoiceNum);
+
+    if (invoice.payment_status === "paid") {
+      showMessage("This invoice has already been paid", "warning");
+      return;
+    }
+    
+    processPayment(invoice, finalPay, invoiceNum);
+  } catch (error) {
+    console.error("Payment processing error:", error);
+    showError("Unable to process invoice. Please try other payment channels.");
+  }
+}
+
+// Helper functions
+function showLoading() {
+  $("#msg_boxas").html(`
+    <div class="flex justify-center items-center mt-4">
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+    </div>
+  `);
+  $("#makePaymentRemitaMain").addClass("hidden");
+}
+
+function showError(message) {
+  $("#msg_boxas").html(`
+    <p class="text-danger text-center mt-4 text-lg">${message}</p>
+  `);
+  $("#makePaymentRemitaMain").removeClass("hidden");
+}
+
+function showMessage(message, type = "warning") {
+  $("#msg_boxas").html(`
+    <p class="text-${type} text-center mt-4 text-lg">${message}</p>
+  `);
+  $("#makePaymentRemitaMain").removeClass("hidden");
+}
+
+async function fetchInvoice(invoiceNum) {
+  const response = await fetch(`${HOST}?getSingleInvoice&invoiceNumber=${invoiceNum}`);
+  const data = await response.json();
+
+  if (data.status !== 1) {
+    throw new Error("Invalid invoice data");
+  }
+
+  return data.message[0];
+}
+
+function processPayment(invoice, amount, invoiceNum) {
+  const paymentEngine = RmPaymentEngine.init({
+    key: "WkFNQklSfDM1Njc5MTEwNzN8MTIwN2U5NDUxOGQxNDhjZmJhMTRiNDQzZDI3MzlmMWU2YjhkZjZjNmIyMjFjOTc1ZjYzZWU0ODE1NGI4YTMxYjk0MWY3ZjNiODM1MGFjYmQyNGVhOWYzODUxNWZmMTY3NGNkYmFkN2E0MGQ2ZGI4MDg3MDI0YzdmMzAwOWYxY2Q=",
+    processRrr: true,
+    transactionId: Math.floor(Math.random() * 1101233),
+    extendedData: {
+      customFields: [{
+        name: "rrr",
+        value: invoice.rrr
+      }]
+    },
+    onSuccess: () => handlePaymentSuccess(invoiceNum, amount),
+    onError: () => showError("Error while processing payment. Try other payment channels."),
+    onClose: () => {
+      console.log("Payment widget closed");
+      $("#msg_boxas").html("");
+      $("#makePaymentRemitaMain").removeClass("hidden");
+    }
+  });
+
+  paymentEngine.showPaymentWidget();
+}
+
+async function handlePaymentSuccess(invoiceNum, amount) {
+  alert("Payment successful");
+  nextPrev(1);
+  openReceipt(invoiceNum);
+
+  // Uncomment if you need to record the payment on your server
+  /*
+  try {
+    await recordPayment(invoiceNum, amount);
+  } catch (error) {
+    console.error("Payment recording failed:", error);
+    showError("Payment processed but recording failed. Contact support with your receipt.");
+  }
+  */
+}
+
+async function recordPayment(invoiceNum, amount) {
+  const dataToPush = {
+    endpoint: "createInvidualPayment",
+    data: {
+      invoice_number: invoiceNum,
+      payment_channel: "Remita",
+      payment_reference_number: response.paymentReference,
+      receipt_number: response.paymentReference,
+      amount_paid: amount
+    }
+  };
+
+  const response = await $.ajax({
+    type: "POST",
+    url: HOST,
+    dataType: 'json',
+    data: JSON.stringify(dataToPush)
+  });
+
+  console.log("Payment recorded:", response);
+}
+
+
 function makePaymentRemita2() {
   let thePay = document.querySelector("#theBal")
   let finalPay = thePay.dataset.money
-  
+
   console.log(finalPay)
-  
+
   $("#makePBtn").addClass("hidden")
   $("#msg_boxx").html(`
     <div class="flex justify-center items-center mt-4">
@@ -389,78 +636,84 @@ function makePaymentRemita2() {
   `)
 
   async function openInvoice(invoicenum) {
-      
-    const response = await fetch(
-      // `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-      `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-    );
-    
-    const userInvoices = await response.json();
-    console.log(userInvoices);
-    
-    if (userInvoices.status === 1) {
-        
-      if (userInvoices.message[0].payment_status === "paid") {
-        alert("This Invoice has already been paid")
+    try {
+
+      const response = await fetch(
+        `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+      );
+
+      const userInvoices = await response.json();
+      console.log(userInvoices);
+
+      if (userInvoices.status === 1) {
+
+        if (userInvoices.message[0].payment_status === "paid") {
+          alert("This Invoice has already been paid")
           $("#makePBtn").removeClass("hidden")
           $("#msg_boxx").html('')
-        
-      } else {
-        let invoiceDetails = userInvoices.message[0]
-        
-        let PaymentData = {
+
+        } else {
+          let invoiceDetails = userInvoices.message[0]
+
+          let PaymentData = {
             "amount": parseFloat(finalPay) * 100,
             // "amount": 200.00,
             "bearer": 1,
             "callbackUrl": `https://payzamfara.com/receipt.html?invoice_num=${invoicenum}&amount=${parseFloat(finalPay)}`,
             "channels": ["card", "bank"],
             "currency": "NGN",
-            "customerFirstName": invoiceDetails.first_name,
-            "customerLastName": invoiceDetails.surname,
+            "customerFirstName": invoiceDetails.first_name + invoiceDetails.surname,
+            "customerLastName": invoicenum,
             "customerPhoneNumber": invoiceDetails.phone,
             "email": invoiceDetails.email,
-        }
-        
-        $.ajax({
-          type: "POST",
-          url: 'https://api.credocentral.com/transaction/initialize',
-          headers: {
-            'Authorization':'1PUB1100nLL80S11CMCWH4J93LfQlTwL0rErft',
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-          },
-          dataType: 'json',
-          data: JSON.stringify(PaymentData),
-          success: function (data) {
-            console.log(data)
-            
-            if (data.status === 200) {
+          }
+
+          $.ajax({
+            type: "POST",
+            url: 'https://api.credocentral.com/transaction/initialize',
+            headers: {
+              'Authorization': '1PUB1100nLL80S11CMCWH4J93LfQlTwL0rErft',
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            dataType: 'json',
+            data: JSON.stringify(PaymentData),
+            success: function (data) {
+              console.log(data)
+
+              if (data.status === 200) {
                 window.location.href = data.data.authorizationUrl
-            } else {
+              } else {
                 $("#makePBtn").removeClass("hidden")
                 $("#msg_boxx").html(`<p class="text-warning text-center mt-4 text-lg">${data.message}</p>`)
-            }
-            
-          },
-          error: function (request, error) {
+              }
+
+            },
+            error: function (request, error) {
               console.log(error)
               $("#makePBtn").removeClass("hidden")
               $("#msg_boxx").html(`<p class="text-danger text-center mt-4 text-lg">Error while processing payment, try another payment gateway!</p>`)
-          }
-        });
-        
-       
-            
+            }
+          });
 
+
+
+
+        }
+      } else {
+        alert("Wrong Invoice")
       }
-    } else {
-      alert("Wrong Invoice")
-    }   
 
- 
+    } catch (error) {
+      $("#makePBtn").removeClass("hidden")
+
+      $("#msg_boxx").html(`<p class="text-danger text-center mt-4 text-lg">Network Error, Please Try Again!</p>`)
+    }
+
+
 
   }
-  
+
   let invoicenn = sessionStorage.getItem("invoice_number")
   openInvoice(invoicenn)
 
@@ -468,136 +721,131 @@ function makePaymentRemita2() {
 }
 
 function makePayment() {
-  let thePay = document.querySelector("#theBal")
-  let finalPay = thePay.dataset.money
-//   console.log(finalPay)
+  $("#paystackPayBtn").prop("disabled", true).text("Processing Payment...");
 
   async function openInvoice(invoicenum) {
-    const response = await fetch(
-      // `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-      `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
-    );
-    const userInvoices = await response.json();
-    console.log(userInvoices);
+    try {
+      const response = await fetch(`${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`);
 
-    if (userInvoices.status === 1) {
-      if (userInvoices.message[0].payment_status === "paid") {
-        alert("This Invoice has already been paid")
-      } else {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
+      const userInvoices = await response.json();
 
-        let invoiceDetails = userInvoices.message[0]
+      if (userInvoices.status !== 1) {
+        alert("Invoice Not Found, Please check your invoice number.");
+        return;
+      }
 
-        // const modal = FlutterwaveCheckout({
-        //   public_key: "FLWPUBK_TEST-b75c6102b14be3e6292bc9eca05a3497-X",
-        //   tx_ref: "titanic" + Math.floor(Math.random() * 1101233),
-        //   amount: parseFloat(thePay),
-        //   currency: "NGN",
-        //   payment_options: "card, banktransfer, ussd",
-        //   customer: {
-        //     email: invoiceDetails.email,
-        //     phone_number: invoiceDetails.phone,
-        //     name: invoiceDetails.first_name + " " + invoiceDetails.surname,
-        //   },
-        //   customizations: {
-        //     title: "useIBS",
-        //     description: "Payment for an awesome cruise",
-        //     logo: "https://payzamfara.com/assets/img/akwaimage.png",
-        //   },
-        //   callback: function (payment) {
-        //     let dataToPush = {
-        //       "endpoint": "createInvidualPayment",
-        //       "data": {
-        //         "invoice_number": invoicenum,
-        //         "payment_channel": "FlutterWave",
-        //         "payment_reference_number": payment.tx_ref,
-        //         "receipt_number": payment.tx_ref, 
-        //         "amount_paid" : thePay
-        //       }
-        //     }
-        //     $.ajax({
-        //       type: "POST",
-        //       url: HOST,
-        //       dataType: 'json',
-        //       data: JSON.stringify(dataToPush),
-        //       success: function (data) {
-        //         console.log(data)
-        //         alert("payment success")
-        //         modal.close();
-        //         nextPrev(1)
-        //         openReceipt(invoicenum)
-        //       },
-        //       error: function (request, error) {
-        //         console.log(error)
-        //       }
-        //     });
+      const invoice = userInvoices.message[0];
 
-        //   },
-        //   onclose: function (incomplete) {
-        //     if (incomplete === true) {
-        //       // Record event in analytics
-        //       console.log("Not completed")
-        //     }
-        //   }
-        // });
+      if (invoice.payment_status === "paid") {
+        alert("This Invoice has already been paid");
+        return;
+      }
 
-       
-        var handler = PaystackPop.setup({
-        //   key: 'pk_test_a00bd73aad869339803b75183303647b5dcd8305', // Replace with your public key
-          key: 'pk_live_b9406bc825d388d331131ec1627ae65ef7ad6a8a', // Replace with your public key
-          
-          email: invoiceDetails.email,
-          amount: finalPay * 100,
-          currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+      const userHasEmail = invoice.email;
 
-          callback: function (response) {
-            //this happens after the payment is completed successfully
-            var reference = response.reference;
-            alert('Payment complete! Reference: ' + reference);
-            // Make an AJAX call to your server with the reference to verify the transaction
-            let dataToPush = {
+      let full_amount_paid = 0
+      userInvoices.message.forEach(usr => full_amount_paid += parseFloat(usr.amount_paid))
+
+      let invoiceDetails = invoice;
+
+      var handler = PaystackPop.setup({
+        key: 'pk_live_b9406bc825d388d331131ec1627ae65ef7ad6a8a', // Replace with your public key
+        // key: 'pk_test_a00bd73aad869339803b75183303647b5dcd8305',
+        email: invoiceDetails.email,
+        amount: full_amount_paid * 100,
+        currency: 'NGN',
+        metadata: {
+          custom_fields: [
+            {
+              display_name: "Invoice Number",
+              variable_name: "invoice_number",
+              value: invoicenum
+            }
+          ]
+        },
+        callback: function (response) {
+          var reference = response.reference;
+          alert('Payment complete! Reference: ' + reference);
+
+          $("#paystackPayBtn").prop("disabled", true).text("Approving Payment...");
+
+          $.ajax({
+            type: "POST",
+            url: "https://payzamfara.com/php/payStack/payment_logs.php",
+            dataType: 'json',
+            data: JSON.stringify({
+              "gateway": "paystack",
+              "invoice_number": invoicenum,
+              "transac_ref": reference,
+              "gateway_status": response.status,
+              "inhouse_status": "unsuccessful"
+            }),
+            success: function (data) {
+              console.log("Logged to payment_logs.php:", data);
+            },
+            error: function (request, error) {
+              console.error("Error logging to payment_logs.php:", error);
+            }
+          });
+
+          $.ajax({
+            type: "POST",
+            url: HOST,
+            dataType: 'json',
+            data: JSON.stringify({
               "endpoint": "createInvidualPayment",
               "data": {
                 "invoice_number": invoicenum,
                 "payment_channel": "paystack",
                 "payment_reference_number": reference,
                 "receipt_number": reference,
-                "amount_paid": finalPay
+                "amount_paid": full_amount_paid
               }
+            }),
+            success: function (data) {
+              // console.log("Payment recorded:", data);
+              // Only proceed after createInvidualPayment succeeds
+              $("#paystackPayBtn").prop("disabled", false).text("Proceed");
+              nextPrev(1);
+              openReceipt(invoicenum);
+            },
+            error: function (request, error) {
+              console.error("Error sending to createInvidualPayment:", error);
+              // Optional: re-enable the button or handle UI fallback here
+              $("#paystackPayBtn").prop("disabled", false).text("Proceed");
+              throw new Error(`There was an issue approving your payment. Please try again. Please contact Support`);
             }
-            $.ajax({
-              type: "POST",
-              url: HOST,
-              dataType: 'json',
-              data: JSON.stringify(dataToPush),
-              success: function (data) {
-                console.log(data)
-                alert("payment success")
-                nextPrev(1)
-                openReceipt(invoicenum)
-              },
-              error: function (request, error) {
-                console.log(error)
-              }
-            });
+          });
 
-          },
-          onClose: function () {
-            alert('Transaction was not completed, window closed.');
-          },
-        });
-        handler.openIframe();
-      }
-    } else {
-      alert("Wrong Invoice")
+        },
+        onClose: function () {
+          alert('Transaction was not completed, window closed.');
+          $("#paystackPayBtn").prop("disabled", false).text("Proceed");
+        }
+      });
+
+      handler.openIframe();
+
+
+
+    } catch (error) {
+      console.error("An error occurred:", error);
+      $("#paystackPayBtn").prop("disabled", false).text("Proceed");
+      $("#msg_box_paystack").html(`
+            <p class="text-center text-danger">${error.message ? `Ooops ${error.message}` : `Something's not right, please try another payment gateway!`}</p>
+        `)
     }
   }
+
   let invoicenn = sessionStorage.getItem("invoice_number")
   openInvoice(invoicenn)
 
 
 }
-
 
 function formatMoney(amount) {
   return amount.toLocaleString('en-US', {
@@ -611,160 +859,177 @@ async function openReceipt(invoicenum) {
   console.log(invoicenum)
 
   const response = await fetch(
-    `${HOST}/php/index.php?getSingleInvoice&invoiceNumber=${invoicenum}`
+    `${HOST}/php/index.php?getSinglePayment&invoiceNumber=${invoicenum}`
   );
   const userInvoices = await response.json();
-  console.log(userInvoices);
+  //   console.log(userInvoices);
 
   if (userInvoices.status === 1) {
     let invoice_info = userInvoices.message[0]
-    
-    let hardCopyReceipt = ""
-    
-    $("#receiptCard").html(`
-            <div class="invoicetop"></div>
-  
-            <div class="flex px-6 pt-3 items-center justify-between">
-  
-              <h1 class="fontBold text-2xl">RECEIPT</h1>
-  
-              <div class="flex items-center gap-1">
-                <img src="./assets/img/vector.png" alt="">
-                <p class="text-2xl fontBold">${invoice_info.invoice_number}</p>
-              </div>
-  
-            </div>
-            <div class="mt-2 px-2 ">
-<<<<<<< HEAD
-            <img src="./assets/img/logo.png" alt="" class="w-[70px] h-[70px]">
-=======
-            <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
->>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
-            </div>
-            <div class="flex  justify-between px-6 mt-4">
-              <div class="w-full">
-                <p class="text-[#555555]">FROM :</p>
-                <p class="fontBold">${invoice_info.COL_3}</p>
-                <p class="text-[#222234] w-[60%] text-sm">Zamfara</p>
-              </div>
-  
-              <div class="w-full md:mr-[-10%]">
-                <p class="text-[#555555]">TO :</p>
-                <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
-                <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
-              </div>
-  
-            </div>
-  
-            <div class="px-6 mt-4">
-              <p class="text-[#555555]">INFO :</p>
-  
-              <table class="table table-borderless invTa md:w-[70%] w-full">
-                <tr>
-                  <td>
-                    <p class="fontBold">Payer ID: ${invoice_info.tax_number}</p>
-                  </td>
-                  <td>Due Date: ${invoice_info.due_date}</td>
-                </tr>
-                <tr>
-                  <td>Invoice Date: ${invoice_info.date_created}</td>
-                  <td>Expiry Date: ${invoice_info.due_date}</td>
-                </tr>
-                <tr>
-                  <td><span class="fontBold">Description:</span> ${invoice_info.description ? invoice_info.description : '-'}</td>
-                </tr>
-              </table>
-            </div>
-  
-            <div class="flex justify-end">
-              <div class="md:w-[70%] w-[90%]">
-                <table class="table table-borderless">
-                  <tr>
-                    <td class="text-[#555555] text-sm">ITEM DESCRIPTION</td>
-                    <td class="text-[#555555] text-sm">QTY</td>
-                    <td class="text-[#555555] text-sm">RATE</td>
-                    <td class="text-[#555555] text-sm">AMOUNT</td>
-                  </tr>
-                  <tr class="border-b border-b border-[#6F6F84]">
-                    <td class="text-sm">${invoice_info.COL_4}</td>
-                    <td class="text-sm">01</td>
-                    <td class="text-sm"></td>
-                    <td class="text-sm">${formatMoney(parseFloat(invoice_info.amount_paid))}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-[#555555] text-sm">Sub Total</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-[#000] text-sm">${formatMoney(parseFloat(invoice_info.amount_paid))}</td>
-                  </tr>
-                  <tr class="border-b border-b border-[#6F6F84]">
-                    <td class="text-[#555555] text-sm">Discount</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-[#000] text-sm">N0.00</td>
-                  </tr>
-  
-                  <tr>
-                    <td colspan="3" class="text-[#000]">Grand Total<span class="text-[#555555]"> (NGN)</span></td>
-                    <td class="text-[#000] text-xl fontBold"${formatMoney(parseFloat(invoice_info.amount_paid))}</td>
-                  </tr>
-  
-                  <tr>
-                    <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(invoice_info.amount_paid)} Naira Only</td>
-                  </tr>
 
-                </table>
-  
-                <table class="table table-borderless bg-[#FFF3E9]">
-                  <tr>
-                    <td colspan="3" class="text-[#6F6F84] pb-0">Payment Details</td>
-                    <td class="text-right text-uppercase text-[#6F6F84] text-sm pb-0">Online payment </td>
-                  </tr>
-                  <tr>
-                    <td colspan="3"></td>
-                    <td class="text-right pt-0">Online payment </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-  
-  
-            <hr class="my-4 md:mx-10 mx-4">
-  
-<<<<<<< HEAD
-            <div class="md:px-10 px-2 pb-6" id="invtopp">
-                <div class="flex items-center justify-center">
-                <div class="">
-                    <img src="./assets/img/logo.png" alt="" class="w-[70px] h-[70px]">
-                </div>
-=======
-            <div class="md:px-10 px-2 pb-6">
+    let hardCopyReceipt = ""
+    let receiptCardMain = ""
+
+    receiptCardMain = `
+        <div class="invoicetop"></div>
+
+        <div class="flex px-6 pt-3 items-center justify-between">
+
+          <h1 class="fontBold text-2xl">RECEIPT</h1>
+
+          <div class="flex items-center gap-1">
+            <img src="./assets/img/vector.png" alt="">
+            <p class="text-2xl fontBold">${invoice_info.invoice_number}</p>
+          </div>
+
+        </div>
+        
+        <div class="mt-2 px-2 flex justify-between">
+            <img src="./assets/img/logo.png" alt="" class="w-[100px] h-[70px]">
+            
+            <div id="qrContainer1st" class="w-[200px] mt-3"></div>
+        </div>
+        
+        <div class="flex  justify-between px-6 mt-4">
+          <div class="w-full">
+            <p class="text-[#555555]">FROM :</p>
+            <p class="fontBold">${invoice_info.COL_3}</p>
+            <p class="text-[#222234] w-[60%] text-sm">Zamfara State</p>
+          </div>
+
+          <div class="w-full md:mr-[-10%]">
+            <p class="text-[#555555]">TO :</p>
+            <p class="fontBold text-left">${invoice_info.surname} ${invoice_info.first_name}</p>
+            <p class="text-[#222234] text-sm md:w-[60%]">${invoice_info.address}, Zamfara</p>
+          </div>
+
+        </div>
+
+        <div class="px-6 mt-4">
+          <p class="text-[#555555]">INFO :</p>
+
+          <table class="table table-borderless invTa md:w-[70%] w-full">
+            <tr>
+              <td>
+                <p class="fontBold">Payer ID: ${invoice_info.tax_number}</p>
+                <p class="fontBold">TIN: ${invoice_info.tin}</p>
+              </td>
+              <td>Due Date: ${invoice_info.due_date}</td>
+            </tr>
+            <tr>
+              <td>Payment Date: ${invoice_info.date_created}</td>
+            </tr>
+            <tr>
+              <td><span class="fontBold">Description:</span> ${invoice_info.description ? invoice_info.description : '-'}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="flex justify-end">
+          <div class="md:w-[70%] w-[90%]">
+            <table class="table table-borderless">
+              <tr>
+                <td class="text-[#555555] text-sm">ITEM DESCRIPTION</td>
+                <td class="text-[#555555] text-sm">QTY</td>
+                <td class="text-[#555555] text-sm">RATE</td>
+                <td class="text-[#555555] text-sm">AMOUNT</td>
+              </tr>
+        `
+    let theTotal = []
+    userInvoices.message.forEach(element => {
+      receiptCardMain += `
+              <tr class="border-b border-b border-[#6F6F84]">
+                <td class="text-sm">${element.COL_4}</td>
+                <td class="text-sm">01</td>
+                <td class="text-sm"></td>
+                <td class="text-sm">${formatMoney(parseFloat(element.amount_paid))}</td>
+              </tr>
+            `
+      theTotal.push(parseFloat(element.amount_paid))
+    });
+
+    receiptCardMain += `          
+              <tr>
+                <td class="text-[#555555] text-sm">Sub Total</td>
+                <td></td>
+                <td></td>
+                <td class="text-[#000] text-sm">${formatMoney(sumArray(theTotal))}</td>
+              </tr>
+              <tr class="border-b border-b border-[#6F6F84]">
+                <td class="text-[#555555] text-sm">Discount</td>
+                <td></td>
+                <td></td>
+                <td class="text-[#000] text-sm">N0.00</td>
+              </tr>
+
+              <tr>
+                <td colspan="3" class="text-[#000]">Grand Total<span class="text-[#555555]"> (NGN)</span></td>
+                <td class="text-[#000] text-xl fontBold">${formatMoney(sumArray(theTotal))}</td>
+              </tr>
+
+              <tr>
+                <td colspan="4" class="text-sm text-[#000] pb-0">Amount in words</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-sm text-[#555555] pt-0 text-capitalize">${convertNumberToWords(sumArray(theTotal))} Only</td>
+              </tr>
+
+            </table>
+
+            <table class="table table-borderless bg-[#FFF3E9]">
+              <tr>
+                <td colspan="3" class="text-[#6F6F84] pb-0">Payment Details</td>
+                <td class="text-right text-uppercase text-[#6F6F84] text-sm pb-0">Online payment </td>
+              </tr>
+              <tr>
+                <td colspan="3"></td>
+                <td class="text-right pt-0">Online payment </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <hr class="my-4 md:mx-10 mx-4">
+
+        <div class="md:px-10 px-2 pb-6" id="invtopp">
             <div class="flex items-center justify-center">
             <div class="">
-            <img src="./assets/img/akwaimage.png" alt="" class="w-[100px] h-[70px]">
+                <img src="./assets/img/logo.png" alt="" class="w-[70px] h-[70px]">
             </div>
->>>>>>> d416dfa171a192ebc5287bd586d605961d917e0c
-             
-              <div>
-                <p class="text-xl fontBold pb-0">Pay Zamfara</p>
-                <div class="flex items-center gap-x-3 flex-wrap">
-                  <p class="text-sm text-[#6F6F84]">www.payzamfara.com</p>
-                  <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
-                  <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
-                  <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
-                </div>
-              </div>
-              
+         
+          <div>
+            <p class="text-xl fontBold pb-0">Pay Zamfara</p>
+            <div class="flex items-center gap-x-3 flex-wrap">
+              <p class="text-sm text-[#6F6F84]">www.payzamfara.com</p>
+              <p class="text-sm text-[#6F6F84]">Info@payzamfara.com</p>
+              <p class="text-sm text-[#6F6F84]">0800 101 5555</p>
+              <img src="./assets/img/logo1.png" class="h-[30px] w-[70px]" alt="">
             </div>
-    
           </div>
-        `)
+          
+        </div>
+
+      </div>
+    `
+
+    $("#receiptCard").html(receiptCardMain)
+
+    const qrCodeContainer1st = document.getElementById("qrContainer1st")
+
+    const qrCode1st = new QRCode(qrCodeContainer1st, {
+      text: `https://payzamfara.com/viewreceipt.html?invnumber=${invoicenum}&load=true`,
+      colorDark: '#000000',
+      width: 100,
+      height: 100,
+      colorLight: '#ffffff',
+      version: 10,
+    });
+
     let theDatooo = new Date()
     let nowDate = theDatooo.toISOString().split('T')[0]
-    
+
+
     hardCopyReceipt += `
         <div class="hardReceiptCopy p-1">
             <div class="flex justify-between mt-4">
@@ -823,7 +1088,7 @@ async function openReceipt(invoicenum) {
             <div class="flex justify-between mt-5 items-center">
                 <div>
                     <p class="capitalize fontBold">Amount In Words</p>
-                    <p class="text-sm capitalize">${convertNumberToWords(invoice_info.amount_paid)} Naira Only</p>
+                    <p class="text-sm capitalize">${convertNumberToWords(invoice_info.amount_paid)} </p>
                 </div>
                 <div>
                     <div class="border-b border-gray-400 w-[300px]"></div>
@@ -833,10 +1098,10 @@ async function openReceipt(invoicenum) {
             
         </div>    
     `
-    
+
     $("#receiptHardCopy").html(hardCopyReceipt)
     const qrCodeContainer = document.getElementById("qrContainer")
-    
+
     const qrCode = new QRCode(qrCodeContainer, {
       text: `https://payzamfara.com/viewreceipt.html?invnumber=${invoicenum}&load=true`,
       colorDark: '#000000',
@@ -845,7 +1110,7 @@ async function openReceipt(invoicenum) {
       colorLight: '#ffffff',
       version: 10,
     });
-    
+
   } else {
     $("#invoiceCard").html(`Invalid Invoice, or expired invoice`)
   }

@@ -114,7 +114,8 @@ function aprovethis() {
   } else if (level == "4") {
     theVerify(5)
   } else if (level == "5") {
-
+    theVerify(6)
+  } else if (level == "6") {
     theVerify(1)
   }
 }

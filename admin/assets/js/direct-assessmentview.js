@@ -124,7 +124,8 @@ document.getElementById('approveButton').addEventListener('click', async functio
   if (levels === "F") {
     thenextstat = "2"
   } else if (levels === "S") {
-    thenextstat = "3"
+    // thenextstat = "3"
+    thenextstat = "4"
   } else if (levels === "T") {
     thenextstat = "4"
   }

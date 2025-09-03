@@ -143,8 +143,15 @@
                       All taxes
                     </button>
                   </li>
+                  <li class="nav-item text-center" role="presentation">
+                    <button class="nav-link" id="assigned-tax-tab" data-bs-toggle="pill" data-bs-target="#assigned-tax"
+                      type="button" role="tab" aria-controls="assigned-tax" aria-selected="false">
+                      Assigned Taxes
+                    </button>
+                  </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
+
                   <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                     aria-labelledby="pills-home-tab">
                     <div class="table-responsive -mt-6 md:w-8/12">
@@ -153,7 +160,6 @@
                           <tr>
                             <th>Date and time</th>
                             <th>Description</th>
-                            <th>IP Adddress</th>
                           </tr>
                         </thead>
                         <tbody id="ActivityLogs">
@@ -166,11 +172,17 @@
                       </table>
                     </div>
                   </div>
+
                   <div class="tab-pane fade" id="pills-app" role="tabpanel" aria-labelledby="pills-app-tab">
-                    <!-- <button onclick="exportTablee('showtaxess', '.dataTable')" class="button mb-3">Export CSV</button> -->
 
-                    <div class="accordion apt" id="accordionExample">
+                    <div class="flex justify-end">
+                      <button class="button" id="generateInvoiceBtnDemand">Generate Demand Note</button>
+                    </div>
 
+                    <div id="taxes-container">
+                      <div class="flex justify-center items-center mt-4">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                      </div>
                     </div>
                   </div>
 
@@ -218,10 +230,12 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                    <div class="table-responsive -mt-6">
-                      <!-- <div class="flex justify-end">
-                        <button class="btn btn-primary">save</button>
-                      </div> -->
+                    <div class="table-responsive">
+
+                      <div class="flex justify-end">
+                        <button class="button" id="assign-tax">Assign Tax</button>
+                      </div>
+
                       <table class="table dataTable2">
                         <thead>
                           <tr>
@@ -240,8 +254,28 @@
 
                         </tbody>
                         <div class="flex justify-center items-center mt-4" id="loader">
-                    
+
                         </div>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="assigned-tax" role="tabpanel" aria-labelledby="assigned-tax-tab">
+                    <div class="table-responsive">
+
+                      <table class="table" id="dataTable5">
+                        <thead>
+                          <tr>
+                            <th>S/N</th>
+                            <th>REVENUE HEAD</th>
+                            <th>CATEGORY</th>
+                            <th>Assignment Date</th>
+                          </tr>
+                        </thead>
+                        <tbody id="assignedTaxesBody">
+
+
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -308,7 +342,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.min.js"></script>
   <script src="./assets/vendor/libs/export-table/src/tableHTMLExport.js"></script>
-  <!-- <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script> -->
+  <script src="./assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/js/taxpayerlist.js"></script>
   <script src="./assets/js/table2CSV.js"></script>
@@ -327,68 +361,11 @@
       table.search($(this).val()).draw();
     });
   </script>
-  <script>
-    function tableToCSV() {
-      /* Get the HTML data using Element by Id */
-      var table = document.querySelector(".table");
 
-      /* Declaring array variable */
-      var rows = [];
-
-      //iterate through rows of table
-      for (var i = 0, row; row = table.rows[i]; i++) {
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-
-
-        /* add a new records in the array */
-        rows.push(
-          [
-            column1,
-            column2,
-            column3,
-            column4,
-            column5,
-            column6,
-            column7
-          ]
-        );
-
-      }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function (rowArray) {
-        row = rowArray.join(",");
-        csvContent += row + "\r\n";
-      });
-
-      /* create a hidden <a> DOM node and set its download attribute */
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Taxpayer_List.csv");
-      document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
-      link.click();
-    }
-
-  </script>
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
-
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

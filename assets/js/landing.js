@@ -526,3 +526,26 @@ function sendMsg(e) {
 
 
 }
+
+async function automatedHook() {
+  try {
+    const response = await fetch(`https://payzamfara.com/php/payStack/verify_payment_paystackInternal_log.php`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const hook = await response.json();
+    console.log(hook);
+  } catch (error) {
+    console.error('Error fetching hook data:', error);
+  }
+}
+
+automatedHook();

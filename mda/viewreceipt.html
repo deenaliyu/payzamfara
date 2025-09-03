@@ -5,10 +5,12 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrimeGuage</title>
+  <title>Payzamfara</title>
 
-  <!-- FAVION ICON -->
-  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
@@ -34,23 +36,36 @@
     .imgTabs {
       display: none;
     }
+    .theheaders {
+      color: #fff !important;
+      background: #125826 !important;
+  }
   </style>
 </head>
 
 <body>
 
-  <section class="flex h-[89vh] overflow-y-scroll flex justify-center ">
+  <div class="invoice bg-white w-[789.921px] shadow-md py-6 hidden" id="receiptHardCopy">
+
+
+  </div>
+
+  <section class="flex h-[100vh] overflow-y-scroll flex justify-center ">
 
 
       <section class="pb-5">
         
         <div class="flex align-items-center gap-1 my-4 pb-8">
-            <a type="button" style='color: #125826; font-weight: 500;' href="collection.html" class="text-[18px]">Back to
+            <a type="button" style='color: #005826; font-weight: 500;' href="collection.html" class="text-[18px]">Back to
               Collection Report</a>
           </div>
         <div class="invoiceContainer flex justify-center mt-5 pr-10">
           <div class="invoice bg-white w-[100%] shadow-md -mt-12" id="receiptCard">
-              <h1>Hello</h1>
+                
+            <div class="flex justify-center items-center mt-4" id="loader">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+            </div>
+            
           </div>
           <!-- RECEIPT -->
           <!-- RECEIPT WILL BE HERE -->
@@ -59,15 +74,25 @@
         </div>
 
         <div class="flex justify-center pr-10">
-          <div class="w-[100%]">
+          <div class="w-[100%] mb-4">
             <!-- <div class="mt-4">
               <p class="text-xl">Note: You can make part payment by editing amount you are to pay</p>
             </div> -->
-            <div class="flex justify-between mt-4">
+            <div class="flex justify-between mt-4 space-x-3">
               <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('receiptCard')">
-                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-                <span>Print Receipt</span>
+                <iconify-icon icon="fa6-solid:download" class="text-xl"></iconify-icon>
+                <span>Download Receipt</span>
               </button>
+
+              <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('receiptCard')">
+                <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                <span>Print E-Receipt</span>
+              </button>
+              
+                <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoiceHard('receiptHardCopy')">
+                  <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                  <span>Print Hard Copy</span>
+                </button>
             </div>
           </div>
         </div>
@@ -82,6 +107,9 @@
 
 
 
+
+
+
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -92,7 +120,7 @@
   <script>
     AOS.init();
   </script>
-  <script src="assets/js/viewreceipt.js"></script>
+   <script src="../assets/js/payment.js"></script>
 </body>
 
 </html>

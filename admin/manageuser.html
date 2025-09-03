@@ -109,10 +109,6 @@
                     list</a>
                   <h1 class="fontBold text-xl mb-4">Manage users</h1>
 
-                  <div class="card card-body" id="accessLevelview">
-
-                  </div>
-
                   <section class="card-body card mt-4">
 
 
@@ -176,7 +172,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Dashboard</label>
+                              <label for="" class="fontBold text-black mb-3">Dashboard</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="dashboard_access" value="full"> Full Access</label>
@@ -188,7 +184,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Analytics</label>
+                              <label for="" class="fontBold text-black mb-3">Analytics</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="analytics_access" value="view_revenue"> View Revenue Performance</label>
@@ -206,7 +202,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">MDAs</label>
+                              <label for="" class="fontBold text-black mb-3">MDAs</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="mda_access" value="view_mda"> View MDA list</label>
@@ -229,7 +225,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Reports</label>
+                              <label for="" class="fontBold text-black mb-3">Reports</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="reports_access" value="view_inv_list"> View Invoice list</label>
@@ -246,13 +242,37 @@
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="reports_access" value="generate_settle_report"> Generate Settlement
                                   Report</label>
+
+
                               </div>
                             </div>
                           </div>
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Tax Payers</label>
+                              <label for="" class="fontBold text-black mb-3">Presumpive Report</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="presumptive_access" value="view_presumptive_tax"> View Presumpive
+                                  Report</label>
+
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="presumptive_access" value="create_presumptive_tax"> Generate Presumptive
+                                  Report</label>
+
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="presumptive_access" value="download_presumptive_report"> Download
+                                  Presumptive
+                                  Report</label>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Tax Payers</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="tax_payer_access" value="view_tax_list"> View Tax Payer list</label>
@@ -304,7 +324,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Enumeration</label>
+                              <label for="" class="fontBold text-black mb-3">Enumeration</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="enumeration_access" value="reg_user"> Register new user</label>
@@ -328,18 +348,38 @@
                               <label for="" class="">ETCC</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
-                                    data-name="etcc_access" value="first_reviewer"> First reviewer</label>
+                                    data-name="etcc_access" value="first_reviewer"> First Reviewer</label>
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
-                                    data-name="etcc_access" value="second_reviewer"> Second reviewer</label>
+                                    data-name="etcc_access" value="second_reviewer"> Second Reviewer</label>
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
-                                    data-name="etcc_access" value="third_reviewer"> third reviewer</label>
+                                    data-name="etcc_access" value="third_reviewer"> Third Reviewer</label>
+
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="etcc_access" value="fourth_reviewer"> Fourth Reviewer</label>
                               </div>
                             </div>
                           </div>
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Audit Trails</label>
+                              <label for="" class="fontBold text-black mb-3">Demand Notice</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="demand_notice_access" value="view_demand_notice"> View Demand
+                                  Notices</label>
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="demand_notice_access" value="create_demand_notice"> Create Demand
+                                  Notice</label>
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="demand_notice_access" value="download_notice_report"> Download
+                                  Report</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">Audit Trails</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="audit_trail_access" value="view_audit"> View the audit trail
@@ -357,7 +397,19 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">User Management</label>
+                              <label for="" class="fontBold text-black mb-3">RMDS Setup</label>
+                              <div class="checkbox-group">
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="rdms_access" value="view_rdms"> View RDMS Module</label>
+                                <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
+                                    data-name="rdms_access" value="modify_rdms"> Modify RDMS Module</label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="fontBold text-black mb-3">User Management</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="users_access" value="view_admin"> View Admin User List</label>
@@ -374,7 +426,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">CMS</label>
+                              <label for="" class="fontBold text-black mb-3">CMS</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="cms_access" value="create_gallery"> Create a new post - Gallery</label>
@@ -404,7 +456,7 @@
 
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="">Support</label>
+                              <label for="" class="fontBold text-black mb-3">Support</label>
                               <div class="checkbox-group">
                                 <label class="block mb-2"><input type="checkbox" class="acclvl form-check-input"
                                     data-name="support" value="view_support"> View support Module</label>
@@ -469,7 +521,7 @@
   <script src="./assets/js/nav.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
   <script src="./assets/vendor/js/menu.js"></script>
-  <script src="./assets/js/manageusers.js"></script>
+  <script src="./assets/js/manageusers.js?v=2.2"></script>
   <script src="./assets/js/main.js"></script>
 </body>
 

@@ -8,12 +8,12 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>Payzamfara</title>
 
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
 
   <!-- Fonts -->
 
@@ -49,111 +49,54 @@
   <!-- modal for filtering the invoice -->
   <div class="modal fade" id="filterInvoice" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content md:w-[100vh]">
-        <span class="flex justify-content-end">
-          <button>
-            <iconify-icon icon="ph:x-thin" data-bs-dismiss="modal" aria-label="Close"
-              style="font-size: 3vh; margin-right: 2vh; margin-top: 2vh"></iconify-icon>
-          </button>
-        </span>
-
-        <div class="mx-3">
-          <p class="text-[3vh] font-semibold text-black text-center">
-            Filter
-          </p>
-          <hr />
+      <div class="modal-content">
+        <div class="modal-header ">
+          <h5 class="modal-title text-center text-2xl font-bold" id="exampleModalLabel3">Filter</h5>
+          <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
+            aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
         </div>
+        <div class="modal-body">
 
-        <!-- <hr /> -->
-
-        <div class="grid grid-cols-4 mx-[8vh] gap-4">
-          <div class="col-span-2 my-3">
-            <div class="flex justify-content-between my-2">
-              <label for="">invoice number</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
+          <div class="flex justify-end">
+            <button class="btn btn-primary btn-sm" onclick="clearfilter2()">clear filter</button>
+          </div>
+          <div class="row">
+            <div class="col mb-0" id="the_rev">
+              <label for="defaultSelect" class="form-label">Revenue Head</label>
+              <div class="form-group">
+                <select name="" id="getMDAs" class="form-select">
+                  <option selected>--- All---</option>
+                </select>
+              </div>
             </div>
 
-            <div class="flex justify-content-between my-2">
-              <label for="">TIN</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
+            <div class="col mb-0" id="payment_channel">
+              <label for="defaultSelect" class="form-label">Payment Channel</label>
+              <div class="form-group">
+                <select name="" id="getPayment" class="form-select ">
+                  <option selected>--- All---</option>
+                </select>
+              </div>
             </div>
 
-            <div class="flex justify-content-between my-2">
-              <label for="">Revenue head</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
 
-            <div class="flex justify-content-between my-2">
-              <label for="">Name of citizen</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
+          </div>
 
-            <div class="flex justify-content-between my-2">
-              <label for="">Invoice status</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
+          <div class="row g-2">
+            <label for="" class="mt-3">Date</label>
+            <div class="col mb-0">
+              <label for="emailLarge" class="form-label">From</label>
+              <input class="form-control" type="date" value="" id="fromDateInput">
             </div>
-            <div class="flex justify-content-between my-2">
-              <label for="">Invoice due date</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-            <div class="flex justify-content-between my-2">
-              <label for="">Invoice expiry date</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex flex-column my-3">
-              <label for="">From</label>
-              <input type="date" name="date" class="form-control" id="" placeholder="Enter Name" />
+            <div class="col mb-0">
+              <label for="dobLarge" class="form-label">To</label>
+              <input class="form-control" type="date" value="" id="toDateInput">
             </div>
           </div>
 
-          <div class="col-span-2 my-3">
-            <div class="flex justify-content-between my-2">
-              <label for="">Date generated</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">MDA</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">Invoice number</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">Receipt number</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">Category</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">Invoice status</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex justify-content-between my-2">
-              <label for="">Paid by</label>
-              <input class="form-check-input" type="checkbox" value="" id="" />
-            </div>
-
-            <div class="flex flex-column my-3">
-              <label for="">to</label>
-              <input type="date" name="date" class="form-control" id="" placeholder="Enter Name" />
-            </div>
-          </div>
         </div>
-
-        <div class="flex item-center justify-content-center mb-3">
-          <button type="button" class="btn btn-prime w-50 py-1 px-4" id="">
-            Apply
-          </button>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-prime w-full" id="filterMda2">Apply</button>
         </div>
       </div>
     </div>
@@ -211,17 +154,14 @@
                 style="font-size: 3vh; padding-right: 1.5vh"></iconify-icon>
               Download Report
             </button>
-            
 
-            <a class="mt-4 flex flex-row gap-2" href = "./profile.html">
+
+            <a class="mt-4 flex flex-row gap-2" href="./profile.html">
               <div class="">
-              <img src="./assets/img/userprofile.png"
-                  alt
-                  class="md:w-[5vh] w-10 h-auto rounded-circle"
-                  id="theProfImg1"
-                />
+                <img src="./assets/img/userprofile.png" alt class="md:w-[5vh] w-10 h-auto rounded-circle"
+                  id="theProfImg1" />
               </div>
-                <p id="mdName"></p>
+              <p id="mdName"></p>
             </a>
           </div>
         </nav>
@@ -229,54 +169,55 @@
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <section class="content-wrapper border-t-2 bg-white">
+        <section class="content-wrapper">
           <div class="container-xxl flex-grow-1 container-p-y taxes">
-            <div class="border-1 rounded-xl px-4">
-              <h1 class="text-2xl text-[#282828] fontBold mt-4">
-                Collection Report
-              </h1>
-              <hr class="text-[#F4F4F4] my-3" />
-              <div class="table-responsive p-3">
-                <table class="table theTable table-striped" id="dataTable">
-                  <thead class="text-center">
-                    <th class="fontBold text-sm text-gray-500">
-                      <div class="flex flex-row">
-                        S/N
-                        <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
-                      </div>
-                    </th>
-                    <th class="fontBold text-sm text-gray-500">
-                      Revenue Head
-                    </th>
 
-                    <!-- <th class="fontBold text-sm text-gray-500">TIN</th> -->
-                    <th class="fontBold text-sm text-gray-500">
-                      Name
-                    </th>
-
-                    <th class="fontBold text-gray-500">INVOICE NUMBER</th>
-                    <th class="fontBold text-gray-500">AMOUNT PAYMENT</th>
-                    <th class="fontBold text-gray-500">PAYMENT DATE</th>
-                    <th class="fontBold text-gray-500">PAYMENT CHANNEL</th>
-                    <th class="fontBold text-gray-500">PAYMENT REFERENCE NUMBER</th>
-                    <th class="fontBold text-gray-500">
-                      VIEW RECIEPT
-                    </th>
-                    <!-- <th class="fontBold text-gray-500">payer id</th> -->
-
-                    <!-- <th class="fontBold text-gray-500">Payment status</th> -->
-                    <!-- <th class="fontBold text-gray-500">Download</th> -->
-                  </thead>
-                  <tbody id="showCollections">
-
-
-                  </tbody>
-                </table>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="text-2xl text-[#282828] fontBold mt-4">
+                  Collection Report
+                </h1>
               </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
-                loading...
+              <div class="card-body">
+                <div class="table-responsive p-3">
+                  <table class="table theTable table-striped" id="dataTable">
+                    <thead>
+                      <th class="fontBold text-sm text-gray-500">
+                        <div class="flex flex-row">
+                          S/N
+                          <iconify-icon icon="material-symbols:arrow-downward-rounded"></iconify-icon>
+                        </div>
+                      </th>
+                      <th class="fontBold text-sm text-gray-500">
+                        Revenue Head
+                      </th>
+
+                      <!-- <th class="fontBold text-sm text-gray-500">TIN</th> -->
+                      <th class="fontBold text-sm text-gray-500">
+                        Name
+                      </th>
+                      <th class="fontBold text-gray-500">INVOICE NUMBER</th>
+                      <th class="fontBold text-gray-500">AMOUNT PAYMENT</th>
+                      <th class="fontBold text-gray-500">PAYMENT DATE</th>
+                      <th class="fontBold text-gray-500">PAYMENT CHANNEL</th>
+                      <th class="fontBold text-gray-500">PAYMENT REFERENCE NUMBER</th>
+                      <th class="fontBold text-gray-500">
+                        VIEW RECIEPT
+                      </th>
+                    </thead>
+                    <tbody id="showCollections">
+
+
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-center items-center mt-4" id="loader">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                  loading...
+                </div>
               </div>
+
+
             </div>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
@@ -292,54 +233,6 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
 
-  <div class="modal fade" id="notiModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Notifications</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
-        <div class="modal-body relative">
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your TIN has been verified</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your complaint has been answered</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-          <hr class="text-[#D7D7D7] my-3" />
-          <div class="flex justify-between">
-            <p class="text-[16px]">Your payment is due</p>
-            <button class="text-[#125826] text-[12px] underline underline-offset-1">
-              clear
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- / Layout wrapper -->
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
@@ -355,7 +248,8 @@
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/js/session.js"></script>
   <!-- endbuild -->
-  <script src="./assets/js/reports.js"></script>
+  <script src="./assets/js/collection.js"></script>
+  <script src="./assets/js/filterInv.js"></script>
   <script>
     let theAtivo = document.querySelector(`.dggg`);
     theAtivo.parentElement.classList.add("active");

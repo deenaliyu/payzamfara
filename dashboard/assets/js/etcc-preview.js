@@ -23,6 +23,12 @@ function addOneYearToDate(date) {
   return givenDate.toISOString().split('T')[0]; // Returns in YYYY-MM-DD format
 }
 
+function formatDateoo(dateString) {
+  const date = new Date(dateString.replace(' ', 'T'));
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
+
 async function getEtccDetails() {
   const response = await fetch(`${HOST}/?getETCC&type=ref&id=${theid}`)
   const etccDetail = await response.json()
@@ -67,6 +73,7 @@ async function getEtccDetails() {
       <div class="flex justify-between px-6 mt-4">
         <h1 class="text-xl fontBold text-black">TAX CLEARANCE CERTIFICATE</h1>
 
+        
         <p><span class="text-lg fontBold text-black">Certificate Number:</span> ${theEtcDetail.etcc_no}</p>
       </div>
 
@@ -97,7 +104,7 @@ async function getEtccDetails() {
 
       <p class="px-6">This is to certify that Taxpayer with Tax Identification Number <span
           class="text-lg fontBold text-black">${theEtcDetail.applicant_tin}</span> has settled his/her tax
-        assessment for the following 2 year(s) for the specified source of income.</p>
+        assessment for the following 3 year(s) for the specified source of income.</p>
 
       <div class="px-6 mt-4">
         <p class="fontBold text-xl text-black mb-2">Details of Assessment</p>
@@ -159,15 +166,15 @@ async function getEtccDetails() {
         
 
         <div class="sig2 w-4/12">
+          <div class="flex">
+            <p class="flex-1">${formatDateoo(theEtcDetail.date_approved)}</p>
+            <img width="60%" src="./assets/img/rakiya_signature.png" alt="EC Signature" />
+          </div>
           <div class="border-b-2"></div>
-          <p class="fontBold text-black text-center mt-1">Official date and stamp</p>
+          <p class="fontBold text-black text-center mt-1">Issuing Date and Stamp</p>
         </div>
 
       </div>
-
-      <p class="text-center mt-2">Three year(s) copies of Official receipts MUST be attached to this certificate to
-        make it valid</p>
-
 
 
       <hr class="my-4 md:mx-10 mx-4">

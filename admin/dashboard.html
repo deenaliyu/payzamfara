@@ -9,7 +9,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>PayZamfara</title>
 
   <meta name="description" content="" />
 
@@ -131,56 +131,122 @@
                       </p>
                     </div>
 
-                    <div class="dashCards card w-full flex-col space-y-2  ">
+                    <div class="dashCards card w-full flex-col space-y-2">
                       <div class="flex items-center  justify-start">
                         <div class="icoCont bg-[#1c315c1f] mr-auto">
                           <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
                         </div>
-                        <p class=" text-gray-500 text-xs impMetrics">TOTAL ANNUAL REVENUE</p>
+                        <p class=" text-gray-500 text-xs impMetrics">TOTAL ACCRUED REVENUE</p>
                       </div>
 
 
-                       <div class="form-group w-1/2 ml-auto" style="margin-top: 52px;">
-                        <select class="form-select" id="annualYear" onchange="refreshTheCards()">
+                       <div class="form-group ml-auto" style="margin-top: 52px;">
+                        <select class="form-select" id="accruedRev" onchange="refreshTheCardsAcr()">
                         </select>
                       </div>
 
                       <p class="zanumbers text-end" >
-                        <span id="total_amount_invoiced2">-</span>
+                        <span id="accruedRevText">-</span>
                       </p>
                     </div>
 
+                    <!--<div class="dashCards card w-full flex-col space-y-2  ">-->
+                    <!--  <div class="flex items-center  justify-start">-->
+                    <!--    <div class="icoCont bg-[#f890301f] mr-auto">-->
+                    <!--      <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>-->
+                    <!--    </div>-->
+                    <!--    <p class="text-gray-500 text-xs impMetrics">EXPECTED MONTHLY REVENUE</p>-->
+                    <!--  </div>-->
+
+
+                    <!--    <div class="form-group  ml-auto" style="margin-top: 52px;">-->
+                    <!--        <select class="form-select" id="monthlyYear2" onchange="refreshTheCards3()">-->
+                    <!--        </select>-->
+                    <!--    </div>-->
+
+                    <!--  <p class="zanumbers text-end">-->
+                    <!--    <span id="due_amount">-</span>-->
+                    <!--  </p>-->
+                    <!--</div>-->
+                    
                     <div class="dashCards card w-full flex-col space-y-2  ">
                       <div class="flex items-center  justify-start">
                         <div class="icoCont bg-[#f890301f] mr-auto">
                           <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
                         </div>
-                        <p class="text-gray-500 text-xs impMetrics">EXPECTED MONTHLY REVENUE</p>
+                        <p class="text-gray-500 text-xs impMetrics">TOTAL INVOICES GENERATED</p>
                       </div>
 
 
                         <div class="form-group  ml-auto" style="margin-top: 52px;">
-                            <select class="form-select" id="monthlyYear2" onchange="refreshTheCards3()">
+                            <select class="form-select" id="monthlyYear2ttl" onchange="refreshTheCardsttl()">
                             </select>
                         </div>
 
                       <p class="zanumbers text-end">
-                        <span id="due_amount">-</span>
+                        <span id="due_amountttl">-</span>
                       </p>
                     </div>
-
+                    
                     <div class="dashCards card w-full flex-col space-y-2  ">
                       <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#1c315c1f] mr-auto">
-                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
+                        <div class="icoCont bg-[#d7a1271f] mr-auto">
+                          <iconify-icon class="text-[#D7A127]" icon="clarity:employee-group-solid"></iconify-icon>
                         </div>
-                        <p class=" text-gray-500 text-xs impMetrics">REGISTERED TAX PAYER</p>
+                        <p class=" text-gray-500 text-xs impMetrics">EXPECTED ANNUAL REVENUE</p>
+                      </div>
+
+
+                      <div class="form-group w-1/2 ml-auto" style="margin-top: 52px;">
+                        <select class="form-select" id="annualYear" onchange="refreshTheCards()">
+                        </select>
+                      </div>
+
+                      <p class="zanumbers text-end">
+                        <span id="total_amount_invoiced2">-</span>
+                      </p>
+                    </div>
+                    
+                    <div class="dashCards card w-full flex-col space-y-2  ">
+                      <div class="flex items-center  justify-start">
+                        <div class="icoCont bg-[#d7a1271f] mr-auto">
+                          <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
+                        </div>
+                        <p class=" text-gray-500 text-xs impMetrics">AVERAGE DAILY REVENUE</p>
                       </div>
 
                       <p class="zanumbers text-end" style="margin-top: 52px;">
-                        <span id="reg_taxP">-</span>
+                        <span id="avg_daily_rev">-</span>
                       </p>
                     </div>
+                    
+                    <div class="dashCards card flex-col space-y-2  w-fit">
+                        <div class="flex items-center gap-3">
+                            <div class="icoCont bg-[#d7a1271f]">
+                                <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
+                            </div>
+                            
+                            <p class=" text-gray-500 text-md impMetrics flex-1">Daily Remittance Stats</p>
+                            
+                            <input type="date" class="form-control" id="dateFilter" />
+                        </div>
+                        <div class="flex-1">
+                            
+                            <div class="mt-6 space-y-4">
+                              <div>
+                                <p class="text-xs text-gray-500 font-medium">NUMBER OF REMITTANCES</p>
+                                <p class="text-md font-semibold text-gray-700 mt-1" id='numberOfdailyRemittance'>0</p>
+                              </div>
+                
+                              <div class="pt-2 border-t border-gray-100">
+                                <p class="text-xs text-gray-500 font-medium">AMOUNT OF REMITTANCES</p>
+                                <p class="text-md font-semibold text-gray-700 mt-1" id="amountOfdailyRemittance">0</p>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
                   </div>
 
                   <div class="flex justify-end mt-4">
@@ -196,6 +262,19 @@
 
                   <section class="collapse" id="viewMore">
                     <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
+                        
+                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
+                        <div class="flex items-center  justify-start">
+                          <div class="icoCont bg-[#d7a1271f] mr-auto">
+                            <iconify-icon class="text-[#D7A127]" icon="clarity:employee-group-solid"></iconify-icon>
+                          </div>
+                          <p class="text-gray-500 text-xs text-end ">
+                            REGISTERED TAX PAYER
+                          </p>
+                        </div>
+                        <p class="zanumbers text-end" id="reg_taxP">-</p>
+                      </div>
+                    
                       <div class="dashCards card card-hidden w-full flex-col space-y-2">
                         <div class="flex items-center  justify-start">
                           <div class="icoCont bg-[#d7a1271f] mr-auto">
@@ -279,33 +358,7 @@
                         </p>
                       </div>
                       <!-- THIRD ROW -->
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF EXPIRED INVOICE
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="total_numberE">-</span>
-                        </p>
-                      </div>
 
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL AMOUNT OF EXPIRED INVOICE
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="total_amountE">-</span>
-                        </p>
-                      </div>
 
 
 
@@ -357,9 +410,20 @@
 
                     <div class="col-md-6 md:mt-0">
                       <div class="card h-[350px]">
+                          <div class="flex space-x-3 justify-end items-center">
+                              <button id="viewmore" class="flex justify-end items-center text-[#E85039]" data-bs-toggle="modal" data-bs-target="#dataMore">
+                      <span class="theText">View More</span>
+                    </button>
+                            <div class="form-group  ml-auto p-2" style="margin-top: 10px;">
+                          <select class="form-select" id="theMonth" onchange="refreshTheMonth1()">
+                          </select>
+                            </div>
+                          </div>
                         <div id="gauge-graph" class="theChart"></div>
-
-                        <p class="text-center -mt-20 mb-2 text-black">% of number of invoices paid on time</p>
+                        <div class="-mt-10">
+                          <p class="text-center  mb-2 text-black fontBold" id=""><span id="percent"></span> %</p>
+                          <p class="text-center  mb-2 text-black">Revenue Gauge</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -403,7 +467,39 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
   <!-- / Layout wrapper -->
+<div class="modal fade" id="dataMore" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-bold text-center">Compliance</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body relative">
+             <div class="table-responsive p-2">
+                <table class="table">
+                  <thead>
+                    <tr class="text-center">
+                      <th>S/N</th>
+                      <th>Date</th>
+                      <th>Total Revenue</th>
+                      <th>Expired Revenue</th>
+                      <th>Percentage</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0" id="showThem">
 
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex justify-center items-center mt-4" id="loader">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id="notiModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
@@ -463,9 +559,9 @@
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/js/nav.js?v=1.0"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="assets/js/adminDash.js?v=1.2"></script>
+  <script src="assets/js/adminDash.js?v=6.9"></script>
   <script>
     let theAtivo = document.querySelector(`.dass`);
     theAtivo.parentElement.classList.add("active");
@@ -478,7 +574,10 @@
   <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v=1.3"></script>
   <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/dashboard.js"></script>
+  <script src="./assets/js/dashboard.js?v=1.0"></script>
+  <!-- <script src="../assets/js/invoicess.js"></script> -->
+  <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
+
 </body>
 
 </html>

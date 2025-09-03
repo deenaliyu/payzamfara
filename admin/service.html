@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
   <!-- Core CSS -->
-   <link rel="stylesheet" href="./assets/css/dataTable.css">
+  <link rel="stylesheet" href="./assets/css/dataTable.css">
   <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="./assets/css/demo.css" />
@@ -46,13 +46,13 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="./assets/js/config.js"></script>
-<style>
-  a .disabled,
-a [disabled],
-fieldset[disabled] a {
-    cursor: not-allowed;
-}
-</style>
+  <style>
+    a .disabled,
+    a [disabled],
+    fieldset[disabled] a {
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 
 <body>
@@ -80,7 +80,7 @@ fieldset[disabled] a {
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black datei" id="datei">-</p>
+              <p class="text-sm text-black datei">-</p>
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">E-services</h1>
             </div>
 
@@ -111,13 +111,13 @@ fieldset[disabled] a {
         <section class="content-wrapper">
           <div class="flex justify-center items-center mt-4" id="theLoader">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-          </div> 
-            
+          </div>
+
           <div class="container-xxl flex-grow-1 container-p-y">
             <section class="w-12/12 main_section hidden" id="serviceContainer">
-              <div class="p-2">
-                <div class="w-full">
 
+              <div class="card">
+                <div class="card-header">
                   <ul class="nav nav-pills mb-3 md:gap-[26px] gap-6" role="tablist">
 
                     <li class="nav-item flex align-items-center">
@@ -140,91 +140,98 @@ fieldset[disabled] a {
                       </button>
                     </li>
                   </ul>
+                </div>
 
+                <div class="card-body">
                   <div class="tab-content p-0">
                     <div class="tab-pane fade active show" id="taxfiling" role="tabpanel">
 
-                      <div class="card card-body">
-                        <div class="table-responsive p-2">
-                          <table class="table invoiceTable" id="dataTable">
-                            <thead>
-                              <tr class="text-center">
-                                <th>Date sent</th>
-                                <th>Next due date</th>
-                                <th>Reference number</th>
-                                <th>Category</th>
-                                <th>Tax filled</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0" id="showThem">
-          
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="flex justify-center items-center mt-4" id="loader">
-                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                        </div>
+                      <div class="table-responsive p-2">
+                        <table class="table invoiceTable" id="dataTable">
+                          <thead>
+                            <tr class="text-center">
+                              <th>Date sent</th>
+                              <th>Payer ID</th>
+                              <th>Full Name</th>
+                              <th>Email</th>
+                              <th>Next due date</th>
+                              <th>Reference number</th>
+                              <th>Category</th>
+                              <th>Tax filled</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0" id="showThem">
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="flex justify-center items-center mt-4" id="loader">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
                       </div>
 
                     </div>
 
                     <div class="tab-pane fade" id="tinrequests" role="tabpanel">
 
-                      <div class="card card-body">
-                        <div class="table-responsive p-2">
-                          <table class="table invoiceTable" id="dataTable2">
-                            <thead>
-                              <tr class="text-center">
-                                <th>Date sent</th>
-                                <th>Reference number</th>
-                                <!-- <th>Category</th> -->
-                                <th>Status</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0" id="showTin">
-          
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="flex justify-center items-center mt-4" id="loader2">
-                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                        </div>
+                      <div class="table-responsive p-2">
+                        <table class="table invoiceTable" id="dataTable2">
+                          <thead>
+                            <tr class="text-center">
+                              <th>Date sent</th>
+                              <th>Full Name</th>
+                              <th>Email</th>
+                              <th>Reference number</th>
+                              <!-- <th>Category</th> -->
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0" id="showTin">
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="flex justify-center items-center mt-4" id="loader2">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
                       </div>
 
                     </div>
                     <div class="tab-pane fade" id="taxclrance" role="tabpanel">
 
-                      <div class="card card-body">
-                        <div class="table-responsive p-2">
-                          <table class="table invoiceTable" id="dataTable3">
-                            <thead>
-                              <tr class="text-center">
-                                <th>Date sent</th>
-                                <th>Reference number</th>
-                                <th>Category</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                                <th>TCC</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0" id="showcert">
-          
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="flex justify-center items-center mt-4" id="loader3">
-                          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-                        </div>
+                      <div class="table-responsive p-2">
+                        <table class="table invoiceTable" id="dataTable3">
+                          <thead>
+                            <tr class="text-center">
+                              <th>Date sent</th>
+                              <th>Reference number</th>
+                              <th>Full Name</th>
+                              <th>Email</th>
+                              <th>Category</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                              <th>TCC</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0" id="showcert">
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="flex justify-center items-center mt-4" id="loader3">
+                        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
                       </div>
 
                     </div>
                   </div>
-
-
                 </div>
+              </div>
+
+
+
+
+
             </section>
           </div>
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>

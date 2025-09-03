@@ -12,7 +12,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -234,11 +234,11 @@
             </div>
 
             <div class="mt-4 flex gap-x-2">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text rounded-2xl" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control rounded-2xl" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31" />
-              </div>
+              </div> -->
             </div>
 
             <a href="./CreateUser.html" class="md:text-[2.2vh] text-[2vh] hover:text-white">
@@ -262,41 +262,47 @@
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
-        <div class="content-wrapper bg-white border-t-2">
+        <div class="content-wrapper border-t-2">
           <!-- Content -->
 
           <div class="container-xxl flex-grow-1 container-p-y">
             <!-- <div class="flex justify-content-between"> -->
             <!-- <p class="font-bold text-lg text-[#1E1E1E] md:ml-5">Users</p> -->
             <!-- </div> -->
-            <div class="border-1 rounded-2xl py-2 mt-6 px-2">
-              <h1 class="text-xl text-[#282828] fontBold mt-2">Users</h1>
+            <div class="card">
+              <div class="card-header">
+                <h1 class="text-xl text-[#282828] fontBold mt-2">Users</h1>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table" id="dataTable">
+                    <thead>
+                      <tr class="text-center text-[2.2vh]">
+                        <th>S/N</th>
+                        <th>AVATAR</th>
+                        <th>NAME</th>
+                        <th>LAST LOGIN</th>
+                        <th>EMAIL</th>
+                        <th>Total payment</th>
+                        <th>Invoice generated</th>
+                        <th>ACCESS LEVEL</th>
+                        <th>MANAGE</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0" id="showUsers">
 
-              <div class="table-responsive">
-                <table class="table" id="dataTable">
-                  <thead>
-                    <tr class="text-center text-[2.2vh]">
-                      <th>S/N</th>
-                      <th>AVATAR</th>
-                      <th>NAME</th>
-                      <th>LAST LOGIN</th>
-                      <th>EMAIL</th>
-                      <th>Total payment</th>
-                      <th>Invoice generated</th>
-                      <th>ACCESS LEVEL</th>
-                      <th>MANAGE</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0" id="showUsers">
+                    </tbody>
+                  </table>
+                </div>
 
-                  </tbody>
-                </table>
+                <div class="flex justify-center items-center mt-4" id="loader">
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
+                  loading...
+                </div>
               </div>
 
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 mr-4 border-gray-900"></div>
-                loading...
-              </div>
+
+
             </div>
           </div>
           <!-- / Content -->

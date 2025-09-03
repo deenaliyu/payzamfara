@@ -1,418 +1,49 @@
-let USERINFO2 = JSON.parse(window.localStorage.getItem("enumDataPrime"));
-let theIDD
+const flatBusinessTypes = [];
+const presumptiveBusiness = []
 
-function continueReg() {
-  let allInputs = document.querySelectorAll(".enumInput")
-
-
-  // check for empty fileds
-
-  for (let i = 0; i < allInputs.length; i++) {
-    const inpt = allInputs[i];
-
-    if (inpt.required && inpt.value === "") {
-      alert("Please fill all required fields")
-      inpt.scrollIntoView()
-      break;
+async function getBusinessType() {
+  try {
+    const response = await fetch(`${HOST}?getIndustryHierarchy`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
 
-    if (i === allInputs.length - 1) {
-      let theTxCateg = document.querySelector("#theTxCateg")
-      if (theTxCateg.value === "Presumptive tax") {
-        nextPrev(1)
-      } else {
-        nextPrev(2)
-      }
+    const data = await response.json();
+
+    if (data.status === 1) {
+      data.data.forEach(industry => {
+        industry.sectors.forEach(sector => {
+          sector.business_types.forEach(businessType => {
+            // Optionally store this info for lookup later
+            flatBusinessTypes.push({
+              business_type_id: businessType.business_type_id,
+              business_type_name: businessType.business_type_name,
+              sector_id: sector.sector_id,
+              sector_name: sector.sector_name,
+              industry_id: industry.industry_id,
+              industry_name: industry.industry_name,
+            });
+
+            $("#businessTypeSelect").append(`
+              <option value="${businessType.business_type_name}">${businessType.business_type_name}</option>
+            `)
+          });
+        });
+      });
     }
+  } catch (error) {
+    console.log(error)
   }
 }
 
-function continueReg2() {
-  let allInputs = document.querySelectorAll(".enumInput2")
-
-
-  // check for empty fileds
-
-  for (let i = 0; i < allInputs.length; i++) {
-    const inpt = allInputs[i];
-
-    if (inpt.required && inpt.value === "") {
-      alert("Please fill all required fields")
-      inpt.scrollIntoView()
-      break;
-    }
-
-    if (i === allInputs.length - 1) {
-      nextPrev(1)
-    }
-  }
-}
-
-function continueReg3() {
-  let allInputs = document.querySelectorAll(".enumInputB")
-
-
-  // check for empty fileds
-
-  for (let i = 0; i < allInputs.length; i++) {
-    const inpt = allInputs[i];
-
-    if (inpt.required && inpt.value === "") {
-      alert("Please fill all required fields")
-      inpt.scrollIntoView()
-      break;
-    }
-
-    if (i === allInputs.length - 1) {
-      nextPrev(1)
-    }
-  }
-}
-
-let password = generateRandomString()
-function previewPage() {
-  let allInputs = document.querySelectorAll(".enumInput")
-  let allInputs2 = document.querySelectorAll(".enumInput2")
-  let allInputs3 = document.querySelectorAll(".enumInputB")
-
-  $("#password").val(password)
-  allInputs.forEach((inputt, i) => {
-
-    let theInputt = document.querySelector(`.enumPrev1[data-name='${inputt.dataset.name}']`)
-    if (theInputt) {
-      theInputt.value = inputt.value
-    }
-  });
-
-  allInputs2.forEach((inputt, i) => {
-
-    let theInputt = document.querySelector(`.enumPrev2[data-name='${inputt.dataset.name}']`)
-    if (theInputt) {
-      theInputt.value = inputt.value
-    }
-
-  });
-
-  allInputs3.forEach((inputt, i) => {
-    let theInputt = document.querySelector(`.enumPrevB[data-name='${inputt.dataset.name}']`)
-    if (theInputt) {
-      theInputt.value = inputt.value
-    }
-  });
-
-
-  nextPrev(1)
-
-
-}
-
-function registerUser() {
-  $("#theButton").addClass("hidden")
-  $("#msg_box").html(`
-      <div class="flex justify-center items-center mb-4">
-        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-      </div>
-    `)
-
-  let EnumData = {
-    "endpoint": "createEnumTaxPayer",
-    "data": [
-      {
-        "category": "corporate",
-        "business_type": "",
-        "staff_quota": "",
-        "revenue_return": "",
-        "valuation": ""
-      },
-      {
-        "account_type": "2",
-        "by_account": USERINFO2.id
-      }
-    ]
-  }
-
-  let allInputs = document.querySelectorAll(".enumInput")
-  let allInputs2 = document.querySelectorAll(".enumInput2")
-  // let allInputs3 = document.querySelectorAll(".enumInputB")
-  let businessNums = document.querySelectorAll(".businessNums")
-
-  allInputs.forEach((inputt, i) => {
-    EnumData.data[0][inputt.dataset.name] = inputt.value
-  })
-
-
-  allInputs2.forEach((inputt, i) => {
-    EnumData.data[1][inputt.dataset.name] = inputt.value
-  })
-
-  businessNums.forEach((busines, ii) => {
-    let the_inputs = busines.querySelectorAll(".enumInputB")
-
-    the_inputs.forEach((inputt, i) => {
-
-      if (ii === businessNums.length - 1) {
-
-        EnumData.data[0][inputt.dataset.name] += inputt.value
-      } else {
-        EnumData.data[0][inputt.dataset.name] += inputt.value + `~`
-      }
-
-    })
-
-  })
-
-  // console.log(EnumData)
-
-  const publitio = new PublitioAPI('ksWdvJ3JjfV5JZnHyRqv', 'ruxLmts4NiupnoddqVi1Z70tnoMmf5yT')
-  let theImageSrc = document.querySelector("#theImageThing").src
-  let fileInput = document.querySelector(".imgUpl")
-
-  if (fileInput.value === "") {
-    EnumData.data[0]["img"] = theImageSrc
-    sendToDB()
-
-  } else {
-    let fileUrl = fileInput.files[0]
-    const reader = new FileReader()
-    reader.readAsBinaryString(fileUrl);
-
-    publitio.uploadFile(fileUrl, 'file', {
-      title: `ENUMTAXPAYER - ${EnumData.data[0].first_name} ${EnumData.data[0].last_name}`,
-      public_id: `${EnumData.data[0].email}`,
-
-    }).then((data) => {
-      EnumData.data[0]["img"] = data.url_preview
-      // console.log(data.url_preview)
-      sendToDB()
-    }).catch((error) => {
-      sendToDB()
-    })
-  }
-
-  async function sendToDB() {
-    try {
-      const response = await fetch(HOST, {
-        method: "POST",
-        body: JSON.stringify(EnumData),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      const data = await response.json()
-
-      if (data.status === 1) {
-        // $("#theButton").addClass("hidden")
-        if (data.id) {
-          theIDD = data.id
-        }
-        nextPrev(1)
-      } else {
-        $("#theButton").removeClass("hidden")
-        $("#msg_box").html(`
-          <p class="text-warning text-center text-lg">${data.message}</p>
-        `)
-      }
-
-
-    } catch (error) {
-      console.log(error)
-      $("#theButton").removeClass("hidden")
-      $("#msg_box").html(`
-          <p class="text-danger text-center text-lg">Something went wrong ! try again.</p>
-        `)
-    }
-  }
-  // sendToDB()
-}
-
-function generateRandomString() {
-  var result = '';
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-
-  for (var i = 0; i < 8; i++) {
-    var randomIndex = Math.floor(Math.random() * charactersLength);
-    result += characters.charAt(randomIndex);
-  }
-
-  return result;
-}
-
-
-function emailVerifcation() {
-  $("#sendMailBtnCont").addClass("hidden")
-  $("#msg_box2").html(`
-    <div class="flex justify-center items-center mt-4">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div>
-  `)
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}?sendEmailEnum&id=${theIDD}`,
-    dataType: 'json',
-    // data: StringedData,
-    success: function (data) {
-
-      $("#sendMailBtnCont").removeClass("hidden")
-      $("#msg_box2").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-success">Email sent successfully !</p>
-        </div>
-      `)
-      nextPrev(3)
-    },
-    error: function (request, error) {
-      console.log(error)
-      $("#sendMailBtnCont").removeClass("hidden")
-      $("#msg_box2").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-warning">Something went wrong, try SMS verification!</p>
-        </div>
-      `)
-    }
-  });
-}
-
-function phoneVerifcation() {
-  $("#sendMailBtnCont").addClass("hidden")
-  $("#msg_box2").html(`
-    <div class="flex justify-center items-center mt-4">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div>
-  `)
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}?smsVerifyEnum&id=${theIDD}&num=1`,
-    dataType: 'json',
-    // data: StringedData,
-    success: function (data) {
-
-      $("#sendMailBtnCont").removeClass("hidden")
-      $("#msg_box2").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-success">message sent successfully !</p>
-        </div>
-      `)
-      nextPrev(1)
-      startTimer()
-    },
-    error: function (request, error) {
-      console.log(error)
-      $("#sendMailBtnCont").removeClass("hidden")
-      $("#msg_box2").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-warning">Something went wrong, try SMS verification!</p>
-        </div>
-      `)
-    }
-  });
-}
-
-function resend() {
-  $("#resCont").addClass("hidden")
-  $("#msg_box3").html(`
-    <div class="flex justify-center items-center mt-4">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div>
-  `)
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}?smsVerifyEnum&id=${theIDD}&num=6`,
-    dataType: 'json',
-    // data: StringedData,
-    success: function (data) {
-
-      $("#resCont").removeClass("hidden")
-      $("#msg_box3").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-success">message sent successfully !</p>
-        </div>
-      `)
-      startTimer()
-    },
-    error: function (request, error) {
-      console.log(error)
-      $("#resCont").removeClass("hidden")
-      $("#msg_box3").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-warning">Something went wrong, try email verification!</p>
-        </div>
-      `)
-    }
-  });
-}
-
-
-function startTimer() {
-  var button = document.getElementById("resend");
-  button.disabled = true;
-  button.classList.add("disabled")
-
-  var timeLeft = 60;
-  var timer = setInterval(function () {
-    document.getElementById("countdown").innerHTML = "resend in: " + timeLeft + "s";
-    timeLeft--;
-
-    if (timeLeft < 0) {
-      clearInterval(timer);
-      button.disabled = false;
-      button.classList.remove("disabled")
-      document.getElementById("countdown").innerHTML = "";
-    }
-  }, 1000);
-}
-
-function verifyAccounttt() {
-  let codee = document.querySelector("#codeee").value
-  $("#theVerifyy").addClass("hidden")
-  $("#msg_boxx").html(`
-    <div class="flex justify-center items-center mt-4">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-    </div>
-  `)
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}?smsUpdateAccountEnum&id=${theIDD}&code=${codee}`,
-    dataType: 'json',
-    // data: StringedData,
-    success: function (data) {
-
-      if (data.status === 1) {
-        $("#theVerifyy").removeClass("hidden")
-        $("#msg_boxx").html(`
-          <div class="flex justify-center items-center mt-4">
-            <p class="text-success">${data.message}</p>
-          </div>
-        `)
-        nextPrev(1)
-      } else {
-        $("#theVerifyy").removeClass("hidden")
-        $("#msg_boxx").html(`
-          <div class="flex justify-center items-center mt-4">
-            <p class="text-warning">${data.message}!</p>
-          </div>
-        `)
-      }
-
-    },
-    error: function (request, error) {
-      console.log(error)
-      $("#theVerifyy").removeClass("hidden")
-      $("#msg_boxx").html(`
-        <div class="flex justify-center items-center mt-4">
-          <p class="text-danger">Failed to Activate Account</p>
-        </div>
-      `)
-    }
-  });
-}
-
-
-let businessTypes = ``
+// getBusinessType().then(() => {
+//   $("#businessTypeSelect").selectize({
+//     create: false,
+//     sortField: 'text',
+//     placeholder: 'Search for your type of business',
+//     dropdownParent: 'body'
+//   });
+// })
 
 async function fetchBusiness() {
   try {
@@ -423,15 +54,21 @@ async function fetchBusiness() {
 
     if (data.status === 1) {
 
-      data.message.forEach(busness => {
-        businessTypes += `
-          <option value="${busness.business_type}">${busness.business_type}</option>
-        `
-
-        $("#busiType").append(`
-          <option value="${busness.business_type}">${busness.business_type}</option>
-        `)
+      data.message.forEach(dta => {
+        presumptiveBusiness.push(dta)
+        $("#businessTypeSelect").append(`
+              <option value="${dta.business_type}">${dta.business_type}</option>
+            `)
       })
+      // data.message.forEach(busness => {
+      //   businessTypes += `
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `
+
+      //   $("#busiType").append(`
+      //     <option value="${busness.business_type}">${busness.business_type}</option>
+      //   `)
+      // })
     }
 
   } catch (error) {
@@ -439,71 +76,766 @@ async function fetchBusiness() {
   }
 }
 
-fetchBusiness()
+fetchBusiness().then(e => {
+  $("#businessTypeSelect").selectize({
+    create: false,
+    // sortField: 'text',
+    placeholder: 'Search for your type of business',
+    dropdownParent: 'body'
+  });
+})
 
-function addBusiness() {
-  $("#businessCnt").append(`
-    <div class="businessNums mt-3">
-      <div class="flex justify-end">
-        <button onclick="deleteBusiness(this)">
-          <iconify-icon icon="ic:round-delete"></iconify-icon>
-        </button>
-      </div>
 
-      <div class="flex gap-3 md:flex-row flex-col mb-3">
+class CustomerValidation {
+  constructor() {
+    this.apiBaseUrl = 'https://payzamfara.com/php/JTD';
+    this.form = document.getElementById('validation-form');
+    this.validationInput = document.getElementById('validationInput');
+    this.validateBtn = document.getElementById('validate-btn');
+    this.proceedBtn = document.getElementById('proceed-btn');
+    this.taxpayerSummary = document.getElementById('taxpayer-summary');
+    this.taxpayerOptions = document.getElementById('taxpayer-options');
+    this.taxpayerDetails = document.getElementById('taxpayer-details');
+    this.selectedTaxpayer = null;
 
-        <div class="form-group md:w-6/12">
-          <label for="">Type of Business*</label>
-          <select class="form-select enumInputB" id="busiType" data-name="business_type" required>
-            ${businessTypes}
-          </select>
-        </div>
+    this.init();
+  }
 
-        <div class="form-group md:w-6/12">
-          <label for="">No of Employees*</label>
-          <select class="form-select enumInputB" data-name="staff_quota" required>
-            <option value=""></option>
-            <option value="1-9">1-9</option>
-            <option value="10-29">10-29</option>
-            <option value="30-50">30-50</option>
-          </select>
-        </div>
+  init() {
+    this.setupEventListeners();
+    this.updateInputPlaceholder();
+  }
 
-      </div>
+  setupEventListeners() {
+    // Radio button change
+    document.querySelectorAll('input[name="identificationMethod"]').forEach(radio => {
+      radio.addEventListener('change', () => this.updateInputPlaceholder());
+    });
 
-      <div class="flex gap-3 md:flex-row flex-col mb-3">
+    // Form submission
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.validateTaxpayer();
+    });
 
-        <div class="form-group md:w-6/12">
-          <label for="">Annual Revenue return in naira*</label>
-          <select class="form-select enumInputB" data-name="revenue_return" required>
-            <option value=""></option>
-            <option value="1-100,000">1-100,000</option>
-            <option value="100,001 - 499,999">100,001 - 499,999</option>
-            <option value="500,000 and above">500,000 and above</option>
-          </select>
-        </div>
+    // Proceed button
+    this.proceedBtn.addEventListener('click', () => this.proceedToNextStep());
+  }
 
-        <div class="form-group md:w-6/12">
-          <label for="">Value of business/assets In naira*</label>
-          <select class="form-select enumInputB" data-name="valuation" required>
-            <option value=""></option>
-            <option value="1 - 500,000">1 - 500,000</option>
-            <option value="500,001 - 999,999">500,001 - 999,999</option>
-            <option value="1,000,000 and above">1,000,000 and above</option>
-          </select>
-        </div>
+  updateInputPlaceholder() {
+    const method = document.querySelector('input[name="identificationMethod"]:checked').value;
+    const input = this.validationInput;
 
-      </div>
+    switch (method) {
+      case 'tin':
+        input.placeholder = 'Enter your TIN (e.g., 0123456789)';
+        input.dataset.name = 'tin';
+        break;
+      case 'registration_number':
+        input.placeholder = 'Enter your RC Number (e.g., RC123456)';
+        input.dataset.name = 'registration_number';
+        break;
+      case 'nin':
+        input.placeholder = 'Enter your NIN (e.g., 12345678901)';
+        input.dataset.name = 'nin';
+        break;
+      case 'phone_no':
+        input.placeholder = 'Enter your Phone (e.g., 08012345678)';
+        input.dataset.name = 'phone_no';
+        break;
+    }
+  }
 
-      <hr>
-    </div>
+  async validateTaxpayer() {
+    const method = document.querySelector('input[name="identificationMethod"]:checked').value;
+    const value = this.validationInput.value.trim();
 
-    
-  `)
+    if (!value) {
+      this.showError(this.validationInput, 'This field is required');
+      return;
+    }
+
+    this.showLoader();
+
+    try {
+      const response = await this.fetchTaxpayer(method, value);
+
+      if (response.status === 'error') {
+        this.handleTaxpayerNotFound();
+      } else {
+        if (response.data.length > 1) {
+          // If multiple records, pick the one with type !== 'individual'
+          const nonIndividual = response.data.find(taxpayer => taxpayer.type !== 'individual');
+          if (nonIndividual) {
+            this.displayTaxpayerInfo(nonIndividual);
+            return;
+          }
+        } else {
+          // If only one record, display it
+          this.displayTaxpayerInfo(response.data);
+        }
+      }
+
+    } catch (error) {
+      console.error('Validation error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'An error occurred while validating. Please try again.',
+        icon: 'error'
+      });
+    } finally {
+      this.hideLoader();
+    }
+  }
+
+  async fetchTaxpayer(method, value) {
+    const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+  }
+
+  handleTaxpayerNotFound() {
+    Swal.fire({
+      title: 'Taxpayer Not Found',
+      text: 'No taxpayer record was found with the provided information. Would you like to register manually?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Register Manually',
+      cancelButtonText: 'Try Again'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.proceedToNextStep();
+      }
+    });
+  }
+
+  displayTaxpayerInfo(taxpayerData) {
+    // Show the summary section
+    this.taxpayerSummary.classList.remove('hidden');
+
+    // Clear previous content
+    this.taxpayerOptions.innerHTML = '';
+    this.taxpayerDetails.innerHTML = '';
+
+    // Render the single taxpayer details
+    this.renderTaxpayerDetails(taxpayerData);
+    this.selectedTaxpayer = taxpayerData;
+  }
+
+  renderTaxpayerOptions(taxpayers) {
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'mb-4';
+
+    const label = document.createElement('label');
+    label.className = 'block text-sm font-medium text-gray-700 mb-2';
+    label.textContent = 'Multiple records found. Please select one:';
+    optionsDiv.appendChild(label);
+
+    taxpayers.forEach((taxpayer, index) => {
+      const div = document.createElement('div');
+      div.className = 'flex items-center mb-2';
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'taxpayerOption';
+      input.id = `taxpayer-${index}`;
+      input.value = index;
+      input.className = 'mr-2';
+      input.addEventListener('change', () => {
+        this.selectedTaxpayer = taxpayer;
+        this.renderTaxpayerDetails(taxpayer);
+      });
+
+      if (index === 0) {
+        input.checked = true;
+        this.selectedTaxpayer = taxpayer;
+        this.renderTaxpayerDetails(taxpayer);
+      }
+
+      const label = document.createElement('label');
+      label.htmlFor = `taxpayer-${index}`;
+      label.className = 'text-sm';
+
+      if (taxpayer.type === 'individual') {
+        label.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+      } else {
+        label.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+      }
+
+      div.appendChild(input);
+      div.appendChild(label);
+      optionsDiv.appendChild(div);
+    });
+
+    this.taxpayerOptions.appendChild(optionsDiv);
+  }
+
+  renderTaxpayerDetails(taxpayer) {
+    this.taxpayerDetails.innerHTML = '';
+
+    if (taxpayer.type === 'individual') {
+      const record = taxpayer.record;
+
+      const details = [
+        { label: 'Full Name', value: `${record.Title} ${record.first_name} ${record.middle_name || ''} ${record.last_name}` },
+        { label: 'TIN', value: record.tin },
+        { label: 'Gender', value: record.GenderName },
+        { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
+        { label: 'Marital Status', value: record.MaritalStatus },
+        { label: 'Occupation', value: record.Occupation },
+        { label: 'Phone Number', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName },
+        { label: 'Tax Authority', value: record.TaxAuthorityName },
+      ];
+
+      details.forEach(detail => {
+        if (detail.value) {
+          this.addDetailRow(detail.label, detail.value);
+        }
+      });
+    } else {
+      console.log(taxpayer)
+      const record = taxpayer.record;
+
+      const details = [
+        { label: 'Registered Name', value: record.registered_name },
+        { label: 'Trade Name', value: record.main_trade_name },
+        { label: 'TIN', value: record.tin },
+        { label: 'RC Number', value: record.registration_number },
+        { label: 'Organization Type', value: record.org_type_name },
+        { label: 'Phone Number', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName },
+        { label: 'Date of Incorporation', value: this.formatDate(record.date_of_incorporation) },
+        { label: 'Director', value: `${record.director_name} (${record.director_phone})` },
+      ];
+
+      details.forEach(detail => {
+        if (detail.value) {
+          this.addDetailRow(detail.label, detail.value);
+        }
+      });
+    }
+  }
+
+  addDetailRow(label, value) {
+    const div = document.createElement('div');
+    div.className = 'mb-2';
+
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'font-semibold text-sm';
+    labelSpan.textContent = `${label}: `;
+
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'text-sm';
+    valueSpan.textContent = value;
+
+    div.appendChild(labelSpan);
+    div.appendChild(valueSpan);
+    this.taxpayerDetails.appendChild(div);
+  }
+
+  proceedToNextStep() {
+    // Store the taxpayer data for use in the next steps
+    if (this.selectedTaxpayer) {
+      sessionStorage.setItem('taxpayerData', JSON.stringify(this.selectedTaxpayer));
+    }
+
+    // Hide the validation form and show the next section
+    document.getElementById('customer-validation').style.display = 'none';
+    document.getElementById('corporate-registration').style.display = 'block';
+
+    // If we have taxpayer data, pre-fill the next form
+    if (this.selectedTaxpayer) {
+      this.prefillNextForm();
+    }
+  }
+
+  prefillNextForm() {
+    const taxpayer = this.selectedTaxpayer;
+    const record = taxpayer.record;
+
+    // Set state and LGA if available in your form
+    if (document.getElementById('STATES')) {
+      let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
+
+      let formattedLGA = record.LGAName
+        ? record.LGAName
+          .toLowerCase()
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+        : '';
+
+      document.getElementById('STATES').value = formattedState;
+
+
+      let lgaSelector = document.querySelector('#LGAs')
+      if (lgaList[formattedState]) {
+        lgaSelector.innerHTML = '<option>--Select LGA--</option>'
+        lgaList[formattedState].forEach(lga => {
+          lgaSelector.innerHTML += `
+              <option value="${lga}">${lga}</option>
+              `;
+        });
+      }
+
+      document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
+    }
+
+    if (taxpayer.type === 'individual') {
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
+
+
+
+      document.querySelector('.regInputs[data-name="address"]').value =
+        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+    } else {
+      // For non-individual taxpayers
+      document.querySelector('.regInputs[data-name="first_name"]').value = record.registered_name || '';
+      // document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
+
+      // Set business type to "yes" and select appropriate type
+      // document.getElementById('businessOwnerYes').checked = true;
+      // this.toggleBusinessType();
+
+      document.querySelector('.regInputs[data-name="address"]').value =
+        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+    }
+  }
+
+  showLoader() {
+    this.validateBtn.disabled = true;
+    this.validateBtn.innerHTML = `
+      Validating...
+      <iconify-icon icon="eos-icons:loading"></iconify-icon>
+    `;
+  }
+
+  hideLoader() {
+    this.validateBtn.disabled = false;
+    this.validateBtn.innerHTML = `
+      Validate
+      <iconify-icon icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon>
+    `;
+  }
+
+  showError(input, message) {
+    const errorElement = input.nextElementSibling;
+    errorElement.textContent = message;
+    errorElement.classList.remove('hidden');
+    input.classList.add('border-red-500');
+  }
+
+  hideError(input) {
+    const errorElement = input.nextElementSibling;
+    errorElement.textContent = '';
+    errorElement.classList.add('hidden');
+    input.classList.remove('border-red-500');
+  }
+
+  formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
 }
 
-function deleteBusiness(e) {
-  let parentss = e.parentElement.parentElement
-  parentss.remove()
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new CustomerValidation();
+});
 
+class RegistrationForm {
+  constructor() {
+    this.currentTab = 0;
+    this.formSections = document.querySelectorAll('.formTabs');
+    this.prevBtns = document.querySelectorAll('.previous-btn')
+    this.urlParams = new URLSearchParams(window.location.search);
+    this.category = this.urlParams.get('category');
+    this.createdBy = this.urlParams.get('createdby');
+    this.adminId = this.urlParams.get('admin_id');
+    // this.HOST = ''; // Set your API host here
+
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    this.showTab(this.currentTab);
+    this.setupPasswordToggle();
+    this.setupTINFormatting();
+    this.setupPhoneValidation();
+  }
+
+  setupEventListeners() {
+    // Form submissions
+    // document.getElementById('validation-form')?.addEventListener('submit', (e) => this.handleFormSubmit(e, 1));
+    document.getElementById('continueBtn')?.addEventListener('click', (e) => this.handleFormSubmit(e, 2));
+    document.getElementById('continueBtn2')?.addEventListener('click', (e) => this.handleFormSubmit(e, 1));
+    document.getElementById('CreateAccountBtn')?.addEventListener('click', (e) => this.handleFinalSubmit(e));
+    document.querySelector(".back-btn")?.addEventListener("click", () => this.nextPrev(-1))
+
+    this.prevBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.nextPrev(-1);
+      });
+    });
+    // Previous button
+    document.getElementById('prev-btn')?.addEventListener('click', () => {
+      // console.log('Going back');
+      this.nextPrev(-1);
+    });
+
+  }
+
+  showTab(n) {
+    this.formSections.forEach((section, index) => {
+      section.style.display = index === n ? 'block' : 'none';
+    });
+  }
+
+  nextPrev(n) {
+    if (n < 0) {
+      this.formSections[this.currentTab].style.display = 'none';
+      this.currentTab += n;
+      if (this.currentTab < 0) this.currentTab = 0;
+      this.showTab(this.currentTab);
+      return;
+    }
+
+    if (this.validateCurrentTab()) {
+      this.formSections[this.currentTab].style.display = 'none';
+      this.currentTab += n;
+
+      if (this.currentTab >= this.formSections.length) {
+        return false;
+      }
+
+      this.showTab(this.currentTab);
+    }
+  }
+
+  validateCurrentTab() {
+    const currentSection = this.formSections[this.currentTab];
+    const inputs = currentSection.querySelectorAll('.regInputs[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      const errorElement = input.nextElementSibling;
+
+      if (!input.value.trim()) {
+        this.showError(input, 'This field is required');
+        isValid = false;
+      } else if (input.type === 'email' && !this.validateEmail(input.value)) {
+        this.showError(input, 'Please enter a valid email address');
+        isValid = false;
+      } else if (input.id === 'phonenumber' && !this.validatePhone(input.value)) {
+        this.showError(input, 'Phone number must be 11 digits');
+        isValid = false;
+      } else if (input.id === 'tinInput' && input.value && !this.validateTIN(input.value)) {
+        this.showError(input, 'Please enter a valid TIN (format: 1234567890)');
+        isValid = false;
+      } else {
+        this.hideError(input);
+      }
+    });
+
+    return isValid;
+  }
+
+  handleFormSubmit(e, nextStep) {
+    e.preventDefault();
+    console.log(nextStep)
+    if (this.validateCurrentTab()) {
+      this.nextPrev(nextStep);
+    }
+  }
+
+  async handleFinalSubmit(e) {
+    e.preventDefault();
+
+    const password = document.getElementById('pps').value;
+    const confirmPassword = document.getElementById('pps2').value;
+    const msgBox = document.getElementById('msg-box');
+
+    // Clear previous messages
+    msgBox.innerHTML = '';
+
+    // Validate password
+    if (!password) {
+      this.showError(document.getElementById('pps-cont'), 'Password cannot be empty');
+      return;
+    }
+
+    // if (password.length < 8) {
+    //   this.showError(document.getElementById('pps'), 'Password must be at least 8 characters');
+    //   return;
+    // }
+
+    // if (!/[A-Z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one uppercase letter');
+    //   return;
+    // }
+
+    // if (!/[a-z]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one lowercase letter');
+    //   return;
+    // }
+
+    // if (!/[0-9]/.test(password)) {
+    //   this.showError(document.getElementById('pps'), 'Password must contain at least one number');
+    //   return;
+    // }
+
+    if (password !== confirmPassword) {
+      this.showError(document.getElementById('pps2-cont'), 'Passwords do not match');
+      return;
+    }
+
+    // All validations passed - proceed with registration
+    this.showLoader();
+    $("#createAccountBtn").prop('disabled', true);
+    try {
+      const formData = this.collectFormData();
+
+      const response = await this.submitForm(formData);
+
+
+      this.handleRegistrationResponse(response);
+    } catch (error) {
+      this.showMessage('An error occurred. Please try again.', 'error');
+      console.error('Registration error:', error);
+    } finally {
+      this.hideLoader();
+      $("#createAccountBtn").prop('disabled', false);
+    }
+  }
+
+  collectFormData() {
+    const inputs = document.querySelectorAll('.regInputs');
+    const businessTypeVal = $("#businessTypeSelect").val()
+    let businessTypedata;
+
+    if (businessTypeVal) {
+      businessTypedata = presumptiveBusiness.find(ee => ee.business_type === businessTypeVal)
+    }
+
+    const data = {
+      endpoint: "createPayerAccount",
+      data: {
+        verification_status: "nil",
+        surname: "",
+        img: "assets/img/userprofile.png",
+        tax_number: "",
+        business_type_id: businessTypedata ? businessTypedata.id : null,
+        industry: null,
+        category: this.getCategoryValue(),
+        numberofstaff: "",
+        created_by: "enumerator",
+        by_account: userInfo2?.id || null,
+      }
+    };
+
+    inputs.forEach(input => {
+      let value;
+      if (input.dataset.name === 'email') {
+        value = input.value.trim() || `payzamfarageneraluser@gmail.com`;
+      } else {
+        value = input.value;
+      }
+      data.data[input.dataset.name] = value;
+    });
+    return data;
+  }
+
+  getCategoryValue() {
+    switch (this.category) {
+      case 'individual': return 2;
+      case 'corporate': return 1;
+      case 'state': return 3;
+      default: return 4;
+    }
+  }
+
+  async submitForm(data) {
+    const response = await fetch(HOST, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+  }
+
+  handleRegistrationResponse(response) {
+    const msgBox = document.getElementById('msg-box');
+
+    if (response.status === 1) {
+      msgBox.innerHTML = `<p class="text-success text-lg">${response.message}</p>`;
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Account successfully created!',
+        showConfirmButton: true,
+        confirmButtonText: 'Go to Taxpayers',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `taxpayer.html`;
+        }
+      });
+
+      // if (this.createdBy === 'admin') {
+      //   this.sendAdminEmail(response.id);
+      // } else {
+      //   setTimeout(() => {
+      //     window.location.href = `verification.html?id=${response.id}&email=${response.data.email}&phone=${response.data.phone}`;
+      //   }, 1500);
+      // }
+
+    } else if (response.status === 2) {
+      msgBox.innerHTML = `
+        <p class="text-warning text-lg">${response.message}</p>
+        <p class="text-success text-lg mt-2">
+          <a href="forgetpass.html" class="underline">Click here to reset your password</a>
+        </p>
+      `;
+    } else {
+      msgBox.innerHTML = `<p class="text-warning text-lg">${response.message}</p>`;
+    }
+  }
+
+  async sendAdminEmail(userId) {
+    const msgBox = document.getElementById('msg-box');
+
+    try {
+      await fetch(`${HOST}?sendEmail&id=${userId}`);
+      msgBox.innerHTML += `
+        <p class="text-success text-lg mt-2">An email has been sent to the User.</p>
+        <div class="flex justify-center mt-4">
+          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+        </div>
+      `;
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      msgBox.innerHTML += `
+        <div class="flex justify-center mt-4">
+          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+        </div>
+      `;
+    }
+  }
+
+  // Helper methods
+  showError(input, message) {
+    const errorElement = input.nextElementSibling;
+    if (errorElement && errorElement.classList.contains('validate')) {
+      errorElement.textContent = message;
+      errorElement.classList.remove('hidden');
+      input.classList.add('border-red-500');
+    }
+  }
+
+  hideError(input) {
+    const errorElement = input.nextElementSibling;
+    if (errorElement && errorElement.classList.contains('validate')) {
+      errorElement.textContent = '';
+      errorElement.classList.add('hidden');
+      input.classList.remove('border-red-500');
+    }
+  }
+
+  showLoader() {
+    const msgBox = document.getElementById('msg-box');
+    const loaderTemplate = document.getElementById('loader-template').cloneNode(true);
+    loaderTemplate.classList.remove('hidden');
+    msgBox.appendChild(loaderTemplate);
+    document.getElementById('CreateAccountBtn').disabled = true;
+  }
+
+  hideLoader() {
+    document.getElementById('CreateAccountBtn').disabled = false;
+  }
+
+  showMessage(message, type = 'success') {
+    const msgBox = document.getElementById('msg-box');
+    msgBox.innerHTML = `<p class="text-${type} text-lg">${message}</p>`;
+  }
+
+  validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  validatePhone(phone) {
+    return /^\d{11}$/.test(phone);
+  }
+
+  validateTIN(tin) {
+    return /^\d{10,}$/.test(tin);
+  }
+
+  setupPasswordToggle() {
+    document.querySelectorAll('.togglePassword').forEach(icon => {
+      icon.addEventListener('click', function () {
+        const input = this.previousElementSibling;
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        this.classList.toggle('bi-eye');
+        this.classList.toggle('bi-eye-slash');
+      });
+    });
+  }
+
+  setupTINFormatting() {
+    const tinInput = document.getElementById('tinInput');
+    if (tinInput) {
+      tinInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 10) {
+          value = value.slice(0, 10) + '-' + value.slice(10, 14);
+        }
+        e.target.value = value;
+      });
+    }
+  }
+
+  setupPhoneValidation() {
+    const phoneInput = document.getElementById('phonenumber');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function (e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 11);
+      });
+    }
+  }
 }
+
+// Initialize the form when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new RegistrationForm();
+});

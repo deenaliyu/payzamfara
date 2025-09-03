@@ -32,40 +32,35 @@ async function fetchRevenueHeads() {
         <td>${revenueHead.COL_5}</td>
         <td>&#8358;${revenueHead.COL_6}</td>
         <td>Monthly</td>
-        
-
-        
-
+      
         <td>
-        <div class="bg-green-200 rounded-2xl py-1 px-3">
-          <p class=${revenueHead.status == 'approved' ? 'text-[green]' : 'text-[orange]'}>${revenueHead.status}</p>
-        </div>
+        <span class="badge bg-${revenueHead.status === 'approved' ? 'success' : 'warning'}">${revenueHead.status}</span>
       </td>
       
         <td>
-                          <div
-                            class="flex justify-content-between align-items-center"
-                          >
-                          <button
-                          onclick="editRevFunc(this)" data-revid="${revenueHead.id}" data-bs-toggle="modal"
-                          data-bs-target="#editRev"
-                          >
-                            <iconify-icon
-                              icon="fa6-regular:pen-to-square"
-                              style="font-size: 2.4vh"
-                            ></iconify-icon>
-                          </button>
-                          <button
-                            onclick="deleteRev(this)"
-                            data-revid="${revenueHead.id}"
-                          >
-                            <iconify-icon
-                              icon="material-symbols:delete-outline-sharp"
-                              style="font-size: 2.4vh"
-                            ></iconify-icon>
-                          </button>
-                          </div>
-                        </td>
+          <div
+            class="flex justify-content-between align-items-center"
+          >
+          <button
+          onclick="editRevFunc(this)" data-revid="${revenueHead.id}" data-bs-toggle="modal"
+          data-bs-target="#editRev"
+          >
+            <iconify-icon
+              icon="fa6-regular:pen-to-square"
+              style="font-size: 2.4vh"
+            ></iconify-icon>
+          </button>
+          <button
+            onclick="deleteRev(this)"
+            data-revid="${revenueHead.id}"
+          >
+            <iconify-icon
+              icon="material-symbols:delete-outline-sharp"
+              style="font-size: 2.4vh"
+            ></iconify-icon>
+          </button>
+          </div>
+        </td>
       </tr>    
     `)
     });

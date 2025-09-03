@@ -9,7 +9,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>Payzamfara</title>
 
   <meta name="description" content="" />
 
@@ -75,7 +75,7 @@
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
               </div> -->
-              <a href="./taxes.html" class="button">
+              <a href="../generateinvoice.html" class="button">
                 <iconify-icon icon="ic:baseline-plus"></iconify-icon> Generate Invoice</a>
 
               <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
@@ -112,7 +112,15 @@
                 <li class="nav-item text-center" role="presentation">
                   <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                    All taxes
+                    All Taxes
+                  </button>
+                </li>
+
+                <li class="nav-item text-center" role="presentation">
+                  <button class="nav-link" id="assigned-taxes-tab" data-bs-toggle="pill"
+                    data-bs-target="#assigned-taxes" type="button" role="tab" aria-controls="assigned-taxes"
+                    aria-selected="false">
+                    Assigned Taxes
                   </button>
                 </li>
               </ul>
@@ -120,16 +128,16 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
                   <div class="flex justify-end mb-4 -mt-6">
-                    <button class="button hidden" id="genInv"> <iconify-icon icon="ic:baseline-plus"></iconify-icon>
-                      Generate
-                      Invoice</button>
+                    <button class="button" id="generateInvoiceBtnAppl">Generate Invoice</button>
                   </div>
 
 
-                  <div class="accordion apt" id="accordionExample">
-                  
+                  <div id="taxes-container">
+                    <div class="flex justify-center items-center mt-4">
+                      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+                    </div>
                   </div>
-                  
+
                 </div>
 
                 <!-- <div class="tab-pane fade" id="pills-tax" role="tabpanel" aria-labelledby="pills-tax-tab">
@@ -191,7 +199,33 @@
                   </div>
                 </div>
 
-                
+                <div class="tab-pane fade" id="assigned-taxes" role="tabpanel" aria-labelledby="assigned-taxes-tab">
+
+                  <div class="flex justify-end mb-4">
+                    <button class="button" id="generateInvoiceBtn">Generate Invoices</button>
+                  </div>
+
+                  <div class="table-responsive">
+
+                    <table class="table" id="dataTable4">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>S/N</th>
+                          <th>REVENUE HEAD</th>
+                          <th>CATEGORY</th>
+                          <th>Assignment Date</th>
+                        </tr>
+                      </thead>
+                      <tbody id="assignedTaxesBody">
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
               </div>
             </div>
 
@@ -210,6 +244,26 @@
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
+
+  <div class="modal fade" id="periodsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="periodsModalLabel">Payment Period Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="periodsModalBody">
+          <!-- Content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="modal fade" id="notiModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">

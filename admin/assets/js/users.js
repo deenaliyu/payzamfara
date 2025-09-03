@@ -148,7 +148,7 @@ async function fetchUSERS() {
               <a href="./manageuser.html?id=${userInvoice.id}"><iconify-icon icon="fa6-regular:pen-to-square"></iconify-icon></a>
               <iconify-icon onclick="deleteRev(this)" class="cursor-pointer" data-revid="${userInvoice.id}" icon="material-symbols:delete-outline-sharp"></iconify-icon>
 
-              <a href="./viewuser.html?id=${userInvoice.id}" class="btn btn-primary btn-sm">View</a>
+              <a href="./manageuser.html?id=${userInvoice.id}" class="btn btn-primary btn-sm">View</a>
             </div>
           </td>
       `

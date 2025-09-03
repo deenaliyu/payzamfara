@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD33L7TK59"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZD33L7TK59');
+</script>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -156,6 +165,8 @@
                 <label for="">Marital Status*</label>
                 <select name="" class="form-select taxReqInput" data-name="merital_status" required>
                   <option selected disabled>Select--</option>
+                   <option value="single">Single</option>
+                    <option value="married">Married</option>
                 </select>
               </div>
             </div>
@@ -177,14 +188,14 @@
             <div class="flex items-center gap-3 mb-4">
               <div class="form-group md:w-6/12 w-full">
                 <label for="">State*</label>
-                <select name="" id="states" class="form-select taxReqInput" data-name="state" required>
+                <select name="" id="selectState" class="form-select taxReqInput" data-name="state" required>
                   <option value="Akwa Ibom">Akwa Ibom</option>
                 </select>
               </div>
 
               <div class="form-group  md:w-6/12 w-full">
                 <label for="">LGA*</label>
-                <select name="" class="form-select taxReqInput" data-name="local_area" required>
+                <select name="" id="selectLGA" class="form-select taxReqInput" data-name="local_area" required>
                   <option selected disabled>Select--</option>
                 </select>
               </div>

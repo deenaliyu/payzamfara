@@ -1,103 +1,143 @@
 let adminInfo2 = JSON.parse(localStorage.getItem("adminDataPrime"))
 
 let ALLTaxP = ""
-let numberOfAll = 0
-let numberOfAll2 = 0
+let dataToExport;
 
-async function fetchTaxPayers() {
-  $("#showreport").html("")
-  $("#loader").css("display", "flex")
+$("#createTaxBtn").on("click", function () {
+  window.location.href = `../regcategory.html?createdby=admin&admin_id=${adminInfo2.id}`
+})
 
-  const response = await fetch(`${HOST}/?getTaxPayer`)
-  const taxPayers = await response.json()
-  ALLTaxP = taxPayers
-  console.log(ALLTaxP)
+async function getRegSummary() {
 
-  $("#loader").css("display", "none")
-
-  if (taxPayers.status === 0) {
-    $("#showreport").html("<tr></tr>")
-    $('#dataTable').DataTable();
-
-    $("#selfRegis").html(0)
-    numberOfAll = 0
-  } else {
-    $("#selfRegis").html(taxPayers.message.length)
-    numberOfAll = taxPayers.message.length
-    sessionStorage.setItem('numberOfAll', numberOfAll);
-    taxPayers.message.reverse().forEach((taxPayer, i) => {
-      // let theimg = taxPayer.img
-      // if (theimg === "") {
-      //   theimg = "./assets/img/avatars/1.png"
-      // }
-      let showRe = ""
-
-      showRe += `
-        <tr class="relative">
-          <td>${i + 1}</td>
-        `
-      // if (taxPayer.img === "") {
-      //   showRe += `   
-      //   <td>
-      //     <img src="./assets/img/avatars/1.png" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-      //   </td>
-      //   `
-      // } else {
-      //   showRe += ` 
-      //   <td> 
-      //     <img src="${taxPayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-      //   </td>
-      //   `
-      // }
-
-      showRe += `
-        <td><a class="text-primary" href="./taxpayerlist.html?id=${taxPayer.tax_number}">${taxPayer.tax_number}</a></td>
-        <td>${taxPayer.first_name} ${taxPayer.surname}</td>
-        <td>${taxPayer.category}</td>
-        <td>${taxPayer.tin}</td>
-        <td>${taxPayer.email}</td>
-      `
-      if (taxPayer.tin_status === "Unverified") {
-        showRe += `
-          <td class="text-danger">${taxPayer.tin_status}</td>
-        `
-      } else if (taxPayer.tin_status === "Verified") {
-        showRe += `
-          <td class="text-success">${taxPayer.tin_status}</td>
-        `
-      }
-
-
-      showRe += `
-          <td>${taxPayer.timeIn}</td>
-          <td>
-          <div class="flex items-center gap-3">
-       `
-      showRe += `
-        <button data-theid="${taxPayer.tax_number}" onclick="editThis(this)" data-usertype="payer_user" class="EditUser txView"><iconify-icon
-        icon="material-symbols:edit-square-outline"></iconify-icon></button>
-      `
-      showRe += `
-      <a href="./taxpayerlist.html?id=${taxPayer.tax_number}" class="btn btn-primary btn-sm viewUser txView">View</a>
-          </div>
-      
-        </tr>
-        `
-
-      $("#showreport").append(showRe)
-
-      if (i === taxPayers.message.length - 1) {
-        $('#dataTable').DataTable();
-      }
-    });
-
-  }
-
+  fetch(`${HOST}?get_Registered_Stats`)
+    .then(response => response.json())
+    .then(data => {
+      // Update the values dynamically
+      $('#allregistered').text(data.total_self_registered + data.total_admin_registered || 0)
+      $('#selfRegis').text(data.total_self_registered || 0)
+      $('#adminReg').text(data.total_admin_registered || 0)
+    })
+    .catch(error => console.error('Error fetching data:', error));
 }
 
-fetchTaxPayers().then(ee => {
- 
-})
+getRegSummary()
+
+function fetchTaxPayers() {
+  if ($.fn.DataTable.isDataTable('#dataTable')) {
+    $('#dataTable').DataTable().destroy();
+  }
+
+  // $('#dataTable').empty(); 
+
+  table = $('#dataTable').DataTable({
+    processing: true, // Show processing indicator
+    serverSide: true, // Enable server-side processing
+    paging: true,     // Enable pagination
+    pageLength: 50,   // Number of items per page
+    ajax: function (data, callback, settings) {
+      // Convert DataTables page number to your API page number
+      const pageNumber = Math.ceil(data.start / data.length) + 1;
+
+      // Call your API with the calculated page number
+      $.ajax({
+        url: HOST,
+        type: 'GET',
+        data: {
+          getTaxPayer: true,
+          page: pageNumber,
+          pageSize: data.length, // Number of rows per page
+          search: data.search.value, // Search term
+          searchDelay: 1500,
+        },
+        success: function (response) {
+          // Map the API response to DataTables expected format
+          ALLTaxP = response.message
+          dataToExport = response.data
+
+          if (response.status === 1) {
+            callback({
+              draw: data.draw, // Pass through draw counter
+              recordsTotal: response.pagination.total, // Total records in your database
+              recordsFiltered: response.pagination.total, // Filtered records count
+              data: response.message, // The actual data array from your API
+            });
+          } else {
+            callback({
+              draw: data.draw, // Pass through draw counter
+              recordsTotal: 0, // Total records in your database
+              recordsFiltered: 0, // Filtered records count
+              data: [], // The actual data array from your API
+            });
+          }
+        },
+        error: function () {
+          alert('Failed to fetch data.');
+        },
+      });
+    },
+    columns: [
+      {
+        data: null,
+        orderable: false, // Disable ordering for the numbering column
+        render: function (data, type, row, meta) {
+          // Calculate the row number based on the page
+          return meta.row + 1 + meta.settings._iDisplayStart;
+        },
+      },
+      {
+        data: 'tax_number',
+        render: function (data, type, row) {
+          return `<a class="text-primary" href="./taxpayerlist.html?id=${data}">${data}</a>`;
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `${row.first_name} ${row.surname === '?' ? '' : row.surname}`;
+        }
+      },
+      { data: 'category' },
+      { data: 'tin' },
+      { data: 'email' },
+      { data: 'phone' },
+      {
+        data: 'created_by',
+        render: function (data, type, row) {
+          if (data === "admin") {
+            return `Admin`
+          } else {
+            return `Self`
+          }
+        }
+      },
+      {
+        data: 'tin_status',
+        render: function (data, type, row) {
+          if (data === "Unverified") {
+            return `<span class="badge bg-danger">${data}</span>`
+          } else {
+            return `<span class="badge bg-success">${data}</span>`
+          }
+        }
+      },
+      { data: 'timeIn' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `
+          <div class="flex items-center gap-3">
+            <a href="./managetaxpayer.html?id=${row.tax_number}" class=" viewUser txEdit"><iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon></a>
+            <!-- <button data-theid="${row.tax_number}" onclick="editThis(this)" data-usertype="payer_user" class="EditUser txView"><iconify-icon icon="material-symbols:edit-square-outline"></iconify-icon></button> -->
+            <a href="./taxpayerlist.html?id=${row.tax_number}" class="btn btn-primary btn-sm viewUser txView">View</a>
+          </div>`
+        }
+      }
+    ],
+  });
+}
+
+fetchTaxPayers()
+
 
 async function fetchEnutaxP() {
   $("#showreport2").html("")
@@ -110,13 +150,9 @@ async function fetchEnutaxP() {
   if (taxPayers.status === 0) {
     $("#showreport2").html(``)
 
-    $("#enumRegs").html(0)
-    numberOfAll2 = 0
   } else {
     $("#enumRegs").html(taxPayers.message.length)
-  
-    numberOfAll2 = taxPayers.message.length
-    sessionStorage.setItem('numberOfAll2', numberOfAll2);
+
     taxPayers.message.reverse().forEach((txpayer, i) => {
 
       let showRe1 = ""
@@ -156,17 +192,14 @@ async function fetchEnutaxP() {
   }
 
 }
- // <td>
-          //   <img src="${txpayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
-          // </td>
+// <td>
+//   <img src="${txpayer.img}" class="w-[40px] rounded-full h-[40px] object-cover" alt="" />
+// </td>
 
 fetchEnutaxP().then(dd => {
   $('#dataTable2').DataTable();
 })
 
-numberOfAll = JSON.parse(sessionStorage.getItem("numberOfAll"))
-numberOfAll2 = JSON.parse(sessionStorage.getItem("numberOfAll2"))
-$(".registered").html(numberOfAll + numberOfAll2)
 
 $("#Individual").on('click', () => {
   var input, filter, table, tr, td, i;
@@ -274,3 +307,31 @@ $("#updateStatus").on("click", function (e) {
   });
 
 })
+
+function exportData() {
+  // console.log(dataToExport)
+  const csvRows = [];
+
+  // Extract headers (keys) excluding 'id'
+  const headers = Object.keys(dataToExport[0]).filter((key) => key !== "id");
+  csvRows.push(headers.join(",")); // Join headers with commas
+
+  // Loop through the data to create CSV rows
+  for (const row of dataToExport) {
+    const values = headers.map((header) => {
+      const value = row[header];
+      return `"${value}"`; // Escape values with quotes
+    });
+    csvRows.push(values.join(","));
+  }
+
+  // Combine all rows into a single string
+  const csvString = csvRows.join("\n");
+
+  // Export to a downloadable file
+  const blob = new Blob([csvString], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "taxpayer_report.csv";
+  a.click();
+}

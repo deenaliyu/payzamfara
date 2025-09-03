@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../assets/css/responsive.css" />
   <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
   <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+  <link  ref="stylesheet" href="./assets/css/print2.css" media="print" />
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
   <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -34,67 +35,136 @@
     .imgTabs {
       display: none;
     }
+    
+    .demanInvoiceBody {
+        background: url('./assets/img/demandbg.png');
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .demanInvoiceBody p {
+        font-size: 10px;
+    }
+    #myTab .nav-link.active {
+        background: #005826 !important;
+    }
   </style>
 </head>
 
 <body>
 
-  <section class="flex h-[89vh] overflow-y-scroll flex justify-center ">
-
-
-
-    <section class="pb-5">
-      <div class="flex align-items-center gap-1 my-4">
-        <a type="button" style='color: #005826; font-weight: 500;' onclick="history.go(-1)" class="text-[18px]">Go
-          Back</a>
-      </div>
-      <div class="invoiceContainer flex justify-center">
-
-        <div class="invoice bg-white md:w-[100%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
-          <!-- COMING FROM JS invoice.js -->
+    <section class="p-5">
+        <div class="flex align-items-center gap-1 my-4">
+            <a type="button" style='color: #005826; font-weight: 500;' onclick="history.go(-1)" class="text-[18px]">Go Back</a>
         </div>
-
-
-      </div>
-
-      <div class="flex justify-center px-4">
-        <div>
-          <div class="flex justify-between mt-4 gap-3">
-            <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
-              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-              <span>Download Invoice</span>
-            </button>
-            <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
-              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
-              <span>Print Receipt</span>
-            </button>
-          </div>
+        
+        <div class="flex justify-center mb-3">  
+            <ul class="nav nav-pills hidden" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Consolidated Demand Notice</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="sencond-tab" data-bs-toggle="tab" href="#sencondTab" role="tab" aria-controls="home" aria-selected="true">Demand Notice Assessment</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Invoice</a>
+                </li>
+            </ul>
         </div>
-      </div>
+          
+        
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="invoiceContainer flex justify-center">
+                    <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCard">
+                        <!-- COMING FROM JS invoice.js -->
+                    </div>
+                </div>
+            
+                <div class="flex justify-center px-4">
+                    <div>
+                      <div class="flex justify-between mt-4 gap-3">
+                        <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCard')">
+                          <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                          <span>Download Demand Invoice</span>
+                        </button>
+                        <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCard')">
+                          <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                          <span>Print Demand Invoice</span>
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="sencondTab" role="tabpanel" aria-labelledby="home-tab">
+                <div class="invoiceContainer flex justify-center">
+                    <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="assessmentDemandNotice">
+                        <!-- COMING FROM JS invoice.js -->
+                    </div>
+                </div>
+            
+                <div class="flex justify-center px-4">
+                    <div>
+                      <div class="flex justify-between mt-4 gap-3">
+                        <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('assessmentDemandNotice')">
+                          <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                          <span>Download Demand Notice Assessment</span>
+                        </button>
+                        <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('assessmentDemandNotice')">
+                          <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                          <span>Print Demand Notice Assessment</span>
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <section class="p-5 hidden"  id='normalInvoiceCont'>
+                    <div class="invoiceContainer flex justify-center">
+                        <div class="invoice bg-white lg:w-[60%] w-[90%] shadow-md md:-mt-12 mt-2" id="invoiceCardSecond">
+                          <!-- COMING FROM JS invoice.js -->
+                        </div>
+                    </div>
+            
+                    <div class="flex justify-center px-4">
+                        <div>
+                          <div class="flex justify-between mt-4 gap-3">
+                            <button class="outline-btn flex gap-3 items-center px-10" onclick="downloadInvoice('invoiceCardSecond')">
+                              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                              <span>Download Invoice</span>
+                            </button>
+                            <button class="outline-btn flex gap-3 items-center px-10" onclick="printInvoice('invoiceCardSecond')">
+                              <iconify-icon icon="mdi:printer-outline" class="text-xl"></iconify-icon>
+                              <span>Print Invoice</span>
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+                </section>      
+            </div>
 
-
-
+            
+        </div>  
+        
+    
     </section>
-
-
-  </section>
-
-
 
 
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
   <script src="./assets/vendor/libs/popper/popper.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./assets/vendor/js/bootstrap.js"></script>
-  <script src="./assets/js/nav.js?v=1.2"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Joe12387/detectIncognito@main/dist/es5/detectIncognito.min.js"></script>
+  <script src="./assets/js/nav.js?v=3.0"></script>
   <script src="../assets/js/aos-master/dist/aos.js"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <!-- <script src="assets/js/payment.js"></script> -->
-  <script src="assets/js/viewinvoice.js?v=1.2"></script>
-  <script src="assets/js/invoice.js?v=1.2"></script>
+  <script src="assets/js/viewinvoice.js?v=2.0"></script>
+  <script src="../assets/js/invoice.js?v=18.0"></script>
 </body>
 
 </html>

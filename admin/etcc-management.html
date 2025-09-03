@@ -1,313 +1,635 @@
 <!DOCTYPE html>
 
+
+
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+
   data-template="vertical-menu-template-free">
 
+
+
 <head>
+
   <meta charset="utf-8" />
+
   <meta name="viewport"
+
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+
 
   <title>Payzamfara</title>
 
+
+
   <meta name="description" content="" />
 
+
+
   <!-- Favicon -->
+
   <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
 
+
+
   <!-- Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <link
+
     href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+
     rel="stylesheet" />
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+
   <!-- Icons. Uncomment required icon fonts -->
+
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
+
+
   <!-- Core CSS -->
+
   <link rel="stylesheet" href="./assets/css/dataTable.css">
+
   <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+
   <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+
   <link rel="stylesheet" href="./assets/css/demo.css" />
+
   <link rel="stylesheet" href="./assets/css/style.css" />
+
   <!-- Vendors CSS -->
+
   <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+
 
   <!-- Page CSS -->
 
+
+
   <!-- Helpers -->
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 
   <script src="./assets/vendor/js/helpers.js"></script>
 
+
+
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+
   <script src="./assets/js/config.js"></script>
+
   <script src="https://cdn.tiny.cloud/1/a2nnryhuz1r1qtqf4ap5nkr1msakmeqobebopr1d2o3nfx1h/tinymce/6/tinymce.min.js"
+
     referrerpolicy="origin"></script>
+
 </head>
 
+
+
 <body>
+
   <!-- Layout wrapper -->
+
   <div class="layout-wrapper layout-content-navbar">
+
     <div class="layout-container">
+
       <!-- Menu -->
 
+
+
       <aside id="layout-menu" class="aside layout-menu menu-vertical menu bg-menu-theme"></aside>
+
       <!-- / Menu -->
 
+
+
       <!-- Layout container -->
+
       <div class="layout-page">
+
         <!-- Navbar -->
 
+
+
         <nav
+
           class="layout-navbar navi container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+
           id="layout-navbar">
 
+
+
           <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+
             <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+
               <i class="bx bx-menu bx-sm"></i>
+
             </a>
+
           </div>
 
+
+
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+
             <div class="">
+
               <p class="text-sm text-black datei" id="datei">-</p>
+
               <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">eTCC Manager</h1>
+
             </div>
 
+
+
             <div class="mt-4 flex gap-x-5">
+
               <div class="flex items-center gap-3" id="initiateEtcc">
 
+
+
                 <a href="../etcc-initiate.html?initiator=admin" id="initorBtn" class="button" type="button">Initiate
+
                   eTCC</a>
 
+
+
               </div>
+
+
+
 
 
               <div class="avatar avatar-online">
+
                 <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
 
+
+
               </div>
+
               <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
+
             </div>
 
+
+
           </div>
+
+
 
         </nav>
 
+
+
         <!-- / Navbar -->
 
+
+
         <!-- Content wrapper -->
+
         <section class="content-wrapper">
+
           <div class="flex justify-center items-center mt-4" id="theLoader">
+
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+
           </div>
 
+
+
           <div class="container-xxl flex-grow-1 container-p-y">
+
             <section class="w-full main_section hidden">
+
               <h1 class="text-xl mb-3 fontBold text-black">Overview</h1>
+
               <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
 
+
+
                 <div class="dashCards card w-full flex-col space-y-2  ">
 
+
+
                   <div class="flex items-center gap-2">
+
                     <div class="icoCont bg-[#E7EEEC]">
+
                       <iconify-icon class="text-[#337362]" icon="solar:wallet-money-bold"></iconify-icon>
+
                     </div>
+
                     <p class="text-gray-500 impMetrics text-xs">SUBMITTED</p>
+
                   </div>
 
+
+
                   <p class="zanumbers text-end" style="margin-top: 30px;">
+
                     <span id="sub_num">20</span>
+
                   </p>
+
                 </div>
+
+
 
                 <div class="dashCards card w-full flex-col space-y-2  ">
 
+
+
                   <div class="flex items-center gap-2">
+
                     <div class="icoCont bg-[#E7EEEC]">
+
                       <iconify-icon class="text-[#337362]" icon="solar:wallet-money-bold"></iconify-icon>
+
                     </div>
+
                     <p class="text-gray-500 impMetrics text-xs">PENDING</p>
+
                   </div>
 
+
+
                   <p class="zanumbers text-end" style="margin-top: 30px;">
+
                     <span id="pending_num">-</span>
+
                   </p>
+
                 </div>
+
+
 
                 <!-- <div class="dashCards card w-full flex-col space-y-2  ">
 
+
+
                   <div class="flex items-center gap-2">
+
                     <div class="icoCont bg-[#E7EEEC]">
+
                       <iconify-icon class="text-[#337362]" icon="solar:wallet-money-bold"></iconify-icon>
+
                     </div>
+
                     <p class="text-gray-500 impMetrics text-xs">RETURNED</p>
+
                   </div>
 
+
+
                   <p class="zanumbers text-end" style="margin-top: 30px;">
+
                     <span id="reg_bodies">20</span>
+
                   </p>
+
                 </div> -->
+
+
 
                 <div class="dashCards card w-full flex-col space-y-2  ">
 
+
+
                   <div class="flex items-center gap-2">
+
                     <div class="icoCont bg-[#E7EEEC]">
+
                       <iconify-icon class="text-[#337362]" icon="solar:wallet-money-bold"></iconify-icon>
+
                     </div>
+
                     <p class="text-gray-500 impMetrics text-xs">APPROVED</p>
+
                   </div>
 
+
+
                   <p class="zanumbers text-end" style="margin-top: 30px;">
+
                     <span id="appr_num">-</span>
+
                   </p>
+
                 </div>
+
+
+
+
 
 
 
               </div>
 
 
+
+
+
               <section class="mt-4 card px-2">
+
                 <div class="flex justify-end mt-4 mb-2">
+
                   <div class="flex gap-4">
+
                     <button class="button flex items-center gap-3" onclick="exportData()">
+
                       <iconify-icon icon="humbleicons:download" class="text-xl"></iconify-icon>
+
                       <span>Download Report</span>
+
                     </button>
 
+
+
                   </div>
+
                 </div>
 
+
+
                 <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2 border-b " id="pills-tab" role="tablist">
+
                   <li class="nav-item text-center" role="presentation" id="all_etcc_one">
                     <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#all_etcc" type="button"
                       role="tab">
                       All
                     </button>
                   </li>
+
                   <li class="nav-item text-center" role="presentation" id="first_reviewer">
                     <button class="nav-link" data-bs-toggle="pill" data-bs-target="#submitted" type="button" role="tab">
-                      Submitted (First Reviewer)
+                      Desk Officer
                     </button>
                   </li>
+
                   <li class="nav-item text-center" role="presentation" id="second_reviewer">
                     <button class="nav-link" data-bs-toggle="pill" data-bs-target="#rev_apprv" type="button" role="tab">
                       Second Reviewer
                     </button>
                   </li>
+
                   <li class="nav-item text-center" role="presentation" id="third_reviewer">
                     <button class="nav-link" data-bs-toggle="pill" data-bs-target="#dir_apprv" type="button" role="tab">
                       Director Approval
                     </button>
                   </li>
-                  <li class="nav-item text-center" role="presentation" id="final_approved">
-                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#approved" type="button" role="tab">
-                      Approved
-                    </button>
+
+                  <li class="nav-item text-center" role="presentation" id="fourth_reviewer">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#dir_apprv" type="button" role="tab">EC Approval</button>
                   </li>
+
+                  <li class="nav-item text-center" role="presentation" id="final_approved">
+
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#approved" type="button" role="tab">
+
+                      Approved
+
+                    </button>
+
+                  </li>
+
                   <li class="nav-item text-center" role="presentation" id="declined">
-                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#declined_one" type="button"
-                      role="tab">
+
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#declined_one" type="button"role="tab">
                       Declined
                     </button>
                   </li>
-
-
-
                 </ul>
 
+
+
                 <div class="tab-content" id="pills-tabContent">
+
                   <div class="tab-pane fade all_etcc_one show active" id="all_etcc" role="tabpanel">
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable6">
+
                         <thead>
+
                           <tr>
+
                             <th>S/N</th>
+
                             <th>Date Sent</th>
+
                             <th>Reference Number</th>
+
                             <th>Name</th>
+
                             <th>Email</th>
+
                             <th>Category</th>
+
                             <th>Status</th>
+
                             <th>Date Updated</th>
+
                             <th>Action</th>
+
                           </tr>
+
                         </thead>
+
                         <tbody id="etccTable6">
 
+
+
                         </tbody>
+
                       </table>
+
                     </div>
+
+
 
                   </div>
 
                   <div class="tab-pane fade" id="submitted" role="tabpanel">
 
+
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable">
+
                         <thead>
+
                           <tr>
+
                             <th>S/N</th>
+
                             <th>Date Sent</th>
+
                             <th>Reference Number</th>
+
                             <th>Name</th>
+
                             <th>Email</th>
+
                             <th>Category</th>
+
                             <th>Status</th>
+
                             <th>Date Approved</th>
+
                             <th>Action</th>
+
                             <!--<th>Preview</th>-->
+
                           </tr>
+
                         </thead>
+
                         <tbody id="etccTable">
 
 
+
+
+
                         </tbody>
+
                       </table>
 
 
+
+
+
                       <!-- <div class="flex justify-center items-center mt-4" id="loader">
+
                         <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900">
+
                         </div>
+
                       </div> -->
+
                     </div>
+
+
 
                   </div>
 
                   <div class="tab-pane fade second_reviewer" id="rev_apprv" role="tabpanel">
 
+
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable2">
+
                         <thead>
+
                           <tr>
+
                             <th>S/N</th>
+
                             <th>Date Sent</th>
+
                             <th>Reference Number</th>
+
                             <th>Name</th>
+
                             <th>Email</th>
+
                             <th>Category</th>
+
                             <th>Status</th>
+
                             <th>Date Approved</th>
+
                             <th>Action</th>
+
                           </tr>
+
                         </thead>
+
                         <tbody id="etccTable2">
 
 
+
+
+
                         </tbody>
+
                       </table>
+
                     </div>
+
+
 
                   </div>
 
                   <div class="tab-pane fade third_reviewer" id="dir_apprv" role="tabpanel">
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable3">
+
+                        <thead>
+
+                          <tr>
+
+                            <th>S/N</th>
+
+                            <th>Date Sent</th>
+
+                            <th>Reference Number</th>
+
+                            <th>Name</th>
+
+                            <th>Email</th>
+
+                            <th>Category</th>
+
+                            <th>Status</th>
+
+                            <th>Date Approved</th>
+
+                            <th>Action</th>
+
+                          </tr>
+
+                        </thead>
+
+                        <tbody id="etccTable3">
+
+
+
+                        </tbody>
+
+                      </table>
+
+                    </div>
+
+
+
+                  </div>
+
+                  <div class="tab-pane fade fourth_reviewer" id="fourth_apprv" role="tabpanel">
+                    <div class="table-responsive">
+                      <table class="table payeTable" id="dataTable7">
                         <thead>
                           <tr>
                             <th>S/N</th>
@@ -321,116 +643,206 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <tbody id="etccTable3">
+                        <tbody id="etccTable7">
 
                         </tbody>
+
                       </table>
                     </div>
-
                   </div>
 
                   <div class="tab-pane fade final_approved" id="approved" role="tabpanel">
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable4">
+
                         <thead>
+
                           <tr>
+
                             <th>S/N</th>
+
                             <th>Date Sent</th>
+
                             <th>Reference Number</th>
+
                             <th>Name</th>
+
                             <th>Email</th>
+
                             <th>Category</th>
+
                             <th>Status</th>
+
                             <th>Date Approved</th>
+
                             <th>Action</th>
+
                             <th>TCC</th>
+
                           </tr>
+
                         </thead>
+
                         <tbody id="etccTable4">
 
+
+
                         </tbody>
+
                       </table>
+
                     </div>
 
+
+
                   </div>
+
+
 
                   <div class="tab-pane fade declined" id="declined_one" role="tabpanel">
+
                     <div class="table-responsive">
+
                       <table class="table payeTable" id="dataTable5">
+
                         <thead>
+
                           <tr>
+
                             <th>S/N</th>
+
                             <th>Date Sent</th>
+
                             <th>Reference Number</th>
+
                             <th>Name</th>
+
                             <th>Email</th>
+
                             <th>Category</th>
+
                             <th>Status</th>
+
                             <th>Reason for Declining</th>
+
                             <th>Date Declined</th>
+
                             <th>Action</th>
+
                           </tr>
+
                         </thead>
+
                         <tbody id="etccTable5">
 
+
+
                         </tbody>
+
                       </table>
+
                     </div>
 
+
+
                   </div>
-
-
-
                 </div>
-
               </section>
 
-
             </section>
+
           </div>
 
+
+
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
+
           <div class="content-backdrop fade"></div>
+
         </section>
 
+
+
         <!-- Content wrapper -->
+
       </div>
+
       <!-- / Layout page -->
+
     </div>
 
 
+
+
+
     <!-- Overlay -->
+
     <div class="layout-overlay layout-menu-toggle"></div>
+
   </div>
+
   <!-- / Layout wrapper -->
+
   <!-- Core JS -->
+
   <!-- build:js assets/vendor/js/core.js -->
+
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
   <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+
   <script src="./assets/vendor/libs/popper/popper.js"></script>
+
   <script src="./assets/vendor/js/bootstrap.js"></script>
+
   <script src="./assets/js/jquery.datatables.min.js"></script>
+
   <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
+
   <script src="./assets/vendor/libs/echarts/echarts.js"></script>
+
   <script src="./assets/vendor/libs/chartjs/dist/chart.js"></script>
+
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
   <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+
   <script src="./assets/js/nav.js"></script>
+
   <!-- <script src="./assets/js/session.js"></script> -->
+
   <script src="./assets/vendor/js/menu.js"></script>
+
   <script src="./assets/js/accessLevel.js"></script>
+
   <script src="./assets/js/main.js"></script>
 
+
+
   <script src="./assets/js/etcc-page.js"></script>
+
+
 
   <script>
 
 
+
+
+
     let theAtivo = document.querySelector(".mdoetcc")
+
     theAtivo.parentElement.classList.add("active")
 
+
+
   </script>
+
 </body>
+
+
 
 </html>
