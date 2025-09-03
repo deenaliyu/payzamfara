@@ -263,11 +263,6 @@ function continuePage() {
   let phonenumber = document.querySelector("#phonenumber")
   let tin = document.querySelector("#tin")
 
-  if (tin.value === "") {
-    $("#popUpModal").modal("show")
-    return;
-  }
-
   if (phonenumber.value.length !== 11) {
     alert("Phone number should be equal to 11")
     return;
