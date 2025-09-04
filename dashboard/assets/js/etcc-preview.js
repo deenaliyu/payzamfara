@@ -232,7 +232,7 @@ function downloadInvoice(thecard) {
       pdf.addPage(PDF_Width, PDF_Height);
       pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
     }
-    pdf.save(thecard + ".pdf");
+    pdf.save("etcc-certificate" + ".pdf");
     document.body.innerHTML = originalContent;
     // $("#" + thecard).hide();
   });
