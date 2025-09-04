@@ -102,6 +102,59 @@ async function fetchTaxfillers() {
                   `);
       }
     });
+
+    $("#submitApp").on("click", (e) => {
+
+      let amount = document.querySelector("#amount").value
+      // console.log(amount);
+      if(amount === "") {
+        amount = 0
+      }
+      e.preventDefault()
+      $("#msg_box").html(`
+            <div class="flex justify-center items-center mt-4">
+              <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+            </div>
+          `)
+
+      $("#submitApp").addClass("hidden")
+
+      $.ajax({
+        type: "GET",
+        url: `${HOST}/?approveTaxFiling&id=${userIdo}&amount=${amount}`,
+        dataType: 'json',
+        success: function (data) {
+          if (data.status === 2) {
+            $("#msg_box4").html(`
+                  <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
+                `)
+            $("#submitApp").removeClass("hidden")
+
+          } else if (data.status === 1) {
+            $("#msg_box").html(`
+                  <p class="text-success text-center mt-4 text-lg">Approved Successfully</p>
+                `)
+            setTimeout(() => {
+              window.location.href = "./service.html"
+            }, 1000);
+
+          } else if (data.status === 0) {
+            $("#msg_box").html(`
+                  <p class="text-warning text-center mt-4 text-base">${data.message}</p>
+                `)
+            $("#submitApp").removeClass("hidden")
+          }
+        },
+        error: function (request, error) {
+          console.log(error);
+          $("#msg_box").html(`
+                <p class="text-danger text-center mt-4 text-lg">Something went wrong try again !</p>
+              `)
+          $("#submitApp").removeClass("hidden")
+        }
+      });
+
+    })
   } else {
     // $("#showInvoice").html("<tr></tr>");
     $("#dataTable").DataTable();
@@ -112,55 +165,7 @@ fetchTaxfillers()
 
 
 
-$("#submitApp").on("click", (e) => {
 
-  let amount = document.querySelector("#amount").value
-  console.log(amount);
-  e.preventDefault()
-  $("#msg_box").html(`
-        <div class="flex justify-center items-center mt-4">
-          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-        </div>
-      `)
-
-  $("#submitApp").addClass("hidden")
-
-  $.ajax({
-    type: "GET",
-    url: `${HOST}/?approveTaxFiling&id=${userIdo}&amount=${amount}`,
-    dataType: 'json',
-    success: function (data) {
-      if (data.status === 2) {
-        $("#msg_box4").html(`
-              <p class="text-warning text-center mt-4 text-lg">${data.message}</p>
-            `)
-        $("#submitApp").removeClass("hidden")
-
-      } else if (data.status === 1) {
-        $("#msg_box").html(`
-              <p class="text-success text-center mt-4 text-lg">Approved Successfully</p>
-            `)
-        setTimeout(() => {
-          window.location.href = "./service.html"
-        }, 1000);
-
-      } else if (data.status === 0) {
-        $("#msg_box").html(`
-              <p class="text-warning text-center mt-4 text-base">${data.message}</p>
-            `)
-        $("#submitApp").removeClass("hidden")
-      }
-    },
-    error: function (request, error) {
-      console.log(error);
-      $("#msg_box").html(`
-            <p class="text-danger text-center mt-4 text-lg">Something went wrong try again !</p>
-          `)
-      $("#submitApp").removeClass("hidden")
-    }
-  });
-
-})
 
 function populateTable(array, tableId) {
   const tableBody = $("#" + tableId);
@@ -181,8 +186,8 @@ function populateTable(array, tableId) {
               <td><span class='badge bg-${item.payment_status === "paid" ? "success" : "danger"}'>${item.payment_status}</span></td>
               <td>${item.due_date}</td>
               <td>
-                ${item.payment_status === 'unpaid' ? `<a class="button btn-sm" href="../viewinvoice.html?invnumber=${item.invoice_number}&load=true">View Invoice</a>` 
-                  : `<a class="button btn-sm" href="../viewreceipt.html?invnumber=${item.invoice_number}&load=true">View Receipt</a>` }
+                ${item.payment_status === 'unpaid' ? `<a class="button btn-sm" href="../viewinvoice.html?invnumber=${item.invoice_number}&load=true">View Invoice</a>`
+        : `<a class="button btn-sm" href="../viewreceipt.html?invnumber=${item.invoice_number}&load=true">View Receipt</a>`}
               </td>
           </tr>
       `);

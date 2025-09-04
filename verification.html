@@ -36,18 +36,16 @@
                 height="42"></iconify-icon>
             </div>
             <p class="text-center text-xl mb-2">Congratulations!</p>
-            <p class="text-sm text-gray-600 text-center"> Your account has been successfully created.
-              To complete the verification process, please choose your preferred
-              method of verification.</p>
+            <p class="text-lg text-gray-600 text-center">Your account has been successfully created. </p>
+            <p class="text-lg text-gray-600 text-center">Check your email for a verification link or enter the OTP sent to your phone number.</p>
 
-            <div class="mt-4 flex items-center justify-center gap-3" id="theMsg">
-              <button id="sendEmail" class="button flex items-center gap-2">
-                <iconify-icon class="text-xl" icon="simple-line-icons:envolope"></iconify-icon>
-                Email verification</button>
-
-              <button id="sendSMS" class="outline-btn flex items-center gap-2">
-                <iconify-icon class="text-xl" icon="material-symbols:phone-android-outline-rounded"></iconify-icon>
-                Phone verification</button>
+            <div class="mt-4 flex flex-col items-center justify-center gap-3" id="theMsg">
+              <div class="w-full md:w-6/12">
+                <label class="block text-center mb-1">Enter OTP</label>
+                <input id="otpInput" type="text" maxlength="6" class="form-control text-center"
+                  placeholder="Enter 6-digit code">
+              </div>
+              <button id="verifyOtpBtn" class="button">Verify OTP</button>
             </div>
             <div id="msg_boxx" class="w-full">
 
@@ -71,7 +69,7 @@
 
   </script>
   <script src="assets/js/nav.js"></script>
-  <script src="assets/js/verification.js"></script>
+  <script src="assets/js/verification.js?v=1.0"></script>
 </body>
 
 </html>

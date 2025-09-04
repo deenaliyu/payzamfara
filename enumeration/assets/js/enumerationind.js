@@ -136,10 +136,10 @@ class CustomerValidation {
     try {
       const response = await this.fetchTaxpayer(method, value);
 
-      if (response.status === 'error') {
+      if (response.status === 'error' || response.data.length === 0) {
         this.handleTaxpayerNotFound();
       } else {
-        this.displayTaxpayerInfo(response.data); // response.data is now the object
+        this.displayTaxpayerInfo(response.data);
       }
 
     } catch (error) {
@@ -155,7 +155,8 @@ class CustomerValidation {
   }
 
   async fetchTaxpayer(method, value) {
-    const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    // const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    const url = `${this.apiBaseUrl}/get-taxpayer?search=${encodeURIComponent(value)}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -180,7 +181,7 @@ class CustomerValidation {
     });
   }
 
-  displayTaxpayerInfo(taxpayerData) {
+  displayTaxpayerInfo(taxpayers) {
     // Show the summary section
     this.taxpayerSummary.classList.remove('hidden');
 
@@ -188,9 +189,14 @@ class CustomerValidation {
     this.taxpayerOptions.innerHTML = '';
     this.taxpayerDetails.innerHTML = '';
 
-    // Render the single taxpayer details
-    this.renderTaxpayerDetails(taxpayerData);
-    this.selectedTaxpayer = taxpayerData;
+    if (taxpayers.length === 1) {
+      // Single taxpayer found
+      this.renderTaxpayerDetails(taxpayers[0]);
+      this.selectedTaxpayer = taxpayers[0];
+    } else {
+      // Multiple taxpayers found
+      this.renderTaxpayerOptions(taxpayers);
+    }
   }
 
   renderTaxpayerOptions(taxpayers) {
@@ -227,10 +233,13 @@ class CustomerValidation {
       label.htmlFor = `taxpayer-${index}`;
       label.className = 'text-sm';
 
-      if (taxpayer.type === 'individual') {
-        label.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+      // Determine if individual or non-individual
+      const isIndividual = taxpayer.data.jtb.first_name !== undefined;
+      
+      if (isIndividual) {
+        label.textContent = `${taxpayer.data.jtb.first_name} ${taxpayer.data.jtb.last_name} (${taxpayer.tin})`;
       } else {
-        label.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+        label.textContent = `${taxpayer.data.jtb.registered_name} (${taxpayer.tin})`;
       }
 
       div.appendChild(input);
@@ -244,22 +253,23 @@ class CustomerValidation {
   renderTaxpayerDetails(taxpayer) {
     this.taxpayerDetails.innerHTML = '';
 
-    if (taxpayer.type === 'individual') {
-      const record = taxpayer.record;
+    const jtbData = taxpayer.data.jtb;
+    const isIndividual = jtbData.first_name !== undefined;
 
+    if (isIndividual) {
       const details = [
-        { label: 'Full Name', value: `${record.Title} ${record.first_name} ${record.middle_name || ''} ${record.last_name}` },
-        { label: 'TIN', value: record.tin },
-        { label: 'Gender', value: record.GenderName },
-        { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
-        { label: 'Marital Status', value: record.MaritalStatus },
-        { label: 'Occupation', value: record.Occupation },
-        { label: 'Phone Number', value: record.phone_no_1 },
-        { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
-        { label: 'LGA', value: record.LGAName },
-        { label: 'State', value: record.StateName },
-        { label: 'Tax Authority', value: record.TaxAuthorityName },
+        { label: 'Full Name', value: `${jtbData.Title || ''} ${jtbData.first_name || ''} ${jtbData.middle_name || ''} ${jtbData.last_name || ''}`.trim() },
+        { label: 'TIN', value: taxpayer.tin },
+        { label: 'Gender', value: jtbData.GenderName },
+        { label: 'Date of Birth', value: this.formatDate(jtbData.date_of_birth) },
+        { label: 'Marital Status', value: jtbData.MaritalStatus },
+        { label: 'Occupation', value: jtbData.Occupation },
+        { label: 'Phone Number', value: jtbData.phone_no_1 },
+        { label: 'Email', value: jtbData.email_address },
+        { label: 'Address', value: `${jtbData.house_number || ''} ${jtbData.street_name || ''}, ${jtbData.city || ''}`.trim() },
+        { label: 'LGA', value: jtbData.LGAName },
+        { label: 'State', value: jtbData.StateName },
+        { label: 'Tax Authority', value: jtbData.TaxAuthorityName },
       ];
 
       details.forEach(detail => {
@@ -268,22 +278,19 @@ class CustomerValidation {
         }
       });
     } else {
-      console.log(taxpayer)
-      const record = taxpayer.record;
-
       const details = [
-        { label: 'Registered Name', value: record.registered_name },
-        { label: 'Trade Name', value: record.main_trade_name },
-        { label: 'TIN', value: record.tin },
-        { label: 'RC Number', value: record.registration_number },
-        { label: 'Organization Type', value: record.org_type_name },
-        { label: 'Phone Number', value: record.phone_no_1 },
-        { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
-        { label: 'LGA', value: record.LGAName },
-        { label: 'State', value: record.StateName },
-        { label: 'Date of Incorporation', value: this.formatDate(record.date_of_incorporation) },
-        { label: 'Director', value: `${record.director_name} (${record.director_phone})` },
+        { label: 'Registered Name', value: jtbData.registered_name },
+        { label: 'Trade Name', value: jtbData.main_trade_name },
+        { label: 'TIN', value: taxpayer.tin },
+        { label: 'RC Number', value: jtbData.registration_number },
+        { label: 'Organization Type', value: jtbData.org_type_name },
+        { label: 'Phone Number', value: jtbData.phone_no_1 },
+        { label: 'Email', value: jtbData.email_address },
+        { label: 'Address', value: `${jtbData.house_number || ''} ${jtbData.street_name || ''}, ${jtbData.city || ''}`.trim() },
+        { label: 'LGA', value: jtbData.LGAName },
+        { label: 'State', value: jtbData.StateName },
+        { label: 'Date of Incorporation', value: this.formatDate(jtbData.date_of_incorporation) },
+        { label: 'Director', value: jtbData.director_name ? `${jtbData.director_name} (${jtbData.director_phone})` : '' },
       ];
 
       details.forEach(detail => {
@@ -329,14 +336,15 @@ class CustomerValidation {
 
   prefillNextForm() {
     const taxpayer = this.selectedTaxpayer;
-    const record = taxpayer.record;
+    const jtbData = taxpayer.data.jtb;
+    const isIndividual = jtbData.first_name !== undefined;
 
     // Set state and LGA if available in your form
     if (document.getElementById('STATES')) {
-      let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
+      let formattedState = jtbData.StateName ? jtbData.StateName.charAt(0).toUpperCase() + jtbData.StateName.slice(1).toLowerCase() : '';
 
-      let formattedLGA = record.LGAName
-        ? record.LGAName
+      let formattedLGA = jtbData.LGAName
+        ? jtbData.LGAName
           .toLowerCase()
           .split(' ')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -344,7 +352,6 @@ class CustomerValidation {
         : '';
 
       document.getElementById('STATES').value = formattedState;
-
 
       let lgaSelector = document.querySelector('#LGAs')
       if (lgaList[formattedState]) {
@@ -359,31 +366,29 @@ class CustomerValidation {
       document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
     }
 
-    if (taxpayer.type === 'individual') {
-      document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
-      document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
-      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
-      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
-      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
-
-
+    if (isIndividual) {
+      document.querySelector('.regInputs[data-name="first_name"]').value = jtbData.first_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = jtbData.last_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = jtbData.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = jtbData.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = taxpayer.tin || '';
 
       document.querySelector('.regInputs[data-name="address"]').value =
-        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+        `${jtbData.house_number || ''} ${jtbData.street_name || ''}, ${jtbData.city || ''}`.trim();
     } else {
       // For non-individual taxpayers
-      document.querySelector('.regInputs[data-name="first_name"]').value = record.registered_name || '';
-      document.querySelector('.regInputs[data-name="surname"]').value = record.main_trade_name || '';
-      document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
-      document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
-      document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
+      document.querySelector('.regInputs[data-name="first_name"]').value = jtbData.registered_name || '';
+      document.querySelector('.regInputs[data-name="surname"]').value = jtbData.main_trade_name || '';
+      document.querySelector('.regInputs[data-name="email"]').value = jtbData.email_address || '';
+      document.querySelector('.regInputs[data-name="phone"]').value = jtbData.phone_no_1 || '';
+      document.querySelector('.regInputs[data-name="tin"]').value = taxpayer.tin || '';
 
       // Set business type to "yes" and select appropriate type
       document.getElementById('businessOwnerYes').checked = true;
       this.toggleBusinessType();
 
       document.querySelector('.regInputs[data-name="address"]').value =
-        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+        `${jtbData.house_number || ''} ${jtbData.street_name || ''}, ${jtbData.city || ''}`.trim();
     }
   }
 
@@ -433,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new CustomerValidation();
 });
 
+// The rest of your RegistrationForm class remains the same
 class RegistrationForm {
   constructor() {
     this.currentTab = 0;
@@ -682,7 +688,7 @@ class RegistrationForm {
       //   this.sendAdminEmail(response.id);
       // } else {
       //   setTimeout(() => {
-      //     window.location.href = `verification.html?id=${response.id}&email=${response.data.email}&phone=${response.data.phone}`;
+      //   window.location.href = `verification.html?id=${response.id}&email=${response.data.email}&phone=${response.data.phone}`;
       //   }, 1500);
       // }
 

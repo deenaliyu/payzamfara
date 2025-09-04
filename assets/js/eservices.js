@@ -72,7 +72,7 @@ $("#checkStatus").on("click", function () {
       let obj3 = {
         "TaxFilling": `<button onclick="generateInvoice()" data-thedata="" id="generating_inv" class='button'>Generate Invoice</button>`,
         "TinRequest": "<p></p>",
-        "TaxClearance": `<a href='taxcertificate.html?reference=${therefNumber}' class='button'>Download</a>`
+        "TaxClearance": `<a href='dashboard/etcc-preview.html?theid=${therefNumber}' class='button'>Download</a>`
       }
 
       modalBB += `

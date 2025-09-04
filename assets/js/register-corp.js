@@ -145,20 +145,18 @@ class CustomerValidation {
     try {
       const response = await this.fetchTaxpayer(method, value);
 
-      if (response.status === 'error') {
+      if (response.status === 'success' && response.data.length === 0) {
         this.handleTaxpayerNotFound();
-      } else {
+      } else if (response.status === 'success') {
         if (response.data.length > 1) {
-          // If multiple records, pick the one with type !== 'individual'
-          const nonIndividual = response.data.find(taxpayer => taxpayer.type !== 'individual');
-          if (nonIndividual) {
-            this.displayTaxpayerInfo(nonIndividual);
-            return;
-          }
+          // If multiple records, pick the first one
+          this.displayTaxpayerInfo(response.data);
         } else {
           // If only one record, display it
           this.displayTaxpayerInfo(response.data);
         }
+      } else {
+        this.handleTaxpayerNotFound();
       }
 
     } catch (error) {
@@ -174,7 +172,8 @@ class CustomerValidation {
   }
 
   async fetchTaxpayer(method, value) {
-    const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    // Use the search parameter instead of method-specific parameters
+    const url = `${this.apiBaseUrl}/get-taxpayer?search=${encodeURIComponent(value)}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -199,7 +198,7 @@ class CustomerValidation {
     });
   }
 
-  displayTaxpayerInfo(taxpayerData) {
+  displayTaxpayerInfo(taxpayers) {
     // Show the summary section
     this.taxpayerSummary.classList.remove('hidden');
 
@@ -207,24 +206,29 @@ class CustomerValidation {
     this.taxpayerOptions.innerHTML = '';
     this.taxpayerDetails.innerHTML = '';
 
-    // Render the single taxpayer details
-    this.renderTaxpayerDetails(taxpayerData);
-    this.selectedTaxpayer = taxpayerData;
+    if (taxpayers.length === 1) {
+      // Single taxpayer found
+      this.renderTaxpayerDetails(taxpayers[0]);
+      this.selectedTaxpayer = taxpayers[0];
+    } else {
+      // Multiple taxpayers found
+      this.renderTaxpayerOptions(taxpayers);
+    }
   }
 
   renderTaxpayerOptions(taxpayers) {
     const optionsDiv = document.createElement('div');
     optionsDiv.className = 'mb-4';
-
+  
     const label = document.createElement('label');
     label.className = 'block text-sm font-medium text-gray-700 mb-2';
     label.textContent = 'Multiple records found. Please select one:';
     optionsDiv.appendChild(label);
-
+  
     taxpayers.forEach((taxpayer, index) => {
       const div = document.createElement('div');
       div.className = 'flex items-center mb-2';
-
+  
       const input = document.createElement('input');
       input.type = 'radio';
       input.name = 'taxpayerOption';
@@ -235,39 +239,51 @@ class CustomerValidation {
         this.selectedTaxpayer = taxpayer;
         this.renderTaxpayerDetails(taxpayer);
       });
-
+  
       if (index === 0) {
         input.checked = true;
         this.selectedTaxpayer = taxpayer;
         this.renderTaxpayerDetails(taxpayer);
       }
-
+  
       const label = document.createElement('label');
       label.htmlFor = `taxpayer-${index}`;
       label.className = 'text-sm';
-
-      if (taxpayer.type === 'individual') {
-        label.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+  
+      // Determine if individual or business
+      const isIndividual = this.isIndividualTaxpayer(taxpayer);
+      const record = taxpayer.data.jtb;
+      
+      if (isIndividual) {
+        label.textContent = `${record.first_name} ${record.last_name} (${record.tin})`;
       } else {
-        label.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+        label.textContent = `${record.registered_name} (${record.tin})`;
       }
-
+  
       div.appendChild(input);
       div.appendChild(label);
       optionsDiv.appendChild(div);
     });
-
+  
     this.taxpayerOptions.appendChild(optionsDiv);
+  }
+
+  isIndividualTaxpayer(taxpayer) {
+    // Check if this is an individual by looking for individual-specific fields
+    return taxpayer.data.jtb && 
+           (taxpayer.data.jtb.first_name !== undefined && 
+            taxpayer.data.jtb.first_name !== null);
   }
 
   renderTaxpayerDetails(taxpayer) {
     this.taxpayerDetails.innerHTML = '';
-
-    if (taxpayer.type === 'individual') {
-      const record = taxpayer.record;
-
+  
+    const isIndividual = this.isIndividualTaxpayer(taxpayer);
+    const record = taxpayer.data.jtb;
+  
+    if (isIndividual) {
       const details = [
-        { label: 'Full Name', value: `${record.Title} ${record.first_name} ${record.middle_name || ''} ${record.last_name}` },
+        { label: 'Full Name', value: `${record.Title || ''} ${record.first_name || ''} ${record.middle_name || ''} ${record.last_name || ''}`.trim() },
         { label: 'TIN', value: record.tin },
         { label: 'Gender', value: record.GenderName },
         { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
@@ -275,20 +291,18 @@ class CustomerValidation {
         { label: 'Occupation', value: record.Occupation },
         { label: 'Phone Number', value: record.phone_no_1 },
         { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'Address', value: `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim() },
         { label: 'LGA', value: record.LGAName },
         { label: 'State', value: record.StateName },
         { label: 'Tax Authority', value: record.TaxAuthorityName },
       ];
-
+  
       details.forEach(detail => {
         if (detail.value) {
           this.addDetailRow(detail.label, detail.value);
         }
       });
     } else {
-      const record = taxpayer.record;
-
       const details = [
         { label: 'Registered Name', value: record.registered_name },
         { label: 'Trade Name', value: record.main_trade_name },
@@ -297,15 +311,15 @@ class CustomerValidation {
         { label: 'Organization Type', value: record.org_type_name },
         { label: 'Phone Number', value: record.phone_no_1 },
         { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'Address', value: `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim() },
         { label: 'LGA', value: record.LGAName },
         { label: 'State', value: record.StateName },
         { label: 'Date of Incorporation', value: this.formatDate(record.date_of_incorporation) },
-        { label: 'Director', value: `${record.director_name} (${record.director_phone})` },
+        { label: 'Director', value: `${record.director_name || ''} (${record.director_phone || ''})`.trim() },
       ];
-
+  
       details.forEach(detail => {
-        if (detail.value) {
+        if (detail.value && detail.value !== ' ()' && detail.value !== 'null') {
           this.addDetailRow(detail.label, detail.value);
         }
       });
@@ -332,13 +346,18 @@ class CustomerValidation {
   proceedToNextStep() {
     // Store the taxpayer data for use in the next steps
     if (this.selectedTaxpayer) {
-      sessionStorage.setItem('taxpayerData', JSON.stringify(this.selectedTaxpayer));
+      // Add a type property to maintain compatibility with existing code
+      const taxpayerWithType = {
+        ...this.selectedTaxpayer,
+        type: this.isIndividualTaxpayer(this.selectedTaxpayer) ? 'individual' : 'business'
+      };
+      sessionStorage.setItem('taxpayerData', JSON.stringify(taxpayerWithType));
     }
-
+  
     // Hide the validation form and show the next section
     document.getElementById('customer-validation').style.display = 'none';
     document.getElementById('corporate-registration').style.display = 'block';
-
+  
     // If we have taxpayer data, pre-fill the next form
     if (this.selectedTaxpayer) {
       this.prefillNextForm();
@@ -347,12 +366,13 @@ class CustomerValidation {
 
   prefillNextForm() {
     const taxpayer = this.selectedTaxpayer;
-    const record = taxpayer.record;
-
+    const isIndividual = this.isIndividualTaxpayer(taxpayer);
+    const record = taxpayer.data.jtb;
+  
     // Set state and LGA if available in your form
     if (document.getElementById('selectState')) {
       let formattedState = record.StateName ? record.StateName.charAt(0).toUpperCase() + record.StateName.slice(1).toLowerCase() : '';
-
+  
       let formattedLGA = record.LGAName
         ? record.LGAName
           .toLowerCase()
@@ -360,10 +380,9 @@ class CustomerValidation {
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ')
         : '';
-
+  
       document.getElementById('selectState').value = formattedState;
-
-
+  
       let lgaSelector = document.querySelector('#selectLGA')
       if (lgaList2[formattedState]) {
         lgaSelector.innerHTML = '<option>--Select LGA--</option>'
@@ -373,19 +392,17 @@ class CustomerValidation {
               `;
         });
       }
-
+  
       document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
     }
-
-    if (taxpayer.type === 'individual') {
+  
+    if (isIndividual) {
       document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
       document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
       document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
-
-
-
+  
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
     } else {
@@ -395,8 +412,7 @@ class CustomerValidation {
       document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
-
-
+  
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
     }

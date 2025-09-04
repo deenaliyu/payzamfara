@@ -3,6 +3,7 @@ class InvoiceGenerator {
     // HOST = ''; // Set your API host here
     this.paymentItems = [];
     this.revenueHeads = [];
+    this.flatBusinessTypes = []
     this.taxpayerData = null;
     this.currentTab = 0;
     this.formSections = document.querySelectorAll('.formTabs');
@@ -15,6 +16,7 @@ class InvoiceGenerator {
     this.setupEventListeners();
     this.fetchInitialData();
     this.setupValidationToggle();
+    this.getBusinessType()
     this.showTab(this.currentTab);
   }
 
@@ -27,6 +29,10 @@ class InvoiceGenerator {
 
     // Proceed button
     document.getElementById('proceed-btn')?.addEventListener('click', () => {
+      this.proceedToBilling();
+    });
+
+    document.getElementById('skip-btn')?.addEventListener('click', () => {
       this.proceedToBilling();
     });
 
@@ -54,6 +60,26 @@ class InvoiceGenerator {
     // Category change
     document.getElementById('category')?.addEventListener('change', (e) => {
       this.updateContactFormLayout(e.target.value);
+    });
+
+
+    $(".checki").on("change", function () {
+      let val = $(this).val();
+
+      if (val === "yes") {
+        $("#businessType").html(`
+          <div class="flex gap-x-10 pt-2 px-3 items-center md:flex-nowrap sm:flex-wrap">
+            <p>Type of business</p>
+            <div class="form-group mb-2 md:w-[320px] w-full">
+              <select class="mt-1 regInputs" required data-name="business_type" id="businessTypeSelect"></select>
+              <small class="validate text-[red]"></small>
+            </div>
+          </div>
+        `);
+        this.populateBusinessTypeSelect(); // Populate after creating the select
+      } else {
+        $("#businessType").html(``);
+      }
     });
   }
 
@@ -125,6 +151,16 @@ class InvoiceGenerator {
         return;
       }
 
+      if ($("#businessTypeSelect").val() === "") {
+        const errorElement = document.querySelector(".validate-business")
+        if (errorElement && errorElement.classList.contains('validate')) {
+          errorElement.textContent = "This field is required";
+          errorElement.classList.remove('hidden');
+        }
+        isValid = false;
+        return;
+      }
+
       // Field-specific validation
       switch (input.dataset.name) {
         case 'phone':
@@ -141,19 +177,19 @@ class InvoiceGenerator {
           }
           break;
 
-        case 'tin':
-          if (input.value && !/^\d{10}(-\d{4})?$/.test(input.value)) {
-            this.showError(input, 'TIN must be 10 digits or 10-4 format');
-            isValid = false;
-          }
-          break;
+        // case 'tin':
+        //   if (input.value && !/^\d{10}(-\d{4})?$/.test(input.value)) {
+        //     this.showError(input, 'TIN must be 10 digits or 10-4 format');
+        //     isValid = false;
+        //   }
+        //   break;
 
-        case 'address':
-          if (input.value.length < 10) {
-            this.showError(input, 'Address must be at least 10 characters');
-            isValid = false;
-          }
-          break;
+        // case 'address':
+        //   if (input.value.length < 10) {
+        //     this.showError(input, 'Address must be at least 10 characters');
+        //     isValid = false;
+        //   }
+        //   break;
       }
     });
 
@@ -170,13 +206,39 @@ class InvoiceGenerator {
     }
   }
 
-
   async fetchRevenueHeads() {
     const response = await fetch(`${HOST}/?getAllRevenueHeads`);
     const data = await response.json();
 
     if (data.status === 1) {
       this.revenueHeads = data.message;
+      this.populateRevenueHeads();
+    }
+  }
+
+  async filterRevenueHeadsByMDA() {
+    const mdaName = document.getElementById('selectMdaInput').value;
+
+    if (!mdaName || mdaName === '') {
+      await this.fetchRevenueHeads();
+      this.populateRevenueHeads();
+      return;
+    }
+
+    try {
+      const response = await fetch(`${HOST}/?getMDAsRevenueHeads&mdName=${encodeURIComponent(mdaName)}`);
+      const data = await response.json();
+
+      if (data.status === 1) {
+        this.revenueHeads = data.message;
+        this.populateRevenueHeads();
+      } else {
+        await this.fetchRevenueHeads();
+        this.populateRevenueHeads();
+      }
+    } catch (error) {
+      console.error('Error filtering revenue heads:', error);
+      await this.fetchRevenueHeads();
       this.populateRevenueHeads();
     }
   }
@@ -196,46 +258,18 @@ class InvoiceGenerator {
         select.appendChild(option);
       });
 
-      select.addEventListener('change', () => this.filterRevenueHeadsByMDA());
-    }
-  }
-
-  async filterRevenueHeadsByMDA() {
-    const mdaName = document.getElementById('selectMdaInput').value;
-    if (!mdaName || mdaName === 'Select MDA') {
-      this.populateRevenueHeads();
-      return;
-    }
-
-    try {
-      const response = await fetch(`${HOST}/?getMDAsRevenueHeads&mdName=${encodeURIComponent(mdaName)}`);
-      const data = await response.json();
-
-      const selects = document.querySelectorAll('.revHeadsss');
-      selects.forEach(select => {
-        select.innerHTML = '<option disabled selected>Select--</option>';
-
-        if (data.status === 1) {
-          data.message.forEach(revHd => {
-            const option = document.createElement('option');
-            option.value = revHd.id;
-            option.textContent = revHd.COL_4;
-            select.appendChild(option);
-          });
-        } else {
-          // Fallback to all revenue heads if filtered request fails
-          this.revenueHeads.forEach(rev => {
-            const option = document.createElement('option');
-            option.value = rev.id;
-            option.textContent = rev.COL_4;
-            select.appendChild(option);
-          });
-        }
+      $("#selectMdaInput").selectize({
+        create: false,
+        // sortField: 'text',
+        placeholder: "Select MDA",
+        dropdownParent: 'body',
+        onChange: function (value) {
+          this.filterRevenueHeadsByMDA();
+        }.bind(this)
       });
-    } catch (error) {
-      console.error('Error filtering revenue heads:', error);
-      // Fallback to all revenue heads
-      this.populateRevenueHeads();
+
+
+
     }
   }
 
@@ -270,15 +304,85 @@ class InvoiceGenerator {
     }
   }
 
-  populateRevenueHeads(container = null) {
-    const select = container || document.querySelector('#payment-items-container .revHeadsss');
-    select.innerHTML = '<option disabled selected>Select--</option>';
+  async getBusinessType() {
+    try {
+      const response = await fetch(`${HOST}?getIndustryHierarchy`);
+      if (!response.ok) throw new Error('Network response was not ok');
 
-    this.revenueHeads.forEach(rev => {
-      const option = document.createElement('option');
-      option.value = rev.id;
-      option.textContent = rev.COL_4;
-      select.appendChild(option);
+      const data = await response.json();
+
+      if (data.status === 1) {
+        data.data.forEach(industry => {
+          industry.sectors.forEach(sector => {
+            sector.business_types.forEach(businessType => {
+              this.flatBusinessTypes.push({
+                business_type_id: businessType.business_type_id,
+                business_type_name: businessType.business_type_name,
+                sector_id: sector.sector_id,
+                sector_name: sector.sector_name,
+                industry_id: industry.industry_id,
+                industry_name: industry.industry_name,
+              });
+            });
+          });
+        });
+
+        // Populate any select that's already on the page
+        this.populateBusinessTypeSelect();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  populateBusinessTypeSelect() {
+    const selectEl = document.getElementById('businessTypeSelect');
+    if (!selectEl) return;
+
+    selectEl.innerHTML = '<option value="" selected disabled>-Select the type of the business--</option>'
+    this.flatBusinessTypes.forEach(type => {
+      selectEl.innerHTML += `<option value="${type.business_type_name}">${type.business_type_name}</option>`
+    })
+
+    const $select = $(selectEl);
+    if ($select[0].selectize) {
+      $select[0].selectize.destroy();
+    }
+    $select.selectize({
+      create: false,
+      sortField: 'text',
+      placeholder: 'Search for your type of business',
+      dropdownParent: 'body'
+    });
+  }
+
+  populateRevenueHeads(container = null) {
+    const selects = container ? [container] : document.querySelectorAll('.revHeadsss');
+
+    selects.forEach(select => {
+      // Destroy existing Selectize instance if it exists
+      if (select.selectize) {
+        select.selectize.destroy();
+      }
+
+      select.innerHTML = '<option disabled selected>Select--</option>';
+
+      this.revenueHeads.forEach(rev => {
+        const option = document.createElement('option');
+        option.value = rev.id;
+        option.textContent = rev.COL_4;
+        select.appendChild(option);
+      });
+
+      // Initialize Selectize after populating
+      // console.log(select)
+      $(select).selectize({
+        create: false,
+        // sortField: 'text',
+        placeholder: "Select revenue head",
+        dropdownParent: 'body',
+      });
+
     });
   }
 
@@ -309,14 +413,16 @@ class InvoiceGenerator {
     this.showLoader('#validate-btn');
 
     try {
-      const response = await fetch(`https://payzamfara.com/php/JTD/get-taxpayer?${method}=${encodeURIComponent(value)}`);
+      // Use the search parameter instead of method-specific parameters
+      const response = await fetch(`https://payzamfara.com/php/JTD/get-taxpayer?search=${encodeURIComponent(value)}`);
       const data = await response.json();
 
-      if (data.status === 'error') {
+      if (data.status === 'success' && data.data.length === 0) {
         this.handleTaxpayerNotFound();
-      } else {
-        // console.log(data.data)
+      } else if (data.status === 'success') {
         this.displayTaxpayerInfo(data.data);
+      } else {
+        this.handleTaxpayerNotFound();
       }
     } catch (error) {
       console.error('Validation error:', error);
@@ -324,6 +430,14 @@ class InvoiceGenerator {
     } finally {
       this.hideLoader('#validate-btn');
     }
+  }
+
+  isIndividualTaxpayer(taxpayer) {
+    // Check if this is an individual by looking for individual-specific fields
+    return taxpayer.data && taxpayer.data.jtb &&
+      (taxpayer.data.jtb.first_name !== undefined &&
+        taxpayer.data.jtb.first_name !== null &&
+        taxpayer.data.jtb.first_name !== '');
   }
 
   // Enhanced taxpayer not found handler
@@ -353,49 +467,6 @@ class InvoiceGenerator {
     });
   }
 
-  // displayTaxpayerInfo(taxpayer) {
-  //   this.taxpayerData = taxpayer;
-  //   const container = document.getElementById('taxpayer-details');
-  //   container.innerHTML = '';
-
-  //   const details = taxpayer.type === 'individual' ? [
-  //     { label: 'Name', value: `${taxpayer.record.first_name} ${taxpayer.record.last_name}` },
-  //     { label: 'TIN', value: taxpayer.record.tin },
-  //     { label: 'Phone', value: taxpayer.record.phone_no_1 },
-  //     { label: 'Email', value: taxpayer.record.email_address },
-  //     { label: 'Address', value: `${taxpayer.record.house_number} ${taxpayer.record.street_name}, ${taxpayer.record.city}` },
-  //     { label: 'LGA', value: taxpayer.record.LGAName }
-  //   ] : [
-  //     { label: 'Registered Name', value: taxpayer.record.registered_name },
-  //     { label: 'TIN', value: taxpayer.record.tin },
-  //     { label: 'RC Number', value: taxpayer.record.registration_number },
-  //     { label: 'Phone', value: taxpayer.record.phone_no_1 },
-  //     { label: 'Email', value: taxpayer.record.email_address },
-  //     { label: 'Address', value: `${taxpayer.record.house_number} ${taxpayer.record.street_name}, ${taxpayer.record.city}` }
-  //   ];
-
-  //   details.forEach(detail => {
-  //     if (detail.value) {
-  //       const div = document.createElement('div');
-  //       div.className = 'mb-2';
-
-  //       const labelSpan = document.createElement('span');
-  //       labelSpan.className = 'font-semibold text-sm';
-  //       labelSpan.textContent = `${detail.label}: `;
-
-  //       const valueSpan = document.createElement('span');
-  //       valueSpan.className = 'text-sm';
-  //       valueSpan.textContent = detail.value;
-
-  //       div.appendChild(labelSpan);
-  //       div.appendChild(valueSpan);
-  //       container.appendChild(div);
-  //     }
-  //   });
-
-  //   document.getElementById('taxpayer-summary').classList.remove('hidden');
-  // }
-
   displayTaxpayerInfo(taxpayers) {
     const container = document.getElementById('taxpayer-details');
     const optionsContainer = document.getElementById('taxpayer-options');
@@ -406,9 +477,9 @@ class InvoiceGenerator {
     this.taxpayerData = taxpayers;
 
     // If single record, display directly
-    if (taxpayers.record) {
-      this.renderTaxpayerDetails(taxpayers);
-      this.selectedTaxpayer = taxpayers;
+    if (taxpayers.length === 1) {
+      this.renderTaxpayerDetails(taxpayers[0]);
+      this.selectedTaxpayer = taxpayers[0];
 
       document.getElementById('taxpayer-summary').classList.remove('hidden');
       return;
@@ -451,11 +522,14 @@ class InvoiceGenerator {
       radioLabel.htmlFor = `taxpayer-${index}`;
       radioLabel.className = 'text-sm';
 
-      // Create display text based on taxpayer type
-      if (taxpayer.type === 'individual') {
-        radioLabel.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+      // Determine if individual or business
+      const isIndividual = this.isIndividualTaxpayer(taxpayer);
+      const record = taxpayer.data.jtb;
+
+      if (isIndividual) {
+        radioLabel.textContent = `${record.first_name} ${record.last_name} (${record.tin})`;
       } else {
-        radioLabel.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+        radioLabel.textContent = `${record.registered_name} (${record.tin})`;
       }
 
       wrapper.appendChild(radio);
@@ -471,26 +545,29 @@ class InvoiceGenerator {
     const container = document.getElementById('taxpayer-details');
     container.innerHTML = '';
 
-    const details = taxpayer.type === 'individual' ? [
-      { label: 'Name', value: `${taxpayer.record.first_name} ${taxpayer.record.last_name}` },
-      { label: 'TIN', value: taxpayer.record.tin },
-      { label: 'Gender', value: taxpayer.record.GenderName },
-      { label: 'Date of Birth', value: this.formatDate(taxpayer.record.date_of_birth) },
-      { label: 'Phone', value: taxpayer.record.phone_no_1 },
-      { label: 'Email', value: taxpayer.record.email_address },
-      { label: 'Address', value: `${taxpayer.record.house_number} ${taxpayer.record.street_name}, ${taxpayer.record.city}` },
-      { label: 'LGA', value: taxpayer.record.LGAName },
-      { label: 'State', value: taxpayer.record.StateName }
+    const isIndividual = this.isIndividualTaxpayer(taxpayer);
+    const record = taxpayer.data.jtb;
+
+    const details = isIndividual ? [
+      { label: 'Name', value: `${record.first_name} ${record.last_name}` },
+      { label: 'TIN', value: record.tin },
+      { label: 'Gender', value: record.GenderName },
+      { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
+      { label: 'Phone', value: record.phone_no_1 },
+      { label: 'Email', value: record.email_address },
+      { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+      { label: 'LGA', value: record.LGAName },
+      { label: 'State', value: record.StateName }
     ] : [
-      { label: 'Registered Name', value: taxpayer.record.registered_name },
-      { label: 'TIN', value: taxpayer.record.tin },
-      { label: 'RC Number', value: taxpayer.record.registration_number },
-      { label: 'Phone', value: taxpayer.record.phone_no_1 },
-      { label: 'Email', value: taxpayer.record.email_address },
-      { label: 'Address', value: `${taxpayer.record.house_number} ${taxpayer.record.street_name}, ${taxpayer.record.city}` },
-      { label: 'LGA', value: taxpayer.record.LGAName },
-      { label: 'State', value: taxpayer.record.StateName },
-      { label: 'Director', value: `${taxpayer.record.director_name} (${taxpayer.record.director_phone})` }
+      { label: 'Registered Name', value: record.registered_name },
+      { label: 'TIN', value: record.tin },
+      { label: 'RC Number', value: record.registration_number },
+      { label: 'Phone', value: record.phone_no_1 },
+      { label: 'Email', value: record.email_address },
+      { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+      { label: 'LGA', value: record.LGAName },
+      { label: 'State', value: record.StateName },
+      { label: 'Director', value: `${record.director_name || ''} (${record.director_phone || ''})` }
     ];
 
     details.forEach(detail => {
@@ -537,25 +614,60 @@ class InvoiceGenerator {
   }
 
   prefillContactForm() {
-    const record = this.taxpayerData.record;
+    if (!this.taxpayerData || !this.taxpayerData[0].data || !this.taxpayerData[0].data.jtb) return;
+
+    const record = this.taxpayerData[0].data.jtb;
+
     const categorySelect = document.getElementById('category');
-    if (this.taxpayerData.type === 'individual') {
+
+    // Determine if individual or business
+    const isIndividual = this.isIndividualTaxpayer(this.taxpayerData);
+
+    if (isIndividual) {
       categorySelect.value = '2'; // 2 = Individual
     } else {
       categorySelect.value = '1'; // 1 = Company
     }
     categorySelect.dispatchEvent(new Event('change'));
 
+
+    // Fill the form fields
     document.querySelector('.payInputs[data-name="first_name"]').value =
-      this.taxpayerData.type === 'individual' ? record.first_name : record.registered_name;
+      isIndividual ? record.first_name || '' : record.registered_name || '';
     document.querySelector('.payInputs[data-name="surname"]').value =
-      this.taxpayerData.type === 'individual' ? record.last_name : '';
+      isIndividual ? record.last_name || '' : '';
     document.querySelector('.payInputs[data-name="email"]').value = record.email_address || '';
     document.querySelector('.payInputs[data-name="phone"]').value = record.phone_no_1 || '';
-
     document.querySelector('.payInputs[data-name="tin"]').value = record.tin || '';
     document.querySelector('.payInputs[data-name="address"]').value =
       `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+
+    // Set state (this is a select element)
+    const stateSelect = document.getElementById('selectState');
+    if (stateSelect && record.StateName) {
+      // Format state name: Capitalize first letter, lowercase the rest
+      const formattedState = record.StateName.charAt(0).toUpperCase() +
+        record.StateName.slice(1).toLowerCase();
+      stateSelect.value = formattedState;
+    }
+
+    // Set LGA (this is a select element)
+    const lgaSelect = document.getElementById('selectLGA');
+    if (lgaSelect && record.LGAName) {
+      // Try to find matching option
+      const options = lgaSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].text.toLowerCase() === record.LGAName.toLowerCase()) {
+          lgaSelect.value = options[i].value;
+          break;
+        }
+      }
+
+      // If no exact match found, try to set by text content
+      if (!lgaSelect.value && record.LGAName) {
+        lgaSelect.value = record.LGAName;
+      }
+    }
   }
 
   updateContactFormLayout(category) {
@@ -590,10 +702,10 @@ class InvoiceGenerator {
   addPaymentItem() {
     const container = document.getElementById('payment-items-container');
     const newItem = document.createElement('div');
-    newItem.className = 'flex items-center gap-2 mb-4';
+    newItem.className = 'flex items-center gap-2 mb-4 itemRow';
     newItem.innerHTML = `
       <div class="form-group w-8/12">
-        <select class="form-select genInv revHeadsss h-[40px]" required>
+        <select class="genInv revHeadsss" required>
           <option disabled selected>Select--</option>
         </select>
       </div>
@@ -605,7 +717,10 @@ class InvoiceGenerator {
     `;
 
     container.appendChild(newItem);
-    this.populateRevenueHeads(newItem.querySelector('.revHeadsss'));
+
+    // Get the select element and populate it
+    const selectElement = newItem.querySelector('.revHeadsss');
+    this.populateRevenueHeads(selectElement); // This will now also initialize Select2
   }
 
   validateBillingForm() {
@@ -634,12 +749,31 @@ class InvoiceGenerator {
 
   prepareInvoicePreview() {
     const category = document.querySelector('#category option:checked').textContent;
-    const items = Array.from(document.querySelectorAll('.revHeadsss')).map((select, index) => {
+    const items = Array.from(document.querySelectorAll('.revHeadsss')).map((select) => {
+      const selectizeInstance = select.selectize || (select.selectize = $(select)[0].selectize);
+      if (!selectizeInstance) return null;
+
+      const revenueHeadId = selectizeInstance.getValue();
+      if (!revenueHeadId || revenueHeadId === 'Select--') return null;
+
+      const selectedOption = selectizeInstance.options[revenueHeadId];
+      const name = selectedOption ? selectedOption.text : '';
+
+      // ✅ Find the amount input in the same row/parent
+      const amountInput = select.closest('.itemRow')?.querySelector('.amountTopay');
+      const rawValue = amountInput?.value.replace(/,/g, '') || '0';
+      const amount = parseFloat(rawValue);
+
+      if (isNaN(amount) || amount <= 0) return null;
+
       return {
-        name: select.options[select.selectedIndex].text,
-        amount: parseFloat(document.querySelectorAll('.amountTopay')[index].value.replace(/,/g, ''))
+        name,
+        amount,
+        revenue_head_id: revenueHeadId
       };
-    });
+    }).filter(item => item !== null);
+
+    // console.log(items)
 
     const total = items.reduce((sum, item) => sum + item.amount, 0);
     const description = document.getElementById('thedescripInput').value;
@@ -684,7 +818,7 @@ class InvoiceGenerator {
     payInputs.forEach(input => {
       const name = input.dataset.name;
       const previewInput = document.querySelector(`.payInputs2[data-name="${name}"]`);
-      console.log(previewInput.value, input.value);
+      // console.log(input, previewInput, name);
       if (previewInput) {
         previewInput.value = input.value;
       }
@@ -732,12 +866,22 @@ class InvoiceGenerator {
     // Get all input values
     const inputs = document.querySelectorAll('.payInputs');
     const category = document.getElementById('category').value;
+
+    const businessTypeVal = $("#businessTypeSelect").val()
+    let businessTypedata;
+
+    if (businessTypeVal) {
+      businessTypedata = this.flatBusinessTypes.find(ee => ee.business_type_name === businessTypeVal)
+    }
     const formData = {
       endpoint: "createPayerAccount",
       data: {
         verification_status: "pending",
         img: "assets/img/userprofile.png",
         category: category,
+        "business_type_id": businessTypedata ? businessTypedata.business_type_id : null,
+        "industry": businessTypedata ? businessTypedata.industry_name : null,
+        "business_type": $("#businessTypeSelect").val() || null,
         created_by: "self",
         by_account: null
       }
@@ -745,7 +889,10 @@ class InvoiceGenerator {
 
     // Add all form data
     inputs.forEach(input => {
-      formData.data[input.dataset.name] = input.value.trim();
+      if (input.dataset.name) {
+        formData.data[input.dataset.name] = input.value.trim();
+      }
+
     });
 
     // Handle empty email case
@@ -777,11 +924,21 @@ class InvoiceGenerator {
     const revHeadSelects = document.querySelectorAll('.revHeadsss');
     const amountInputs = document.querySelectorAll('.amountTopay');
 
-    revHeadSelects.forEach((select, index) => {
-      paymentItems.push({
-        revenue_head_id: select.value,
-        amount: parseFloat(amountInputs[index].value.replace(/,/g, ''))
-      });
+    $('.amountTopay').each(function () {
+      const amountValue = parseFloat($(this).val().replace(/,/g, ''));
+
+      // find the revHeadsss in the same row/container
+      const $select = $(this).closest('.itemRow').find('.revHeadsss');
+      // ^ adjust `tr` to whatever parent wrapper you’re using
+
+      if ($select.length && $select[0].selectize) {
+        const selectedValue = $select[0].selectize.getValue();
+
+        paymentItems.push({
+          revenue_head_id: selectedValue,
+          amount: amountValue
+        });
+      }
     });
 
     // Prepare invoice data

@@ -132,10 +132,10 @@ class CustomerValidation {
     try {
       const response = await this.fetchTaxpayer(method, value);
 
-      if (response.status === 'error') {
+      if (response.status === 'error' || response.data.length === 0) {
         this.handleTaxpayerNotFound();
       } else {
-        this.displayTaxpayerInfo(response.data); // response.data is now the object
+        this.displayTaxpayerInfo(response.data); // response.data is now an array
       }
 
     } catch (error) {
@@ -151,7 +151,7 @@ class CustomerValidation {
   }
 
   async fetchTaxpayer(method, value) {
-    const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
+    const url = `${this.apiBaseUrl}/get-taxpayer?search=${encodeURIComponent(value)}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -176,7 +176,7 @@ class CustomerValidation {
     });
   }
 
-  displayTaxpayerInfo(taxpayerData) {
+  displayTaxpayerInfo(taxpayers) {
     // Show the summary section
     this.taxpayerSummary.classList.remove('hidden');
 
@@ -184,9 +184,14 @@ class CustomerValidation {
     this.taxpayerOptions.innerHTML = '';
     this.taxpayerDetails.innerHTML = '';
 
-    // Render the single taxpayer details
-    this.renderTaxpayerDetails(taxpayerData);
-    this.selectedTaxpayer = taxpayerData;
+    if (taxpayers.length === 1) {
+      // Single taxpayer found
+      this.renderTaxpayerDetails(taxpayers[0]);
+      this.selectedTaxpayer = taxpayers[0];
+    } else {
+      // Multiple taxpayers found
+      this.renderTaxpayerOptions(taxpayers);
+    }
   }
 
   renderTaxpayerOptions(taxpayers) {
@@ -223,10 +228,15 @@ class CustomerValidation {
       label.htmlFor = `taxpayer-${index}`;
       label.className = 'text-sm';
 
-      if (taxpayer.type === 'individual') {
-        label.textContent = `${taxpayer.record.first_name} ${taxpayer.record.last_name} (${taxpayer.record.tin})`;
+      // Determine if individual or business
+      const isIndividual = this.isIndividualTaxpayer(taxpayer);
+      
+      if (isIndividual) {
+        const record = taxpayer.data.jtb;
+        label.textContent = `${record.first_name} ${record.last_name} (${record.tin})`;
       } else {
-        label.textContent = `${taxpayer.record.registered_name} (${taxpayer.record.tin})`;
+        const record = taxpayer.data.jtb;
+        label.textContent = `${record.registered_name} (${record.tin})`;
       }
 
       div.appendChild(input);
@@ -237,14 +247,22 @@ class CustomerValidation {
     this.taxpayerOptions.appendChild(optionsDiv);
   }
 
+  isIndividualTaxpayer(taxpayer) {
+    // Check if this is an individual by looking for individual-specific fields
+    return taxpayer.data.jtb && 
+           (taxpayer.data.jtb.first_name !== undefined && 
+            taxpayer.data.jtb.first_name !== null);
+  }
+
   renderTaxpayerDetails(taxpayer) {
     this.taxpayerDetails.innerHTML = '';
 
-    if (taxpayer.type === 'individual') {
-      const record = taxpayer.record;
+    const isIndividual = this.isIndividualTaxpayer(taxpayer);
+    const record = taxpayer.data.jtb;
 
+    if (isIndividual) {
       const details = [
-        { label: 'Full Name', value: `${record.Title} ${record.first_name} ${record.middle_name || ''} ${record.last_name}` },
+        { label: 'Full Name', value: `${record.Title || ''} ${record.first_name || ''} ${record.middle_name || ''} ${record.last_name || ''}`.trim() },
         { label: 'TIN', value: record.tin },
         { label: 'Gender', value: record.GenderName },
         { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
@@ -252,7 +270,7 @@ class CustomerValidation {
         { label: 'Occupation', value: record.Occupation },
         { label: 'Phone Number', value: record.phone_no_1 },
         { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'Address', value: `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim() },
         { label: 'LGA', value: record.LGAName },
         { label: 'State', value: record.StateName },
         { label: 'Tax Authority', value: record.TaxAuthorityName },
@@ -264,9 +282,6 @@ class CustomerValidation {
         }
       });
     } else {
-      console.log(taxpayer)
-      const record = taxpayer.record;
-
       const details = [
         { label: 'Registered Name', value: record.registered_name },
         { label: 'Trade Name', value: record.main_trade_name },
@@ -275,15 +290,15 @@ class CustomerValidation {
         { label: 'Organization Type', value: record.org_type_name },
         { label: 'Phone Number', value: record.phone_no_1 },
         { label: 'Email', value: record.email_address },
-        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'Address', value: `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim() },
         { label: 'LGA', value: record.LGAName },
         { label: 'State', value: record.StateName },
         { label: 'Date of Incorporation', value: this.formatDate(record.date_of_incorporation) },
-        { label: 'Director', value: `${record.director_name} (${record.director_phone})` },
+        { label: 'Director', value: `${record.director_name || ''} (${record.director_phone || ''})`.trim() },
       ];
 
       details.forEach(detail => {
-        if (detail.value) {
+        if (detail.value && detail.value !== ' ()' && detail.value !== 'null') {
           this.addDetailRow(detail.label, detail.value);
         }
       });
@@ -310,7 +325,12 @@ class CustomerValidation {
   proceedToNextStep() {
     // Store the taxpayer data for use in the next steps
     if (this.selectedTaxpayer) {
-      sessionStorage.setItem('taxpayerData', JSON.stringify(this.selectedTaxpayer));
+      // Add a type property to maintain compatibility with existing code
+      const taxpayerWithType = {
+        ...this.selectedTaxpayer,
+        type: this.isIndividualTaxpayer(this.selectedTaxpayer) ? 'individual' : 'business'
+      };
+      sessionStorage.setItem('taxpayerData', JSON.stringify(taxpayerWithType));
     }
 
     // Hide the validation form and show the next section
@@ -325,7 +345,8 @@ class CustomerValidation {
 
   prefillNextForm() {
     const taxpayer = this.selectedTaxpayer;
-    const record = taxpayer.record;
+    const isIndividual = this.isIndividualTaxpayer(taxpayer);
+    const record = taxpayer.data.jtb;
 
     // Set state and LGA if available in your form
     if (document.getElementById('selectState')) {
@@ -341,7 +362,6 @@ class CustomerValidation {
 
       document.getElementById('selectState').value = formattedState;
 
-
       let lgaSelector = document.querySelector('#selectLGA')
       if (lgaList2[formattedState]) {
         lgaSelector.innerHTML = '<option>--Select LGA--</option>'
@@ -355,14 +375,12 @@ class CustomerValidation {
       document.querySelector('.regInputs[data-name="lga"]').value = formattedLGA
     }
 
-    if (taxpayer.type === 'individual') {
+    if (isIndividual) {
       document.querySelector('.regInputs[data-name="first_name"]').value = record.first_name || '';
       document.querySelector('.regInputs[data-name="surname"]').value = record.last_name || '';
       document.querySelector('.regInputs[data-name="email"]').value = record.email_address || '';
       document.querySelector('.regInputs[data-name="phone"]').value = record.phone_no_1 || '';
       document.querySelector('.regInputs[data-name="tin"]').value = record.tin || '';
-
-
 
       document.querySelector('.regInputs[data-name="address"]').value =
         `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();

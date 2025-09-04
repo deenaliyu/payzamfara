@@ -89,6 +89,7 @@ function getStartedInvoice(theUrl) {
           return formatMoney(parseFloat(data));
         }
       },
+      { data: 'description' },
       { data: 'date_created' },
       { data: 'due_date' },
       {

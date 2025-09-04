@@ -597,7 +597,7 @@ function generateInv(revid) {
       let price = document.getElementById('swal-input1').value
       try {
         const response = await fetch(
-          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${revid}&price=${price}`
+          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=${revid}&price=${price}&zonalOffice=8&lga=Not Assigned&invoice_type=invoice`
         );
         if (!response.ok) {
           throw new Error(response.statusText);
