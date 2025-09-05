@@ -102,6 +102,18 @@ function getStartedInvoice(theUrl) {
   });
 }
 
+function addOneDay(dateString) {
+  let date = new Date(dateString);
+
+  date.setDate(date.getDate() + 1);
+
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, "0");
+  let day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 async function filterTheInvoice() {
   try {
     $("#msg_boxer").html(`
@@ -131,23 +143,10 @@ async function filterTheInvoice() {
     let fromDateInput = document.querySelector("#fromDateInput").value
     let toDateInput = document.querySelector("#toDateInput").value
 
-    if (selRevv === "") {
-
-    } else {
-      obj.revenue_head = selRevv === "" ? '' : selRevv
-    }
-
-    if (selectedMda === "") {
-
-    } else {
-      obj.mda_id = selectedMda
-    }
-
-    if (listOfchannel === "") {
-
-    } else {
-      obj.payment_channel = listOfchannel
-    }
+    obj.revenue_head = selRevv === "" ? '' : selRevv
+    obj.mda_id = selectedMda === "" ? '' : selectedMda
+    obj.payment_channel = listOfchannel === "" ? '' : listOfchannel
+    obj.timeIn_end = toDateInput === "" ? '' : addOneDay(toDateInput)
 
     const urlParam = new URLSearchParams(obj).toString()
 

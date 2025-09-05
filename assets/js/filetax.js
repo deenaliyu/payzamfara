@@ -387,16 +387,27 @@ function proceedToFile() {
         }
 
         // No unpaid invoices; allow filing
-        await Swal.fire({
+        const { isConfirmed, isDenied } = await Swal.fire({
           icon: 'success',
           title: 'All clear!',
           text: 'You have no unpaid invoices. You can proceed to file your tax.',
           confirmButtonText: 'Proceed',
-          confirmButtonColor: '#015826'
+          confirmButtonColor: '#015826',
+          showDenyButton: true,
+          denyButtonText: 'Apply for ETCC',
+          denyButtonColor: '#AB0304'
         });
 
-        // Advance to next step in the wizard if available
-        try { nextPrev(1); } catch (e) {}
+        // Handle button clicks
+        if (isConfirmed) {
+          try {
+            nextPrev(1);
+          } catch (e) {
+            console.error("Error advancing wizard:", e);
+          }
+        } else if (isDenied) {
+          window.location.href = "./etcc-initiate.html"; // change to your desired route
+        }
       } catch (err) {
         Swal.fire({
           icon: 'error',

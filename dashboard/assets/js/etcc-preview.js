@@ -42,6 +42,8 @@ async function getEtccDetails() {
 
     let theEtcDetail = etccDetail.message[0]
 
+    let theYearHere = new Date(theEtcDetail.date_approved)
+
     $("#previewCard").html(`
       <div class="invoicetop"></div>
 
@@ -145,7 +147,7 @@ async function getEtccDetails() {
         <table>
           <tr>
             <th class="text-black fontBold pr-4">Source of Income:</th>
-            <td>${theEtcDetail.occupation === "" ? '-' : theEtcDetail.occupation}</td>
+            <td>${theEtcDetail.occupation || 'N/A'}</td>
           </tr>
           <tr>
             <th class="text-black fontBold pr-4">Expiry Date:</th>
