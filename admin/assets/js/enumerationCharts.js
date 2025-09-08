@@ -80,59 +80,111 @@ async function getEnumerationCategoryDashboard() {
     })
     $("#theTotal").html(tt)
     $("#total1").html(tt)
-    data[0].forEach((guage, i) => {
-      if (guage.tax_category !== null) {
-        GuageChart(guage.count, guage.tax_category)
-        document.querySelectorAll(".countss")[i].textContent = guage.count
-        document.querySelectorAll(".percent")[i].textContent = calculatePercentage(parseInt(guage.count), tt) + "%"
+    // Plot donut pie chart for TOTAL TAXPAYER ENUMERATED (BY CATEGORY)
+    // Sample data: [{category: "Individual", count: "1333"}, {category: "Corporate", count: "261"}]
+    const donutLabels = data[0].map(item => item.category);
+    const donutData = data[0].map(item => parseInt(item.count));
+    const donutColors = ['#63B967', '#EA4335', '#3A37D0', '#7AD0C7', '#005826', '#242424'];
+
+    const donutCtx = document.getElementById("taxPayerEnum").getContext('2d');
+
+    new Chart(donutCtx, {
+      type: 'doughnut',
+      data: {
+        labels: donutLabels,
+        datasets: [{
+          label: "TOTAL TAXPAYER ENUMERATED (BY CATEGORY)",
+          data: donutData,
+          backgroundColor: donutColors
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: "right",
+            align: "middle"
+          }
+        }
       }
+    });
 
-    })
-
-    // TOTAL TAXPAYER ENUMERATED
-
-    let obj = {
-      "Formal": "formalTax",
-      "Informal": "inFormaltax",
-      "Presumptive tax": "PresumptiveTax"
-    }
-
-    let tt2 = 0
-    data[3].forEach((guage, i) => {
-      tt2 += parseInt(guage.number)
-    })
-    $("#total2").html(tt2)
-    data[3].forEach((guage, i) => {
-      if (guage.category !== null) {
-        GuageChart(guage.number, obj[guage.category])
-        document.querySelectorAll(".countss2")[i].textContent = guage.number
-        document.querySelectorAll(".percent2")[i].textContent = parseInt(calculatePercentage(parseInt(guage.number), tt2)) + "%"
+    // TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS) - Use horizontal bar chart
+    let agentLabels = data[1].map(dta => dta.enumerator_name);
+    let agentCounts = data[1].map(dta => parseInt(dta.count));
+    const agentBarCtx = document.getElementById("totalTaxPayer").getContext('2d');
+    new Chart(agentBarCtx, {
+      type: 'bar',
+      data: {
+        labels: agentLabels,
+        datasets: [{
+          label: "TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)",
+          data: agentCounts,
+          backgroundColor: '#015826'
+        }]
+      },
+      options: {
+        indexAxis: 'x',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Taxpayers Registered" }
+          },
+          x: {
+            title: { display: true, text: "Field Agent" }
+          }
+        }
       }
+    });
 
-    })
+    // TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE - Use bubble chart
+    let labels = data[2].map(dta => {
+      let name = dta.business_type || "Unknown";
+      return name.length > 20 ? name.substring(0, 20) + "..." : name;
+    });
 
-    // TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)
-    let labelss = []
-    let numberrs = []
-    data[1].forEach(dta => {
-      labelss.push(dta.by_account)
-      numberrs.push(parseInt(dta.count))
-    })
+    let values = data[2].map(dta => parseInt(dta.count));
 
-    // console.log(labelss)
-    pieCharts(labelss, "TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)", numberrs, "totalTaxPayer")
-
-    // TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE
-    let labelss2 = []
-    let numberrs2 = []
-    data[2].forEach(dta => {
-      if (dta.business_type !== "") {
-        labelss2.push(dta.business_type)
-        numberrs2.push(parseInt(dta.count))
+    const ctx = document.getElementById("totalRegis").getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: "TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE",
+          data: values,
+          backgroundColor: "#3A37D0"
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y', // horizontal bar
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                // Always show the full name + value in tooltip
+                let fullName = data[2][context.dataIndex].business_type;
+                let value = context.raw;
+                return `${fullName}: ${value}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { beginAtZero: true }
+        }
       }
+    });
 
-    })
-    pieCharts(labelss2, "TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE", numberrs2, "totalRegis")
 
   } catch (error) {
     console.log(error)
@@ -178,66 +230,6 @@ function pieCharts(labels, title, theData, theId) {
 }
 
 // pieCharts(["Commercial", "Education", "Pool Betting", "Hospitality", "Retail", "Legal"], "TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE", [100, 130, 120, 70, 200, 230], "totalRegis")
-
-function GuageChart(valuee, theId) {
-  var chartDom = document.getElementById(theId);
-  var myChart = echarts.init(chartDom);
-  var option;
-
-  option = {
-    series: [
-      {
-        type: 'gauge',
-        progress: {
-          show: true,
-          width: 5
-        },
-        axisLine: {
-          // show: false,
-          lineStyle: {
-            width: 5
-          }
-        },
-        axisTick: {
-          show: false
-        },
-        splitLine: {
-          show: false
-        },
-        axisLabel: {
-          show: false
-        },
-        anchor: {
-          show: false,
-        },
-        title: {
-          show: false
-        },
-        detail: {
-          show: false,
-        },
-        pointer: {
-          show: false
-        },
-        data: [
-          {
-            value: valuee
-          }
-        ]
-      }
-    ]
-  };
-
-  option && myChart.setOption(option);
-}
-
-// GuageChart(70, "individual")
-// GuageChart(20, "corporate")
-// GuageChart(10, "properties")
-
-// GuageChart(70, "formalTax")
-// GuageChart(20, "inFormaltax")
-// GuageChart(10, "PresumptiveTax")
 
 
 function barCharts(labels, title, theData, theId) {
@@ -388,8 +380,8 @@ function barChartsColored(labels, title, theData, theId) {
 
 }
 
-barChartsColored(["Dan", "Okon", "Ali", "Samu", "Nike"], "Total Taxpayers Enumerated", [250, 200, 280, 100, 50], "lest5Agents")
-barChartsColored(["Basheer", "Jasmine", "Kachi", "Cynthia", "Madu"], "Total Taxpayers Enumerated", [100, 150, 180, 200, 130], "top5Agents")
+// barChartsColored(["Dan", "Okon", "Ali", "Samu", "Nike"], "Total Taxpayers Enumerated", [250, 200, 280, 100, 50], "lest5Agents")
+// barChartsColored(["Basheer", "Jasmine", "Kachi", "Cynthia", "Madu"], "Total Taxpayers Enumerated", [100, 150, 180, 200, 130], "top5Agents")
 
 // lineCharts(months, "Total Taxpayers Enumerated", [250, 200, 280, 100, 120, 100, 150, 170, 180, 200, 130, 110], "totalTaxEnummm")
 // function doughnutCharts(labels, title, theData, theId) {

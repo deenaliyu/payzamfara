@@ -163,14 +163,14 @@ async function fetchEnutaxP() {
       <td><a class="text-primary" href="./taxpayerlist.html?id=${txpayer.id}&enumerated=true">${txpayer.tax_number}</a></td>
       <td>${txpayer.first_name} ${txpayer.last_name}</td>
       <td>${txpayer.email}</td>
-      <td>${txpayer.account_type}</td>
-      <td>${txpayer.fullname}</td>
-      <td>${txpayer.tin}</td>
+      <td>${txpayer.category}</td>
+      <td>${txpayer.enumerator_name}</td>
+      <td>${txpayer.tin || 'N/A'}</td>
       <td>
-      ${txpayer.tin_status === "Verified" ? `
-       <div class="badge bg-success">${txpayer.tin_status}</div>
+      ${txpayer.verification_status === "1" ? `
+       <div class="badge bg-success">verified</div>
       ` : `
-        <div class="badge bg-danger">${txpayer.tin_status}</div>
+        <div class="badge bg-danger">unverified</div>
       `}
         
       </td>

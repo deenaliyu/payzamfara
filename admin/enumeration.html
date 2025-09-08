@@ -177,84 +177,22 @@
 
                       <div class="row gy-4 mt-4">
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="card card-body">
                             <div class="card-title text-[#000]">TOTAL TAXPAYER ENUMERATED</div>
                             <p class="text-sm text-gray-400 -mt-4">By taxpayer category</p>
                             <p class="text-lg mt-2 text-center"><span class="fontBold text-[#000]">Total:</span> <span
                                 class="fontBold text-[#67C871]" id="total1">-</span></p>
 
-                            <div class="row gap-3 mt-6">
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">Individual</p>
-                                <div id="individual" class="theChart2"></div>
-
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss">-</p>
-                                  <p class="text-center text-xs percent">-</p>
-                                </div>
-                              </div>
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">Corporate</p>
-                                <div id="corporate" class="theChart2"></div>
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss">-</p>
-                                  <p class="text-center text-xs percent">-</p>
-                                </div>
-                              </div>
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">Properties</p>
-                                <div id="properties" class="theChart2"></div>
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss">-</p>
-                                  <p class="text-center text-xs percent">-</p>
-                                </div>
-                              </div>
+                            <div class="theChart mt-5">
+                              <canvas id="taxPayerEnum"></canvas>
                             </div>
 
 
                           </div>
                         </div>
 
-                        <div class="col-md-6">
-                          <div class="card card-body">
-                            <div class="card-title text-[#000]">TOTAL TAXPAYER ENUMERATED</div>
-                            <p class="text-sm text-gray-400 -mt-4">By tax category</p>
-                            <p class="text-lg mt-2 text-center"><span class="fontBold text-[#000]">Total:</span> <span
-                                class="fontBold text-[#67C871]" id="total2">-</span></p>
-
-                            <div class="row gap-3 mt-6">
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">Formal Tax</p>
-                                <div id="formalTax" class="theChart2"></div>
-
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss2">-</p>
-                                  <p class="text-center text-xs percent2">-</p>
-                                </div>
-                              </div>
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">In-Formal Tax</p>
-                                <div id="inFormaltax" class="theChart2"></div>
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss2">-</p>
-                                  <p class="text-center text-xs percent2">-</p>
-                                </div>
-                              </div>
-                              <div class="w-[120px]">
-                                <p class="text-xs text-center">Presumptive Tax</p>
-                                <div id="PresumptiveTax" class="theChart2"></div>
-                                <div>
-                                  <p class="fontBold text-center text-[#67C871] countss2">-</p>
-                                  <p class="text-center text-xs percent2">-</p>
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="card card-body">
                             <div class="card-title text-[#000]">TOTAL TAXPAYERS REGISTERED (BY FIELD AGENTS)</div>
 
@@ -265,11 +203,11 @@
                           </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="card card-body">
                             <div class="card-title text-[#000]">TOTAL TAXPAYER ENUMERATED BY BUSINESS TYPE</div>
 
-                            <div class="theChart">
+                            <div class="theChart" style="height: 700px;">
                               <canvas id="totalRegis"></canvas>
                             </div>
 
@@ -298,7 +236,7 @@
                           </div>
                         </div> -->
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                           <div class="card card-body">
                             <div class="card-title text-[#000]">LEAST 5 performing agents</div>
 
@@ -307,7 +245,7 @@
                             </div>
 
                           </div>
-                        </div>
+                        </div> -->
 
                         <!-- <div class="col-md-6">
                           <div class="card card-body">
@@ -321,7 +259,7 @@
                           </div>
                         </div> -->
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                           <div class="card card-body">
                             <div class="card-title text-[#000]">TOP 5 performing agents</div>
 
@@ -330,7 +268,7 @@
                             </div>
 
                           </div>
-                        </div>
+                        </div> -->
 
                       </div>
                     </div>
@@ -398,7 +336,6 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="assets/js/adminDash.js"></script>
   <script>
     let theAtivo = document.querySelector(`.enu`);
     theAtivo.parentElement.classList.add("active");
@@ -410,7 +347,6 @@
 
   <!-- Main JS -->
   <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/dashboard.js"></script>
   <script src="./assets/js/enumerationCharts.js"></script>
   <script src="./assets/js/accessLevel.js?v=1.2"></script>
 
