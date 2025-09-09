@@ -66,18 +66,18 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black" id="datei">-</p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Profile</h1>
+              <p class="text-sm text-black datei">-</p>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Enumeration</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5">
-              <div class="input-group input-group-merge md:w-72 hidden md:flex">
+              <!-- <div class="input-group input-group-merge md:w-72 hidden md:flex">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
                   aria-describedby="basic-addon-search31">
-              </div>
-              <a href="../generateinvoice.html" class="button ">
-                <iconify-icon icon="ic:baseline-plus"></iconify-icon>Generate Invoice</a>
+              </div> -->
+              <!-- <a href="../generateinvoice.html" class="button ">
+                <iconify-icon icon="ic:baseline-plus"></iconify-icon>Generate Invoice</a> -->
 
               <iconify-icon icon="mdi:bell-notification" data-bs-toggle="modal" data-bs-target="#notiModal"
                 class="hidden md:flex cursor-pointer text-[#005826]" width="32" height="32"></iconify-icon>
@@ -97,18 +97,20 @@
 
           <div class="container-xxl flex-grow-1 container-p-y">
             <div class="flex align-items-center gap-1 mb-3">
-                <a type="button" style='color: #005826; font-weight: 500;' onclick="history.back()">Back to
-                  New Agent</a>
-              </div>
+              <a type="button" style='color: #005826; font-weight: 500;' onclick="history.back()">Back to
+                New Agent</a>
+            </div>
+
             <div class="card px-4">
+
               <div class="p-4 flex gap-x-3">
                 <div class="avatar avatar-online">
-                  <img src="./assets/img/userprofile.png" id="theProfImg" alt
+                  <img src="./assets/img/userprofile.png" alt
                     class="h-[70px] w-[70px] rounded-circle" />
                 </div>
                 <div class="mainInfo">
-                  <h4 class="text-[18px] text-[#2E2F5B]">-</h4>
-                  <p class="text-[14px] text-[#667085] pt-2">Payer ID: -</p>
+                  <h4 class="text-[18px] text-[#2E2F5B]" id="thenameOfAgent">-</h4>
+                  <p class="text-[14px] text-[#667085] pt-2">Agent ID: <span id="enumId"></span></p>
                 </div>
               </div>
               <ul class="nav nav-pills mb-3 flex md:gap-x-10 pt-2" id="pills-tab" role="tablist">
@@ -118,12 +120,12 @@
                     User Information
                   </button>
                 </li>
-                <li class="nav-item text-center" role="presentation">
+                <!-- <li class="nav-item text-center" role="presentation">
                   <button class="nav-link" id="pills-basic-tab" data-bs-toggle="pill" data-bs-target="#pills-basic"
                     type="button" role="tab" aria-controls="pills-basic" aria-selected="false">
                     Change Password
                   </button>
-                </li>
+                </li> -->
               </ul>
               <div class="tab-content" id="pills-tabContent">
 
@@ -136,14 +138,14 @@
                         <p class="w-[221px] text-[#101828]">This will be displayed on your
                           profile</p>
                         <div class="avatar avatar-online">
-                          <img src="./assets/img/userprofile.png" id="theProfImg2" alt
+                          <img src="./assets/img/userprofile.png" id="" alt
                             class="h-[70px] w-[70px] rounded-circle" />
                         </div>
                       </div>
                       <div class="flex gap-x-2">
-                        <button class="text-[#101828] text-[16px]" id="openUpload">Update picture</button>
+                        <!-- <button class="text-[#101828] text-[16px]" id="openUpload">Update picture</button>
                         <input type="file" class="hidden" accept=".png, .jpg" onchange="profileChanged()"
-                          id="profile_picIn" />
+                          id="profile_picIn" /> -->
                         <!-- <button class="text-[#101828] text-[16px]">Delete</button> -->
                       </div>
                     </div>
@@ -160,57 +162,57 @@
                     <hr class="text-[#F4F4F4] my-3">
 
                     <form action="">
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="defaultSelect" class="form-label">Name of User <span
-                                        class="text-[red]">*</span></label>
-                                <input required type="text" class="form-control userInputs"
-                                    data-name="fullname" placeholder="Enter Full Name.." />
-                            </div>
-                            <div class="col mb-3">
-                                <label for="defaultSelect" class="form-label">Email Address <span
-                                        class="text-[red]">*</span></label>
-                                <input required type="email" class="form-control userInputs"
-                                    data-name="email" id="email" placeholder="Email address" />
-                            </div>
+
+                      <div class="row">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label">Name of User <span
+                              class="text-[red]">*</span></label>
+                          <input required type="text" class="form-control userInputs" data-name="fullname"
+                            placeholder="Enter Full Name.." />
                         </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="defaultSelect" class="form-label">Phone Number <span
-                                        class="text-[red]">*</span></label>
-                                <input required type="number" class="form-control userInputs"
-                                    data-name="phone" placeholder="Phone Number" />
-                            </div>
-                            <div class="col mb-3">
-                                <label>State</label>
-                                <select class="form-select mt-1 regInputs" id="selectState"
-                                    data-name="state" required>
-                                    <option value="Zamfara">Zamfara</option>
-                                </select>
-                            </div>
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label">Email Address <span
+                              class="text-[red]">*</span></label>
+                          <input required type="email" class="form-control userInputs" data-name="email" id="email"
+                            placeholder="Email address" />
                         </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                label>Local Govt</label>
-                                <select class="form-select mt-1 regInputs" id="selectLGA"
-                                    data-name="lga" required>
-                                    <option selected disabled>--Select LGA--</option>
-                                </select>
-                            </div>
-                            <div class="col mb-3">
-                                <label for="defaultSelect" class="form-label">Address<span
-                                        class="text-[red]">*</span></label>
-                                <input required type="number" class="form-control userInputs"
-                                    data-name="phone" placeholder="Phone Number" />
-                            </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label">Phone Number <span
+                              class="text-[red]">*</span></label>
+                          <input required type="number" class="form-control userInputs" data-name="phone"
+                            placeholder="Phone Number" />
                         </div>
-                        <div class="flex justify-center mt-4">
-                            <button id="createAgent"
-                                class="btn btn-primary rounded-xl mt-2 w-4/12">Create</button>
+                        <div class="col mb-3">
+                          <label>State</label>
+                          <select class="form-select mt-1 userInputs" id="STATE" data-name="state" required>
+                            <option value="Zamfara">Zamfara</option>
+                          </select>
                         </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col mb-3">
+                          <label>Local Govt</label>
+                          <select class="form-select mt-1 userInputs" id="LGAs2" data-name="lga" required>
+                            <option selected disabled>--Select LGA--</option>
+                          </select>
+                        </div>
+                        <div class="col mb-3">
+                          <label for="defaultSelect" class="form-label">Address<span class="text-[red]">*</span></label>
+                          <input required type="text" class="form-control userInputs" data-name="address"
+                            placeholder="Address" />
+                        </div>
+                      </div>
+
+                      <div class="flex justify-center mt-4">
+                        <button id="theButton" type="button" class="btn btn-primary rounded-xl mt-2 w-4/12" onclick="updateUser()">Update</button>
+                      </div>
 
 
-                        <div id="msg_box"></div>
+                      <div id="msg_box"></div>
                     </form>
 
 
@@ -218,11 +220,11 @@
                   </div>
                 </div>
 
-                <div class="tab-pane fade" id="pills-basic" role="tabpanel" aria-labelledby="pills-basic-tab">
-                    <div class="border border-gray-500 rounded-md flex justify-between md:w-[252px] w-full mb-2 p-2">
-                        <p class="text-gray-500">david@124[[</p>
-                        <iconify-icon icon="iconoir:copy" width="24" height="24"></iconify-icon>
-                    </div>
+                <!-- <div class="tab-pane fade" id="pills-basic" role="tabpanel" aria-labelledby="pills-basic-tab">
+                  <div class="border border-gray-500 rounded-md flex justify-between md:w-[252px] w-full mb-2 p-2">
+                    <p class="text-gray-500">david@124[[</p>
+                    <iconify-icon icon="iconoir:copy" width="24" height="24"></iconify-icon>
+                  </div>
                   <div class="flex justify-between md:w-[550px] mb-3 items-center gap-3">
                     <label class="w-[195px]">New Password</label>
                     <div class="form-group md:w-[454px] w-full">
@@ -244,7 +246,7 @@
                   <div id="msg_box2" class="w-full"></div>
                   <button class="button mt-4" id="updatePass">Update Password</button>
 
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -316,11 +318,7 @@
   <!-- Main JS -->
 
   <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/userprofile.js"></script>
-  <!-- Page JS -->
-
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="./assets/js/viewagent.js"></script>
 </body>
 
 </html>

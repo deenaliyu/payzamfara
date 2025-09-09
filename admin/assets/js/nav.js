@@ -1,13 +1,13 @@
 function hardRefresh() {
-    // This will reload the page and bypass the cache, similar to a hard refresh
-    window.location.reload(true);
+  // This will reload the page and bypass the cache, similar to a hard refresh
+  window.location.reload(true);
 }
 // hardRefresh();
 let HOST = "https://payzamfara.com/php/index.php";
 // let HOST = "https://useibs.com/payzamfara/php/index.php";
 let userInfo2 = JSON.parse(window.localStorage.getItem("adminDataPrime"));
 
-document.title="Payzamfara";
+document.title = "Payzamfara";
 
 $(".aside").html(`
 <div class="app-brand demo">
@@ -292,19 +292,19 @@ $(".datem").html(currentDate.toLocaleDateString());
 let logoutTimeout;
 
 function startLogoutTimer() {
-    // Set the timeout to 10 minutes (600,000 milliseconds)
-    logoutTimeout = setTimeout(logout, 1800000);
+  // Set the timeout to 10 minutes (600,000 milliseconds)
+  logoutTimeout = setTimeout(logout, 1800000);
 }
 
 function resetLogoutTimer() {
-    clearTimeout(logoutTimeout);
-    startLogoutTimer();
+  clearTimeout(logoutTimeout);
+  startLogoutTimer();
 }
 
 function logout() {
   localStorage.removeItem("adminDataPrime");
-    // alert('You have been logged out due to inactivity.');
-    window.location.href = "./index.html";
+  // alert('You have been logged out due to inactivity.');
+  window.location.href = "./index.html";
 }
 
 // Attach event listeners to reset the logout timer on user activity
@@ -1309,7 +1309,7 @@ if (stateSelect2) {
 }
 
 function convertNumberToWords(amount) {
-    const ones = [
+  const ones = [
     "",
     "One",
     "Two",

@@ -27,7 +27,7 @@ async function getEnumerators() {
 
             <button href=""><iconify-icon icon="material-symbols:delete-outline-rounded"
                 style="font-size: 20px;"></iconify-icon></button>
-            <a href="viewagent.html"><iconify-icon icon="material-symbols:edit-square-outline"
+            <a href="viewagent.html?id=${txpayer.id}"><iconify-icon icon="material-symbols:edit-square-outline"
                 style="font-size: 20px;"></iconify-icon></a>
           </div>
           `
