@@ -34,6 +34,12 @@
       padding-bottom: 0px;
       font-size: 14px;
     }
+
+    .required::after {
+      content: "*";
+      color: red;
+      margin-left: 2px;
+    }
   </style>
 </head>
 
@@ -192,14 +198,14 @@
             <div class="flex gap-3 md:flex-row flex-col mb-3">
 
               <div class="form-group md:w-6/12">
-                <label for="">Type of Business*</label>
+                <label for="" class="required">Type of Business</label>
                 <select class="form-select enumInputB" id="busiType" data-name="business_type" required>
                   <option value="">Select ---</option>
                 </select>
               </div>
 
               <div class="form-group md:w-6/12">
-                <label for="">Category*</label>
+                <label for="" class="required">Category</label>
                 <select class="form-select enumInputB" data-name="business_category" required id="business_category">
                   <option value=""></option>
                   <option value="Trading">Trading</option>
@@ -211,14 +217,21 @@
 
             </div>
 
-            <div class="form-group mt-4">
-              <label for="">Staff Quota*</label>
+            <div class="form-group mt-4 mb-3">
+              <label for="" class="required">Staff Quota</label>
               <select class="form-select enumInputB" data-name="staff_quota" required id="staffQuota">
-                <option value=""></option>
+                <option value="">Select ---</option>
                 <option value="1-5">1-5 Staff</option>
                 <option value="6-20">6-20 Staff</option>
                 <option value="21">21+ Staff</option>
               </select>
+            </div>
+
+            <div class="form-group mb-2">
+              <label for="" class="required">Tax Liability</label>
+              <input type="number" min="1000" class="form-control mainAmountInput enumInputB" placeholder="Enter Amount"
+                required>
+              <small class="text-danger d-none" id="amountError">Amount must be at least 1000</small>
             </div>
 
             <div class="form-group mb-3 mt-1">
@@ -247,7 +260,7 @@
             <!-- <div id="businessCnt" class="mt-2"></div> -->
 
             <div class="form-group mb-3">
-              <label for="description">Description*</label>
+              <label for="description" class="required">Description</label>
               <input type="text" class="form-control genInv" id="thedescripInput" required>
             </div>
 

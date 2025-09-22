@@ -80,7 +80,7 @@ async function updateStatus(id, status) {
         }).then((result) => {
           if (result.isConfirmed) {
             // Logic to generate the invoice
-            generateInvoiceNum(thedetailss.tax_number, thedetailss.monthly_tax_payable);
+            generateInvoiceNum(thedetailss.tax_number, parseFloat(thedetailss.monthly_tax_payable) * 12);
           }
         });
       } else {

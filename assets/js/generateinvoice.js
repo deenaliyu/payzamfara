@@ -115,12 +115,12 @@ class InvoiceGenerator {
 
     switch (method) {
       case 'tin':
-        input.placeholder = 'Enter your TIN (e.g., 0025152785)';
+        input.placeholder = 'Enter your JTB TIN (e.g., 0025152785)';
         input.pattern = "\\d{10}"; // 10-digit TIN pattern
         break;
       case 'registration_number':
         input.placeholder = 'Enter your RC Number (e.g., RC123456)';
-        input.pattern = "RC\\d{6}"; // RC followed by 6 digits
+        input.pattern = ".*"; // Accept any value
         break;
       case 'nin':
         input.placeholder = 'Enter your NIN (e.g., 12345678901)';
@@ -129,6 +129,10 @@ class InvoiceGenerator {
       case 'phone_no':
         input.placeholder = 'Enter your Phone (e.g., 08012345678)';
         input.pattern = "\\d{11}"; // 11-digit phone
+        break;
+      case 'email_or_phone':
+        input.placeholder = 'Enter your Email or Phone (e.g., user@email.com or 08012345678)';
+        input.pattern = "^(\\d{11}|[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,})$"; // 11-digit phone or email
         break;
     }
 

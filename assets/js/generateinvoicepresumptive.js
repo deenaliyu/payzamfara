@@ -386,6 +386,17 @@ document.getElementById("category").addEventListener("change", function () {
 
 function goToPreviewPage() {
   let developlevyAmount = document.querySelector('.developlevyAmount')
+  let mainAmountInput = document.querySelector('.mainAmountInput').value
+  let allInputsB = document.querySelectorAll(".enumInputB")
+
+  for (let i = 0; i < allInputsB.length; i++) {
+    const input = allInputsB[i];
+    if (input.required && input.value === "") {
+      alert("Please fill all required fields in business details.");
+      return;
+    }
+  }
+
   if (developlevyAmount && developlevyAmount.value === "") {
     alert("Amount cannot be empty")
     return;
@@ -418,7 +429,7 @@ function goToPreviewPage() {
         let amount = data.message.minimum
         let categories = data.message.category
         // console.log(categories)
-        displayInfo(business_type, amount, categories)
+        displayInfo(business_type, mainAmountInput, categories)
 
 
       }
@@ -604,7 +615,7 @@ async function generateInvoiceNon() {
 }
 
 async function generateInvoiceNum(taxNumber) {
-  let amt = parseFloat(document.querySelector("#amt").textContent.replace(/[^0-9.-]+/g, ""));
+  let amt = parseFloat(document.querySelector(".mainAmountInput").value);
   let cati = document.querySelector("#business_class").textContent;
   let the_id = 1340
   invoice_type = "presumptive"
