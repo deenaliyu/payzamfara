@@ -409,6 +409,8 @@ class InvoiceGenerator {
         case 'registration_number': errorMsg = 'RC Number should be in format RC123456'; break;
         case 'nin': errorMsg = 'NIN should be 11 digits'; break;
         case 'phone_no': errorMsg = 'Phone number should be 11 digits'; break;
+        case 'email_or_phone': errorMsg = 'Please enter a valid email or phone number'; break;
+        case 'pltin': errorMsg = 'Please enter a valid IGR TIN'; break;
       }
       this.showError(input, errorMsg);
       return;
@@ -417,16 +419,34 @@ class InvoiceGenerator {
     this.showLoader('#validate-btn');
 
     try {
-      // Use the search parameter instead of method-specific parameters
-      const response = await fetch(`https://payzamfara.com/php/JTD/get-taxpayer?search=${encodeURIComponent(value)}`);
-      const data = await response.json();
+      let response;
+      let data;
 
-      if (data.status === 'success' && data.data.length === 0) {
-        this.handleTaxpayerNotFound();
-      } else if (data.status === 'success') {
-        this.displayTaxpayerInfo(data.data);
+      // Determine which API to call based on the selected method
+      if (method === 'email_or_phone' || method === 'pltin') {
+        // Call the Plateau IGR API for these two methods
+        response = await fetch(`https://payzamfara.com/php/?checkUsers&data=${encodeURIComponent(value)}`);
+        data = await response.json();
+
+        if (data.status === 1 && data.message === "user exists") {
+          // Transform the Plateau IGR response to match the expected format
+          const transformedData = this.transformPlateauResponse(data);
+          this.displayTaxpayerInfo([transformedData]);
+        } else {
+          this.handleTaxpayerNotFound();
+        }
       } else {
-        this.handleTaxpayerNotFound();
+        // Call the original JTD API for other methods
+        response = await fetch(`https://payzamfara.com/php/JTD/get-taxpayer?search=${encodeURIComponent(value)}`);
+        data = await response.json();
+
+        if (data.status === 'success' && data.data.length === 0) {
+          this.handleTaxpayerNotFound();
+        } else if (data.status === 'success') {
+          this.displayTaxpayerInfo(data.data);
+        } else {
+          this.handleTaxpayerNotFound();
+        }
       }
     } catch (error) {
       console.error('Validation error:', error);
@@ -436,8 +456,48 @@ class InvoiceGenerator {
     }
   }
 
+  // Add this new method to transform Plateau IGR response to match your expected format
+  transformPlateauResponse(plateauData) {
+    const user = plateauData.user;
+
+    // Determine if individual or corporate
+    const isIndividual = user.category === 'Individual' || user.category === 'individual';
+
+    return {
+      data: {
+        jtb: {
+          first_name: user.first_name || '',
+          last_name: user.surname || '',
+          registered_name: isIndividual ? '' : (user.first_name || ''),
+          tin: user.tin || user.tax_number || '',
+          registration_number: '', // Not available in Plateau response
+          phone_no_1: user.phone || '',
+          email_address: user.email || '',
+          house_number: '', // Extract from address if possible
+          street_name: '', // Extract from address if possible
+          city: user.lga || '', // Using LGA as city
+          LGAName: user.lga || '',
+          StateName: user.state || '',
+          GenderName: '', // Not available in Plateau response
+          date_of_birth: '', // Not available in Plateau response
+          director_name: '', // Not available for individuals
+          director_phone: '' // Not available for individuals
+        }
+      },
+      // Add the original Plateau data for reference
+      plateauData: user
+    };
+  }
+
   isIndividualTaxpayer(taxpayer) {
-    // Check if this is an individual by looking for individual-specific fields
+    // Check if this is a Plateau response
+    if (taxpayer.plateauData) {
+      return taxpayer.plateauData.category === 'Individual' ||
+        taxpayer.plateauData.category === 'individual' ||
+        !taxpayer.plateauData.category; // Default to individual if no category
+    }
+
+    // Original JTD check
     return taxpayer.data && taxpayer.data.jtb &&
       (taxpayer.data.jtb.first_name !== undefined &&
         taxpayer.data.jtb.first_name !== null &&
@@ -550,29 +610,58 @@ class InvoiceGenerator {
     container.innerHTML = '';
 
     const isIndividual = this.isIndividualTaxpayer(taxpayer);
-    const record = taxpayer.data.jtb;
+    let details;
 
-    const details = isIndividual ? [
-      { label: 'Name', value: `${record.first_name} ${record.last_name}` },
-      { label: 'TIN', value: record.tin },
-      { label: 'Gender', value: record.GenderName },
-      { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
-      { label: 'Phone', value: record.phone_no_1 },
-      { label: 'Email', value: record.email_address },
-      { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
-      { label: 'LGA', value: record.LGAName },
-      { label: 'State', value: record.StateName }
-    ] : [
-      { label: 'Registered Name', value: record.registered_name },
-      { label: 'TIN', value: record.tin },
-      { label: 'RC Number', value: record.registration_number },
-      { label: 'Phone', value: record.phone_no_1 },
-      { label: 'Email', value: record.email_address },
-      { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
-      { label: 'LGA', value: record.LGAName },
-      { label: 'State', value: record.StateName },
-      { label: 'Director', value: `${record.director_name || ''} (${record.director_phone || ''})` }
-    ];
+    if (taxpayer.plateauData) {
+      // Handle Plateau IGR data
+      const user = taxpayer.plateauData;
+      details = isIndividual ? [
+        { label: 'Name', value: `${user.first_name} ${user.surname}` },
+        { label: 'Tax Number', value: user.tax_number },
+        { label: 'TIN', value: user.tin },
+        { label: 'Category', value: user.category },
+        { label: 'Phone', value: user.phone },
+        { label: 'Email', value: user.email },
+        { label: 'Address', value: user.address },
+        { label: 'LGA', value: user.lga },
+        { label: 'State', value: user.state },
+        { label: 'Business Type', value: user.business_type }
+      ] : [
+        { label: 'Registered Name', value: user.first_name },
+        { label: 'Tax Number', value: user.tax_number },
+        { label: 'TIN', value: user.tin },
+        { label: 'Phone', value: user.phone },
+        { label: 'Email', value: user.email },
+        { label: 'Address', value: user.address },
+        { label: 'LGA', value: user.lga },
+        { label: 'State', value: user.state },
+        { label: 'Business Type', value: user.business_type }
+      ];
+    } else {
+      // Handle original JTD data (your existing code)
+      const record = taxpayer.data.jtb;
+      details = isIndividual ? [
+        { label: 'Name', value: `${record.first_name} ${record.last_name}` },
+        { label: 'TIN', value: record.tin },
+        { label: 'Gender', value: record.GenderName },
+        { label: 'Date of Birth', value: this.formatDate(record.date_of_birth) },
+        { label: 'Phone', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName }
+      ] : [
+        { label: 'Registered Name', value: record.registered_name },
+        { label: 'TIN', value: record.tin },
+        { label: 'RC Number', value: record.registration_number },
+        { label: 'Phone', value: record.phone_no_1 },
+        { label: 'Email', value: record.email_address },
+        { label: 'Address', value: `${record.house_number} ${record.street_name}, ${record.city}` },
+        { label: 'LGA', value: record.LGAName },
+        { label: 'State', value: record.StateName },
+        { label: 'Director', value: `${record.director_name || ''} (${record.director_phone || ''})` }
+      ];
+    }
 
     details.forEach(detail => {
       if (detail.value) {
@@ -618,14 +707,20 @@ class InvoiceGenerator {
   }
 
   prefillContactForm() {
-    if (!this.taxpayerData || !this.taxpayerData[0].data || !this.taxpayerData[0].data.jtb) return;
+    if (!this.taxpayerData || !this.taxpayerData[0]) return;
 
-    const record = this.taxpayerData[0].data.jtb;
+    // Check if it's Plateau data or JTD data
+    const isPlateauData = this.taxpayerData[0].plateauData !== undefined;
+    const record = isPlateauData ? this.taxpayerData[0].plateauData : this.taxpayerData[0].data.jtb;
+
+    if (!record) return;
 
     const categorySelect = document.getElementById('category');
 
     // Determine if individual or business
-    const isIndividual = this.isIndividualTaxpayer(this.taxpayerData);
+    const isIndividual = this.isIndividualTaxpayer(this.taxpayerData[0]);
+
+    // console.log('Is Individual:', isIndividual, record, this.taxpayerData);
 
     if (isIndividual) {
       categorySelect.value = '2'; // 2 = Individual
@@ -634,42 +729,97 @@ class InvoiceGenerator {
     }
     categorySelect.dispatchEvent(new Event('change'));
 
+    // Fill the form fields based on data source
+    if (isPlateauData) {
+      // Handle Plateau API data
+      document.querySelector('.payInputs[data-name="first_name"]').value =
+        isIndividual ? record.first_name || '' : record.first_name || '';
+      document.querySelector('.payInputs[data-name="surname"]').value =
+        isIndividual ? record.surname || '' : '';
+      document.querySelector('.payInputs[data-name="email"]').value = record.email || '';
+      document.querySelector('.payInputs[data-name="phone"]').value = record.phone || '';
+      document.querySelector('.payInputs[data-name="tin"]').value = record.tin || record.tax_number || '';
+      document.querySelector('.payInputs[data-name="address"]').value = record.address || '';
 
-    // Fill the form fields
-    document.querySelector('.payInputs[data-name="first_name"]').value =
-      isIndividual ? record.first_name || '' : record.registered_name || '';
-    document.querySelector('.payInputs[data-name="surname"]').value =
-      isIndividual ? record.last_name || '' : '';
-    document.querySelector('.payInputs[data-name="email"]').value = record.email_address || '';
-    document.querySelector('.payInputs[data-name="phone"]').value = record.phone_no_1 || '';
-    document.querySelector('.payInputs[data-name="tin"]').value = record.tin || '';
-    document.querySelector('.payInputs[data-name="address"]').value =
-      `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+      // Set state (this is a select element)
+      const stateSelect = document.getElementById('selectState');
+      if (stateSelect && record.state) {
+        // Format state name: Capitalize first letter, lowercase the rest
+        const formattedState = record.state.charAt(0).toUpperCase() +
+          record.state.slice(1).toLowerCase();
+        stateSelect.value = formattedState;
+      }
 
-    // Set state (this is a select element)
-    const stateSelect = document.getElementById('selectState');
-    if (stateSelect && record.StateName) {
-      // Format state name: Capitalize first letter, lowercase the rest
-      const formattedState = record.StateName.charAt(0).toUpperCase() +
-        record.StateName.slice(1).toLowerCase();
-      stateSelect.value = formattedState;
-    }
+      // Set LGA (this is a select element)
+      const lgaSelect = document.getElementById('selectLGA');
+      if (lgaSelect && record.lga) {
+        // Try to find matching option
+        const options = lgaSelect.options;
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].text.toLowerCase() === record.lga.toLowerCase()) {
+            lgaSelect.value = options[i].value;
+            break;
+          }
+        }
 
-    // Set LGA (this is a select element)
-    const lgaSelect = document.getElementById('selectLGA');
-    if (lgaSelect && record.LGAName) {
-      // Try to find matching option
-      const options = lgaSelect.options;
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].text.toLowerCase() === record.LGAName.toLowerCase()) {
-          lgaSelect.value = options[i].value;
-          break;
+        // If no exact match found, try to set by text content
+        if (!lgaSelect.value && record.lga) {
+          lgaSelect.value = record.lga;
         }
       }
 
-      // If no exact match found, try to set by text content
-      if (!lgaSelect.value && record.LGAName) {
-        lgaSelect.value = record.LGAName;
+      // For Plateau data, also populate business type if available
+      if (record.business_type) {
+        const businessTypeSelect = document.getElementById('businessTypeSelect');
+        if (businessTypeSelect) {
+          // Wait for selectize to be initialized if it exists
+          setTimeout(() => {
+            if (businessTypeSelect.selectize) {
+              businessTypeSelect.selectize.setValue(record.business_type);
+            } else {
+              businessTypeSelect.value = record.business_type;
+            }
+          }, 100);
+        }
+      }
+
+    } else {
+      // Handle original JTD data (existing logic)
+      document.querySelector('.payInputs[data-name="first_name"]').value =
+        isIndividual ? record.first_name || '' : record.registered_name || '';
+      document.querySelector('.payInputs[data-name="surname"]').value =
+        isIndividual ? record.last_name || '' : '';
+      document.querySelector('.payInputs[data-name="email"]').value = record.email_address || '';
+      document.querySelector('.payInputs[data-name="phone"]').value = record.phone_no_1 || '';
+      document.querySelector('.payInputs[data-name="tin"]').value = record.tin || '';
+      document.querySelector('.payInputs[data-name="address"]').value =
+        `${record.house_number || ''} ${record.street_name || ''}, ${record.city || ''}`.trim();
+
+      // Set state (this is a select element)
+      const stateSelect = document.getElementById('selectState');
+      if (stateSelect && record.StateName) {
+        // Format state name: Capitalize first letter, lowercase the rest
+        const formattedState = record.StateName.charAt(0).toUpperCase() +
+          record.StateName.slice(1).toLowerCase();
+        stateSelect.value = formattedState;
+      }
+
+      // Set LGA (this is a select element)
+      const lgaSelect = document.getElementById('selectLGA');
+      if (lgaSelect && record.LGAName) {
+        // Try to find matching option
+        const options = lgaSelect.options;
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].text.toLowerCase() === record.LGAName.toLowerCase()) {
+            lgaSelect.value = options[i].value;
+            break;
+          }
+        }
+
+        // If no exact match found, try to set by text content
+        if (!lgaSelect.value && record.LGAName) {
+          lgaSelect.value = record.LGAName;
+        }
       }
     }
   }

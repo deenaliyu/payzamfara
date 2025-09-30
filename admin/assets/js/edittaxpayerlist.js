@@ -233,7 +233,7 @@ async function getTaxPayer() {
 
         let lgaSelect = document.querySelector('#selectLGA');
 
-        lgaList["Plateau"].forEach(lga => {
+        lgaList["Zamfara"].forEach(lga => {
             lgaSelect.innerHTML += `
         <option value="${lga}">${lga}</option>
       `;

@@ -702,7 +702,7 @@ class RegistrationForm {
       msgBox.innerHTML = `
         <p class="text-warning text-lg">${response.message}</p>
         <p class="text-success text-lg mt-2">
-          <a href="forgetpass.html" class="underline">Click here to reset your password</a>
+          <a href="forgetpass.html" class="underline">Click here to verify your account</a>
         </p>
       `;
     } else {

@@ -80,28 +80,27 @@
             <p class="mb-3 mt-3">Select your preferred identification method</p>
 
             <form id="validation-form" class="mt-4">
-              <div class="mb-4 flex gap-4 flex-wrap items-center">
+              <div class="mb-4 flex md:gap-4 gap-3 flex-wrap items-center">
                 <div class="form-check mb-2">
                   <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="tin"
                     id="TIN" checked />
-                  <label class="form-check-label" for="TIN">JTB TIN</label>
+                  <label class="form-check-label" for="TIN">TIN</label>
                 </div>
                 <div class="form-check mb-2">
-                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod"
+                  <input class="form-check-input firstInpts  checkUsersApi" type="radio" name="identificationMethod"
                     value="email_or_phone" id="EmailOrPhone" />
                   <label class="form-check-label" for="EmailOrPhone">Email or Phone Number</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="nin"
+                    id="nin" />
+                  <label class="form-check-label" for="nin">NIN</label>
                 </div>
                 <div class="form-check mb-2">
                   <input class="form-check-input firstInpts" type="radio" name="identificationMethod"
                     value="registration_number" id="TaxRegID" />
                   <label class="form-check-label" for="TaxRegID">RC No.</label>
                 </div>
-                <div class="form-check mb-2">
-                  <input class="form-check-input firstInpts" type="radio" name="identificationMethod" value="nin"
-                    id="NIN" />
-                  <label class="form-check-label" for="NIN">NIN</label>
-                </div>
-
               </div>
 
               <div class="form-group">
