@@ -258,7 +258,7 @@ function generateInvoiceNum(taxNumber, amountCal) {
       try {
 
         const response = await fetch(
-          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=1343&price=${amountCal}&category_pre=Formal&zonalOffice=8&lga=Not Assigned&sector=sector&description=description&invoice_type=direct`
+          `${HOST}?generateSingleInvoices&tax_number=${taxNumber}&revenue_head_id=1343&price=${amountCal}&category_pre=Formal&zonalOffice=8&lga=Not Assigned&sector=sector&description=null&invoice_type=direct`
         );
         if (!response.ok) {
           throw new Error(response.statusText);

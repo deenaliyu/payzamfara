@@ -45,11 +45,32 @@ async function fetchAssessmentData() {
       // define the null values of params
       currentAssessmentId = assessment.id || null;
       currentAccessNo = assessment.dAssesment_no || null;
-      
-      // Populate form fields with existing data
+
+
+      // Check assessment status before populating
+      if (assessment.level === "Approval" || assessment.level === "Disapproved") {
+        populateFormFields(assessment);
+
+        await calculateTaxLiabilityFromAssessment(assessment);
+      } else {
+        Swal.fire({
+          title: 'Already Reassessed',
+          text: 'This assessment is already reassessed and pending approval.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Continue Anyways',
+          confirmButtonColor: '#015826',
+          cancelButtonText: 'Cancel',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isDismissed || result.isDenied || result.isCanceled) {
+            window.location.href = 'direct-invoices.html';
+          }
+          // If user clicks "Continue", do nothing (stay on page)
+        });
+      }
       populateFormFields(assessment);
 
-      // Calculate and display tax liability
       await calculateTaxLiabilityFromAssessment(assessment);
 
     } else {
