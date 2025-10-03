@@ -41,7 +41,6 @@ async function fetchUserDetailsById(id) {
     $("#annual_liability").text(formatMoney(parseFloat(detailss.monthly_tax_payable) * 12));
 
 
-
     return data;
   } catch (error) {
     console.error(error);
@@ -80,7 +79,11 @@ async function updateStatus(id, status) {
         }).then((result) => {
           if (result.isConfirmed) {
             // Logic to generate the invoice
-            generateInvoiceNum(thedetailss.tax_number, parseFloat(thedetailss.monthly_tax_payable) * 12);
+            if (thedetailss.invoice_number) {
+              updateInvoice(thedetailss.invoice_number);
+            } else {
+              generateInvoiceNum(thedetailss.tax_number, parseFloat(thedetailss.monthly_tax_payable) * 12);
+            }
           }
         });
       } else {
@@ -195,6 +198,53 @@ document.getElementById('disapproveButton').addEventListener('click', async func
   }
 });
 
+function updateInvoice(invoice_number) {
+  Swal.fire({
+    title: "Confirm Invoice Reassessment",
+    text: "Are you sure you want to update this invoice?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Update Invoice",
+    showLoaderOnConfirm: true,
+    preConfirm: async () => {
+      try {
+        const response = await fetch(`${HOST}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            endpoint: "updateInvoice",
+            data: { invoice_number }
+          })
+        });
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        const result = await response.json();
+        if (result.status !== 1) {
+          throw new Error("Failed to update invoice");
+        }
+        return result;
+      } catch (error) {
+        Swal.showValidationMessage(`Request failed: ${error}`);
+      }
+    },
+    allowOutsideClick: () => !Swal.isLoading(),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: "success",
+        title: "Invoice Updated Successfully!",
+        confirmButtonText: "Go to Direct Assessment Invoices",
+      }).then((result2) => {
+        if (result2.isConfirmed) {
+          window.location.href = "./direct-invoices.html";
+        }
+      });
+    }
+  });
+}
 function generateInvoiceNum(taxNumber, amountCal) {
   Swal.fire({
     title: "Generating Invoice",
@@ -213,7 +263,25 @@ function generateInvoiceNum(taxNumber, amountCal) {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
-        return await response.json();
+        const invoiceData = await response.json();
+        console.log(invoiceData);
+        if (invoiceData.status === 1 && invoiceData.invoice_number) {
+          // Link invoice to direct assessment
+          await fetch(`${HOST}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              endpoint: "updateDirectAssessmentInvoiceNumber",
+              data: {
+                dAssesment_no: thedetailss.dAssesment_no,
+                invoice_number: invoiceData.invoice_number
+              }
+            })
+          });
+        }
+        return invoiceData;
       } catch (error) {
         Swal.showValidationMessage(`Request failed: ${error}`);
       }

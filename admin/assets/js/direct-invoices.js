@@ -99,6 +99,12 @@ async function fetchInvoice() {
           return `<a href="./viewinvoice.html?invnumber=${row.invoice_number}&load=true" class="btn btn-primary btn-sm viewUser">View Invoice</a>`;
         }
       },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return `<a href="direct-assessmentedit.html?invoiceno=${row.invoice_number}&id=${row.id}" class="btn btn-primary btn-sm">Re Assess</a>`;
+        }
+      },
     ],
   });
 

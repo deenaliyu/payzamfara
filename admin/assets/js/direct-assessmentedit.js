@@ -5,22 +5,25 @@ let currentAccessNo = null;
 // Get parameters from URL
 function getUrlParams() {
   const urlParams = new URLSearchParams(window.location.search);
-  currentAccessNo = urlParams.get('assessno');
-  currentAssessmentId = urlParams.get('id');
-  return { accessno: currentAccessNo, id: currentAssessmentId };
+  const currentInvoiceno = urlParams.get('invoiceno');
+
+  let currentAccessNo = null;
+  let currentAssessmentId = null;
+
+  return { accessno: currentAccessNo, invoiceno: currentInvoiceno, id: currentAssessmentId };
 }
 
 // Fetch and populate existing assessment data
 async function fetchAssessmentData() {
   const params = getUrlParams();
 
-  if (!params.id) {
-    console.error('No assessment ID found in URL');
+  if (!params.invoiceno) {
+    console.error('No invoice number found in URL');
     return;
   }
 
   try {
-    const response = await fetch(`${HOST}?getAllDirectAssessmentss&id=${params.id}`);
+    const response = await fetch(`${HOST}?getAllDirectAssessmentss&invoice_number=${params.invoiceno}`);
     const resdata = await response.json();
 
     if (resdata.status === "success" && resdata.data.direct_assessments.length > 0) {
@@ -39,6 +42,10 @@ async function fetchAssessmentData() {
         address: "" // You might need to get this from another endpoint
       };
 
+      // define the null values of params
+      currentAssessmentId = assessment.id || null;
+      currentAccessNo = assessment.dAssesment_no || null;
+      
       // Populate form fields with existing data
       populateFormFields(assessment);
 

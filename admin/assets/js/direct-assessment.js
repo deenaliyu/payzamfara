@@ -111,15 +111,7 @@ async function fetchInvoice() {
           return formatMoney(parseFloat(row.monthly_tax_payable * 12));
         }
       },
-      { data: 'created_date' },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return `
-            <a href="direct-assessmentedit.html?assessno=${row.dAssesment_no}&id=${row.id}" class="btn btn-primary btn-sm">Re Assess</a>
-          `
-        }
-      },
+      { data: 'created_date' }
     ],
   });
 
@@ -225,14 +217,6 @@ async function fetchForSpecificLevels(level) {
         }
       },
       { data: 'created_date' },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return `
-            <a href="direct-assessmentedit.html?assessno=${row.dAssesment_no}&id=${row.id}" class="btn btn-primary btn-sm">Re Assess</a>
-          `
-        }
-      },
       {
         data: null,
         render: function (data, type, row) {
@@ -343,14 +327,6 @@ async function fetchForSpecificLevelsDecline(level) {
         }
       },
       { data: 'created_date' },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return `
-            <a href="direct-assessmentedit.html?assessno=${row.dAssesment_no}&id=${row.id}" class="btn btn-primary btn-sm">Re Assess</a>
-          `
-        }
-      },
       {
         data: null,
         render: function (data, type, row) {
