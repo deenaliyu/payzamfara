@@ -100,7 +100,7 @@ class CustomerValidation {
     this.skipBtn.addEventListener('click', () => this.proceedToNextStep());
   }
 
-  
+
 
   updateInputPlaceholder() {
     const method = document.querySelector('input[name="identificationMethod"]:checked').value;
@@ -239,7 +239,7 @@ class CustomerValidation {
 
       // Determine if individual or non-individual
       const isIndividual = taxpayer.data.jtb.first_name !== undefined;
-      
+
       if (isIndividual) {
         label.textContent = `${taxpayer.data.jtb.first_name} ${taxpayer.data.jtb.last_name} (${taxpayer.tin})`;
       } else {
@@ -699,12 +699,15 @@ class RegistrationForm {
     } else if (response.status === 2) {
       msgBox.innerHTML = `
         <p class="text-warning text-lg">${response.message}</p>
-        <p class="text-success text-lg mt-2">
+        <!--<p class="text-success text-lg mt-2">
           <a href="forgetpass.html" class="underline">Click here to reset your password</a>
-        </p>
+        </p>-->
       `;
-    } else {
+    } else if (response.status === 3) {
       msgBox.innerHTML = `<p class="text-warning text-lg">${response.message}</p>`;
+      this.sendAdminEmail(response.id);
+    } else {
+      msgBox.innerHTML = `<p class="text-error text-lg">${response.message || 'Registration failed. Please try again.'}</p>`;
     }
   }
 
@@ -714,16 +717,16 @@ class RegistrationForm {
     try {
       await fetch(`${HOST}?sendEmail&id=${userId}`);
       msgBox.innerHTML += `
-        <p class="text-success text-lg mt-2">An email has been sent to the User.</p>
+        <p class="text-success text-lg mt-2">A verfication mail has been sent to the User.</p>
         <div class="flex justify-center mt-4">
-          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+          <a class="button" href="./taxpayer.html">Go to Taxpayer</a>
         </div>
       `;
     } catch (error) {
       console.error('Failed to send email:', error);
       msgBox.innerHTML += `
         <div class="flex justify-center mt-4">
-          <a class="button" href="admin/taxpayer.html">Go to Taxpayer</a>
+          <a class="button" href="./taxpayer.html">Go to Taxpayer</a>
         </div>
       `;
     }

@@ -9,7 +9,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Prime Gauge</title>
+  <title>Plateau IGR</title>
 
   <meta name="description" content="" />
 
@@ -37,9 +37,30 @@
   <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <script src="./assets/vendor/js/helpers.js"></script>
   <script src="./assets/js/config.js"></script>
-  
+
   <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
+  <style>
+    .info-card {
+      background-color: #f8fafc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 10px;
+      border-left: 4px solid #025826;
+    }
+
+    .info-label {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+  </style>
 </head>
 
 <body class="taxpayer">
@@ -69,17 +90,13 @@
           <div class="navbar-nav-right relative flex items-center gap-x-5" id="navbar-collapse">
             <div class="">
               <p class="text-sm text-black">Date: <span class="datei"> </span></p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Reports</h1>
+              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Presumptive Tax</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5 absolute right-24">
-              
-              <button class="flex gap-1 align-items-center" type="button" data-bs-toggle="modal"
-                data-bs-target="#filterInvoice">
-                <iconify-icon icon="mdi:filter-variant" style="font-size: 24px"></iconify-icon>
-                Filter
-              </button>
-              <button class="button items-center flex gap-x-1" id="invReportd" onclick="exportData(this)">
+
+
+              <button class="button items-center flex gap-x-1" id="invReportd" onclick="exportData()">
                 <iconify-icon icon="material-symbols:cloud-download" width="28" height="28"></iconify-icon> Download
                 Report</button>
 
@@ -96,78 +113,119 @@
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
-          <div class="flex justify-center items-center mt-4" id="theLoader">
-            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-          </div>
 
-          <div class="container-xxl flex-grow-1 container-p-y taxes hidden" id="reportDisplay">
-            <p class="font-bold text-2xl text-black">Invoice Report</p>
 
-            <div class="grid grid-cols-3 gap-3 mt-2">
+          <!--<div class="flex justify-center items-center mt-4" id="theLoader">-->
+          <!--  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>-->
+          <!--</div>-->
 
-              <div class="card dashCards">
-                <div class="icoCont bg-[#e850391f]">
-                  <iconify-icon class="text-[#E85039]" icon="material-symbols:finance-chip"></iconify-icon>
-                </div>
-                <p class="headder">TOTAL INVOICES</p>
-                <p class="zanumbers" id="totalInv">-</p>
-              </div>
-              <!-- 7ad0c7 -->
-              <div class="card dashCards">
-                <div class="icoCont bg-[#7ad0c714]">
-                  <iconify-icon class="text-[#7ad0c7]" icon="la:file-invoice-dollar"></iconify-icon>
-                </div>
-                <p class="headder">TOTAL INVOICED</p>
-                <p class="zanumbers">&#8358; <span id="total_amount_invoiced">-</span></p>
-              </div>
-
-              <div class="card dashCards">
-                <div class="icoCont bg-[#d7a1271f]">
-                  <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                </div>
-                <p class="headder">PAID</p>
-                <p class="zanumbers">&#8358; <span id="total_amountP">-</span></p>
-              </div>
-
-            </div>
-            <div class="card py-4 mt-6">
-              <div class="table-responsive p-2">
-                <table class="table invoiceTable" id="dataTable">
-                  <thead>
-                    <tr class="text-center">
-                      <th></th>
-                      <th>Payer ID</th>
-                      <th>MDA</th>
-                      <th>Revenue Head</th>
-                      <th>Name</th>
-                      <th>Phone Number</th> 
-                      <th>Office</th> 
-                      <th>Invoice Number</th>
-                      <th>Invoice Type</th>
-                      <th>Amount</th>
-                      <th>Description</th>
-                      <th>Date Created</th>
-                      <th>Due Date</th>
-                      <th>Payment Status</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0" id="showThem">
-
-                  </tbody>
-                </table>
-                
-                
-              </div>
-              
+          <div class="container-xxl flex-grow-1 container-p-y taxes" id="reportDisplay">
+            <a href="presumptive-tax-assessment.html" class="text-[#025826] w-fit">Back to Presumptive Tax</a>
+            <div class="flex justify-between  items-center mb-5">
+              <p class="font-bold text-2xl text-black">Presumptive Tax</p>
             </div>
 
+
+
+            <div class="card card-body mt-5">
+              <div class="modal-body" id="theUserDetails">
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Payer ID</div>
+                      <div class="info-value" id="payerId">-</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Name</div>
+                      <div class="info-value" id="nameo">-</div>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Email Address</div>
+                      <div class="info-value" id="emailo">-</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Phone Number</div>
+                      <div class="info-value" id="phonenumber">-</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Status</div>
+                      <div class="info-value">
+                        <span class="status-badge" id="thestatus">-</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Business Type</div>
+                      <div class="info-value" id="business_type">-</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Tax Liability</div>
+                      <div class="info-value currency" id="tax_liability">-</div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">BPR Value</div>
+                      <div class="info-value currency" id="bpr_value">-</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Development Levy</div>
+                      <div class="info-value currency" id="development_levy_value">-</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="info-card">
+                      <div class="info-label">Date Created</div>
+                      <div class="info-value" id="date_created">-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer" id="approveButtons">
+                <button type="button" class="btn btn-success approve-btn items-center flex gap-x-1" id="approveButton">
+                  <iconify-icon icon="mdi:approve" class="me-2"></iconify-icon> <span>Approve</span>
+                </button>
+                <button type="button" class="btn btn-danger decline-btn items-center flex gap-x-1"
+                  id="disapproveButton">
+                  <iconify-icon icon="carbon:close-outline" class="me-2"></iconify-icon> <span>Decline</span>
+                </button>
+              </div>
+            </div>
+
+
+            <div class="content-backdrop fade"></div>
           </div>
 
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer">
 
           </section>
-          <div class="content-backdrop fade"></div>
         </section>
 
         <!-- Content wrapper -->
@@ -217,96 +275,61 @@
           <button type="button" class="btn-close flex justify-content-center" data-bs-dismiss="modal"
             aria-label="Close"><iconify-icon icon="ph:x-thin"></iconify-icon></button>
         </div>
+
         <div class="modal-body">
           <div class="flex justify-end">
-              <button class="btn btn-primary btn-sm" onclick="clearfilter()">clear filter</button>
+            <button class="btn btn-primary btn-sm" onclick="clearfilter3()">clear filter</button>
           </div>
-          
-            <div class="col mb-3">
-              <label class="form-label">Invoice Number</label>
-              <div class="form-group">
-                <input class="form-control filterInputs" data-name="invoice_number" placeholder="Invoice Number" />
-              </div>
-            </div>
-            
-            <div class="row">
-                <div class="col mb-3">
-                  <label class="form-label">First Name</label>
-                  <div class="form-group">
-                    <input class="form-control filterInputs" data-name="first_name" placeholder="First Name" />
-                  </div>
-                </div>
-            
-                <div class="col mb-3">
-                  <label class="form-label">Surname</label>
-                  <div class="form-group">
-                    <input class="form-control filterInputs" data-name="surname" placeholder="Surname" />
-                  </div>
-                </div>
-            </div>   
-            
-            <div class="row">
-                <div class="col mb-3">
-                  <label class="form-label">Email</label>
-                  <div class="form-group">
-                    <input class="form-control filterInputs" type="email" data-name="email" placeholder="Email Address" />
-                  </div>
-                </div>
-                
-                <div class="col mb-3">
-                  <label class="form-label">Phone Number</label>
-                  <div class="form-group">
-                    <input class="form-control filterInputs" data-name="phone" placeholder="Phone Number" />
-                  </div>
-                </div>
-            </div>
-            
-          <div class="row">
-            <div class="col mb-3" id="mdass">
-              <label for="defaultSelect" class="form-label">MDA</label>
-              <div class="form-group">
-                <select name="" id="getMDAs" class="form-select filterInputs" data-name="mda_id">
-                  <option disabled selected value="">--- Select MDA ---</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
+
+          <div class="row  mb-4">
             <div class="col mb-0" id="the_rev">
-              <label for="defaultSelect" class="form-label">Revenue Head</label>
+              <label for="defaultSelect" class="form-label">Sector</label>
               <div class="form-group">
-                <select name="" id="getRevs" class="form-select filterInputs" data-name="revenue_head">
-                  <option disabled selected value="">--- Select RevHead ---</option>
+                <select id="sectorFil" class="form-select">
+                  <option disabled selected value="">--- Select Sector ---</option>
+                  <option value="Formal">Formal</option>
+                  <option value="Informal">Informal</option>
+
                 </select>
               </div>
             </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col mb-0">
+              <label for="invoiceNumber" class="form-label">Invoice Number</label>
+              <input type="text" class="form-control" id="invnumberInput">
+            </div>
+          </div>
+
+          <div class="row mb-2">
             <div class="col mb-0">
               <label for="paymentStatusSelect" class="form-label">Payment status</label>
-              <select id="paymentStatusSelect" class="form-select filterInputs" data-name="payment_status">
+              <select id="paymentStatusSelect" class="form-select">
                 <option value="">All</option>
                 <option value="paid">Paid</option>
                 <option value="unpaid">Un-paid</option>
               </select>
             </div>
           </div>
+
           <div class="row g-2">
             <label for="" class="mt-3">Date</label>
             <div class="col mb-0">
               <label for="emailLarge" class="form-label">From</label>
-              <input class="form-control filterInputs" data-name="date_created_start" type="date" value="" id="fromDateInput">
+              <input class="form-control" type="date" value="" id="fromDateInput">
             </div>
             <div class="col mb-0">
               <label for="dobLarge" class="form-label">To</label>
-              <input class="form-control filterInputs" data-name="date_created_end" type="date" value="" id="toDateInput">
+              <input class="form-control" type="date" value="" id="toDateInput">
             </div>
           </div>
-          
         </div>
-        
+
         <div class="modal-footer ">
-          <button type="button" class="btn btn-prime w-full" onclick='filterTheInvoice()' id="filterTheInvoice">Apply</button>
-          <div id='msg_boxer'></div>
+          <button type="button" class="btn btn-prime w-full" id="filterDemand">Apply</button>
         </div>
+
       </div>
     </div>
   </div>
@@ -319,17 +342,13 @@
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="./assets/js/jquery.datatables.min.js"></script>
   <script src="./assets/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-
   <script>
-    $('#searching').keyup(function () {
-      var table = $('.table').DataTable();
-      table.search($(this).val()).draw();
-    });
+    $("#dataTable2").DataTable();
   </script>
+  <script src="https://cdn.jsdelivr.net/gh/Joe12387/detectIncognito@main/dist/es5/detectIncognito.min.js"></script>
   <script src="./assets/js/nav.js"></script>
   <script>
-    let theAtivo = document.querySelector(".dggg")
+    let theAtivo = document.querySelector(".presump")
     theAtivo.parentElement.classList.add("active")
   </script>
 
@@ -340,22 +359,10 @@
   <!-- Vendors JS -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $("#getMDAs").select2({
-        dropdownParent: $("#filterInvoice")
-      })
-      $("#listOfpayable").select2({
-        dropdownParent: $("#filterInvoice")
-      })
-
-    })
- </script>
-  <!-- Main JS -->
   <script src="./assets/js/accessLevel.js?v1.2"></script>
-  <script src="./assets/js/invoices.js?v=13.0"></script>
-  <script src="./assets/js/filterInv.js"></script>
+  <script src="./assets/js/presumptive-taxview.js"></script>
   <script src="./assets/js/main.js"></script>
+
 </body>
 
 </html>

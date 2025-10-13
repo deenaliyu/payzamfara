@@ -64,6 +64,7 @@ class CustomerValidation {
     this.form = document.getElementById('validation-form');
     this.validationInput = document.getElementById('validationInput');
     this.validateBtn = document.getElementById('validate-btn');
+    this.skipBtn = document.getElementById('skip-btn');
     this.proceedBtn = document.getElementById('proceed-btn');
     this.taxpayerSummary = document.getElementById('taxpayer-summary');
     this.taxpayerOptions = document.getElementById('taxpayer-options');
@@ -92,6 +93,7 @@ class CustomerValidation {
 
     // Proceed button
     this.proceedBtn.addEventListener('click', () => this.proceedToNextStep());
+    this.skipBtn.addEventListener('click', () => this.proceedToNextStep());
   }
 
   updateInputPlaceholder() {

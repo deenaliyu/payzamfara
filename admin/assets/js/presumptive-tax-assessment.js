@@ -6,6 +6,8 @@ function formatMoney(amount) {
   });
 }
 
+$("#generatePresumptiveBtn").attr('href', `../generatepresumptiveinvoice.html?created_by=admin&id=${userInfo2?.id}`);
+
 let AllDemanData = {}
 let dataToExport;
 
@@ -27,7 +29,7 @@ async function fetchInvoice() {
       const filters = {
         page: pageNumber,
         limit: data.length, // Number of rows per pages
-        getAllDirectAssessmentss: true,
+        getAllPresumptiveAssessments: true,
       };
 
       // Call your API with the calculated page number
@@ -37,12 +39,12 @@ async function fetchInvoice() {
         data: filters,
         success: function (response) {
           // Map the API response to DataTables expected format
-          dataToExport = response.data.direct_assessments
+          dataToExport = response.data.presumptive_assessments
           callback({
             draw: data.draw, // Pass through draw counter
             recordsTotal: response.data.total_records, // Total records in your database
             recordsFiltered: response.data.total_records, // Filtered records count
-            data: response.data.direct_assessments, // The actual data array from your API
+            data: response.data.presumptive_assessments, // The actual data array from your API
           });
         },
         error: function (error) {
@@ -85,35 +87,22 @@ async function fetchInvoice() {
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.annual_gross_income));
+          return formatMoney(parseFloat(row.tax_liability));
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.consolidated_relief));
+          return formatMoney(parseFloat(row.bpr_value) || 0);
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.chargeable_income));
+          return formatMoney(parseFloat(row.development_levy_value) || 0);
         }
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable));
-        }
-      },
-
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
-        }
-      },
-      { data: 'created_date' }
+      { data: 'created_at' }
     ],
   });
 
@@ -137,7 +126,7 @@ async function fetchForSpecificLevels(level) {
       const pageNumber = Math.ceil(data.start / data.length) + 1;
 
       const filters = {
-        getAllDirectAssessmentss: true,
+        getAllPresumptiveAssessments: true,
         page: pageNumber,
         limit: data.length, // Number of rows per pages
         level: level, // Add the selected level as a filter
@@ -150,7 +139,7 @@ async function fetchForSpecificLevels(level) {
         data: filters,
         success: function (response) {
           // Filter the data based on the selected level
-          const filteredData = response.data.direct_assessments.filter(item => item.level === level);
+          const filteredData = response.data.presumptive_assessments.filter(item => item.level === level);
           dataToExport = filteredData;
           // Map the API response to DataTables expected format
           callback({
@@ -190,41 +179,36 @@ async function fetchForSpecificLevels(level) {
       { data: 'email' },
       // { data: 'reason' },
       {
+        data: 'level',
+        render: function (data, type, row) {
+          return getStatusBadge(data);
+        }
+      },
+      { data: 'admin_fullname' },
+      {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.annual_gross_income));
+          return formatMoney(parseFloat(row.tax_liability));
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.consolidated_relief));
+          return formatMoney(parseFloat(row.bpr_value) || 0);
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.chargeable_income));
+          return formatMoney(parseFloat(row.development_levy_value) || 0);
         }
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
-        }
-      },
-      { data: 'created_date' },
+      { data: 'created_at' },
       {
         data: null,
         render: function (data, type, row) {
           return `
-            <a href="direct-assessmentview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
+            <a href="presumptive-taxview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
           `;
         },
       },
@@ -248,7 +232,7 @@ async function fetchForSpecificLevelsDecline(level) {
       const pageNumber = Math.ceil(data.start / data.length) + 1;
 
       const filters = {
-        getAllDirectAssessmentss: true,
+        getAllPresumptiveAssessments: true,
         page: pageNumber,
         limit: data.length, // Number of rows per pages
         level: level, // Add the selected level as a filter
@@ -261,7 +245,7 @@ async function fetchForSpecificLevelsDecline(level) {
         data: filters,
         success: function (response) {
           // Filter the data based on the selected level
-          const filteredData = response.data.direct_assessments.filter(item => item.level === level);
+          const filteredData = response.data.presumptive_assessments.filter(item => item.level === level);
           dataToExport = filteredData;
           // Map the API response to DataTables expected format
           callback({
@@ -302,41 +286,36 @@ async function fetchForSpecificLevelsDecline(level) {
       { data: 'email' },
       { data: 'reason' },
       {
+        data: 'level',
+        render: function (data, type, row) {
+          return getStatusBadge(data);
+        }
+      },
+      { data: 'admin_fullname', },
+      {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.annual_gross_income));
+          return formatMoney(parseFloat(row.tax_liability));
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.consolidated_relief));
+          return formatMoney(parseFloat(row.bpr_value) || 0);
         }
       },
       {
         data: null,
         render: function (data, type, row) {
-          return formatMoney(parseFloat(row.chargeable_income));
+          return formatMoney(parseFloat(row.development_levy_value) || 0);
         }
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable));
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return formatMoney(parseFloat(row.monthly_tax_payable * 12));
-        }
-      },
-      { data: 'created_date' },
+      { data: 'created_at' },
       {
         data: null,
         render: function (data, type, row) {
           return `
-            <a href="direct-assessmentview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
+            <a href="presumptive-taxview.html?id=${row.id}&level=${level.split("")[0]}" class="btn btn-primary btn-sm">View</a>
           `;
         },
       },
@@ -364,10 +343,9 @@ $(document).ready(function () {
 
 function getStatusBadge(status) {
   const statusClass = {
-    'First reviewer': 'bg-warning',
-    'Second reviewer': 'bg-warning',
-    'Third reviewer': 'bg-warning',
-    'Approval': 'bg-success',
+    'First Reviewer': 'bg-warning',
+    'Second Reviewer': 'bg-warning',
+    'Approved': 'bg-success',
     'Disapproved': 'bg-danger',
   }[status] || 'bg-secondary';
 
@@ -383,15 +361,15 @@ async function fetchAnalytics() {
 
   try {
     const response = await fetch(
-      `${HOST}?getDirectAssessmentAnalysis`
+      `${HOST}?getPresumptiveAnalytics`
     );
 
     const userAnalytics = await response.json();
 
-    $("#submittedCount").html(userAnalytics.total_assessments)
-    $("#approvedCount").html(userAnalytics.total_approved_assessments)
-    $("#pendingCount").html(userAnalytics.total_pending_assessments)
-    $("#disapprovedCount").html(userAnalytics.total_disapproved_assessments)
+    $("#submittedCount").html(userAnalytics.data.total)
+    $("#approvedCount").html(userAnalytics.data.approved)
+    $("#pendingCount").html(userAnalytics.data.pending)
+    $("#disapprovedCount").html(userAnalytics.data.disapproved)
 
 
     // console.log(userAnalytics)

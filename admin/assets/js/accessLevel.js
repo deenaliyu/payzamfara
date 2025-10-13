@@ -131,7 +131,7 @@ async function getRolesAdmin() {
     }
 
 
-  } else if (currentPage.includes("presumptive-tax.html")) {
+  } else if (currentPage.includes("presumptive-tax")) {
     let ReportRoles = userRoles.presumptive_access
 
     $('#reportDisplay').removeClass('hidden')
