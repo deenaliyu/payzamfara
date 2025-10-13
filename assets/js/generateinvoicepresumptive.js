@@ -54,7 +54,14 @@ async function fetchBusiness() {
   }
 }
 
-fetchBusiness()
+fetchBusiness().then(r => {
+  $("#busiType").selectize({
+    create: false,
+    // sortField: 'text',
+    placeholder: 'Search for your type of business',
+    dropdownParent: 'body'
+  });
+})
 
 $("#developmentLevy").on('change', function () {
   if ($(this).is(":checked")) {
@@ -116,50 +123,6 @@ $("#bprCheckInput").on('change', function () {
     $("#bprCheckContainer").html('');
   }
 });
-
-// function addBusiness() {
-//   $("#businessCnt").append(`
-//     <div class="businessNums mt-3">
-//       <div class="flex justify-end">
-//         <button onclick="deleteBusiness(this)">
-//           <iconify-icon icon="ic:round-delete"></iconify-icon>
-//         </button>
-//       </div>
-
-//       <div class="flex gap-3 md:flex-row flex-col mb-3">
-
-//         <div class="form-group md:w-6/12">
-//           <label for="">Type of Business*</label>
-//           <select class="form-select enumInputB" id="busiType" data-name="business_type" required>
-//             ${businessTypes}
-//           </select>
-//         </div>
-
-//         <div class="form-group md:w-6/12">
-//           <label for="">No of Employees*</label>
-//           <select class="form-select enumInputB" data-name="staff_quota" required>
-//             <option value=""></option>
-//             <option value="1-9">1-9</option>
-//             <option value="10-29">10-29</option>
-//             <option value="30-50">30-50</option>
-//           </select>
-//         </div>
-
-//       </div>
-//       <hr>
-//     </div>
-
-
-//   `)
-// }
-
-// function deleteBusiness(e) {
-//   let parentss = e.parentElement.parentElement
-//   parentss.remove()
-
-// }
-let userInfo = JSON.parse(localStorage.getItem("userDataPrime"));
-// console.log(userInfo)
 
 async function fetchUserDetails() {
   let tinOrEmail = document.querySelector("#tinOrEmail").value;
@@ -315,31 +278,6 @@ function continuePage() {
   }
 }
 // theName
-
-
-// let the_id
-// $(".revHeadsss").on("change", function () {
-//   let val = $(this).val()
-//   // console.log(val)
-//   setPrice(val)
-// })
-
-// let aa = [];
-// function setPrice(val) {
-//   let theRevenue = theRevs.filter(rr => rr.id === val)
-//   // console.log(val, theRevenue)
-//   $("#amountTopay").val()
-//   the_id = theRevenue[0].id
-//   aa["message"] = theRevenue;
-// }
-
-// function formatMoney(amount) {
-//   return amount.toLocaleString('en-US', {
-//     style: 'currency',
-//     currency: 'NGN', // Change this to your desired currency code
-//     minimumFractionDigits: 2,
-//   });
-// }
 
 function sumArray(numbers) {
   // console.log(numbers)
@@ -589,17 +527,15 @@ async function generateInvoiceNon() {
         data: StringedData,
         success: function (data) {
           console.log(data)
-          if (data.status === 2) {
-            let taxNumber = data.data.tax_number
-            // console.log(taxNumber)
-            generateInvoiceNum(taxNumber)
+          let taxNumber = data.data.tax_number
 
+          if (taxNumber) {
+            createPresumptiveAssessment(taxNumber);
           } else {
-
-            let taxNumber = data.data.tax_number
-            // console.log(data)
-            generateInvoiceNum(taxNumber)
-
+            $("#msg_box").html(`
+              <p class="text-danger text-center mt-4 text-lg">${data.message}</p>
+            `)
+            $("#generating_inv").removeClass("hidden")
           }
         },
         error: function (request, error) {
@@ -613,6 +549,73 @@ async function generateInvoiceNon() {
     }
   }
 }
+
+function createPresumptiveAssessment(taxNumber) {
+  // let invoiceNo = "PRSM-" + generateRandomString().toUpperCase();
+  let businessType = $("#busiType").val();
+  let category = $("#business_class").text();
+  let staffQuota = $("#staffQuota").val();
+  let taxLiability = parseFloat($(".mainAmountInput").val());
+  let description = $("#thedescripInput").val() || "No description";
+
+  // Optional values for levies
+  let developmentLevyInput = $(".developlevyAmount").val();
+  let bprInput = $(".bprSelectInputAmount").val();
+
+  let payload = {
+    endpoint: "createPresumptiveAssessment",
+    data: {
+      tax_number: taxNumber,
+      type_of_business: businessType,
+      generatedBy: adminId || null,
+      category: category,
+      staff_quota: staffQuota,
+      tax_liability: taxLiability,
+      description: description,
+      development_levy_value: developmentLevyInput || "",
+      bpr_value: bprInput || "",
+      bpr_revenue_head_id: bprInput ? $(".bprSelectInput").val() : NULL,
+      level: "First Reviewer"
+    }
+  };
+
+  $.ajax({
+    type: "POST",
+    url: HOST,
+    dataType: "json",
+    data: JSON.stringify(payload),
+    success: function (res) {
+      if (res.status === 1) {
+        Swal.fire({
+          title: "Assessment Created",
+          text: "Presumptive Tax Assessment saved successfully.",
+          icon: "success",
+          confirmButtonColor: "#3085d6",
+          allowOutsideClick: false,
+          confirmButtonText: "Continue"
+        }).then(() => {
+          window.location.href = `./admin/presumptive-tax-assessment.html`;
+        });
+      } else {
+        Swal.fire("Error", res.message || "Something went wrong saving assessment.", "error");
+
+        $("#msg_box").html(`
+              <p class="text-danger text-center mt-4 text-lg">${data.message}</p>
+            `)
+        $("#generating_inv").removeClass("hidden")
+      }
+    },
+    error: function (xhr, err) {
+      console.error("Server Error:", err);
+      Swal.fire("Error", "Server error while saving assessment.", "error");
+      $("#msg_box").html(`
+        <p class="text-danger text-center mt-4 text-lg">Server error while saving assessment.</p>
+      `)
+      $("#generating_inv").removeClass("hidden")
+    }
+  });
+}
+
 
 async function generateInvoiceNum(taxNumber) {
   let amt = parseFloat(document.querySelector(".mainAmountInput").value);
@@ -638,35 +641,35 @@ async function generateInvoiceNum(taxNumber) {
     $("#generating_inv").removeClass("hidden");
   }, 15000);
 
- let dataToSendOut = {
-  generateSingleInvoices: true,
-  tax_number: taxNumber,
-  revenue_head_id: the_id,
-  price: amt,
-  description: description || "No description",
-  invoice_type: invoice_type,
-  category_pre: cati,
-  created_by: "admin",
-  by_account: adminId || null,
-  zonalOffice: 8,
-  lga: "Not Assigned" // <-- Required
-};
+  let dataToSendOut = {
+    generateSingleInvoices: true,
+    tax_number: taxNumber,
+    revenue_head_id: the_id,
+    price: amt,
+    description: description || "No description",
+    invoice_type: invoice_type,
+    category_pre: cati,
+    created_by: "admin",
+    by_account: adminId || null,
+    zonalOffice: 8,
+    lga: "Not Assigned" // <-- Required
+  };
 
-// If development levy is present
-let revenueIds = [the_id];
-let prices = [amt];
+  // If development levy is present
+  let revenueIds = [the_id];
+  let prices = [amt];
 
-if (developmentLevyAmount && developmentLevyAmount.value !== "") {
-  revenueIds.push(800);
-  prices.push(developmentLevyAmount.value);
-}
-if (bprSelectInputAmount && bprSelectInputAmount.value !== "") {
-  revenueIds.push($(".bprSelectInput").val());
-  prices.push(bprSelectInputAmount.value);
-}
+  if (developmentLevyAmount && developmentLevyAmount.value !== "") {
+    revenueIds.push(800);
+    prices.push(developmentLevyAmount.value);
+  }
+  if (bprSelectInputAmount && bprSelectInputAmount.value !== "") {
+    revenueIds.push($(".bprSelectInput").val());
+    prices.push(bprSelectInputAmount.value);
+  }
 
-dataToSendOut.revenue_head_id = revenueIds.join(",");
-dataToSendOut.price = prices.join(",");
+  dataToSendOut.revenue_head_id = revenueIds.join(",");
+  dataToSendOut.price = prices.join(",");
 
   $.ajax({
     type: "GET",
