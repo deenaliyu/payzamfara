@@ -232,7 +232,7 @@ class CustomerValidation {
 
       // Determine if individual or business
       const isIndividual = this.isIndividualTaxpayer(taxpayer);
-      
+
       if (isIndividual) {
         const record = taxpayer.data.jtb;
         label.textContent = `${record.first_name} ${record.last_name} (${record.tin})`;
@@ -251,9 +251,9 @@ class CustomerValidation {
 
   isIndividualTaxpayer(taxpayer) {
     // Check if this is an individual by looking for individual-specific fields
-    return taxpayer.data.jtb && 
-           (taxpayer.data.jtb.first_name !== undefined && 
-            taxpayer.data.jtb.first_name !== null);
+    return taxpayer.data.jtb &&
+      (taxpayer.data.jtb.first_name !== undefined &&
+        taxpayer.data.jtb.first_name !== null);
   }
 
   renderTaxpayerDetails(taxpayer) {
@@ -652,6 +652,7 @@ class RegistrationForm {
       case 'individual': return 2;
       case 'corporate': return 1;
       case 'state': return 3;
+      case 'NGO': return 5;
       default: return 4;
     }
   }

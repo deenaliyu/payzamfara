@@ -8,6 +8,16 @@
   src: url("../fonts/DM_Sans/DMSans-Bold.ttf");
 }
 
+@font-face {
+  font-family: Aptos;
+  src: url("../fonts/Aptos/Aptos.ttf");
+}
+
+@font-face {
+  font-family: AptosBold;
+  src: url("../fonts/Aptos/Aptos-Bold.ttf");
+}
+
 /* ::-webkit-scrollbar {
   display: none
 } */
@@ -28,14 +38,14 @@
 body {
   background-size: cover;
   color: #000;
-  font-family: DM_Sans;
+  font-family: Aptos;
   width: 100vw !important;
   margin: 0 !important;
   overflow-x: hidden !important;
 }
 
 .fontBold {
-  font-family: DM_SansBold;
+  font-family: AptosBold;
 }
 
 header {

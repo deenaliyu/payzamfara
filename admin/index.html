@@ -1,583 +1,1163 @@
-<!DOCTYPE html>
-
-
-
-<html lang="en">
-
-
-
-
-
-
-
-<head>
-
-
-
-  <!-- Google tag (gtag.js) -->
-
-
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD33L7TK59"></script>
-
-
-
-  <script>
-
-
-
-    window.dataLayer = window.dataLayer || [];
-
-
-
-    function gtag() { dataLayer.push(arguments); }
-
-
-
-    gtag('js', new Date());
-
-
-
-
-
-
-
-    gtag('config', 'G-ZD33L7TK59');
-
-
-
-  </script>
-
-
-
-  <meta charset="UTF-8" />
-
-
-
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-  <title>PrimeGuage</title>
-
-
-
-
-
-
-
-  <!-- FAVION ICON -->
-
-
-
-  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
-
-
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-
-
-  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
-
-
-
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-
-
-  <link rel="stylesheet" href="../assets/css/responsive.css" />
-
-
-
-  <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
-
-
-
-  <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
-
-
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-
-
-
-  <style>
-    .form-group i {
-
-
-
-      margin-left: -50px;
-
-
-
-      cursor: pointer;
-
-
-
-      margin-top: 14px;
-
-
-
-    }
-  </style>
-
-
-
-</head>
-
-
-
-
-
-
-
-<body class="bg-[url('../assets/img/slide2.png')] bg-no-repeat">
-
-
-
-
-
-
-
-  <div class="absolute w-full -z-10" style="background: rgba(255, 255, 255, 0.8);"></div>
-
-
-
-
-
-
-
-  <header class="flex justify-between px-10 bg-white py-3" id="theHeaderr">
-
-    <a href="index.html" class="flex gap-1 items-center">
-
-      <div class="w-[70px] h-[40px]">
-
-        <img src="./assets/img/logo.png" class="" />
-
-      </div>
-
-      <p class="text-black fontBold">Pay Zamfara</p>
-
-    </a>
-
-    <div class="md:flex hidden items-center gap-5 text-[#555555]">
-
-      <div class="flex gap-3">
-        <a href="../index.html">Home</a>
-        <a href="../about.html">About Us</a>
-        <a href="../eservices.html">E-Services</a>
-        <a href="../offer.html">What we offer</a>
-        <a href="../taxcategory.html">tax category</a>
-        <a href="../howtopay.html">How to pay</a>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <a class="outline-btn" href="../signin.html">Sign In</a>
-        <a class="button" href="../regcategory.html">Register</a>
-      </div>
-
-    </div>
-
-    <div class="mobile_nav p-6">
-      <div class="flex flex-col text-left gap-3">
-        <a class="text-xl" href="../index.html">Home</a>
-        <a class="text-xl" href="../about.html">About Us</a>
-        <a class="text-xl" href="../eservices.html">E-Services</a>
-        <a class="text-xl" href="../offer.html">What we offer</a>
-        <a class="text-xl" href="../taxcategory.html">tax category</a>
-        <a class="text-xl" href="../howtopay.html">How to pay</a>
-      </div>
-
-      <h1 class="text-left mb-3 mt-3">Links</h1>
-      <hr class="mb-3">
-      <div class="text-left gap-5 text-[#555555] theNav">
-        <a href="../faqs.html" class="flex items-center gap-3 mb-4">
-          <iconify-icon icon="wpf:faq"></iconify-icon>
-          <p class="text-sm m-0">FAQ</p>
-        </a>
-
-        <a href="../contact.html" class="flex items-center gap-3 mb-4">
-          <iconify-icon icon="fluent:contact-card-32-filled"></iconify-icon>
-          <p class="text-sm m-0">Contact Us</p>
-        </a>
-
-        <a href="../news.html" class="flex items-center gap-3 mb-4">
-          <iconify-icon icon="fluent:news-20-filled"></iconify-icon>
-          <p class="text-sm m-0">News</p>
-        </a>
-
-        <a href="../gallery.html" class="flex items-center gap-3 mb-4">
-          <iconify-icon icon="dashicons:format-gallery"></iconify-icon>
-          <p class="text-sm m-0">Gallery</p>
-        </a>
-      </div>
-
-      <div class="flex items-center gap-3 mt-5">
-        <a class="outline-btn" href="../signin.html">Sign In</a>
-        <a class="button" href="../regcategory.html">Register</a>
-      </div>
-    </div>
-
-    <div class="hamburger md:hidden block">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </div>
-
-  </header>
-
-
-
-
-
-
-
-  <section class="flex justify-center items-center py-4 signin headerBeginner h-[80vh]">
-
-
-
-    <form class="md:w-5/12 w-full bg-white rounded-lg px-5 pb-4">
-
-
-
-      <div class="pt-1">
-
-
-
-        <h4 class="text-center text-black-500 my-2">Welcome back!</h4>
-
-
-
-        <p class="text-center text-black-500 my-2">Login into your account</p>
-
-
-
-      </div>
-
-
-
-      <hr class="text-gray mb-3">
-
-
-
-      <div class="form-group mb-3">
-
-
-
-        <label class="text-[14px]">Email address <span>*</span></label>
-
-
-
-        <input class="form-control mt-1" id="emailAdm" type="text" placeholder="Enter username" />
-
-
-
-      </div>
-
-
-
-
-
-
-
-      <div class="form-group mb-3">
-
-
-
-        <label>Password <span>*</span></label>
-
-
-
-
-
-
-
-        <div class="formb flex">
-
-
-
-          <input class="form-control mt-1 password" id="passwordm" type="password" placeholder="Enter Password" />
-
-
-
-          <i class="bi bi-eye-slash togglePassword" id=""></i>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-
-
-      <div class="flex justify-between">
-
-
-
-        <div class="form-check">
-
-
-
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-
-
-
-          <label class="form-check-label text-[16px]" for="flexCheckDefault">
-
-
-
-            Remember me
-
-
-
-          </label>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-
-
-      <button class="button block w-full mt-6" id="LoginAmin" type="button">Login Now</button>
-
-
-
-      <p class="text-center text-[14px] pt-2 text-[#151515]">By selecting login, you agree with our terms
-
-
-
-        and have read our and acknowledged our Global privacy statement.</p>
-
-
-
-
-
-
-
-      <div class="w-full mt-3 msg_box"></div>
-
-
-
-    </form>
-
-
-
-  </section>
-
-
-
-
-
-
-
-
-
-
-
-  <footer class=" bg-[#005826] mt-2  w-full p-4 text-xl flex items-center justify-center gap-3">
-
-
-
-    <p class="text-white text-center text-[14px] items-center">Copyright 2021 - <span id="cc"></span> Primeguage
-
-      Solutions Limited Portal. All rights reserved.</p>
-
-
-
-    <div class="flex gap-3 items-center justify-center">
-
-
-
-      <img src='../assets/img/ncc.svg' style="background: white;" alt="" width="60" />
-
-
-
-      <img src='../assets/img/pci.svg' style="background: white;" alt="" width="60" />
-
-
-
-    </div>
-
-
-
-
-
-
-
-  </footer>
-
-
-
-
-
-
-
-
-
-
-
-  <script src="../assets/js/jquery.js"></script>
-
-
-
-  <script src="../assets/bootstrap/js/bootstrap.bundle.js"></script>
-
-
-
-  <script src="../assets/js/aos-master/dist/aos.js"></script>
-
-
-
-  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
-
-
-
-  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-
-
-
-  <script>
-
-
-
-    AOS.init();
-
-
-
-  </script>
-
-
-
-  <script>
-
-
-
-    const togglePassword = document
-
-
-
-      .querySelectorAll('.togglePassword');
-
-
-
-
-
-
-
-    const password = document.querySelectorAll('.password');
-
-
-
-    togglePassword.forEach((togle, i) => {
-
-
-
-      togle.addEventListener('click', () => {
-
-
-
-
-
-
-
-        // Toggle the type attribute using
-
-
-
-        // getAttribure() method
-
-
-
-        password.forEach((pass, i) => {
-
-
-
-          const type = pass
-
-
-
-            .getAttribute('type') === 'password' ?
-
-
-
-            'text' : 'password';
-
-
-
-
-
-
-
-          pass.setAttribute('type', type);
-
-
-
-        });
-
-
-
-
-
-
-
-      });
-
-
-
-    })
-
-
-
-
-
-
-
-    document.getElementById("cc").textContent = new Date().getFullYear();
-
-
-
-  </script>
-
-
-
-  <script src="../assets/js/nav.js"></script>
-
-
-
-  <script src="../assets/js/signin.js?v=1.5"></script>
-
-
-
-
-
-
-
-</body>
-
-
-
-
-
-
-
+<!DOCTYPE html>
+
+
+
+
+
+
+
+<html lang="en">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+
+
+
+
+
+
+
+  <!-- Google tag (gtag.js) -->
+
+
+
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD33L7TK59"></script>
+
+
+
+
+
+
+
+  <script>
+
+
+
+
+
+
+
+    window.dataLayer = window.dataLayer || [];
+
+
+
+
+
+
+
+    function gtag() { dataLayer.push(arguments); }
+
+
+
+
+
+
+
+    gtag('js', new Date());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    gtag('config', 'G-ZD33L7TK59');
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+  <meta charset="UTF-8" />
+
+
+
+
+
+
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+
+
+
+
+  <title>PrimeGuage</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- FAVION ICON -->
+
+
+
+
+
+
+
+  <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon" />
+
+
+
+
+
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.css" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="../assets/css/responsive.css" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.css" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="../assets/js/aos-master/dist/aos.css" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+
+
+
+
+
+
+  <style>
+    .form-group i {
+
+
+
+
+
+
+
+      margin-left: -50px;
+
+
+
+
+
+
+
+      cursor: pointer;
+
+
+
+
+
+
+
+      margin-top: 14px;
+
+
+
+
+
+
+
+    }
+  </style>
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body class="bg-[url('../assets/img/slide2.png')] bg-no-repeat">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="absolute w-full -z-10" style="background: rgba(255, 255, 255, 0.8);"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeaderr">
+
+
+
+    <a href="index.html" class="flex gap-1 items-center">
+
+
+
+      <div class="w-[70px] h-[40px]">
+
+
+
+        <img src="./assets/img/logo.png" class="" />
+
+
+
+      </div>
+
+
+
+      <p class="text-black fontBold">Pay Zamfara</p>
+
+
+
+    </a>
+
+
+
+    <div class="md:flex hidden items-center gap-5 text-[#555555]">
+
+
+
+      <div class="flex gap-3">
+
+        <a href="../index.html">Home</a>
+
+        <a href="../about.html">About Us</a>
+
+        <a href="../eservices.html">E-Services</a>
+
+        <a href="../offer.html">What we offer</a>
+
+        <a href="../taxcategory.html">tax category</a>
+
+        <a href="../howtopay.html">How to pay</a>
+
+      </div>
+
+
+
+      <div class="flex items-center gap-3">
+
+        <a class="outline-btn" href="../signin.html">Sign In</a>
+
+        <a class="button" href="../regcategory.html">Register</a>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <div class="mobile_nav p-6">
+
+      <div class="flex flex-col text-left gap-3">
+
+        <a class="text-xl" href="../index.html">Home</a>
+
+        <a class="text-xl" href="../about.html">About Us</a>
+
+        <a class="text-xl" href="../eservices.html">E-Services</a>
+
+        <a class="text-xl" href="../offer.html">What we offer</a>
+
+        <a class="text-xl" href="../taxcategory.html">tax category</a>
+
+        <a class="text-xl" href="../howtopay.html">How to pay</a>
+
+      </div>
+
+
+
+      <h1 class="text-left mb-3 mt-3">Links</h1>
+
+      <hr class="mb-3">
+
+      <div class="text-left gap-5 text-[#555555] theNav">
+
+        <a href="../faqs.html" class="flex items-center gap-3 mb-4">
+
+          <iconify-icon icon="wpf:faq"></iconify-icon>
+
+          <p class="text-sm m-0">FAQ</p>
+
+        </a>
+
+
+
+        <a href="../contact.html" class="flex items-center gap-3 mb-4">
+
+          <iconify-icon icon="fluent:contact-card-32-filled"></iconify-icon>
+
+          <p class="text-sm m-0">Contact Us</p>
+
+        </a>
+
+
+
+        <a href="../news.html" class="flex items-center gap-3 mb-4">
+
+          <iconify-icon icon="fluent:news-20-filled"></iconify-icon>
+
+          <p class="text-sm m-0">News</p>
+
+        </a>
+
+
+
+        <a href="../gallery.html" class="flex items-center gap-3 mb-4">
+
+          <iconify-icon icon="dashicons:format-gallery"></iconify-icon>
+
+          <p class="text-sm m-0">Gallery</p>
+
+        </a>
+
+      </div>
+
+
+
+      <div class="flex items-center gap-3 mt-5">
+
+        <a class="outline-btn" href="../signin.html">Sign In</a>
+
+        <a class="button" href="../regcategory.html">Register</a>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="hamburger md:hidden block">
+
+      <span class="bar"></span>
+
+      <span class="bar"></span>
+
+      <span class="bar"></span>
+
+    </div>
+
+
+
+  </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section class="flex justify-center items-center py-4 signin headerBeginner h-[80vh]">
+
+
+
+
+
+
+
+    <form class="md:w-5/12 w-full bg-white rounded-lg px-5 pb-4">
+
+
+
+
+
+
+
+      <div class="pt-1">
+
+
+
+
+
+
+
+        <h4 class="text-center text-black-500 my-2">Welcome back!</h4>
+
+
+
+
+
+
+
+        <p class="text-center text-black-500 my-2">Login into your account</p>
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <hr class="text-gray mb-3">
+
+
+
+
+
+
+
+      <div class="form-group mb-3">
+
+
+
+
+
+
+
+        <label class="text-[14px]">Email address <span>*</span></label>
+
+
+
+
+
+
+
+        <input class="form-control mt-1" id="emailAdm" type="text" placeholder="Enter username" />
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="form-group mb-3">
+
+
+
+
+
+
+
+        <label>Password <span>*</span></label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="formb flex">
+
+
+
+
+
+
+
+          <input class="form-control mt-1 password" id="passwordm" type="password" placeholder="Enter Password" />
+
+
+
+
+
+
+
+          <i class="bi bi-eye-slash togglePassword" id=""></i>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="flex justify-between">
+
+
+
+
+
+
+
+        <div class="form-check">
+
+
+
+
+
+
+
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+
+
+
+
+
+
+
+          <label class="form-check-label text-[16px]" for="flexCheckDefault">
+
+
+
+
+
+
+
+            Remember me
+
+
+
+
+
+
+
+          </label>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <button class="button block w-full mt-6" id="LoginAmin" type="button">Login Now</button>
+
+
+
+
+
+
+
+      <p class="text-center text-[14px] pt-2 text-[#151515]">By selecting login, you agree with our terms
+
+
+
+
+
+
+
+        and have read our and acknowledged our Global privacy statement.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="w-full mt-3 msg_box"></div>
+
+
+
+
+
+
+
+    </form>
+
+
+
+
+
+
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <footer class=" bg-[#005826] mt-2  w-full p-4 text-xl flex items-center justify-center gap-3">
+
+
+
+
+
+
+
+    <p class="text-white text-center text-[14px] items-center">Copyright 2021 - <span id="cc"></span> Primeguage
+
+
+
+      Solutions Limited Portal. All rights reserved.</p>
+
+
+
+
+
+
+
+    <div class="flex gap-3 items-center justify-center">
+
+
+
+
+
+
+
+      <img src='../assets/img/ncc.svg' style="background: white;" alt="" width="60" />
+
+
+
+
+
+
+
+      <img src='../assets/img/pci.svg' style="background: white;" alt="" width="60" />
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="../assets/js/jquery.js"></script>
+
+
+
+
+
+
+
+  <script src="../assets/bootstrap/js/bootstrap.bundle.js"></script>
+
+
+
+
+
+
+
+  <script src="../assets/js/aos-master/dist/aos.js"></script>
+
+
+
+
+
+
+
+  <script src="../assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+
+
+
+
+
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+
+
+
+
+
+
+
+  <script>
+
+
+
+
+
+
+
+    AOS.init();
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+  <script>
+
+
+
+
+
+
+
+    const togglePassword = document
+
+
+
+
+
+
+
+      .querySelectorAll('.togglePassword');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const password = document.querySelectorAll('.password');
+
+
+
+
+
+
+
+    togglePassword.forEach((togle, i) => {
+
+
+
+
+
+
+
+      togle.addEventListener('click', () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Toggle the type attribute using
+
+
+
+
+
+
+
+        // getAttribure() method
+
+
+
+
+
+
+
+        password.forEach((pass, i) => {
+
+
+
+
+
+
+
+          const type = pass
+
+
+
+
+
+
+
+            .getAttribute('type') === 'password' ?
+
+
+
+
+
+
+
+            'text' : 'password';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          pass.setAttribute('type', type);
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    document.getElementById("cc").textContent = new Date().getFullYear();
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+  <script src="../assets/js/nav.js"></script>
+
+
+
+
+
+
+
+  <script src="../assets/js/signin.js?v=1.5"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

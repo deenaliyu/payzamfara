@@ -22,7 +22,10 @@
   </style>
 </head>
 
-<body class="">
+<body class="bg-[url('./assets/img/zamfara.png')] bg-no-repeat">
+
+  <div class="w-full absolute h-full -z-10" style="background: rgba(255, 255, 255, 0.4);"></div>
+
   <header class="flex justify-between px-10 bg-white py-3" id="theHeader"></header>
   <section class="reg formTabs firstForm headerBeginner">
     <div class="row">
@@ -31,58 +34,74 @@
           <img src="./assets/img/ind1.png" alt="">
         </div>
       </div> -->
-      <div class="col-md-12 col-12 h-[88vh] bg-[url('./assets/img/slide2.png')] bg-no-repeat bg-center p-0">
-        <div class="w-full h-[88vh] -z-10" style="background: rgba(255, 255, 255, 0.9);">
-          <div class="flex justify-center pt-[40px]">
-            <div class="">
-              <h4 class="text-[#101828] text-[30px] text-center">Register</h4>
-              <p class="text-[#101828] text-[20px] text-center">Select your category</p>
-              <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
-                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi " data-name="individual">
-                  <div class="flex justify-center pt-2">
-                    <img src="./assets/img/icons/signup_personal.png.png" class="text-center" alt="">
-                  </div>
-                  <p class="text-[14px] text-center">Individual</p>
-                  <p class="text-[12px] text-center pt-2">These are individuals who are required to
-                    pay taxes on their personal income, such as salary, freelance work, rental
-                    income, etc.</p>
+      <div class="col-md-12 col-12 p-0">
+
+        <div class="flex justify-center pt-[40px]">
+          <div class="">
+            <h4 class="text-[#101828] text-[30px] text-center">Register</h4>
+            <p class="text-[#101828] text-[20px] text-center">Select your category</p>
+
+            <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
+              <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi " data-name="individual">
+                <div class="flex justify-center pt-2">
+                  <img src="./assets/img/icons/signup_personal.png.png" class="text-center" alt="">
                 </div>
-                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="corporate">
-                  <div class="flex justify-center pt-2">
-                    <img src="./assets/img/icons/signup_sole_sig.png.png" class="text-center" alt="">
-                  </div>
-                  <p class="text-[14px] text-center">Corporate</p>
-                  <p class="text-[12px] text-center pt-2">These are businesses, including corporations
-                    and limited liability companies, that are required to pay taxes on their
-                    profits.</p>
-                </div>
+                <p class="text-[14px] text-center">Individual</p>
+                <p class="text-[12px] text-center pt-2">These are individuals who are required to
+                  pay taxes on their personal income, such as salary, freelance work, rental
+                  income, etc.</p>
               </div>
-              <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
-                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="state">
-                  <div class="flex justify-center pt-2">
-                    <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
-                  </div>
-                  <p class="text-[14px] text-center">State Agency</p>
-                  <p class="text-[12px] text-center pt-2">These are government agencies and
-                    departments at the state level that are responsible for paying taxes on their
-                    operations.</p>
+              <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="corporate">
+                <div class="flex justify-center pt-2">
+                  <img src="./assets/img/icons/signup_sole_sig.png.png" class="text-center" alt="">
                 </div>
-                <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="federal">
-                  <div class="flex justify-center pt-2">
-                    <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
-                  </div>
-                  <p class="text-[14px] text-center">Federal Agency</p>
-                  <p class="text-[12px] text-center pt-2">These are government agencies and
-                    departments at the federal level that are responsible for paying taxes on their
-                    operations.</p>
-                </div>
+                <p class="text-[14px] text-center">Corporate</p>
+                <p class="text-[12px] text-center pt-2">These are businesses, including corporations
+                  and limited liability companies, that are required to pay taxes on their
+                  profits.</p>
               </div>
             </div>
+
+            <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
+              <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="state">
+                <div class="flex justify-center pt-2">
+                  <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
+                </div>
+                <p class="text-[14px] text-center">State Agency</p>
+                <p class="text-[12px] text-center pt-2">These are government agencies and
+                  departments at the state level that are responsible for paying taxes on their
+                  operations.</p>
+              </div>
+              <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="federal">
+                <div class="flex justify-center pt-2">
+                  <img src="./assets/img/icons/signup_gov.png.png" class="text-center" alt="">
+                </div>
+                <p class="text-[14px] text-center">Federal Agency</p>
+                <p class="text-[12px] text-center pt-2">These are government agencies and
+                  departments at the federal level that are responsible for paying taxes on their
+                  operations.</p>
+              </div>
+
+              <div class="w-[244px] bg-white rounded-lg px-3 pb-4 cardi" data-name="NGO">
+                <div class="flex justify-center pt-2">
+                  <img src="./assets/img/icons/signup_sole_sig.png.png" class="text-center" alt="">
+                </div>
+                <p class="text-[14px] text-center">NGO</p>
+                <p class="text-[12px] text-center pt-2">These are non-governmental organizations
+                  that may be required to pay taxes on certain types of income or activities,
+                  depending on the tax laws in their jurisdiction.</p>
+              </div>
+            </div>
+
+            <div class="flex gap-x-5 mt-3 justify-center flex-wrap">
+
+            </div>
+
           </div>
-          <div class="flex justify-end md:pr-20">
-            <button class="button flex items-center gap-x-2  disabled bb">Proceed <iconify-icon
-                icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
-          </div>
+        </div>
+        <div class="flex justify-end md:pr-20">
+          <button class="button flex items-center gap-x-2  disabled bb">Proceed <iconify-icon
+              icon="material-symbols:line-end-arrow-notch-sharp"></iconify-icon></button>
         </div>
 
       </div>

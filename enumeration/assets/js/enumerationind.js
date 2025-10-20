@@ -650,6 +650,7 @@ class RegistrationForm {
       case 'individual': return 2;
       case 'corporate': return 1;
       case 'state': return 3;
+      case 'NGO': return 5;
       default: return 4;
     }
   }

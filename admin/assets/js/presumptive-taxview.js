@@ -95,7 +95,7 @@ async function updateStatus(id, status) {
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "presumptive-tax.html";
+            window.location.href = "presumptive-tax-assessment.html";
           }
         });
       }
