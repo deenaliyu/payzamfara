@@ -42,6 +42,7 @@ async function displayData(userInvoices) {
       <td>${invoice.first_name} ${invoice.surname} </td>
       <td>${invoice.invoice_number} </td>
         <td>&#8358 ${parseFloat(invoice.amount_paid).toLocaleString()} </td>
+        <td>${invoice.date_created} </td>
       <td>${invoice.due_date} </td>
       <td>
         ${invoice.payment_status === 'paid' ? `<span class="badge bg-success">${invoice.payment_status}</span>` : `<span class="badge bg-warning">${invoice.payment_status}</span>`}

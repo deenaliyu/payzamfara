@@ -1003,7 +1003,8 @@ class InvoiceGenerator {
       // this.displayInvoice(invoiceData);
 
     } catch (error) {
-      console.error('Invoice generation error:', error);
+      console.log('Invoice generation error:', error);
+
       msgBox.innerHTML = `
             <p class="text-danger text-center mt-4 text-lg">
                 Error generating invoice: ${error.message || 'Please try again'}

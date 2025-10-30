@@ -108,20 +108,24 @@ class CustomerValidation {
 
     switch (method) {
       case 'tin':
-        input.placeholder = 'Enter your TIN (e.g., 0123456789)';
-        input.dataset.name = 'tin';
+        input.placeholder = 'Enter your JTB TIN (e.g., 0025152785)';
+        input.pattern = "\\d{10}"; // 10-digit TIN pattern
         break;
       case 'registration_number':
         input.placeholder = 'Enter your RC Number (e.g., RC123456)';
-        input.dataset.name = 'registration_number';
+        input.pattern = ".*"; // Accept any value
         break;
       case 'nin':
         input.placeholder = 'Enter your NIN (e.g., 12345678901)';
-        input.dataset.name = 'nin';
+        input.pattern = "\\d{11}"; // 11-digit NIN
         break;
       case 'phone_no':
         input.placeholder = 'Enter your Phone (e.g., 08012345678)';
-        input.dataset.name = 'phone_no';
+        input.pattern = "\\d{11}"; // 11-digit phone
+        break;
+      case 'email_or_phone':
+        input.placeholder = 'Enter your Email or Phone (e.g., user@email.com or 08012345678)';
+        input.pattern = "^(\\d{11}|[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,})$"; // 11-digit phone or email
         break;
     }
   }
@@ -138,12 +142,24 @@ class CustomerValidation {
     this.showLoader();
 
     try {
-      const response = await this.fetchTaxpayer(method, value);
+      // Use the new API for email_or_phone method
+      if (method === 'email_or_phone') {
+        const response = await this.fetchUserByEmailOrPhone(value);
 
-      if (response.status === 'error' || response.data.length === 0) {
-        this.handleTaxpayerNotFound();
+        if (response.status === 1) {
+          this.displayUserInfo(response.user);
+        } else {
+          this.handleTaxpayerNotFound();
+        }
       } else {
-        this.displayTaxpayerInfo(response.data);
+        // Use the original API for other methods
+        const response = await this.fetchTaxpayer(method, value);
+
+        if (response.status === 'error' || response.data.length === 0) {
+          this.handleTaxpayerNotFound();
+        } else {
+          this.displayTaxpayerInfo(response.data);
+        }
       }
 
     } catch (error) {
@@ -161,6 +177,49 @@ class CustomerValidation {
   async fetchTaxpayer(method, value) {
     // const url = `${this.apiBaseUrl}/get-taxpayer?${method}=${encodeURIComponent(value)}`;
     const url = `${this.apiBaseUrl}/get-taxpayer?search=${encodeURIComponent(value)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    return response.json();
+  }
+
+  displayUserInfo(user) {
+    // Show the summary section
+    this.taxpayerSummary.classList.remove('hidden');
+
+    // Clear previous content
+    this.taxpayerOptions.innerHTML = '';
+    this.taxpayerDetails.innerHTML = '';
+
+    // Format the user data to match the expected structure
+    const formattedUser = {
+      tin: user.tin,
+      data: {
+        jtb: {
+          first_name: user.first_name,
+          last_name: user.surname,
+          email_address: user.email,
+          phone_no_1: user.phone,
+          LGAName: user.lga,
+          StateName: user.state,
+          street_name: user.address,
+          
+          // Add other fields that might be needed
+          registered_name: user.first_name + ' ' + user.surname, // For non-individual format
+          main_trade_name: user.business_type
+        }
+      }
+    };
+
+    this.renderTaxpayerDetails(formattedUser);
+    this.selectedTaxpayer = formattedUser;
+  }
+
+  async fetchUserByEmailOrPhone(value) {
+    const url = `https://payzamfara.com/php/?checkUsers&data=${encodeURIComponent(value)}`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -340,8 +399,14 @@ class CustomerValidation {
 
   prefillNextForm() {
     const taxpayer = this.selectedTaxpayer;
-    const jtbData = taxpayer.data.jtb;
-    const isIndividual = jtbData.first_name !== undefined;
+
+    console.log(taxpayer)
+    // Check if it's from the new API (has user structure) or old API (has jtb structure)
+    const isNewAPIFormat = taxpayer.data && taxpayer.data.jtb;
+    const jtbData = isNewAPIFormat ? taxpayer.data.jtb : taxpayer.data;
+
+    // Determine if individual based on available fields
+    const isIndividual = jtbData.first_name !== undefined && jtbData.first_name !== null;
 
     // Set state and LGA if available in your form
     if (document.getElementById('STATES')) {
@@ -362,8 +427,8 @@ class CustomerValidation {
         lgaSelector.innerHTML = '<option>--Select LGA--</option>'
         lgaList[formattedState].forEach(lga => {
           lgaSelector.innerHTML += `
-              <option value="${lga}">${lga}</option>
-              `;
+            <option value="${lga}">${lga}</option>
+            `;
         });
       }
 
@@ -649,9 +714,9 @@ class RegistrationForm {
     switch (this.category) {
       case 'individual': return 2;
       case 'corporate': return 1;
-      case 'state': return 3;
+      case 'government': return 6;
       case 'NGO': return 5;
-      default: return 4;
+      default: return 1;
     }
   }
 

@@ -651,9 +651,9 @@ class RegistrationForm {
     switch (this.category) {
       case 'individual': return 2;
       case 'corporate': return 1;
-      case 'state': return 3;
+      case 'government': return 6;
       case 'NGO': return 5;
-      default: return 4;
+      default: return 1;
     }
   }
 
