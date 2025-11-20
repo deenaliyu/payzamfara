@@ -135,198 +135,404 @@
               <div class="form-section">
                 <h4 class="section-title">Applicant Information</h4>
                 <div class="row g-3">
-                  <!-- Common fields -->
-                  <div class="col-md-6 individual-field">
-                    <label for="fullName" class="form-label">Full Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+
+                  <!-- INDIVIDUAL FIELDS -->
+                  <div class="col-md-4 individual-field">
+                    <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                    <select class="form-select" id="title" name="title" required>
+                      <option value="" selected disabled>Select Title</option>
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Miss">Miss</option>
+                      <option value="Ms">Ms</option>
+                      <option value="Dr">Dr</option>
+                      <option value="Prof">Prof</option>
+                      <option value="Chief">Chief</option>
+                      <option value="Alhaji">Alhaji</option>
+                      <option value="Hajiya">Hajiya</option>
+                    </select>
                   </div>
-                  <div class="col-md-6 corporate-field d-none">
-                    <label for="companyName" class="form-label">Company Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="companyName" name="companyName">
+                  <div class="col-md-4 individual-field">
+                    <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
                   </div>
-                  <div class="col-md-6">
-                    <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                  </div>
-                  <div class="col-12">
-                    <label for="address" class="form-label" id="addressLabel">Residential Address <span
-                        class="text-danger">*</span></label>
-                    <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+                  <div class="col-md-4 individual-field">
+                    <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
                   </div>
                   <div class="col-md-6 individual-field">
                     <label for="bvn" class="form-label">Bank Verification Number (BVN) <span
                         class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="bvn" name="bvn" maxlength="11" required>
+                    <input type="text" class="form-control" id="bvn" name="bvn" maxlength="11" pattern="[0-9]{11}"
+                      placeholder="Enter 11-digit BVN" required>
+                    <small class="text-muted">11 digits required</small>
+                  </div>
+                  <div class="col-md-6 individual-field">
+                    <label for="dob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="dob" name="dob" max="2006-12-31" required>
+                    <small class="text-muted">Must be 18 years or older</small>
+                  </div>
+
+                  <!-- CORPORATE FIELDS -->
+                  <div class="col-md-6 corporate-field d-none">
+                    <label for="organizationType" class="form-label">Organization Type <span
+                        class="text-danger">*</span></label>
+                    <select class="form-select" id="organizationType" name="organizationType">
+                      <option value="" selected disabled>Select Type</option>
+                      <option value="Private">Private Limited Company</option>
+                      <option value="Public">Public Limited Company</option>
+                      <option value="NGO">Non-Governmental Organization</option>
+                      <option value="Trust">Trust</option>
+                      <option value="Partnership">Partnership</option>
+                    </select>
                   </div>
                   <div class="col-md-6 corporate-field d-none">
                     <label for="cacNumber" class="form-label">CAC Registration Number <span
                         class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="cacNumber" name="cacNumber">
+                    <input type="text" class="form-control" id="cacNumber" name="cacNumber"
+                      placeholder="e.g., RC1234567">
+                  </div>
+                  <div class="col-md-12 corporate-field d-none">
+                    <label for="companyName" class="form-label">CAC Registered Company Name <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="companyName" name="companyName"
+                      placeholder="Enter company name as registered with CAC">
+                  </div>
+
+                  <!-- COMMON FIELDS -->
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="phone" name="phone"
+                      placeholder="+2348012345678 or 08012345678" required>
+                    <small class="text-muted">Format: +234XXXXXXXXXX or 0XXXXXXXXXX</small>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="example@email.com"
+                      required>
+                  </div>
+
+                  <!-- ADDRESS FIELDS -->
+                  <div class="col-md-6">
+                    <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="lga" class="form-label">Local Government Area <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="lga" name="lga" placeholder="Enter LGA" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+                    <select class="form-select" id="state" name="state" required>
+                      <option value="" selected disabled>Select State</option>
+                      <option value="FCT">FCT</option>
+                      <option value="Abia">Abia</option>
+                      <option value="Adamawa">Adamawa</option>
+                      <option value="Akwa Ibom">Akwa Ibom</option>
+                      <option value="Anambra">Anambra</option>
+                      <option value="Bauchi">Bauchi</option>
+                      <option value="Bayelsa">Bayelsa</option>
+                      <option value="Benue">Benue</option>
+                      <option value="Borno">Borno</option>
+                      <option value="Cross River">Cross River</option>
+                      <option value="Delta">Delta</option>
+                      <option value="Ebonyi">Ebonyi</option>
+                      <option value="Edo">Edo</option>
+                      <option value="Ekiti">Ekiti</option>
+                      <option value="Enugu">Enugu</option>
+                      <option value="Gombe">Gombe</option>
+                      <option value="Imo">Imo</option>
+                      <option value="Jigawa">Jigawa</option>
+                      <option value="Kaduna">Kaduna</option>
+                      <option value="Kano">Kano</option>
+                      <option value="Katsina">Katsina</option>
+                      <option value="Kebbi">Kebbi</option>
+                      <option value="Kogi">Kogi</option>
+                      <option value="Kwara">Kwara</option>
+                      <option value="Lagos">Lagos</option>
+                      <option value="Nasarawa">Nasarawa</option>
+                      <option value="Niger">Niger</option>
+                      <option value="Ogun">Ogun</option>
+                      <option value="Ondo">Ondo</option>
+                      <option value="Osun">Osun</option>
+                      <option value="Oyo">Oyo</option>
+                      <option value="Plateau">Plateau</option>
+                      <option value="Rivers">Rivers</option>
+                      <option value="Sokoto">Sokoto</option>
+                      <option value="Taraba">Taraba</option>
+                      <option value="Yobe">Yobe</option>
+                      <option value="Zamfara">Zamfara</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="streetName" class="form-label">Street Name/Address <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="streetName" name="streetName"
+                      placeholder="Enter street address" required>
                   </div>
                 </div>
               </div>
 
-              <!-- Business Information -->
-              <div class="form-section">
+              <!-- Business/Corporate Information -->
+              <div class="form-section corporate-field d-none">
                 <h4 class="section-title">Business Information</h4>
                 <div class="row g-3">
-                  <div class="col-md-6 individual-field">
+                  <div class="col-md-6">
+                    <label for="lineOfBusinessName" class="form-label">Line of Business <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="lineOfBusinessName" name="lineOfBusinessName"
+                      placeholder="e.g., Software Development">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="lineOfBusinessCode" class="form-label">Business Code <span
+                        class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="lineOfBusinessCode" name="lineOfBusinessCode"
+                      placeholder="e.g., 1010" value="1010">
+                    <small class="text-muted">Standard business classification code</small>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="registrationDate" class="form-label">Registration Date <span
+                        class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="registrationDate" name="registrationDate">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="commencementDate" class="form-label">Commencement Date <span
+                        class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="commencementDate" name="commencementDate">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="incorporationDate" class="form-label">Incorporation Date <span
+                        class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="incorporationDate" name="incorporationDate">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="financialYearBegin" class="form-label">Financial Year Start <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="financialYearBegin" name="financialYearBegin"
+                      placeholder="MM-DD" value="01-01" pattern="[0-9]{2}-[0-9]{2}">
+                    <small class="text-muted">Format: MM-DD</small>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="financialYearEnd" class="form-label">Financial Year End <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="financialYearEnd" name="financialYearEnd"
+                      placeholder="MM-DD" value="12-31" pattern="[0-9]{2}-[0-9]{2}">
+                    <small class="text-muted">Format: MM-DD</small>
+                  </div>
+                  <option value="wholesale">Wholesale Trade</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="service">Service Provider</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="ngo">NGO/Non-Profit</option>
+                  <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6 corporate-field d-none">
+                  <label for="businessType" class="form-label">Type of Business Entity <span
+                      class="text-danger">*</span></label>
+                  <select class="form-select" id="businessType" name="businessType">
+                    <option value="" selected disabled>Select entity type</option>
+                    <option value="limited">Limited Liability Company</option>
+                    <option value="public">Public Limited Company</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="ngo">NGO/Foundation</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6 corporate-field d-none">
+                  <label for="taxOffice" class="form-label">Preferred Tax Office <span
+                      class="text-danger">*</span></label>
+                  <select class="form-select" id="taxOffice" name="taxOffice">
+                    <option value="" selected disabled>Select tax office</option>
+                    <option value="lagos-main">Lagos Main</option>
+                    <option value="abuja-central">Abuja Central</option>
+                    <option value="port-harcourt">Port Harcourt</option>
+                    <option value="kano">Kano</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Director Information (Corporate Only) -->
+            <div class="form-section corporate-field d-none">
+              <h4 class="section-title">Director/Proprietor Information</h4>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label for="directorName" class="form-label">Director Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="directorName" name="directorName"
+                    placeholder="Enter director's full name">
+                </div>
+                <div class="col-md-4">
+                  <label for="directorEmail" class="form-label">Director Email <span
+                      class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="directorEmail" name="directorEmail"
+                    placeholder="director@company.com">
+                </div>
+                <div class="col-md-4">
+                  <label for="directorPhone" class="form-label">Director Phone <span
+                      class="text-danger">*</span></label>
+                  <input type="tel" class="form-control" id="directorPhone" name="directorPhone"
+                    placeholder="+2348012345678">
+                </div>
+              </div>
+            </div>
+
+            <!-- COMMENTED OUT - NOT IN JTB PAYLOAD -->
+            <!-- 
+              <div class="form-section">
+                <h4 class="section-title">Additional Information (Optional)</h4>
+                <div class="row g-3">
+                  <div class="col-md-6">
                     <label for="businessName" class="form-label">Business Name (if different)</label>
                     <input type="text" class="form-control" id="businessName" name="businessName">
                   </div>
-                  <div class="col-md-6 individual-field">
+                  <div class="col-md-6">
                     <label for="businessAddress" class="form-label">Business Address</label>
                     <textarea class="form-control" id="businessAddress" name="businessAddress" rows="2"></textarea>
                   </div>
                   <div class="col-md-6">
-                    <label for="commencementDate" class="form-label">Business Commencement Date <span
-                        class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="commencementDate" name="commencementDate" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="natureOfBusiness" class="form-label">Nature of Business <span
-                        class="text-danger">*</span></label>
-                    <select class="form-select" id="natureOfBusiness" name="natureOfBusiness" required>
+                    <label for="natureOfBusiness" class="form-label">Nature of Business</label>
+                    <select class="form-select" id="natureOfBusiness" name="natureOfBusiness">
                       <option value="" selected disabled>Select business type</option>
                       <option value="retail">Retail Trade</option>
                       <option value="wholesale">Wholesale Trade</option>
                       <option value="manufacturing">Manufacturing</option>
-                      <option value="service">Service Provider</option>
+                      <option value="services">Professional Services</option>
+                      <option value="construction">Construction</option>
                       <option value="agriculture">Agriculture</option>
-                      <option value="ngo">NGO/Non-Profit</option>
+                      <option value="technology">Technology & IT</option>
+                      <option value="hospitality">Hospitality & Tourism</option>
+                      <option value="healthcare">Healthcare</option>
+                      <option value="education">Education</option>
+                      <option value="transportation">Transportation</option>
+                      <option value="real-estate">Real Estate</option>
+                      <option value="finance">Financial Services</option>
                       <option value="other">Other</option>
                     </select>
                   </div>
-                  <div class="col-md-6 corporate-field d-none">
-                    <label for="businessType" class="form-label">Type of Business Entity <span
-                        class="text-danger">*</span></label>
-                    <select class="form-select" id="businessType" name="businessType">
-                      <option value="" selected disabled>Select entity type</option>
-                      <option value="limited">Limited Liability Company</option>
-                      <option value="public">Public Limited Company</option>
-                      <option value="partnership">Partnership</option>
-                      <option value="ngo">NGO/Foundation</option>
-                      <option value="other">Other</option>
+                  <div class="col-md-6">
+                    <label for="numberOfStaff" class="form-label">Number of Staff</label>
+                    <select class="form-select" id="numberOfStaff" name="numberOfStaff">
+                      <option value="" selected disabled>Select range</option>
+                      <option value="1-5">1-5 employees</option>
+                      <option value="6-10">6-10 employees</option>
+                      <option value="11-50">11-50 employees</option>
+                      <option value="51-200">51-200 employees</option>
+                      <option value="201-500">201-500 employees</option>
+                      <option value="500+">500+ employees</option>
                     </select>
                   </div>
-                  <div class="col-md-6 corporate-field d-none">
-                    <label for="taxOffice" class="form-label">Preferred Tax Office <span
-                        class="text-danger">*</span></label>
-                    <select class="form-select" id="taxOffice" name="taxOffice">
-                      <option value="" selected disabled>Select tax office</option>
-                      <option value="lagos-main">Lagos Main</option>
-                      <option value="abuja-central">Abuja Central</option>
-                      <option value="port-harcourt">Port Harcourt</option>
-                      <option value="kano">Kano</option>
-                      <option value="other">Other</option>
-                    </select>
+                  <div class="col-md-6">
+                    <label for="businessType" class="form-label">Business Type</label>
+                    <input type="text" class="form-control" id="businessType" name="businessType">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="taxOffice" class="form-label">Tax Office</label>
+                    <input type="text" class="form-control" id="taxOffice" name="taxOffice">
                   </div>
                 </div>
               </div>
+              -->
 
-              <!-- Documents Upload -->
+            <!-- COMMENTED OUT - DOCUMENTS NOT PROCESSED IN THIS VERSION -->
+            <!-- 
               <div class="form-section">
                 <h4 class="section-title">Documents Upload</h4>
                 <div class="row g-3">
                   <div class="col-md-6 individual-field">
                     <label for="validId" class="form-label">Valid ID <span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" id="validId" name="validId" accept=".pdf,.jpg,.jpeg,.png"
-                      required>
-                    <small class="text-muted">(International Passport, Driver's License, National ID or Voter's
-                      Card)</small>
+                    <input type="file" class="form-control" id="validId" name="validId" accept=".pdf,.jpg,.jpeg,.png">
+                    <small class="text-muted">(International Passport, Driver's License, National ID or Voter's Card)</small>
                   </div>
                   <div class="col-md-6 corporate-field d-none">
-                    <label for="cacCertificate" class="form-label">CAC Certificate <span
-                        class="text-danger">*</span></label>
-                    <input type="file" class="form-control" id="cacCertificate" name="cacCertificate"
-                      accept=".pdf,.jpg,.jpeg,.png">
+                    <label for="cacCertificate" class="form-label">CAC Certificate <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="cacCertificate" name="cacCertificate" accept=".pdf,.jpg,.jpeg,.png">
                   </div>
                   <div class="col-md-6 corporate-field d-none">
                     <label for="cacForm" class="form-label">Form CAC2/CAC7 <span class="text-danger">*</span></label>
                     <input type="file" class="form-control" id="cacForm" name="cacForm" accept=".pdf,.jpg,.jpeg,.png">
                   </div>
                   <div class="col-md-6">
-                    <label for="utilityBill" class="form-label">Utility Bill or Tenancy Agreement <span
-                        class="text-danger">*</span></label>
-                    <input type="file" class="form-control" id="utilityBill" name="utilityBill"
-                      accept=".pdf,.jpg,.jpeg,.png" required>
+                    <label for="utilityBill" class="form-label">Utility Bill or Tenancy Agreement <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="utilityBill" name="utilityBill" accept=".pdf,.jpg,.jpeg,.png">
                   </div>
                   <div class="col-md-6 corporate-field d-none">
                     <label for="directorId" class="form-label">Director's Valid ID (Optional)</label>
-                    <input type="file" class="form-control" id="directorId" name="directorId"
-                      accept=".pdf,.jpg,.jpeg,.png">
+                    <input type="file" class="form-control" id="directorId" name="directorId" accept=".pdf,.jpg,.jpeg,.png">
                   </div>
                 </div>
               </div>
+              -->
 
-
-
-              <button class="button w-full mb-20" type="button" onclick="nextPrev(1)">Submit Application</button>
-
+            <div class="alert alert-info mt-4">
+              <i class="fas fa-info-circle"></i> <strong>Note:</strong> All fields marked with <span
+                class="text-danger">*</span> are required.
+              Please ensure all information is accurate before submission.
             </div>
-          </form>
+
+            <button class="button w-full mb-20" type="submit" id="submitTINRequest">Submit Application</button>
 
         </div>
-      </section>
+        </form>
 
-      <section class="formTabs h-full">
-        <div class="pt-10 md:px-10 px-3">
-          <a href="eservices.html" class="flex items-center gap-2 w-fit">
-            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-            <span>Go back</span>
-          </a>
-        </div>
+    </div>
+  </section>
 
-        <div class="flex justify-center h-full px-3 mt-10">
+  <section class="formTabs h-full">
+    <div class="pt-10 md:px-10 px-3">
+      <a href="eservices.html" class="flex items-center gap-2 w-fit">
+        <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+        <span>Go back</span>
+      </a>
+    </div>
 
-          <div action="" class="w-[70%] mt-10">
-            <h1 class="fontBold text-2xl">JTB TIN Request</h1>
-            <h1 class="mb-3 mt-3">Generate Reference</h1>
+    <div class="flex justify-center h-full px-3 mt-10">
 
-            <h1 class="text-2xl" id="refNumber">323232</h1>
+      <div action="" class="w-[70%] mt-10">
+        <h1 class="fontBold text-2xl">JTB TIN Request</h1>
+        <h1 class="mb-3 mt-3">Generate Reference</h1>
 
-            <p>Please Save your reference number after submitting your application to help track its progress. The
-              reference number will be used to identify and track your application throughout the review process. You
-              can generate the reference number by clicking on the button below.
-              Thank you for submitting your application, and we look forward to processing it.
-              Best regards,</p>
+        <h1 class="text-2xl" id="refNumber">323232</h1>
 
-            <div class="mt-5 gap-4">
-              <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
+        <p>Please Save your reference number after submitting your application to help track its progress. The
+          reference number will be used to identify and track your application throughout the review process. You
+          can generate the reference number by clicking on the button below.
+          Thank you for submitting your application, and we look forward to processing it.
+          Best regards,</p>
+
+        <div class="mt-5 gap-4">
+          <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
                 number</button> -->
-              <a href="eservices.html" class="outline-btn">Go Back</a>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Modal -->
-      <div class="modal fade" id="refNumberModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="text-md">TIN reference</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-              </button>
-            </div>
-            <div class="modal-body px-5">
-
-              <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
-              <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
-              <p class="text-center text-[#555555]">Kindly check back later to know your application
-                status.</p>
-            </div>
-          </div>
+          <a href="eservices.html" class="outline-btn">Go Back</a>
         </div>
       </div>
 
     </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal fade" id="refNumberModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="text-md">TIN reference</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body px-5">
+
+          <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
+          <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
+          <p class="text-center text-[#555555]">Kindly check back later to know your application
+            status.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
 
   </section>
 
@@ -344,7 +550,7 @@
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/tabHandler.js"></script>
   <!-- <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script> -->
-  <!-- <script src="assets/js/tinrequest.js"></script> -->
+  <script src="assets/js/jtb-tinrequest.js"></script>
   <script>
     function selectEntity(entityType) {
       // document.getElementById(entityType).checked = true;
@@ -362,28 +568,53 @@
       if (entityType === 'individual') {
         individualFields.forEach(field => field.classList.remove('d-none'));
         corporateFields.forEach(field => field.classList.add('d-none'));
-        document.getElementById('addressLabel').textContent = 'Residential Address *';
 
+        // Set required for individual fields
+        document.getElementById('title').required = true;
+        document.getElementById('firstName').required = true;
+        document.getElementById('lastName').required = true;
         document.getElementById('bvn').required = true;
-        document.getElementById('validId').required = true;
+        document.getElementById('dob').required = true;
+
+        // Remove required for corporate fields
+        document.getElementById('organizationType').required = false;
         document.getElementById('cacNumber').required = false;
-        document.getElementById('cacCertificate').required = false;
-        document.getElementById('cacForm').required = false;
-        document.getElementById('businessType').required = false;
-        document.getElementById('taxOffice').required = false;
+        document.getElementById('companyName').required = false;
+        document.getElementById('lineOfBusinessName').required = false;
+        document.getElementById('lineOfBusinessCode').required = false;
+        document.getElementById('registrationDate').required = false;
+        document.getElementById('commencementDate').required = false;
+        document.getElementById('incorporationDate').required = false;
+        document.getElementById('financialYearBegin').required = false;
+        document.getElementById('financialYearEnd').required = false;
+        document.getElementById('directorName').required = false;
+        document.getElementById('directorEmail').required = false;
+        document.getElementById('directorPhone').required = false;
       } else {
         individualFields.forEach(field => field.classList.add('d-none'));
         corporateFields.forEach(field => field.classList.remove('d-none'));
-        document.getElementById('addressLabel').textContent = 'Business Address *';
 
-        // Set required fields for corporate
+        // Remove required for individual fields
+        document.getElementById('title').required = false;
+        document.getElementById('firstName').required = false;
+        document.getElementById('lastName').required = false;
         document.getElementById('bvn').required = false;
-        document.getElementById('validId').required = false;
+        document.getElementById('dob').required = false;
+
+        // Set required for corporate fields
+        document.getElementById('organizationType').required = true;
         document.getElementById('cacNumber').required = true;
-        document.getElementById('cacCertificate').required = true;
-        document.getElementById('cacForm').required = true;
-        document.getElementById('businessType').required = true;
-        document.getElementById('taxOffice').required = true;
+        document.getElementById('companyName').required = true;
+        document.getElementById('lineOfBusinessName').required = true;
+        document.getElementById('lineOfBusinessCode').required = true;
+        document.getElementById('registrationDate').required = true;
+        document.getElementById('commencementDate').required = true;
+        document.getElementById('incorporationDate').required = true;
+        document.getElementById('financialYearBegin').required = true;
+        document.getElementById('financialYearEnd').required = true;
+        document.getElementById('directorName').required = true;
+        document.getElementById('directorEmail').required = true;
+        document.getElementById('directorPhone').required = true;
       }
     }
 
