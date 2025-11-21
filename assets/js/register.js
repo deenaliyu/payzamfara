@@ -113,6 +113,10 @@ class CustomerValidation {
         input.placeholder = 'Enter your NIN (e.g., 12345678901)';
         input.dataset.name = 'nin';
         break;
+      case 'bvn':
+        input.placeholder = 'Enter your BVN (e.g., 12345678901)';
+        input.dataset.name = 'bvn';
+        break;
       case 'phone_no':
         input.placeholder = 'Enter your Phone (e.g., 08012345678)';
         input.dataset.name = 'phone_no';
@@ -132,6 +136,18 @@ class CustomerValidation {
     this.showLoader();
 
     try {
+      // Handle BVN validation
+      if (method === 'bvn') {
+        await this.validateByBVN(value);
+        return;
+      }
+
+      // Handle NIN validation
+      if (method === 'nin') {
+        await this.validateByNIN(value);
+        return;
+      }
+
       const response = await this.fetchTaxpayer(method, value);
 
       if (response.status === 'error' || response.data.length === 0) {
@@ -161,6 +177,158 @@ class CustomerValidation {
     }
 
     return response.json();
+  }
+
+  async validateByBVN(bvn) {
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-bvn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bvn })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const bvnData = data.data;
+
+        // Remove "State" from stateOfOrigin
+        const state = bvnData.stateOfOrigin ? bvnData.stateOfOrigin.replace(/\s*State\s*/i, '').trim() : '';
+
+        const processedData = {
+          fullname: `${bvnData.firstName || ''} ${bvnData.middleName || ''} ${bvnData.lastName || ''}`.trim(),
+          address: bvnData.residentialAddress || '',
+          phone: bvnData.phoneNumber1 || '',
+          email: bvnData.email || '',
+          state: state,
+          lga: bvnData.lgaOfOrigin || ''
+        };
+
+        this.populateContactForm(processedData);
+        this.proceedToNextStep();
+
+      } else {
+        Swal.fire({
+          title: 'BVN Verification Failed',
+          text: data.message || 'BVN verification failed. Would you like to register manually?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Register Manually',
+          cancelButtonText: 'Try Again'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.proceedToNextStep();
+          }
+        });
+      }
+    } catch (error) {
+      console.error('BVN verification error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'BVN verification service unavailable. Please try again.',
+        icon: 'error'
+      });
+    }
+  }
+
+  async validateByNIN(nin) {
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-nin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nin })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const ninData = data.data;
+        const personal = ninData.personalInfo;
+        const contact = ninData.contactInfo;
+
+        const processedData = {
+          fullname: `${personal.firstName || ''} ${personal.middleName || ''} ${personal.surName || ''}`.trim(),
+          address: contact.residenceAdressLine1 || '',
+          phone: personal.phoneNumber || '',
+          email: personal.email || '',
+          state: contact.birthState || contact.originState || contact.residenceState || '',
+          lga: contact.birthLga || contact.originLga || contact.residenceLga || ''
+        };
+
+        this.populateContactForm(processedData);
+        this.proceedToNextStep();
+
+      } else {
+        Swal.fire({
+          title: 'NIN Verification Failed',
+          text: data.message || 'NIN verification failed. Would you like to register manually?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Register Manually',
+          cancelButtonText: 'Try Again'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.proceedToNextStep();
+          }
+        });
+      }
+    } catch (error) {
+      console.error('NIN verification error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'NIN verification service unavailable. Please try again.',
+        icon: 'error'
+      });
+    }
+  }
+
+  populateContactForm(data) {
+    // Populate name fields
+    if (data.fullname) {
+      const nameParts = data.fullname.split(' ');
+      const firstNameInput = document.querySelector('.regInputs[data-name="first_name"]');
+      const surnameInput = document.querySelector('.regInputs[data-name="surname"]');
+      if (firstNameInput) firstNameInput.value = nameParts[0] || '';
+      if (surnameInput) surnameInput.value = nameParts.slice(1).join(' ') || '';
+    }
+
+    // Populate other fields
+    const emailInput = document.querySelector('.regInputs[data-name="email"]');
+    if (emailInput && data.email) emailInput.value = data.email;
+
+    const phoneInput = document.querySelector('.regInputs[data-name="phone"]');
+    if (phoneInput && data.phone) phoneInput.value = data.phone;
+
+    const addressInput = document.querySelector('.regInputs[data-name="address"]');
+    if (addressInput && data.address) addressInput.value = data.address;
+
+    // Set state
+    const stateSelect = document.getElementById('selectState');
+    if (stateSelect && data.state) {
+      const formattedState = data.state.charAt(0).toUpperCase() + data.state.slice(1).toLowerCase();
+      stateSelect.value = formattedState;
+    }
+
+    stateSelect.dispatchEvent(new Event('change'));
+    // Set LGA
+    const lgaSelect = document.getElementById('selectLGA');
+    if (lgaSelect && data.lga) {
+      const options = lgaSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].text.toLowerCase() === data.lga.toLowerCase()) {
+          lgaSelect.value = options[i].value;
+          break;
+        }
+      }
+
+      if (!lgaSelect.value && data.lga) {
+        lgaSelect.value = data.lga;
+      }
+    }
   }
 
   handleTaxpayerNotFound() {
@@ -629,8 +797,8 @@ class RegistrationForm {
         surname: "",
         img: "assets/img/userprofile.png",
         tax_number: "",
-        business_type_id: businessTypedata.business_type_id || null,
-        industry: businessTypedata.industry_name || null,
+        business_type_id: businessTypedata ? businessTypedata.business_type_id : null,
+        industry: businessTypedata ? businessTypedata.industry_name : null,
         category: this.getCategoryValue(),
         numberofstaff: "",
         created_by: this.createdBy || "self",

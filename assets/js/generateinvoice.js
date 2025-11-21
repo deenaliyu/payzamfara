@@ -126,6 +126,10 @@ class InvoiceGenerator {
         input.placeholder = 'Enter your NIN (e.g., 12345678901)';
         input.pattern = "\\d{11}"; // 11-digit NIN
         break;
+      case 'bvn':
+        input.placeholder = 'Enter your BVN (e.g., 12345678901)';
+        input.pattern = "\\d{11}"; // 11-digit NIN
+        break;
       case 'phone_no':
         input.placeholder = 'Enter your Phone (e.g., 08012345678)';
         input.pattern = "\\d{11}"; // 11-digit phone
@@ -408,6 +412,7 @@ class InvoiceGenerator {
         case 'tin': errorMsg = 'Please enter a valid 10-digit TIN'; break;
         case 'registration_number': errorMsg = 'RC Number should be in format RC123456'; break;
         case 'nin': errorMsg = 'NIN should be 11 digits'; break;
+        case 'bvn': errorMsg = 'BVN should be 11 digits'; break;
         case 'phone_no': errorMsg = 'Phone number should be 11 digits'; break;
         case 'email_or_phone': errorMsg = 'Please enter a valid email or phone number'; break;
         case 'pltin': errorMsg = 'Please enter a valid IGR TIN'; break;
@@ -421,6 +426,18 @@ class InvoiceGenerator {
     try {
       let response;
       let data;
+
+      // Handle BVN validation
+      if (method === 'bvn') {
+        await this.validateByBVN(value);
+        return;
+      }
+
+      // Handle NIN validation
+      if (method === 'nin') {
+        await this.validateByNIN(value);
+        return;
+      }
 
       // Determine which API to call based on the selected method
       if (method === 'email_or_phone' || method === 'pltin') {
@@ -502,6 +519,159 @@ class InvoiceGenerator {
       (taxpayer.data.jtb.first_name !== undefined &&
         taxpayer.data.jtb.first_name !== null &&
         taxpayer.data.jtb.first_name !== '');
+  }
+
+  async validateByBVN(bvn) {
+    const input = document.getElementById('validationInput');
+    this.hideError(input);
+
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-bvn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bvn })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const bvnData = data.data;
+
+        // Remove "State" from stateOfOrigin
+        const state = bvnData.stateOfOrigin ? bvnData.stateOfOrigin.replace(/\s*State\s*/i, '').trim() : '';
+
+        const processedData = {
+          fullname: `${bvnData.firstName || ''} ${bvnData.middleName || ''} ${bvnData.lastName || ''}`.trim(),
+          address: bvnData.residentialAddress || '',
+          phone: bvnData.phoneNumber1 || '',
+          email: bvnData.email || '',
+          category: "individual",
+          state: state,
+          lga: bvnData.lgaOfOrigin || ''
+        };
+
+        this.taxpayerData = processedData;
+        this.populateForm(processedData);
+        this.proceedToBilling();
+
+      } else {
+        this.showError(input, data.message || 'BVN verification failed');
+      }
+    } catch (error) {
+      this.showError(input, 'BVN verification service unavailable. Please try again.');
+      console.error('BVN verification error:', error);
+    } finally {
+      this.hideLoader('#validate-btn');
+    }
+  }
+
+  async validateByNIN(nin) {
+    const input = document.getElementById('validationInput');
+    this.hideError(input);
+
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-nin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nin })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const ninData = data.data;
+        const personal = ninData.personalInfo;
+        const contact = ninData.contactInfo;
+
+        const processedData = {
+          fullname: `${personal.firstName || ''} ${personal.middleName || ''} ${personal.surName || ''}`.trim(),
+          address: contact.residenceAdressLine1 || '',
+          phone: personal.phoneNumber || '',
+          email: personal.email || '',
+          category: "individual",
+          state: contact.birthState || contact.originState || contact.residenceState || '',
+          lga: contact.birthLga || contact.originLga || contact.residenceLga || ''
+        };
+
+        this.taxpayerData = processedData;
+        this.populateForm(processedData);
+        this.proceedToBilling();
+
+      } else {
+        this.showError(input, data.message || 'NIN verification failed');
+      }
+    } catch (error) {
+      this.showError(input, 'NIN verification service unavailable. Please try again.');
+      console.error('NIN verification error:', error);
+    } finally {
+      this.hideLoader('#validate-btn');
+    }
+  }
+
+  populateForm(data) {
+    console.log(data)
+    // Set category
+    const categorySelect = document.getElementById('category');
+    if (categorySelect && data.category) {
+      categorySelect.value = data.category === 'individual' ? '2' : '1';
+      this.updateContactFormLayout(categorySelect.value);
+    }
+
+    // Populate name field(s)
+    if (data.fullname) {
+      const nameParts = data.fullname.split(' ');
+      if (data.category === 'individual') {
+        const firstNameInput = document.querySelector('.payInputs[data-name="first_name"]');
+        const surnameInput = document.querySelector('.payInputs[data-name="surname"]');
+        if (firstNameInput) firstNameInput.value = nameParts[0] || '';
+        if (surnameInput) surnameInput.value = nameParts.slice(1).join(' ') || '';
+      } else {
+        const firstNameInput = document.querySelector('.payInputs[data-name="first_name"]');
+        if (firstNameInput) firstNameInput.value = data.fullname;
+      }
+    }
+
+    // Populate other fields
+    const emailInput = document.querySelector('.payInputs[data-name="email"]');
+    if (emailInput && data.email) emailInput.value = data.email;
+
+    const phoneInput = document.querySelector('.payInputs[data-name="phone"]');
+    if (phoneInput && data.phone) phoneInput.value = data.phone;
+
+    const addressInput = document.querySelector('.payInputs[data-name="address"]');
+    if (addressInput && data.address) addressInput.value = data.address;
+
+    // Set state (this is a select element)
+    const stateSelect = document.getElementById('selectState');
+    if (stateSelect && data.state) {
+      // Format state name: Capitalize first letter, lowercase the rest
+      const formattedState = data.state.charAt(0).toUpperCase() + data.state.slice(1).toLowerCase();
+      stateSelect.value = formattedState;
+    }
+
+    stateSelect.dispatchEvent(new Event('change'));
+
+    // Set LGA (this is a select element)
+    const lgaSelect = document.getElementById('selectLGA');
+    if (lgaSelect && data.lga) {
+      // Try to find matching option
+      const options = lgaSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].text.toLowerCase() === data.lga.toLowerCase()) {
+          lgaSelect.value = options[i].value;
+          break;
+        }
+      }
+
+      // If no exact match found, try to set by text content
+      if (!lgaSelect.value && data.lga) {
+        lgaSelect.value = data.lga;
+      }
+    }
   }
 
   // Enhanced taxpayer not found handler
@@ -749,6 +919,8 @@ class InvoiceGenerator {
           record.state.slice(1).toLowerCase();
         stateSelect.value = formattedState;
       }
+
+      // stateSelect.dispatchEvent(new Event('change'));
 
       // Set LGA (this is a select element)
       const lgaSelect = document.getElementById('selectLGA');
@@ -1013,7 +1185,7 @@ class InvoiceGenerator {
     } finally {
       btn.disabled = false;
       btn.innerHTML = 'Continue';
-      msgBox.innerHTML = ""
+      // msgBox.innerHTML = ""
     }
   }
 

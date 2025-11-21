@@ -319,23 +319,17 @@
                       placeholder="MM-DD" value="12-31" pattern="[0-9]{2}-[0-9]{2}">
                     <small class="text-muted">Format: MM-DD</small>
                   </div>
-                  <option value="wholesale">Wholesale Trade</option>
-                  <option value="manufacturing">Manufacturing</option>
-                  <option value="service">Service Provider</option>
-                  <option value="agriculture">Agriculture</option>
-                  <option value="ngo">NGO/Non-Profit</option>
-                  <option value="other">Other</option>
-                  </select>
                 </div>
                 <div class="col-md-6 corporate-field d-none">
                   <label for="businessType" class="form-label">Type of Business Entity <span
                       class="text-danger">*</span></label>
                   <select class="form-select" id="businessType" name="businessType">
                     <option value="" selected disabled>Select entity type</option>
-                    <option value="limited">Limited Liability Company</option>
-                    <option value="public">Public Limited Company</option>
-                    <option value="partnership">Partnership</option>
-                    <option value="ngo">NGO/Foundation</option>
+                    <option value="wholesale">Wholesale Trade</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="service">Service Provider</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="ngo">NGO/Non-Profit</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -471,7 +465,7 @@
               Please ensure all information is accurate before submission.
             </div>
 
-            <button class="button w-full mb-20" type="submit" id="submitTINRequest">Submit Application</button>
+            <button class="button w-full mb-20" type="button" id="submitTINRequest">Submit Application</button>
 
         </div>
         </form>
@@ -490,21 +484,41 @@
     <div class="flex justify-center h-full px-3 mt-10">
 
       <div action="" class="w-[70%] mt-10">
-        <h1 class="fontBold text-2xl">JTB TIN Request</h1>
-        <h1 class="mb-3 mt-3">Generate Reference</h1>
+        <h1 class="fontBold text-2xl">TIN Generation Successful!</h1>
+        <h1 class="mb-3 mt-3">Your Tax Identification Number</h1>
 
-        <h1 class="text-2xl" id="refNumber">323232</h1>
+        <div class="bg-light p-4 rounded mb-4 text-center">
+          <h2 class="text-3xl font-bold text-success mb-2" id="generatedTIN">--</h2>
+          <p class="text-muted">Tax Identification Number (TIN)</p>
+        </div>
 
-        <p>Please Save your reference number after submitting your application to help track its progress. The
-          reference number will be used to identify and track your application throughout the review process. You
-          can generate the reference number by clicking on the button below.
-          Thank you for submitting your application, and we look forward to processing it.
-          Best regards,</p>
+        <div class="alert alert-success">
+          <i class="fas fa-check-circle"></i>
+          <strong>Success!</strong> Your Tax Identification Number (TIN) has been generated successfully.
+        </div>
+
+        <p class="mt-3">Your TIN has been successfully generated and your account has been created in the system.
+          You can now use this TIN for all your tax-related transactions.</p>
+
+        <p class="mt-3">Please save your TIN for future reference. This number will be used to identify
+          your tax records and should be quoted in all correspondence with the tax authority.</p>
+
+        <div class="mt-3">
+          <p><strong>Important:</strong></p>
+          <ul class="list-disc ml-5">
+            <li>Keep your TIN safe and confidential</li>
+            <li>Your default password is: <strong>12345678</strong></li>
+            <li>Please change your password after first login</li>
+            <li>Quote your TIN in all tax matters</li>
+          </ul>
+        </div>
+
+        <p class="mt-4">Thank you for using our TIN generation service.</p>
+        <p>Best regards,<br>PayZamfara Tax Services</p>
 
         <div class="mt-5 gap-4">
-          <!-- <button class="button" data-bs-toggle="modal" data-bs-target="#refNumberModal">Generate reference
-                number</button> -->
-          <a href="eservices.html" class="outline-btn">Go Back</a>
+          <a href="eservices.html" class="button">Go to Dashboard</a>
+          <button onclick="window.print()" class="outline-btn ml-2">Print TIN</button>
         </div>
       </div>
 
@@ -516,17 +530,17 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="text-md">TIN reference</h1>
+          <h1 class="text-md">Tax Identification Number (TIN)</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
             <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
           </button>
         </div>
         <div class="modal-body px-5">
 
-          <h1 class="text-center text-2xl" id="referenceNum">IBS|20230215| 1033</h1>
-          <p class="text-center mt-5 text-[#555555]">Thanks for using Intelligent Billing System.</p>
-          <p class="text-center text-[#555555]">Kindly check back later to know your application
-            status.</p>
+          <h1 class="text-center text-3xl font-bold text-success mb-3" id="modalTIN">--</h1>
+          <p class="text-center mt-3 text-[#555555]">Your TIN has been generated successfully!</p>
+          <p class="text-center text-[#555555]">You can now use this TIN for all your tax-related transactions.</p>
+          <p class="text-center text-sm text-muted mt-3">Please keep this number safe and confidential.</p>
         </div>
       </div>
     </div>
