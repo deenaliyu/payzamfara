@@ -1,5 +1,5 @@
 // Configuration
-const JTB_BASE_URL = 'https://payzamfara.com/php/JTD';
+const JTB_BASE_URL = 'https://payzamfara.com/php/JTB';
 
 // ============= HELPER FUNCTIONS =============
 
@@ -60,6 +60,85 @@ function formatDate(dateString) {
   return `${day}-${month}-${year}`;
 }
 
+// Convert file to base64
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      // Get base64 string without the data URL prefix
+      const base64 = reader.result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
+
+// Parse BVN date format (19-Mar-2003) to YYYY-MM-DD
+function parseBvnDate(dateStr) {
+  if (!dateStr) return '';
+  const months = {
+    'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+    'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+  };
+
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return '';
+
+  const day = parts[0].padStart(2, '0');
+  const month = months[parts[1]];
+  const year = parts[2];
+
+  return `${year}-${month}-${day}`;
+}
+
+// Store BVN verification data
+let bvnVerificationData = null;
+
+// Verify BVN
+async function verifyBVN(bvn) {
+  try {
+    showLoading('Verifying BVN...');
+
+    const response = await fetch(`${JTB_BASE_URL}/verify-bvn`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ bvn: bvn })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('BVN Verification Response:', result);
+
+    Swal.close();
+
+    if (result.status === 'success') {
+      bvnVerificationData = result.data;
+      return {
+        success: true,
+        data: result.data
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || 'BVN verification failed. Please check the BVN and try again.'
+      };
+    }
+  } catch (error) {
+    Swal.close();
+    console.error('Error verifying BVN:', error);
+    return {
+      success: false,
+      message: error.message || 'Network error occurred while verifying BVN. Please check your connection and try again.'
+    };
+  }
+}
+
 // Format phone number to international format
 function formatPhoneNumber(phone) {
   // Remove all non-numeric characters except +
@@ -84,6 +163,12 @@ function formatPhoneNumber(phone) {
 function validateBVN(bvn) {
   const bvnRegex = /^[0-9]{11}$/;
   return bvnRegex.test(bvn);
+}
+
+// Validate NIN (11 digits)
+function validateNIN(nin) {
+  const ninRegex = /^[0-9]{11}$/;
+  return ninRegex.test(nin);
 }
 
 // Validate email
@@ -124,28 +209,15 @@ function validateCACNumber(cacNumber) {
 function validateIndividualForm(formData) {
   const errors = [];
 
-  // Required fields validation
+  // Check if BVN is verified
+  if (!bvnVerificationData) {
+    errors.push('Please verify your BVN first');
+    return errors;
+  }
+
+  // Required fields that may be missing from BVN
   if (!formData.get('title')) errors.push('Title is required');
-  if (!formData.get('firstName')?.trim()) errors.push('First Name is required');
-  if (!formData.get('lastName')?.trim()) errors.push('Last Name is required');
 
-  // BVN validation
-  const bvn = formData.get('bvn');
-  if (!bvn) {
-    errors.push('BVN is required');
-  } else if (!validateBVN(bvn)) {
-    errors.push('BVN must be exactly 11 digits');
-  }
-
-  // DOB validation
-  const dob = formData.get('dob');
-  if (!dob) {
-    errors.push('Date of Birth is required');
-  } else if (!validateDOB(dob)) {
-    errors.push('You must be at least 18 years old');
-  }
-
-  // Email validation
   const email = formData.get('email');
   if (!email) {
     errors.push('Email is required');
@@ -153,19 +225,21 @@ function validateIndividualForm(formData) {
     errors.push('Please enter a valid email address');
   }
 
-  // Phone validation
-  const phone = formData.get('phone');
-  if (!phone) {
-    errors.push('Phone number is required');
-  } else if (!validatePhone(phone)) {
-    errors.push('Please enter a valid phone number');
+  if (!formData.get('houseNo')?.trim()) errors.push('House Number is required');
+  if (!formData.get('streetName')?.trim()) errors.push('Street Name/Address is required');
+
+  // NIN validation
+  const nin = formData.get('nin');
+  if (!nin) {
+    errors.push('NIN is required');
+  } else if (!validateNIN(nin)) {
+    errors.push('NIN must be exactly 11 digits');
   }
 
-  // Address fields
-  if (!formData.get('streetName')?.trim()) errors.push('Street Name/Address is required');
-  if (!formData.get('city')?.trim()) errors.push('City is required');
-  if (!formData.get('lga')?.trim()) errors.push('LGA is required');
-  if (!formData.get('state')) errors.push('State is required');
+  // Other required fields
+  if (!formData.get('occupation')?.trim()) errors.push('Occupation is required');
+  if (!formData.get('nationality')?.trim()) errors.push('Nationality is required');
+  if (!formData.get('country')?.trim()) errors.push('Country is required');
 
   return errors;
 }
@@ -239,20 +313,32 @@ function validateCorporateForm(formData) {
 // Generate TIN for Individual
 async function generateIndividualTIN(formData) {
   try {
+    // Use photo from BVN verification
+    const photoBase64 = bvnVerificationData?.base64Image || "";
+
     const payload = {
-      action: "generate",
       type: "individual",
       bvn: formData.get('bvn').trim(),
+      nin: formData.get('nin').trim(),
       title: formData.get('title'),
       firstName: formData.get('firstName').trim(),
+      middleName: formData.get('middleName')?.trim() || "",
       lastName: formData.get('lastName').trim(),
+      gender: formData.get('gender'),
+      stateOfOrigin: formData.get('stateOfOrigin'),
       dob: formatDate(formData.get('dob')),
-      phoneNo1: formatPhoneNumber(formData.get('phone')),
+      occupation: formData.get('occupation').trim(),
+      nationality: formData.get('nationality').trim(),
       email: formData.get('email').trim().toLowerCase(),
+      phone1: formData.get('phone1').trim(),
+      phone2: formData.get('phone2')?.trim() || "",
+      photo: photoBase64,
+      houseNo: formData.get('houseNo').trim(),
       streetName: formData.get('streetName').trim(),
       city: formData.get('city').trim(),
       lga: formData.get('lga').trim(),
-      state: formData.get('state')
+      state: formData.get('state'),
+      country: formData.get('country').trim()
     };
 
     console.log('Individual TIN Request Payload:', payload);
@@ -388,7 +474,7 @@ async function createPayerAccount(formData, tinData, entityType) {
         first_name: firstName,
         business_type: formData.get('lineOfBusinessName') || "General",
         tin: tinData.tin,
-        phone: formatPhoneNumber(formData.get('phone')),
+        phone: formData.get('phone1')?.trim() || formData.get('phone')?.trim(),
         email: formData.get('email').trim().toLowerCase(),
         state: formData.get('state'),
         lga: formData.get('lga').trim(),
@@ -438,7 +524,7 @@ async function updateTaxpayerDetails(formData, tinData, entityType) {
       tin: tinData.tin,
       first_name: firstName,
       surname: lastName,
-      phone: formatPhoneNumber(formData.get('phone')),
+      phone: formData.get('phone1')?.trim() || formData.get('phone')?.trim(),
       email: formData.get('email').trim().toLowerCase(),
       state: formData.get('state'),
       lga: formData.get('lga').trim(),
@@ -662,10 +748,82 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Validate BVN input (11 digits only)
+  // BVN Verification Handler
+  const verifyBvnBtn = document.getElementById('verifyBvnBtn');
+  const bvnVerifyInput = document.getElementById('bvnVerify');
+
+  if (verifyBvnBtn && bvnVerifyInput) {
+    // Only allow numbers in BVN input
+    bvnVerifyInput.addEventListener('input', function (e) {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+    });
+
+    verifyBvnBtn.addEventListener('click', async function () {
+      const bvn = bvnVerifyInput.value.trim();
+
+      if (!bvn) {
+        showError('Validation Error', 'Please enter your BVN');
+        return;
+      }
+
+      if (!validateBVN(bvn)) {
+        showError('Validation Error', 'BVN must be exactly 11 digits');
+        return;
+      }
+
+      const result = await verifyBVN(bvn);
+
+      if (result.success) {
+        const data = result.data;
+
+        // Show verification result
+        document.getElementById('verifiedName').textContent =
+          `${data.firstName} ${data.middleName || ''} ${data.lastName}`.trim();
+        document.getElementById('verifiedDob').textContent = data.dateOfBirth;
+        document.getElementById('verifiedGender').textContent = data.gender;
+        document.getElementById('bvnVerificationResult').style.display = 'block';
+
+        // Auto-fill form fields with exact BVN data
+        document.getElementById('bvn').value = data.bvn;
+        document.getElementById('title').value = data.title || '';
+        document.getElementById('firstName').value = data.firstName || '';
+        document.getElementById('middleName').value = data.middleName || '';
+        document.getElementById('lastName').value = data.lastName || '';
+        document.getElementById('gender').value = data.gender || '';
+        document.getElementById('dob').value = parseBvnDate(data.dateOfBirth);
+        document.getElementById('phone1').value = data.phoneNumber1 || '';
+        document.getElementById('phone2').value = data.phoneNumber2 || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('stateOfOrigin').value = data.stateOfOrigin || '';
+        document.getElementById('lga').value = data.lgaOfOrigin || '';
+        document.getElementById('state').value = data.stateOfOrigin || '';
+        document.getElementById('city').value = data.lgaOfOrigin || '';
+        document.getElementById('streetName').value = data.residentialAddress || '';
+        document.getElementById('houseNo').value = '';
+
+        // Show main form and submit section
+        document.querySelector('.form-section-main').style.display = 'block';
+        document.getElementById('submitSection').style.display = 'block';
+
+        showSuccess('BVN Verified!', 'Your information has been auto-filled. Please complete the remaining fields.');
+      } else {
+        showError('Verification Failed', result.message);
+      }
+    });
+  }
+
+  // Validate BVN input (11 digits only) - Hidden field
   const bvnInput = document.getElementById('bvn');
   if (bvnInput) {
     bvnInput.addEventListener('input', function (e) {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+    });
+  }
+
+  // Validate NIN input (11 digits only)
+  const ninInput = document.getElementById('nin');
+  if (ninInput) {
+    ninInput.addEventListener('input', function (e) {
       this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
 
       // Show validation feedback

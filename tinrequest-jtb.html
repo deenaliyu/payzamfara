@@ -129,14 +129,62 @@
               </div>
             </div>
 
+            <!-- BVN Verification Section (Individual Only) -->
+            <div id="bvnVerificationSection" class="form-section" style="display: none;">
+              <h4 class="section-title">BVN Verification</h4>
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Please verify your BVN before proceeding. Your information will be
+                auto-filled from BVN records.
+              </div>
+              <div class="row g-3">
+                <div class="col-md-8">
+                  <label for="bvnVerify" class="form-label">Bank Verification Number (BVN) <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="bvnVerify" maxlength="11" pattern="[0-9]{11}"
+                    placeholder="Enter 11-digit BVN">
+                  <small class="text-muted">11 digits required</small>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">&nbsp;</label>
+                  <button type="button" class="btn btn-primary w-100" id="verifyBvnBtn">
+                    <i class="fas fa-check-circle"></i> Verify BVN
+                  </button>
+                </div>
+              </div>
+              <div id="bvnVerificationResult" class="mt-3" style="display: none;">
+                <div class="alert alert-success">
+                  <i class="fas fa-check-circle"></i> <strong>BVN Verified!</strong>
+                  <div class="mt-2">
+                    <strong>Name:</strong> <span id="verifiedName"></span><br>
+                    <strong>Date of Birth:</strong> <span id="verifiedDob"></span><br>
+                    <strong>Gender:</strong> <span id="verifiedGender"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <div class="form-section-main">
+
+            <div class="form-section-main" style="display: none;">
               <!-- Applicant Information -->
               <div class="form-section">
                 <h4 class="section-title">Applicant Information</h4>
                 <div class="row g-3">
 
-                  <!-- INDIVIDUAL FIELDS -->
+                  <!-- INDIVIDUAL FIELDS - Hidden fields auto-filled from BVN -->
+                  <input type="hidden" id="firstName" name="firstName">
+                  <input type="hidden" id="middleName" name="middleName">
+                  <input type="hidden" id="lastName" name="lastName">
+                  <input type="hidden" id="gender" name="gender">
+                  <input type="hidden" id="dob" name="dob">
+                  <input type="hidden" id="bvn" name="bvn">
+                  <input type="hidden" id="phone1" name="phone1">
+                  <input type="hidden" id="phone2" name="phone2">
+                  <input type="hidden" id="stateOfOrigin" name="stateOfOrigin">
+                  <input type="hidden" id="lga" name="lga">
+                  <input type="hidden" id="state" name="state">
+                  <input type="hidden" id="city" name="city">
+
+                  <!-- Fields that may be missing from BVN - user can edit -->
                   <div class="col-md-4 individual-field">
                     <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                     <select class="form-select" id="title" name="title" required>
@@ -153,25 +201,45 @@
                     </select>
                   </div>
                   <div class="col-md-4 individual-field">
-                    <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="example@email.com"
+                      required>
                   </div>
                   <div class="col-md-4 individual-field">
-                    <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    <label for="houseNo" class="form-label">House Number <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="houseNo" name="houseNo" placeholder="Enter house number"
+                      required>
                   </div>
-                  <div class="col-md-6 individual-field">
-                    <label for="bvn" class="form-label">Bank Verification Number (BVN) <span
+                  <div class="col-md-12 individual-field">
+                    <label for="streetName" class="form-label">Street Name/Address <span
                         class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="bvn" name="bvn" maxlength="11" pattern="[0-9]{11}"
-                      placeholder="Enter 11-digit BVN" required>
+                    <input type="text" class="form-control" id="streetName" name="streetName"
+                      placeholder="Enter street address" required>
+                  </div>
+
+                  <!-- Other required user fields -->
+                  <div class="col-md-6 individual-field">
+                    <label for="nin" class="form-label">NIN <span
+                        class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="nin" name="nin" maxlength="11" pattern="[0-9]{11}"
+                      placeholder="Enter 11-digit NIN" required>
                     <small class="text-muted">11 digits required</small>
                   </div>
                   <div class="col-md-6 individual-field">
-                    <label for="dob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="dob" name="dob" max="2006-12-31" required>
-                    <small class="text-muted">Must be 18 years or older</small>
+                    <label for="occupation" class="form-label">Occupation <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="occupation" name="occupation"
+                      placeholder="Enter occupation" required>
                   </div>
+                  <div class="col-md-6 individual-field">
+                    <label for="nationality" class="form-label">Nationality <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="nationality" name="nationality" value="Nigerian"
+                      required>
+                  </div>
+                  <div class="col-md-6 individual-field">
+                    <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="country" name="country" value="Nigeria" required>
+                  </div>
+                  
 
                   <!-- CORPORATE FIELDS -->
                   <div class="col-md-6 corporate-field d-none">
@@ -199,152 +267,82 @@
                       placeholder="Enter company name as registered with CAC">
                   </div>
 
-                  <!-- COMMON FIELDS -->
-                  <div class="col-md-6">
-                    <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control" id="phone" name="phone"
-                      placeholder="+2348012345678 or 08012345678" required>
-                    <small class="text-muted">Format: +234XXXXXXXXXX or 0XXXXXXXXXX</small>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="example@email.com"
-                      required>
-                  </div>
-
-                  <!-- ADDRESS FIELDS -->
-                  <div class="col-md-6">
-                    <label for="city" class="form-label">City <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="lga" class="form-label">Local Government Area <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lga" name="lga" placeholder="Enter LGA" required>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="state" class="form-label">State <span class="text-danger">*</span></label>
-                    <select class="form-select" id="state" name="state" required>
-                      <option value="" selected disabled>Select State</option>
-                      <option value="FCT">FCT</option>
-                      <option value="Abia">Abia</option>
-                      <option value="Adamawa">Adamawa</option>
-                      <option value="Akwa Ibom">Akwa Ibom</option>
-                      <option value="Anambra">Anambra</option>
-                      <option value="Bauchi">Bauchi</option>
-                      <option value="Bayelsa">Bayelsa</option>
-                      <option value="Benue">Benue</option>
-                      <option value="Borno">Borno</option>
-                      <option value="Cross River">Cross River</option>
-                      <option value="Delta">Delta</option>
-                      <option value="Ebonyi">Ebonyi</option>
-                      <option value="Edo">Edo</option>
-                      <option value="Ekiti">Ekiti</option>
-                      <option value="Enugu">Enugu</option>
-                      <option value="Gombe">Gombe</option>
-                      <option value="Imo">Imo</option>
-                      <option value="Jigawa">Jigawa</option>
-                      <option value="Kaduna">Kaduna</option>
-                      <option value="Kano">Kano</option>
-                      <option value="Katsina">Katsina</option>
-                      <option value="Kebbi">Kebbi</option>
-                      <option value="Kogi">Kogi</option>
-                      <option value="Kwara">Kwara</option>
-                      <option value="Lagos">Lagos</option>
-                      <option value="Nasarawa">Nasarawa</option>
-                      <option value="Niger">Niger</option>
-                      <option value="Ogun">Ogun</option>
-                      <option value="Ondo">Ondo</option>
-                      <option value="Osun">Osun</option>
-                      <option value="Oyo">Oyo</option>
-                      <option value="Plateau">Plateau</option>
-                      <option value="Rivers">Rivers</option>
-                      <option value="Sokoto">Sokoto</option>
-                      <option value="Taraba">Taraba</option>
-                      <option value="Yobe">Yobe</option>
-                      <option value="Zamfara">Zamfara</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="streetName" class="form-label">Street Name/Address <span
-                        class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="streetName" name="streetName"
-                      placeholder="Enter street address" required>
-                  </div>
+                  <input type="text" class="form-control" hidden id="country" name="country" value="Nigeria" required>
                 </div>
               </div>
+            </div>
 
-              <!-- Business/Corporate Information -->
-              <div class="form-section corporate-field d-none">
-                <h4 class="section-title">Business Information</h4>
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label for="lineOfBusinessName" class="form-label">Line of Business <span
-                        class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="lineOfBusinessName" name="lineOfBusinessName"
-                      placeholder="e.g., Software Development">
-                  </div>
-                  <div class="col-md-6">
-                    <label for="lineOfBusinessCode" class="form-label">Business Code <span
-                        class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="lineOfBusinessCode" name="lineOfBusinessCode"
-                      placeholder="e.g., 1010" value="1010">
-                    <small class="text-muted">Standard business classification code</small>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="registrationDate" class="form-label">Registration Date <span
-                        class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="registrationDate" name="registrationDate">
-                  </div>
-                  <div class="col-md-6">
-                    <label for="commencementDate" class="form-label">Commencement Date <span
-                        class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="commencementDate" name="commencementDate">
-                  </div>
-                  <div class="col-md-6">
-                    <label for="incorporationDate" class="form-label">Incorporation Date <span
-                        class="text-danger">*</span></label>
-                    <input type="date" class="form-control" id="incorporationDate" name="incorporationDate">
-                  </div>
-                  <div class="col-md-3">
-                    <label for="financialYearBegin" class="form-label">Financial Year Start <span
-                        class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="financialYearBegin" name="financialYearBegin"
-                      placeholder="MM-DD" value="01-01" pattern="[0-9]{2}-[0-9]{2}">
-                    <small class="text-muted">Format: MM-DD</small>
-                  </div>
-                  <div class="col-md-3">
-                    <label for="financialYearEnd" class="form-label">Financial Year End <span
-                        class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="financialYearEnd" name="financialYearEnd"
-                      placeholder="MM-DD" value="12-31" pattern="[0-9]{2}-[0-9]{2}">
-                    <small class="text-muted">Format: MM-DD</small>
-                  </div>
-                </div>
-                <div class="col-md-6 corporate-field d-none">
-                  <label for="businessType" class="form-label">Type of Business Entity <span
+            <!-- Business/Corporate Information -->
+            <div class="form-section corporate-field d-none">
+              <h4 class="section-title">Business Information</h4>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="lineOfBusinessName" class="form-label">Line of Business <span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="businessType" name="businessType">
-                    <option value="" selected disabled>Select entity type</option>
-                    <option value="wholesale">Wholesale Trade</option>
-                    <option value="manufacturing">Manufacturing</option>
-                    <option value="service">Service Provider</option>
-                    <option value="agriculture">Agriculture</option>
-                    <option value="ngo">NGO/Non-Profit</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <input type="text" class="form-control" id="lineOfBusinessName" name="lineOfBusinessName"
+                    placeholder="e.g., Software Development">
                 </div>
-                <div class="col-md-6 corporate-field d-none">
-                  <label for="taxOffice" class="form-label">Preferred Tax Office <span
+                <div class="col-md-6">
+                  <label for="lineOfBusinessCode" class="form-label">Business Code <span
                       class="text-danger">*</span></label>
-                  <select class="form-select" id="taxOffice" name="taxOffice">
-                    <option value="" selected disabled>Select tax office</option>
-                    <option value="lagos-main">Lagos Main</option>
-                    <option value="abuja-central">Abuja Central</option>
-                    <option value="port-harcourt">Port Harcourt</option>
-                    <option value="kano">Kano</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <input type="number" class="form-control" id="lineOfBusinessCode" name="lineOfBusinessCode"
+                    placeholder="e.g., 1010" value="1010">
+                  <small class="text-muted">Standard business classification code</small>
                 </div>
+                <div class="col-md-6">
+                  <label for="registrationDate" class="form-label">Registration Date <span
+                      class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="registrationDate" name="registrationDate">
+                </div>
+                <div class="col-md-6">
+                  <label for="commencementDate" class="form-label">Commencement Date <span
+                      class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="commencementDate" name="commencementDate">
+                </div>
+                <div class="col-md-6">
+                  <label for="incorporationDate" class="form-label">Incorporation Date <span
+                      class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="incorporationDate" name="incorporationDate">
+                </div>
+                <div class="col-md-3">
+                  <label for="financialYearBegin" class="form-label">Financial Year Start <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="financialYearBegin" name="financialYearBegin"
+                    placeholder="MM-DD" value="01-01" pattern="[0-9]{2}-[0-9]{2}">
+                  <small class="text-muted">Format: MM-DD</small>
+                </div>
+                <div class="col-md-3">
+                  <label for="financialYearEnd" class="form-label">Financial Year End <span
+                      class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="financialYearEnd" name="financialYearEnd"
+                    placeholder="MM-DD" value="12-31" pattern="[0-9]{2}-[0-9]{2}">
+                  <small class="text-muted">Format: MM-DD</small>
+                </div>
+              </div>
+              <div class="col-md-6 corporate-field d-none">
+                <label for="businessType" class="form-label">Type of Business Entity <span
+                    class="text-danger">*</span></label>
+                <select class="form-select" id="businessType" name="businessType">
+                  <option value="" selected disabled>Select entity type</option>
+                  <option value="wholesale">Wholesale Trade</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="service">Service Provider</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="ngo">NGO/Non-Profit</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6 corporate-field d-none">
+                <label for="taxOffice" class="form-label">Preferred Tax Office <span
+                    class="text-danger">*</span></label>
+                <select class="form-select" id="taxOffice" name="taxOffice">
+                  <option value="" selected disabled>Select tax office</option>
+                  <option value="lagos-main">Lagos Main</option>
+                  <option value="abuja-central">Abuja Central</option>
+                  <option value="port-harcourt">Port Harcourt</option>
+                  <option value="kano">Kano</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
             </div>
 
@@ -459,94 +457,95 @@
               </div>
               -->
 
-            <div class="alert alert-info mt-4">
-              <i class="fas fa-info-circle"></i> <strong>Note:</strong> All fields marked with <span
-                class="text-danger">*</span> are required.
-              Please ensure all information is accurate before submission.
+            <div id="submitSection" style="display: none;">
+              <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle"></i> <strong>Note:</strong> All fields marked with <span
+                  class="text-danger">*</span> are required.
+                Please ensure all information is accurate before submission.
+              </div>
+
+              <button class="button w-full mb-20" type="button" id="submitTINRequest">Submit Application</button>
             </div>
 
-            <button class="button w-full mb-20" type="button" id="submitTINRequest">Submit Application</button>
+          </form>
 
         </div>
-        </form>
+      </section>
 
-    </div>
-  </section>
-
-  <section class="formTabs h-full">
-    <div class="pt-10 md:px-10 px-3">
-      <a href="eservices.html" class="flex items-center gap-2 w-fit">
-        <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
-        <span>Go back</span>
-      </a>
-    </div>
-
-    <div class="flex justify-center h-full px-3 mt-10">
-
-      <div action="" class="w-[70%] mt-10">
-        <h1 class="fontBold text-2xl">TIN Generation Successful!</h1>
-        <h1 class="mb-3 mt-3">Your Tax Identification Number</h1>
-
-        <div class="bg-light p-4 rounded mb-4 text-center">
-          <h2 class="text-3xl font-bold text-success mb-2" id="generatedTIN">--</h2>
-          <p class="text-muted">Tax Identification Number (TIN)</p>
+      <section class="formTabs h-full">
+        <div class="pt-10 md:px-10 px-3">
+          <a href="eservices.html" class="flex items-center gap-2 w-fit">
+            <iconify-icon icon="eva:arrow-back-outline"></iconify-icon>
+            <span>Go back</span>
+          </a>
         </div>
 
-        <div class="alert alert-success">
-          <i class="fas fa-check-circle"></i>
-          <strong>Success!</strong> Your Tax Identification Number (TIN) has been generated successfully.
+        <div class="flex justify-center h-full px-3 mt-10">
+
+          <div action="" class="w-[70%] mt-10">
+            <h1 class="fontBold text-2xl">TIN Generation Successful!</h1>
+            <h1 class="mb-3 mt-3">Your Tax Identification Number</h1>
+
+            <div class="bg-light p-4 rounded mb-4 text-center">
+              <h2 class="text-3xl font-bold text-success mb-2" id="generatedTIN">--</h2>
+              <p class="text-muted">Tax Identification Number (TIN)</p>
+            </div>
+
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle"></i>
+              <strong>Success!</strong> Your Tax Identification Number (TIN) has been generated successfully.
+            </div>
+
+            <p class="mt-3">Your TIN has been successfully generated and your account has been created in the system.
+              You can now use this TIN for all your tax-related transactions.</p>
+
+            <p class="mt-3">Please save your TIN for future reference. This number will be used to identify
+              your tax records and should be quoted in all correspondence with the tax authority.</p>
+
+            <div class="mt-3">
+              <p><strong>Important:</strong></p>
+              <ul class="list-disc ml-5">
+                <li>Keep your TIN safe and confidential</li>
+                <li>Your default password is: <strong>12345678</strong></li>
+                <li>Please change your password after first login</li>
+                <li>Quote your TIN in all tax matters</li>
+              </ul>
+            </div>
+
+            <p class="mt-4">Thank you for using our TIN generation service.</p>
+            <p>Best regards,<br>PayZamfara Tax Services</p>
+
+            <div class="mt-5 gap-4">
+              <a href="eservices.html" class="button">Go to Dashboard</a>
+              <button onclick="window.print()" class="outline-btn ml-2">Print TIN</button>
+            </div>
+          </div>
+
         </div>
+      </section>
 
-        <p class="mt-3">Your TIN has been successfully generated and your account has been created in the system.
-          You can now use this TIN for all your tax-related transactions.</p>
+      <!-- Modal -->
+      <div class="modal fade" id="refNumberModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="text-md">Tax Identification Number (TIN)</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+              </button>
+            </div>
+            <div class="modal-body px-5">
 
-        <p class="mt-3">Please save your TIN for future reference. This number will be used to identify
-          your tax records and should be quoted in all correspondence with the tax authority.</p>
-
-        <div class="mt-3">
-          <p><strong>Important:</strong></p>
-          <ul class="list-disc ml-5">
-            <li>Keep your TIN safe and confidential</li>
-            <li>Your default password is: <strong>12345678</strong></li>
-            <li>Please change your password after first login</li>
-            <li>Quote your TIN in all tax matters</li>
-          </ul>
-        </div>
-
-        <p class="mt-4">Thank you for using our TIN generation service.</p>
-        <p>Best regards,<br>PayZamfara Tax Services</p>
-
-        <div class="mt-5 gap-4">
-          <a href="eservices.html" class="button">Go to Dashboard</a>
-          <button onclick="window.print()" class="outline-btn ml-2">Print TIN</button>
+              <h1 class="text-center text-3xl font-bold text-success mb-3" id="modalTIN">--</h1>
+              <p class="text-center mt-3 text-[#555555]">Your TIN has been generated successfully!</p>
+              <p class="text-center text-[#555555]">You can now use this TIN for all your tax-related transactions.</p>
+              <p class="text-center text-sm text-muted mt-3">Please keep this number safe and confidential.</p>
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
-  </section>
-
-  <!-- Modal -->
-  <div class="modal fade" id="refNumberModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="text-md">Tax Identification Number (TIN)</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
-          </button>
-        </div>
-        <div class="modal-body px-5">
-
-          <h1 class="text-center text-3xl font-bold text-success mb-3" id="modalTIN">--</h1>
-          <p class="text-center mt-3 text-[#555555]">Your TIN has been generated successfully!</p>
-          <p class="text-center text-[#555555]">You can now use this TIN for all your tax-related transactions.</p>
-          <p class="text-center text-sm text-muted mt-3">Please keep this number safe and confidential.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  </div>
 
   </section>
 
@@ -566,7 +565,7 @@
   <!-- <script src="./assets/node_modules/publitio_js_sdk/build/publitio-api.min.js"></script> -->
   <script src="assets/js/jtb-tinrequest.js"></script>
   <script>
-    function selectEntity(entityType) {
+    function handleEntitySelection(entityType) {
       // document.getElementById(entityType).checked = true;
 
       // // Highlight selected card
@@ -585,10 +584,13 @@
 
         // Set required for individual fields
         document.getElementById('title').required = true;
-        document.getElementById('firstName').required = true;
-        document.getElementById('lastName').required = true;
-        document.getElementById('bvn').required = true;
-        document.getElementById('dob').required = true;
+        document.getElementById('email').required = true;
+        document.getElementById('houseNo').required = true;
+        document.getElementById('streetName').required = true;
+        document.getElementById('nin').required = true;
+        document.getElementById('occupation').required = true;
+        document.getElementById('nationality').required = true;
+        document.getElementById('country').required = true;
 
         // Remove required for corporate fields
         document.getElementById('organizationType').required = false;
@@ -610,10 +612,13 @@
 
         // Remove required for individual fields
         document.getElementById('title').required = false;
-        document.getElementById('firstName').required = false;
-        document.getElementById('lastName').required = false;
-        document.getElementById('bvn').required = false;
-        document.getElementById('dob').required = false;
+        document.getElementById('email').required = false;
+        document.getElementById('houseNo').required = false;
+        document.getElementById('streetName').required = false;
+        document.getElementById('nin').required = false;
+        document.getElementById('occupation').required = false;
+        document.getElementById('nationality').required = false;
+        document.getElementById('country').required = false;
 
         // Set required for corporate fields
         document.getElementById('organizationType').required = true;
@@ -635,18 +640,25 @@
     document.addEventListener("DOMContentLoaded", function () {
       const formTabs = document.querySelector('.form-section-main');
       const selectEntity = document.getElementById('selectEntity');
+      const bvnSection = document.getElementById('bvnVerificationSection');
 
       // Hide form initially if no selection
       if (!selectEntity.value) {
         formTabs.style.display = 'none';
+        bvnSection.style.display = 'none';
       }
 
       // Listen for changes
       selectEntity.addEventListener('change', function () {
-        if (this.value) {
-          formTabs.style.display = '';
-        } else {
-          formTabs.style.display = 'none';
+        const value = this.value.toLowerCase();
+        handleEntitySelection(value);
+
+        if (value === 'individual') {
+          bvnSection.style.display = 'block';
+          formTabs.style.display = 'none'; // Hide until BVN verified
+        } else if (value === 'corporate') {
+          bvnSection.style.display = 'none';
+          formTabs.style.display = 'block';
         }
       });
     });
