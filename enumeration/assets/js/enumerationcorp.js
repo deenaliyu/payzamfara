@@ -141,6 +141,10 @@ class CustomerValidation {
         input.placeholder = 'Enter your NIN (e.g., 12345678901)';
         input.pattern = "\\d{11}"; // 11-digit NIN
         break;
+      case 'bvn':
+        input.placeholder = 'Enter your BVN (e.g., 12345678901)';
+        input.pattern = "\\d{11}"; // 11-digit BVN
+        break;
       case 'phone_no':
         input.placeholder = 'Enter your Phone (e.g., 08012345678)';
         input.pattern = "\\d{11}"; // 11-digit phone
@@ -164,6 +168,18 @@ class CustomerValidation {
     this.showLoader();
 
     try {
+      // Handle BVN validation
+      if (method === 'bvn') {
+        await this.validateByBVN(value);
+        return;
+      }
+
+      // Handle NIN validation
+      if (method === 'nin') {
+        await this.validateByNIN(value);
+        return;
+      }
+
       // Use the new API for email_or_phone method
       if (method === 'email_or_phone') {
         const response = await this.fetchUserByEmailOrPhone(value);
@@ -216,6 +232,150 @@ class CustomerValidation {
     }
 
     return response.json();
+  }
+
+  async validateByBVN(bvn) {
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-bvn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bvn })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const bvnData = data.data;
+        const state = bvnData.stateOfOrigin ? bvnData.stateOfOrigin.replace(/\s*State\s*/i, '').trim() : '';
+
+        const processedData = {
+          fullname: `${bvnData.firstName || ''} ${bvnData.middleName || ''} ${bvnData.lastName || ''}`.trim(),
+          address: bvnData.residentialAddress || '',
+          phone: bvnData.phoneNumber1 || '',
+          email: bvnData.email || '',
+          state: state,
+          lga: bvnData.lgaOfOrigin || ''
+        };
+
+        this.populateContactForm(processedData);
+        this.proceedToNextStep();
+
+      } else {
+        Swal.fire({
+          title: 'BVN Verification Failed',
+          text: data.message || 'BVN verification failed. Would you like to register manually?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Register Manually',
+          cancelButtonText: 'Try Again'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.proceedToNextStep();
+          }
+        });
+      }
+    } catch (error) {
+      console.error('BVN verification error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'BVN verification service unavailable. Please try again.',
+        icon: 'error'
+      });
+    } finally {
+      this.hideLoader();
+    }
+  }
+
+  async validateByNIN(nin) {
+    try {
+      const response = await fetch('https://payzamfara.com/php/JTB/verify-nin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nin })
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const ninData = data.data;
+        const personal = ninData.personalInfo;
+        const contact = ninData.contactInfo;
+
+        const processedData = {
+          fullname: `${personal.firstName || ''} ${personal.middleName || ''} ${personal.surName || ''}`.trim(),
+          address: contact.residenceAdressLine1 || '',
+          phone: personal.phoneNumber || '',
+          email: personal.email || '',
+          state: contact.birthState || contact.originState || contact.residenceState || '',
+          lga: contact.birthLga || contact.originLga || contact.residenceLga || ''
+        };
+
+        this.populateContactForm(processedData);
+        this.proceedToNextStep();
+
+      } else {
+        Swal.fire({
+          title: 'NIN Verification Failed',
+          text: data.message || 'NIN verification failed. Would you like to register manually?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Register Manually',
+          cancelButtonText: 'Try Again'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.proceedToNextStep();
+          }
+        });
+      }
+    } catch (error) {
+      console.error('NIN verification error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'NIN verification service unavailable. Please try again.',
+        icon: 'error'
+      });
+    } finally {
+      this.hideLoader();
+    }
+  }
+
+  populateContactForm(data) {
+    const companyNameInput = document.querySelector('.regInputs[data-name="first_name"]');
+    if (companyNameInput && data.fullname) companyNameInput.value = data.fullname;
+
+    const emailInput = document.querySelector('.regInputs[data-name="email"]');
+    if (emailInput && data.email) emailInput.value = data.email;
+
+    const phoneInput = document.querySelector('.regInputs[data-name="phone"]');
+    if (phoneInput && data.phone) phoneInput.value = data.phone;
+
+    const addressInput = document.querySelector('.regInputs[data-name="address"]');
+    if (addressInput && data.address) addressInput.value = data.address;
+
+    const stateSelect = document.getElementById('selectState');
+    if (stateSelect && data.state) {
+      const formattedState = data.state.charAt(0).toUpperCase() + data.state.slice(1).toLowerCase();
+      stateSelect.value = formattedState;
+    }
+
+    const lgaSelect = document.getElementById('selectLGA');
+    if (lgaSelect && data.lga) {
+      const options = lgaSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].text.toLowerCase() === data.lga.toLowerCase()) {
+          lgaSelect.value = options[i].value;
+          break;
+        }
+      }
+
+      if (!lgaSelect.value && data.lga) {
+        lgaSelect.value = data.lga;
+      }
+    }
   }
 
   displayUserInfo(user) {
