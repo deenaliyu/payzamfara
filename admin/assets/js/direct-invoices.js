@@ -10,7 +10,7 @@ async function fetchInvoice() {
     processing: true, // Show processing indicator
     serverSide: true, // Enable server-side processing
     paging: true,     // Enable pagination
-    searching: false,  // Enable search box
+    searching: true,  // Enable search box
     pageLength: 50,   // Number of items per page
     ajax: function (data, callback, settings) {
       // Convert DataTables page number to your API page number
@@ -19,6 +19,7 @@ async function fetchInvoice() {
       const filters = {
         getAllDirectAssessment: true,
         page: pageNumber,
+        search: data.search.value,
         limit: data.length,
         invoice_number: $('#invnumberInput').val(),
         payment_status: $('#paymentStatusSelect').val(),

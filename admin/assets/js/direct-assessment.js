@@ -18,7 +18,7 @@ async function fetchInvoice() {
     processing: true, // Show processing indicator
     serverSide: true, // Enable server-side processing
     paging: true,     // Enable pagination
-    searching: false,  // Enable search box
+    searching: true,  // Enable search box
     pageLength: 50,   // Number of items per page
     ajax: function (data, callback, settings) {
       // Convert DataTables page number to your API page number
@@ -26,6 +26,7 @@ async function fetchInvoice() {
 
       const filters = {
         page: pageNumber,
+        search: data.search.value,
         limit: data.length, // Number of rows per pages
         getAllDirectAssessmentss: true,
       };
@@ -130,7 +131,7 @@ async function fetchForSpecificLevels(level) {
     processing: true, // Show processing indicator
     serverSide: true, // Enable server-side processing
     paging: true,     // Enable pagination
-    searching: false,  // Enable search box
+    searching: true,  // Enable search box
     pageLength: 50,   // Number of items per page
     ajax: function (data, callback, settings) {
       // Convert DataTables page number to your API page number
@@ -139,6 +140,7 @@ async function fetchForSpecificLevels(level) {
       const filters = {
         getAllDirectAssessmentss: true,
         page: pageNumber,
+        search: data.search.value,
         limit: data.length, // Number of rows per pages
         level: level, // Add the selected level as a filter
       };
@@ -241,7 +243,7 @@ async function fetchForSpecificLevelsDecline(level) {
     processing: true, // Show processing indicator
     serverSide: true, // Enable server-side processing
     paging: true,     // Enable pagination
-    searching: false,  // Enable search box
+    searching: true,  // Enable search box
     pageLength: 50,   // Number of items per page
     ajax: function (data, callback, settings) {
       // Convert DataTables page number to your API page number
@@ -250,6 +252,7 @@ async function fetchForSpecificLevelsDecline(level) {
       const filters = {
         getAllDirectAssessmentss: true,
         page: pageNumber,
+        search: data.search.value,
         limit: data.length, // Number of rows per pages
         level: level, // Add the selected level as a filter
       };
