@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="./assets/"
+  data-template="vertical-menu-template-free">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Tax Calculator - Payzamfara</title>
+
+  <meta name="description" content="Payzamfara Tax Calculator" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Icons -->
+  <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="./assets/css/demo.css" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <style>
+    .tax-calculator-wrapper {
+      min-height: calc(100vh - 100px);
+      padding-top: 2rem;
+    }
+
+    .calculator-header {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 20px rgba(52, 108, 39, 0.2);
+    }
+
+    .calculator-card {
+      background: white;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group-tax {
+      margin-bottom: 1.5rem;
+    }
+
+    .tax-input-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .tax-input-hint {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.25rem;
+    }
+
+    .tax-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid #e2f5e5;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: #f8fff9;
+    }
+
+    .tax-input:focus {
+      border-color: #008236;
+      box-shadow: 0 0 0 3px rgba(0, 130, 54, 0.1);
+      outline: none;
+    }
+
+    .input-group-prepend {
+      background: #e2f5e5;
+      border: 2px solid #e2f5e5;
+      border-right: none;
+      border-radius: 0.75rem 0 0 0.75rem;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      color: #015826;
+      font-weight: 500;
+    }
+
+    .input-group-prepend+.tax-input {
+      border-left: none;
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+
+    /* Toggle Switch Styles */
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      border: 2px solid #e2f5e5;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+
+    .toggle-group.active {
+      border-color: #008236;
+      background: #e8f5e9;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toggle-label {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .toggle-rate {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    .toggle-rate.active {
+      color: #008236;
+      font-weight: 500;
+    }
+
+    /* Custom Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 28px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-switch input:checked+.toggle-slider {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+    }
+
+    .toggle-switch input:checked+.toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .btn-tax-calculate {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .btn-tax-calculate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 130, 54, 0.2);
+    }
+
+    .btn-tax-reset {
+      background: #f8fff9;
+      color: #008236;
+      border: 2px solid #008236;
+      border-radius: 0.75rem;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .btn-tax-reset:hover {
+      background: #008236;
+      color: white;
+    }
+
+    .law-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .law-comparison-table th {
+      background: #f8fff9;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      color: #015826;
+      border-bottom: 2px solid #e2f5e5;
+    }
+
+    .law-comparison-table td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .law-column {
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      background: #f8fff9;
+    }
+
+    .law-column.old {
+      border-left: 4px solid #015826;
+    }
+
+    .law-column.new {
+      border-left: 4px solid #008236;
+    }
+
+    .tax-band-item {
+      padding: 0.75rem;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tax-band-item:last-child {
+      border-bottom: none;
+    }
+
+    .band-description {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .band-calculation {
+      text-align: right;
+    }
+
+    .band-amount {
+      font-weight: 600;
+      color: #015826;
+    }
+
+    .total-tax-box {
+      background: linear-gradient(135deg, #a9e19c 0%, #18b659 100%);
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .result-value {
+      font-weight: 600;
+      color: #015826;
+      font-size: 1.1rem;
+    }
+
+    .btn-download {
+      background: #f8fff9;
+      color: #008236;
+      border: 2px solid #008236;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin: 0.25rem;
+    }
+
+    .btn-download:hover {
+      background: #008236;
+      color: white;
+    }
+
+    .btn-print {
+      background: #e2f5e5;
+      color: #015826;
+      border: 2px solid #e2f5e5;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin: 0.25rem;
+    }
+
+    .btn-print:hover {
+      background: #015826;
+      color: white;
+      border-color: #015826;
+    }
+
+    .explanation-box {
+      background: #f8fff9;
+      border-left: 4px solid #008236;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .law-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      padding: 0.25rem;
+    }
+
+    .law-toggle-btn {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: none;
+      background: transparent;
+      color: #6c757d;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .law-toggle-btn.active {
+      background: white;
+      color: #008236;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .calculator-card {
+        padding: 1rem;
+      }
+
+      .law-comparison-table {
+        font-size: 0.9rem;
+      }
+
+      .law-comparison-table th,
+      .law-comparison-table td {
+        padding: 0.75rem 0.5rem;
+      }
+
+      .btn-download,
+      .btn-print {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    .result-box {
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+    }
+
+    .result-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-hint {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    /* Section Headers */
+    .section-header {
+      font-weight: 600;
+      color: #015826;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2f5e5;
+    }
+
+    /* Deduction Summary */
+    .deduction-summary {
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .deduction-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px dashed #e2f5e5;
+    }
+
+    .deduction-item:last-child {
+      border-bottom: none;
+    }
+
+    .deduction-item.total {
+      font-weight: 600;
+      color: #015826;
+      border-top: 2px solid #015826;
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+    }
+  </style>
+</head>
+
+<body class="taxpayer">
+  <!-- Layout wrapper -->
+  <div class="">
+
+    <!-- Navbar -->
+    <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+      id="layout-navbar">
+      <!-- Navbar will be loaded here from nav.js -->
+
+      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+          <i class="bx bx-menu bx-sm"></i>
+        </a>
+      </div>
+
+      <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
+        <div class="">
+          <p class="text-sm text-black datei" id="datei">-</p>
+          <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Tax Calculator</h1>
+        </div>
+
+        <div class="mt-4 flex gap-x-5">
+
+          <div class="avatar avatar-online">
+            <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle theProfImg1" />
+
+          </div>
+          <h4 class="text-mm text-black self-center hidden md:flex adminName">System Admin</h4>
+        </div>
+
+      </div>
+    </nav>
+    <!-- / Navbar -->
+
+    <!-- Content wrapper -->
+    <section class="content-wrapper">
+      <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Header with Back Button -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <a href="dashboard.html">
+            <i class="ri-arrow-left-line me-2"></i> Back to Dashboard
+          </a>
+        </div>
+
+        <div class="row g-4">
+          <!-- Left Column: Input Form -->
+          <div class="col-lg-6">
+            <div class="calculator-card">
+              <h4 class="card-title mb-4" style="color: #015826;">Tax Calculation Inputs</h4>
+
+              <!-- Annual Gross Income -->
+              <div class="input-group-tax">
+                <label class="tax-input-label">Annual Gross Income (₦)</label>
+                <div class="input-group">
+                  <input type="text" class="tax-input" id="annualIncome" placeholder="e.g., 5,000,000">
+                </div>
+              </div>
+
+              <!-- Statutory Deductions Section -->
+              <div class="section-header mt-4">
+                <i class="ri-shield-check-line me-2"></i>Statutory Deductions
+              </div>
+
+              <!-- Pension Toggle -->
+              <div class="toggle-group" id="pensionGroup">
+                <div class="toggle-info">
+                  <span class="toggle-label">Pension Contribution</span>
+                  <span class="toggle-rate" id="pensionRateText">8% of gross income</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="pensionToggle" checked onchange="updateToggleGroup('pension')">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- NHIS Toggle -->
+              <div class="toggle-group" id="nhisGroup">
+                <div class="toggle-info">
+                  <span class="toggle-label">NHIS Contribution</span>
+                  <span class="toggle-rate" id="nhisRateText">5% of gross income</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="nhisToggle" checked onchange="updateToggleGroup('nhis')">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- NHF Toggle -->
+              <div class="toggle-group" id="nhfGroup">
+                <div class="toggle-info">
+                  <span class="toggle-label">NHF Contribution</span>
+                  <span class="toggle-rate" id="nhfRateText">2.5% of gross income</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="nhfToggle" checked onchange="updateToggleGroup('nhf')">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- Other Deductions Section -->
+              <div class="section-header mt-4">
+                <i class="ri-home-line me-2"></i>Other Deductions (Optional)
+              </div>
+
+              <!-- Rent Paid Annually -->
+              <div class="input-group-tax">
+                <label class="tax-input-label">Rent Paid Annually (₦)</label>
+                <div class="input-group">
+                  <input type="text" class="tax-input" id="rentPaid" placeholder="e.g., 600,000">
+                </div>
+                <div class="tax-input-hint">Annual rent paid for accommodation (for rent relief under
+                  New Law)</div>
+              </div>
+
+              <!-- Life Insurance -->
+              <div class="input-group-tax">
+                <label class="tax-input-label">Life Insurance Premium (₦)</label>
+                <div class="input-group">
+                  <input type="text" class="tax-input" id="lifeInsurance" placeholder="e.g., 50,000">
+                </div>
+                <div class="tax-input-hint">Annual life insurance premium paid</div>
+              </div>
+
+              <!-- Other Deductions -->
+              <div class="input-group-tax">
+                <label class="tax-input-label">Other Deductions (₦)</label>
+                <div class="input-group">
+                  <input type="text" class="tax-input" id="otherDeductions" placeholder="e.g., 100,000">
+                </div>
+                <div class="tax-input-hint">Any other allowable deductions not listed above</div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="row g-2 mt-4">
+                <div class="col-md-6">
+                  <button class="btn-tax-calculate" onclick="calculateTax()">
+                    <i class="ri-calculator-line me-2"></i> Calculate Tax
+                  </button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn-tax-reset" onclick="resetForm()">
+                    <i class="ri-refresh-line me-2"></i> Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Results -->
+          <div class="col-lg-6">
+            <div class="calculator-card">
+              <!-- Law Toggle -->
+              <div class="law-toggle">
+                <button class="law-toggle-btn active" onclick="showLaw('old')">Old Tax Law</button>
+                <button class="law-toggle-btn" onclick="showLaw('new')">New Tax Law</button>
+              </div>
+
+              <!-- Results Placeholder -->
+              <div id="resultsPlaceholder" class="text-center py-5">
+                <i class="ri-calculator-line display-4 text-muted mb-3"></i>
+                <h5 class="text-muted">No Calculation Yet</h5>
+                <p class="text-muted">
+                  Enter your income details and click "Calculate Tax" to see your PAYE breakdown.
+                </p>
+              </div>
+
+              <!-- Results Display -->
+              <div id="resultsDisplay" style="display: none;">
+                <!-- Comparison Table -->
+                <table class="law-comparison-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th style="background: white;" id="oldLawHeader"></th>
+                      <th style="background: white;" id="newLawHeader"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background: #EFF6FF;">
+                      <td>Annual Gross Income</td>
+                      <td id="oldGrossIncome">₦0.00</td>
+                      <td id="newGrossIncome">₦0.00</td>
+                    </tr>
+                    <tr style="background-color: #FEF3C7;">
+                      <td>Total Deductions</td>
+                      <td id="oldDeductions">₦0.00</td>
+                      <td id="newDeductions">₦0.00</td>
+                    </tr>
+                    <tr style="background-color: #F0FDF4;">
+                      <td id="reliefLabel">CRA / Rent Relief</td>
+                      <td id="oldCRA">₦0.00</td>
+                      <td id="newCRA">₦0.00</td>
+                    </tr>
+                    <tr style="background: #FAF5FF;">
+                      <td><strong>Taxable Income</strong></td>
+                      <td id="oldTaxableIncome"><strong>₦0.00</strong></td>
+                      <td id="newTaxableIncome"><strong>₦0.00</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- Tax Bands Breakdown -->
+                <div class="row g-3 mt-4">
+                  <!-- Old Law Breakdown -->
+                  <div class="col-md-12" id="oldLawBreakdown">
+                    <h6 class="mb-3" style="color: #015826;">Tax Bands Applied (Old Law)</h6>
+                    <div id="oldTaxBands">
+                      <!-- Will be populated by JavaScript -->
+                    </div>
+                  </div>
+
+                  <!-- New Law Breakdown -->
+                  <div class="col-md-12" id="newLawBreakdown">
+                    <h6 class="mb-3" style="color: #015826;">Tax Bands Applied (New Law)</h6>
+                    <div id="newTaxBands">
+                      <!-- Will be populated by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Final Results -->
+                <div class="row g-3 mt-4">
+                  <!-- Total Annual Tax -->
+                  <div class="col-md-4">
+                    <div class="result-box" style="background:#FFF7ED">
+                      <div class="result-content">
+                        <div class="result-label">Total Annual Tax</div>
+                        <div class="result-value" id="totalAnnualTax">₦0.00</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Monthly Equivalent -->
+                  <div class="col-md-4">
+                    <div class="result-box" style="background: #EFF6FF">
+                      <div class="result-content">
+                        <div class="result-label">Monthly Equivalent</div>
+                        <div class="result-value" id="monthlyEquivalent">₦0.00</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Effective Tax Rate -->
+                  <div class="col-md-4">
+                    <div class="result-box" style="background: #F0FDF4">
+                      <div class="result-content">
+                        <div class="result-label">Effective Tax Rate</div>
+                        <div class="result-value" id="effectiveTaxRate">0%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Deduction Summary -->
+                <div class="deduction-summary mt-4" id="deductionSummary">
+                  <h6 class="mb-3" style="color: #015826;"><i class="ri-file-list-3-line me-2"></i>Deduction Breakdown
+                  </h6>
+                  <div id="deductionBreakdown">
+                    <!-- Will be populated by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-center mt-4 flex-wrap">
+                  <button class="btn-download" onclick="downloadPDF()">
+                    <i class="ri-download-line me-2"></i> Download PDF
+                  </button>
+                  <button class="btn-print" onclick="printResults()">
+                    <i class="ri-printer-line me-2"></i> Print
+                  </button>
+                  <button class="btn-download" onclick="copyBreakdown()">
+                    <i class="ri-file-copy-line me-2"></i> Copy Breakdown
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- / Content wrapper -->
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+  </div>
+  <!-- / Layout wrapper -->
+
+  <!-- JavaScript Libraries -->
+  <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="./assets/vendor/libs/popper/popper.js"></script>
+  <script src="./assets/vendor/js/bootstrap.js"></script>
+  <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./assets/js/nav.js"></script>
+  <script src="./assets/vendor/js/menu.js"></script>
+  <script src="./assets/js/main.js"></script>
+
+  <script>
+
+    // Fixed rates for statutory deductions
+    const PENSION_RATE = 0.08;  // 8%
+    const NHIS_RATE = 0.05;     // 5%
+    const NHF_RATE = 0.025;     // 2.5%
+
+    // Format number with commas
+    function formatNumber(num) {
+      return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+
+    // Parse formatted number
+    function parseNumber(str) {
+      return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+
+    // Update toggle group visual state
+    function updateToggleGroup(type) {
+      const toggle = document.getElementById(`${type}Toggle`);
+      const group = document.getElementById(`${type}Group`);
+      const rateText = document.getElementById(`${type}RateText`);
+
+      if (toggle.checked) {
+        group.classList.add('active');
+        rateText.classList.add('active');
+      } else {
+        group.classList.remove('active');
+        rateText.classList.remove('active');
+      }
+    }
+
+    // Initialize toggle states on load
+    document.addEventListener('DOMContentLoaded', function () {
+      updateToggleGroup('pension');
+      updateToggleGroup('nhis');
+      updateToggleGroup('nhf');
+      showLaw('old');
+    });
+
+    // Input formatting for currency fields
+    document.querySelectorAll('.tax-input').forEach(input => {
+      input.addEventListener('input', function (e) {
+        // Remove non-numeric characters except decimal
+        let value = e.target.value.replace(/[^\d.]/g, '');
+
+        // Remove extra decimal points
+        const parts = value.split('.');
+        if (parts.length > 2) {
+          value = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        e.target.value = value;
+      });
+
+      input.addEventListener('blur', function (e) {
+        if (e.target.value) {
+          e.target.value = formatNumber(parseNumber(e.target.value));
+        }
+      });
+    });
+
+    /**
+     * Calculate Consolidated Relief Allowance (CRA) for Old Law
+     * Based on Excel calculation: CRA = 20% of Gross Income
+     */
+    function calculateCRA(grossIncome) {
+      return grossIncome * 0.20;  // 20% of Gross Income
+    }
+
+    /**
+     * Calculate Rent Relief for New Law
+     * Rent Relief = Lower of (20% × annual rent paid) or ₦500,000
+     */
+    function calculateRentRelief(rentPaid) {
+      if (rentPaid <= 0) return 0;
+      const twentyPercentRent = 0.20 * rentPaid;
+      return Math.min(twentyPercentRent, 500000);
+    }
+
+    /**
+     * Calculate tax under Old Law
+     * Tax bands: 7%, 11%, 15%, 19%, 21%, 24%
+     */
+    function calculateOldTax(taxableIncome) {
+      const brackets = [
+        { limit: 300000, rate: 0.07, label: 'First ₦300,000' },
+        { limit: 300000, rate: 0.11, label: 'Next ₦300,000' },
+        { limit: 500000, rate: 0.15, label: 'Next ₦500,000' },
+        { limit: 500000, rate: 0.19, label: 'Next ₦500,000' },
+        { limit: 1600000, rate: 0.21, label: 'Next ₦1,600,000' },
+        { limit: Infinity, rate: 0.24, label: 'Above ₦3,200,000' }
+      ];
+
+      let remainingIncome = taxableIncome;
+      let totalTax = 0;
+      let breakdown = [];
+
+      for (const bracket of brackets) {
+        if (remainingIncome <= 0) break;
+
+        const taxableAmount = Math.min(remainingIncome, bracket.limit);
+        const bracketTax = taxableAmount * bracket.rate;
+        totalTax += bracketTax;
+
+        if (taxableAmount > 0) {
+          breakdown.push({
+            description: bracket.label,
+            calculation: `₦${formatNumber(taxableAmount)} × ${(bracket.rate * 100)}%`,
+            amount: bracketTax
+          });
+        }
+
+        remainingIncome -= taxableAmount;
+      }
+
+      return { total: totalTax, breakdown };
+    }
+
+    /**
+     * Calculate tax under New Law (2026)
+     * Tax bands: 0% (first ₦800,000), 15%, 18%, 21%, 24%
+     */
+    function calculateNewTax(taxableIncome) {
+      const brackets = [
+        { limit: 800000, rate: 0.00, label: 'First ₦800,000 (Tax-Free)' },
+        { limit: 2200000, rate: 0.15, label: 'Next ₦2,200,000' },
+        { limit: 9000000, rate: 0.18, label: 'Next ₦9,000,000' },
+        { limit: 10000000, rate: 0.21, label: 'Next ₦10,000,000' },
+        { limit: Infinity, rate: 0.24, label: 'Above ₦22,000,000' }
+      ];
+
+      let remainingIncome = taxableIncome;
+      let totalTax = 0;
+      let breakdown = [];
+
+      for (const bracket of brackets) {
+        if (remainingIncome <= 0) break;
+
+        const taxableAmount = Math.min(remainingIncome, bracket.limit);
+        const bracketTax = taxableAmount * bracket.rate;
+        totalTax += bracketTax;
+
+        if (taxableAmount > 0) {
+          breakdown.push({
+            description: bracket.label,
+            calculation: `₦${formatNumber(taxableAmount)} × ${(bracket.rate * 100)}%`,
+            amount: bracketTax
+          });
+        }
+
+        remainingIncome -= taxableAmount;
+      }
+
+      return { total: totalTax, breakdown };
+    }
+
+    // Store calculation results globally for toggle switching
+    let calculationResults = null;
+
+    /**
+     * Main Tax Calculation Function
+     */
+    function calculateTax() {
+      // Get input values
+      const income = parseNumber(document.getElementById('annualIncome').value);
+
+      if (!income || income <= 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Invalid Input',
+          text: 'Please enter a valid annual income amount.'
+        });
+        return;
+      }
+
+      // Get toggle states
+      const pensionEnabled = document.getElementById('pensionToggle').checked;
+      const nhisEnabled = document.getElementById('nhisToggle').checked;
+      const nhfEnabled = document.getElementById('nhfToggle').checked;
+
+      // Get other deductions
+      const rent = parseNumber(document.getElementById('rentPaid').value);
+      const insurance = parseNumber(document.getElementById('lifeInsurance').value);
+      const others = parseNumber(document.getElementById('otherDeductions').value);
+
+      // Calculate statutory deductions (only if toggled ON)
+      const pensionDeduction = pensionEnabled ? income * PENSION_RATE : 0;
+      const nhisDeduction = nhisEnabled ? income * NHIS_RATE : 0;
+      const nhfDeduction = nhfEnabled ? income * NHF_RATE : 0;
+
+      // ========== OLD LAW CALCULATION ==========
+      // Formula: Taxable Income = Gross - CRA - NHF - NHIS - Pension - Life Insurance - Others
+      // CRA = 20% of Gross Income
+      const cra = calculateCRA(income);
+      const oldTotalDeductions = nhfDeduction + nhisDeduction + pensionDeduction + insurance + others;
+      const oldTaxableIncome = Math.max(0, income - cra - oldTotalDeductions);
+
+      // Calculate Old Law Tax
+      const oldTax = calculateOldTax(oldTaxableIncome);
+
+      // ========== NEW LAW CALCULATION ==========
+      // Formula: Taxable Income = Gross - NHF - NHIS - Pension - Rent Relief - Life Insurance - Others
+      // NO CRA in New Law!
+      // Rent Relief = Min(20% of Rent Paid, ₦500,000)
+      const rentRelief = calculateRentRelief(rent);
+      const newTotalDeductions = nhfDeduction + nhisDeduction + pensionDeduction + insurance + others;
+      const newTaxableIncome = Math.max(0, income - newTotalDeductions - rentRelief);
+
+      // Calculate New Law Tax
+      const newTax = calculateNewTax(newTaxableIncome);
+
+      // Calculate effective rates
+      const oldEffectiveRate = income > 0 ? (oldTax.total / income) * 100 : 0;
+      const newEffectiveRate = income > 0 ? (newTax.total / income) * 100 : 0;
+
+      // Store results for toggle switching
+      calculationResults = {
+        income,
+        pensionDeduction,
+        nhisDeduction,
+        nhfDeduction,
+        insurance,
+        others,
+        rent,
+        cra,
+        rentRelief,
+        oldTotalDeductions,
+        newTotalDeductions,
+        oldTaxableIncome,
+        newTaxableIncome,
+        oldTax,
+        newTax,
+        oldEffectiveRate,
+        newEffectiveRate
+      };
+
+      // Display results
+      displayResults();
+    }
+
+    /**
+     * Display calculation results
+     */
+    function displayResults() {
+      if (!calculationResults) return;
+
+      const {
+        income, pensionDeduction, nhisDeduction, nhfDeduction, insurance, others, rent,
+        cra, rentRelief, oldTotalDeductions, newTotalDeductions,
+        oldTaxableIncome, newTaxableIncome, oldTax, newTax,
+        oldEffectiveRate, newEffectiveRate
+      } = calculationResults;
+
+      // Show results, hide placeholder
+      document.getElementById('resultsPlaceholder').style.display = 'none';
+      document.getElementById('resultsDisplay').style.display = 'block';
+
+      // Update comparison table
+      document.getElementById('oldGrossIncome').textContent = `₦${formatNumber(income)}`;
+      document.getElementById('newGrossIncome').textContent = `₦${formatNumber(income)}`;
+
+      // Old Law: Show CRA + Deductions separately
+      // New Law: Show only Deductions + Rent Relief
+      document.getElementById('oldDeductions').textContent = `₦${formatNumber(oldTotalDeductions)}`;
+      document.getElementById('newDeductions').textContent = `₦${formatNumber(newTotalDeductions + rentRelief)}`;
+
+      document.getElementById('oldCRA').textContent = `₦${formatNumber(cra)}`;
+      document.getElementById('newCRA').textContent = rentRelief > 0 ? `₦${formatNumber(rentRelief)}` : 'N/A';
+
+      document.getElementById('oldTaxableIncome').innerHTML = `<strong>₦${formatNumber(oldTaxableIncome)}</strong>`;
+      document.getElementById('newTaxableIncome').innerHTML = `<strong>₦${formatNumber(newTaxableIncome)}</strong>`;
+
+      // Update tax bands
+      updateTaxBands('old', oldTax.breakdown);
+      updateTaxBands('new', newTax.breakdown);
+
+      // Update deduction breakdown
+      updateDeductionBreakdown(pensionDeduction, nhisDeduction, nhfDeduction, insurance, others, rent, rentRelief);
+
+      // Show Old Law by default
+      showLaw('old');
+    }
+
+    /**
+     * Update deduction breakdown section
+     */
+    function updateDeductionBreakdown(pension, nhis, nhf, insurance, others, rent, rentRelief) {
+      const container = document.getElementById('deductionBreakdown');
+      let html = '';
+
+      if (pension > 0) {
+        html += `<div class="deduction-item">
+          <span>Pension (8%)</span>
+          <span>₦${formatNumber(pension)}</span>
+        </div>`;
+      }
+
+      if (nhis > 0) {
+        html += `<div class="deduction-item">
+          <span>NHIS (5%)</span>
+          <span>₦${formatNumber(nhis)}</span>
+        </div>`;
+      }
+
+      if (nhf > 0) {
+        html += `<div class="deduction-item">
+          <span>NHF (2.5%)</span>
+          <span>₦${formatNumber(nhf)}</span>
+        </div>`;
+      }
+
+      if (insurance > 0) {
+        html += `<div class="deduction-item">
+          <span>Life Insurance</span>
+          <span>₦${formatNumber(insurance)}</span>
+        </div>`;
+      }
+
+      if (others > 0) {
+        html += `<div class="deduction-item">
+          <span>Other Deductions</span>
+          <span>₦${formatNumber(others)}</span>
+        </div>`;
+      }
+
+      if (rent > 0) {
+        html += `<div class="deduction-item">
+          <span>Rent Paid (Annual)</span>
+          <span>₦${formatNumber(rent)}</span>
+        </div>`;
+        if (rentRelief > 0) {
+          html += `<div class="deduction-item" style="color: #015826;">
+            <span>→ Rent Relief (New Law: 20%, max ₦500k)</span>
+            <span>₦${formatNumber(rentRelief)}</span>
+          </div>`;
+        }
+      }
+
+      const total = pension + nhis + nhf + insurance + others;
+      html += `<div class="deduction-item total">
+        <span>Total Statutory Deductions</span>
+        <span>₦${formatNumber(total)}</span>
+      </div>`;
+
+      container.innerHTML = html;
+    }
+
+    /**
+     * Update tax bands display
+     */
+    function updateTaxBands(lawType, breakdown) {
+      const container = document.getElementById(`${lawType}TaxBands`);
+      container.innerHTML = '';
+
+      breakdown.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'tax-band-item';
+        div.innerHTML = `
+          <div class="band-description">${item.description}</div>
+          <div class="band-calculation">
+            <div class="band-calculation-text">${item.calculation}</div>
+            <div class="band-amount">₦${formatNumber(item.amount)}</div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    /**
+     * Law toggle functionality
+     */
+    function showLaw(lawType) {
+      const buttons = document.querySelectorAll('.law-toggle-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Activate clicked button
+      event.target.classList.add('active');
+
+      // Show/hide columns based on selection
+      const oldHeader = document.getElementById('oldLawHeader');
+      const newHeader = document.getElementById('newLawHeader');
+      const oldCells = document.querySelectorAll('td:nth-child(2), th:nth-child(2)');
+      const newCells = document.querySelectorAll('td:nth-child(3), th:nth-child(3)');
+      const oldBreakdown = document.getElementById('oldLawBreakdown');
+      const newBreakdown = document.getElementById('newLawBreakdown');
+      const reliefLabel = document.getElementById('reliefLabel');
+
+      if (lawType === 'old') {
+        oldHeader.style.display = '';
+        newHeader.style.display = 'none';
+        oldCells.forEach(cell => cell.style.display = '');
+        newCells.forEach(cell => cell.style.display = 'none');
+        oldBreakdown.style.display = '';
+        newBreakdown.style.display = 'none';
+        if (reliefLabel) reliefLabel.textContent = 'CRA (Consolidated Relief)';
+
+        // Update result boxes with OLD LAW values
+        if (calculationResults) {
+          document.getElementById('totalAnnualTax').textContent = `₦${formatNumber(calculationResults.oldTax.total)}`;
+          document.getElementById('monthlyEquivalent').textContent = `₦${formatNumber(calculationResults.oldTax.total / 12)}`;
+          document.getElementById('effectiveTaxRate').textContent = `${calculationResults.oldEffectiveRate.toFixed(2)}%`;
+
+        }
+
+      } else if (lawType === 'new') {
+        oldHeader.style.display = 'none';
+        newHeader.style.display = '';
+        oldCells.forEach(cell => cell.style.display = 'none');
+        newCells.forEach(cell => cell.style.display = '');
+        oldBreakdown.style.display = 'none';
+        newBreakdown.style.display = '';
+        if (reliefLabel) reliefLabel.textContent = 'Rent Relief';
+
+        // Update result boxes with NEW LAW values
+        if (calculationResults) {
+          document.getElementById('totalAnnualTax').textContent = `₦${formatNumber(calculationResults.newTax.total)}`;
+          document.getElementById('monthlyEquivalent').textContent = `₦${formatNumber(calculationResults.newTax.total / 12)}`;
+          document.getElementById('effectiveTaxRate').textContent = `${calculationResults.newEffectiveRate.toFixed(2)}%`;
+
+        }
+      }
+    }
+
+    /**
+     * Reset form
+     */
+    function resetForm() {
+      document.getElementById('annualIncome').value = '';
+      document.getElementById('pensionToggle').checked = true;
+      document.getElementById('nhisToggle').checked = true;
+      document.getElementById('nhfToggle').checked = true;
+      document.getElementById('rentPaid').value = '';
+      document.getElementById('lifeInsurance').value = '';
+      document.getElementById('otherDeductions').value = '';
+
+      // Update toggle visual states
+      updateToggleGroup('pension');
+      updateToggleGroup('nhis');
+      updateToggleGroup('nhf');
+
+      // Clear calculation results
+      calculationResults = null;
+
+      // Show placeholder, hide results
+      document.getElementById('resultsPlaceholder').style.display = 'block';
+      document.getElementById('resultsDisplay').style.display = 'none';
+
+      // Reset law toggle to Old Tax Law
+      const buttons = document.querySelectorAll('.law-toggle-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      buttons[0].classList.add('active');
+    }
+
+    /**
+     * Print results
+     */
+    function printResults() {
+      if (document.getElementById('resultsDisplay').style.display === 'none') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Results',
+          text: 'Please calculate tax first before printing.'
+        });
+        return;
+      }
+
+      window.print();
+    }
+
+    /**
+     * Copy breakdown to clipboard
+     */
+    function copyBreakdown() {
+      const resultsElement = document.getElementById('resultsDisplay');
+
+      if (resultsElement.style.display === 'none') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Results',
+          text: 'Please calculate tax first to copy breakdown.'
+        });
+        return;
+      }
+
+      if (!calculationResults) return;
+
+      const activeLaw = document.querySelector('.law-toggle-btn.active').textContent;
+      const isOldLaw = activeLaw.includes('Old');
+
+      // Create text version
+      const text = `
+Payzamfara TAX CALCULATION
+=======================
+Date: ${new Date().toLocaleDateString()}
+Law Applied: ${activeLaw}
+
+Income Details:
+Annual Gross Income: ₦${formatNumber(calculationResults.income)}
+Pension (8%): ${document.getElementById('pensionToggle').checked ? '₦' + formatNumber(calculationResults.pensionDeduction) : 'Disabled'}
+NHIS (5%): ${document.getElementById('nhisToggle').checked ? '₦' + formatNumber(calculationResults.nhisDeduction) : 'Disabled'}
+NHF (2.5%): ${document.getElementById('nhfToggle').checked ? '₦' + formatNumber(calculationResults.nhfDeduction) : 'Disabled'}
+Rent Paid: ₦${formatNumber(calculationResults.rent)}
+Life Insurance: ₦${formatNumber(calculationResults.insurance)}
+Other Deductions: ₦${formatNumber(calculationResults.others)}
+
+${isOldLaw ? 'CRA' : 'Rent Relief'}: ₦${formatNumber(isOldLaw ? calculationResults.cra : calculationResults.rentRelief)}
+Taxable Income: ₦${formatNumber(isOldLaw ? calculationResults.oldTaxableIncome : calculationResults.newTaxableIncome)}
+
+Results:
+Total Annual Tax: ${document.getElementById('totalAnnualTax').textContent}
+Monthly Equivalent: ${document.getElementById('monthlyEquivalent').textContent}
+Effective Tax Rate: ${document.getElementById('effectiveTaxRate').textContent}
+      `.trim();
+
+      navigator.clipboard.writeText(text).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Copied!',
+          text: 'Tax breakdown copied to clipboard.',
+          timer: 1500
+        });
+      }).catch(err => {
+        console.error('Copy failed:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Copy Failed',
+          text: 'Please try again or use Ctrl+C.'
+        });
+      });
+    }
+
+    /**
+     * Download PDF (placeholder - would need a PDF library)
+     */
+    function downloadPDF() {
+      Swal.fire({
+        icon: 'info',
+        title: 'Coming Soon',
+        text: 'PDF download feature will be available soon. For now, please use the Print option.'
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>PayZamfara</title>
+  <title>PlateauIGR</title>
 
   <meta name="description" content="" />
 
@@ -25,6 +25,7 @@
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Icons. Uncomment required icon fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
   <!-- Core CSS -->
@@ -39,6 +40,73 @@
   <script src="./assets/js/config.js"></script>
 
   <style>
+    /* Container must be position relative for the loader to anchor to it */
+    .card {
+      position: relative;
+    }
+
+    .card-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      border-radius: inherit;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .card-loader.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .spinner-custom {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e8f5e9;
+      border-top: 3px solid #015826;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .layout-navbar.navbar-detached {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      backdrop-filter: unset !important;
+      color: #fff !important;
+    }
+
+    .layout-navbar.navbar-detached #navPageTitle {
+      color: #D4EDCE !important;
+    }
+
+    .layout-navbar.navbar-detached .datei {
+      color: #D4EDCE !important;
+    }
+
+    .layout-navbar.navbar-detached .adminName {
+      color: #D4EDCE !important;
+    }
+
     .collapse {
       visibility: visible !important;
     }
@@ -46,6 +114,306 @@
     .theChart {
       max-width: 100%;
       height: 400px;
+    }
+
+    .revenue-card {
+      border: none !important;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .revenue-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .revenue-card.first {
+      background: #346C27;
+      color: #fff;
+    }
+
+    .revenue-card.second {
+      background: #008236;
+      color: #FFFFFF;
+    }
+
+    .revenue-card.first .card-subtitle,
+    .revenue-card.second .card-subtitle {
+      color: #FFFFFF;
+    }
+
+    .revenue-card.first .card-title,
+    .revenue-card.second .card-title {
+      font-size: 1.8rem;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    .revenue-card.first .revenue-icon2,
+    .revenue-card.second .revenue-icon2 {
+      background-color: #00FF6A;
+      color: #346C27;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .revenue-card .revenue-icon2 i {
+      font-size: 1.3rem;
+    }
+
+    .revenue-card.third .revenue-icon2 {
+      background-color: #104502;
+      color: #02DD5D;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .revenue-card.third {
+      background: #05C555;
+      color: #000;
+    }
+
+    .revenue-card.third .card-subtitle {
+      color: #000000;
+    }
+
+    .revenue-card.third .card-title {
+      font-size: 1.8rem;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .revenue-icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .chart-fill {
+      color: #008236;
+      background: #F0FDF4;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .btn-success-light {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+    }
+
+    .btn-success-dark {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Gauge */
+    .gauge-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .gauge-text {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .btn-filter {
+      background-color: #FFFFFF;
+      border: 1px solid #CED4DA;
+      color: #495057;
+      border-radius: 5px;
+    }
+
+    .sm-control {
+      width: 150px;
+      height: 40px;
+      padding: 3px 5px;
+      /* font-size: 0.45rem; */
+    }
+
+    .main-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main-card .card-body {
+      width: 100%;
+    }
+
+    .main-card .main-card-text {
+      font-size: 0.875rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    .main-card .main-card-figure {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #101828;
+    }
+
+    .main-card-icon {
+      background-color: #F0FDF4;
+      font-size: 1.5rem;
+      color: #000000;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+    }
+
+    .main-card-icon.first {
+      background-color: #17DFBE;
+    }
+
+    .main-card-icon.second {
+      background-color: #009E44;
+    }
+
+    .colored-card {
+      background-color: #F6FFFA;
+    }
+
+    .brown-card {
+      background-color: #E0CEC4;
+    }
+
+    .green-colored {
+      background-color: #B9F8CF;
+    }
+
+    .main-hr {
+      border: none;
+      border-top: 1px solid #E0E0E0;
+      margin: 20px 0;
+    }
+
+    .main-card-badge {
+      background-color: #F6FFFA;
+      color: #008236;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Floating Action Button */
+    /* Floating Action Button */
+    .floating-btn {
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: 30px;
+      right: 30px;
+      border-radius: 30px;
+      /* width: 60px; */
+      /* height: 60px; */
+      font-size: 16px;
+      color: #FFFFFF;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+
+    /* Card Customization */
+    .bg-success-subtle {
+      background-color: #d1f4e0 !important;
+    }
+
+    .bg-secondary-subtle {
+      background-color: #e2ddd5 !important;
+    }
+
+    .bg-warning-subtle {
+      background-color: #fff9e6 !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+
+    .gauge-container {
+      position: relative;
+    }
+
+    .form-select-sm {
+      font-size: 0.875rem;
+      padding: 0.375rem 2rem 0.375rem 0.75rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+    }
+
+    .metric-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+    }
+
+    .quarters-section {
+      border: 1px solid #e9ecef;
+    }
+
+    .quarters-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.65rem;
+      box-shadow: 0 2px 8px rgba(26, 188, 156, 0.35);
+    }
+
+    .quarters-circle.positive {
+      background-color: #1abc9c;
+    }
+
+    .quarters-circle.negative {
+      background-color: #e74c3c;
+    }
+
+    .quarters-circle-title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Global Filter Styles */
+    .global-filter-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
   </style>
 </head>
@@ -64,7 +432,9 @@
       <!-- Layout container -->
       <div class="layout-page">
         <!-- Navbar -->
-
+        <div class="absolute">
+          <img src="./assets/img/dashboard-header.png" class="w-full" alt="">
+        </div>
         <nav
           class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
           id="layout-navbar">
@@ -76,8 +446,8 @@
 
           <div class="navbar-nav-right flex items-center justify-between" id="navbar-collapse">
             <div class="">
-              <p class="text-sm text-black">Date: <span class="datei" id="datei"> </span></p>
-              <h1 class="md:text-[30px] text-[14px] text-[#151515] pt-2">Dashboard</h1>
+              <p class="text-sm text-[#D4EDCE]">Date: <span class="datei" id="datei"> </span></p>
+              <h1 class="md:text-[30px] text-[14px] text-[#D4EDCE] pt-2">Dashboard</h1>
             </div>
 
             <div class="mt-4 flex gap-x-5 ms-auto">
@@ -101,359 +471,549 @@
 
         <!-- Content wrapper -->
         <section class="content-wrapper">
-            
           <div class="flex justify-center items-center mt-4" id="theLoader">
             <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
           </div>
-              
+
           <div class="container-xxl flex-grow-1 container-p-y">
-            <section class="w-12/12 main_section hidden">
-              <div class="p-2">
-                <div class="w-full">
-                  <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
 
-                    <div class="dashCards card w-full flex-col space-y-2  ">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#1c315c1f] mr-auto">
-                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
-                        </div>
-                        <p class=" text-gray-500 text-xs impMetrics">TOTAL MONTHLY REVENUE</p>
+            <!-- Global Filter - Month & Year Dropdowns -->
+            <div class="d-flex justify-content-end relative mb-4" style="z-index: 100;">
+              <div class="global-filter-container col-md-4">
+                <select id="globalMonthFilter" class="form-select">
+                  <option value="01">January</option>
+                  <option value="02">February</option>
+                  <option value="03">March</option>
+                  <option value="04">April</option>
+                  <option value="05">May</option>
+                  <option value="06">June</option>
+                  <option value="07">July</option>
+                  <option value="08">August</option>
+                  <option value="09">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+                <select id="globalYearFilter" class="form-select">
+                  <!-- Years will be populated dynamically (2023 to current year) -->
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <div class="card revenue-card first h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <div class="revenue-icon">
+                        <img src="./assets/img/logo-rounded.png" alt="Icon" class="rounded-circle">
                       </div>
-
-
-                       <div class="form-group  ml-auto" style="margin-top: 52px;">
-                            <select class="form-select" id="monthlyYear" onchange="refreshTheCards2()">
-                            </select>
-                        </div>
-
-                      <p class="zanumbers text-end">
-                        <span id="total_amount_invoiced">-</span>
-                      </p>
+                      <button class="btn revenue-icon2 rounded-circle">
+                        <i class="ri-wallet-3-line"></i>
+                      </button>
                     </div>
-
-                    <div class="dashCards card w-full flex-col space-y-2">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#1c315c1f] mr-auto">
-                          <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
-                        </div>
-                        <p class=" text-gray-500 text-xs impMetrics">TOTAL ACCRUED REVENUE</p>
-                      </div>
-
-
-                       <div class="form-group ml-auto" style="margin-top: 52px;">
-                        <select class="form-select" id="accruedRev" onchange="refreshTheCardsAcr()">
-                        </select>
-                      </div>
-
-                      <p class="zanumbers text-end" >
-                        <span id="accruedRevText">-</span>
-                      </p>
-                    </div>
-
-                    <!--<div class="dashCards card w-full flex-col space-y-2  ">-->
-                    <!--  <div class="flex items-center  justify-start">-->
-                    <!--    <div class="icoCont bg-[#f890301f] mr-auto">-->
-                    <!--      <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>-->
-                    <!--    </div>-->
-                    <!--    <p class="text-gray-500 text-xs impMetrics">EXPECTED MONTHLY REVENUE</p>-->
-                    <!--  </div>-->
-
-
-                    <!--    <div class="form-group  ml-auto" style="margin-top: 52px;">-->
-                    <!--        <select class="form-select" id="monthlyYear2" onchange="refreshTheCards3()">-->
-                    <!--        </select>-->
-                    <!--    </div>-->
-
-                    <!--  <p class="zanumbers text-end">-->
-                    <!--    <span id="due_amount">-</span>-->
-                    <!--  </p>-->
-                    <!--</div>-->
-                    
-                    <div class="dashCards card w-full flex-col space-y-2  ">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#f890301f] mr-auto">
-                          <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
-                        </div>
-                        <p class="text-gray-500 text-xs impMetrics">TOTAL INVOICES GENERATED</p>
-                      </div>
-
-
-                        <div class="form-group  ml-auto" style="margin-top: 52px;">
-                            <select class="form-select" id="monthlyYear2ttl" onchange="refreshTheCardsttl()">
-                            </select>
-                        </div>
-
-                      <p class="zanumbers text-end">
-                        <span id="due_amountttl">-</span>
-                      </p>
-                    </div>
-                    
-                    <div class="dashCards card w-full flex-col space-y-2  ">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#d7a1271f] mr-auto">
-                          <iconify-icon class="text-[#D7A127]" icon="clarity:employee-group-solid"></iconify-icon>
-                        </div>
-                        <p class=" text-gray-500 text-xs impMetrics">EXPECTED ANNUAL REVENUE</p>
-                      </div>
-
-
-                      <div class="form-group w-1/2 ml-auto" style="margin-top: 52px;">
-                        <select class="form-select" id="annualYear" onchange="refreshTheCards()">
-                        </select>
-                      </div>
-
-                      <p class="zanumbers text-end">
-                        <span id="total_amount_invoiced2">-</span>
-                      </p>
-                    </div>
-                    
-                    <div class="dashCards card w-full flex-col space-y-2  ">
-                      <div class="flex items-center  justify-start">
-                        <div class="icoCont bg-[#d7a1271f] mr-auto">
-                          <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
-                        </div>
-                        <p class=" text-gray-500 text-xs impMetrics">AVERAGE DAILY REVENUE</p>
-                      </div>
-
-                      <p class="zanumbers text-end" style="margin-top: 52px;">
-                        <span id="avg_daily_rev">-</span>
-                      </p>
-                    </div>
-                    
-                    <div class="dashCards card flex-col space-y-2  w-fit">
-                        <div class="flex items-center gap-3">
-                            <div class="icoCont bg-[#d7a1271f]">
-                                <iconify-icon class="text-[#005826]" icon="solar:wallet-bold"></iconify-icon>
-                            </div>
-                            
-                            <p class=" text-gray-500 text-md impMetrics flex-1">Daily Remittance Stats</p>
-                            
-                            <input type="date" class="form-control" id="dateFilter" />
-                        </div>
-                        <div class="flex-1">
-                            
-                            <div class="mt-6 space-y-4">
-                              <div>
-                                <p class="text-xs text-gray-500 font-medium">NUMBER OF REMITTANCES</p>
-                                <p class="text-md font-semibold text-gray-700 mt-1" id='numberOfdailyRemittance'>0</p>
-                              </div>
-                
-                              <div class="pt-2 border-t border-gray-100">
-                                <p class="text-xs text-gray-500 font-medium">AMOUNT OF REMITTANCES</p>
-                                <p class="text-md font-semibold text-gray-700 mt-1" id="amountOfdailyRemittance">0</p>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
+                    <h6 class="card-subtitle mb-2">Total Monthly Revenue</h6>
+                    <h3 class="card-title mb-4" id="totalMonthlyRevenue">₦0</h3>
+                    <span class="chart-fill"><i class="ri-line-chart-fill"></i> 12.5%</span>
                   </div>
-
-                  <div class="flex justify-end mt-4">
-                    <button id="viewmore" class="flex justify-end items-center text-[#E85039]" data-bs-toggle="collapse"
-                      data-bs-target="#viewMore">
-                      <span class="theText">View More</span>
-                      <iconify-icon width="30" height="30" icon="material-symbols:arrow-drop-down"></iconify-icon>
-
-                    </button>
-                  </div>
-
-
-
-                  <section class="collapse" id="viewMore">
-                    <div class="grid md:grid-cols-4 grid-cols-2 gap-3">
-                        
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="clarity:employee-group-solid"></iconify-icon>
-                          </div>
-                          <p class="text-gray-500 text-xs text-end ">
-                            REGISTERED TAX PAYER
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end" id="reg_taxP">-</p>
-                      </div>
-                    
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class="text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF INVOICE
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end" id="total_invoice">-</p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end">
-                            TOTAL AMOUNT INVOICED
-                          </p>
-                        </div>
-
-                        <p class="zanumbers text-end">
-                          <span id="total_amount_invoiced3">-</span>
-                        </p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D32121]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF INVOICE DUE
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="due_invoices">100</span>
-                        </p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF INVOICE PAID
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="total_amount">200</span>
-                        </p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D32121]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL AMOUNT OF INVOICE DUE
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="due_amount2">-</span>
-                        </p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#d7a1271f] mr-auto">
-                            <iconify-icon class="text-[#D7A127]" icon="mdi:recurring-payment"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL AMOUNT OF INVOICE PAID
-                          </p>
-                        </div>
-                        <p class="zanumbers text-end">
-                          <span id="total_amountP">-</span>
-                        </p>
-                      </div>
-                      <!-- THIRD ROW -->
-
-
-
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#1c315c1f] mr-auto">
-                            <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF MDA
-                          </p>
-                        </div>
-
-
-
-                        <p class="zanumbers text-end">
-                          <span id="totalMDAs"></span>
-                        </p>
-                      </div>
-
-                      <div class="dashCards card card-hidden w-full flex-col space-y-2">
-                        <div class="flex items-center  justify-start">
-                          <div class="icoCont bg-[#1c315c1f] mr-auto">
-                            <iconify-icon class="text-[#1C315C]" icon="clarity:employee-group-solid"></iconify-icon>
-                          </div>
-                          <p class=" text-gray-500 text-xs text-end ">
-                            TOTAL NUMBER OF REVENUE HEADS
-                          </p>
-                        </div>
-
-
-
-                        <p class="zanumbers text-end">
-                          <span id="totalrevs">80</span>
-                        </p>
-                      </div>
-                    </div>
-                  </section>
-
-
-
-                  <div class="row mt-4 gap-y-6">
-                    <div class="col-md-6">
-                      <div class="card h-[350px]">
-                          <div id="Compliance" class="theChart"></div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6 md:mt-0">
-                      <div class="card h-[350px]">
-                          <div class="flex space-x-3 justify-end items-center">
-                              <button id="viewmore" class="flex justify-end items-center text-[#E85039]" data-bs-toggle="modal" data-bs-target="#dataMore">
-                      <span class="theText">View More</span>
-                    </button>
-                            <div class="form-group  ml-auto p-2" style="margin-top: 10px;">
-                          <select class="form-select" id="theMonth" onchange="refreshTheMonth1()">
-                          </select>
-                            </div>
-                          </div>
-                        <div id="gauge-graph" class="theChart"></div>
-                        <div class="-mt-10">
-                          <p class="text-center  mb-2 text-black fontBold" id=""><span id="percent"></span> %</p>
-                          <p class="text-center  mb-2 text-black">Revenue Gauge</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- <div class="row mt-4 gap-y-6">
-                    <div class="col-md-6">
-                      <div class="card ">
-                        <div class="border-1 p-2 flex">
-                          <h2 class="mr-auto text-md text-bold">INVOICE GRAPH</h2>
-                        </div>
-
-                        <div id="report-bar-chart" class="theChart"></div>
-
-                      </div>
-                    </div>
-
-                    <div class="col-md-6  md:mt-0">
-
-                      <div class="card ">
-                        <div class="border-1 p-2 flex">
-                          <h2 class="mr-auto text-md text-bold">REVENUE GENERATED BY MDA</h2>
-
-                        </div>
-                        <div id="donut-chart-widget" class="theChart"></div>
-                      </div>
-                    </div>
-                  </div> -->
                 </div>
-            </section>
+              </div>
+              <div class="col-md-4">
+                <div class="card revenue-card second h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <div class="revenue-icon">
+                        <img src="./assets/img/logo-rounded.png" alt="Icon" class="rounded-circle">
+                      </div>
+                      <button class="btn revenue-icon2 rounded-circle">
+                        <i class="ri-discount-percent-line"></i>
+                      </button>
+                    </div>
+                    <h6 class="card-subtitle mb-2">Total Accrued Revenue</h6>
+                    <h3 class="card-title mb-4" id="expectedAccruedRevenue">₦0</h3>
+                    <span class="chart-fill"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card revenue-card third h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                      <div class="revenue-icon">
+                        <img src="./assets/img/logo-rounded.png" alt="Icon" class="rounded-circle">
+                      </div>
+                      <div class="btn revenue-icon2 rounded-circle">
+                        <i class="ri-pie-chart-box-line"></i>
+                      </div>
+                    </div>
+                    <h6 class="card-subtitle mb-2">Expected Monthly Revenue</h6>
+                    <h3 class="card-title mb-4" id="expectedMonthlyRevenue">₦0</h3>
+                    <span class="chart-fill"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="">
+              <hr class="main-hr" />
+
+              <button class="btn btn-sm btn-link-primary">See more</button>
+            </div>
+            <!-- Additional Metrics -->
+            <div class="row g-3 mb-4 mt-2">
+              <div class="col-md-4">
+                <div class="card h-100 main-card colored-card">
+                  <div class="card-body mt-3">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-2 main-card-text">Total Invoice Generated</h6>
+                        <div class="d-flex gap-3 align-items-center">
+                          <h4 class="mb-1 main-card-figure" id="totalInvoices">₦0</h4>
+                          <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                        </div>
+
+                        <small class="main-card-text">Current Month</small>
+                      </div>
+                      <button class="main-card-icon first">
+                        <i class="ri-profile-line"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 main-card colored-card">
+                  <div class="card-body mt-3">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-2 main-card-text">Total Amount Generated</h6>
+                        <div class="d-flex gap-3 align-items-center">
+                          <h4 class="mb-1 main-card-figure" id="totalInvoiced">₦0</h4>
+                          <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                        </div>
+
+                        <small class="main-card-text">Current Month</small>
+                      </div>
+                      <button class="main-card-icon first">
+                        <i class="ri-profile-line"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 main-card brown-card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="mb-0 main-card-text">Daily Remittance Stats</h6>
+                      <div class="d-flex align-items-center gap-2">
+                        <input type="date" class="form-control sm-control" id="remittanceDate">
+                      </div>
+                    </div>
+                    <h4 class="mb-2 main-card-figure"><span id="remittanceCount">0</span> Remittance</h4>
+                    <div class="d-flex gap-3 align-items-center">
+                      <h3 class="mb-0 main-card-figure" id="dailyRemittanceAmount">₦0</h3>
+                      <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 main-card">
+                  <div class="card-body mt-3">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-2 main-card-text">Average Daily Revenue</h6>
+                        <div class="d-flex gap-3 align-items-center">
+                          <h4 class="mb-1 main-card-figure" id="averageDailyRevenue">₦0</h4>
+                          <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                        </div>
+                        <small class="main-card-text">Current Month</small>
+                      </div>
+                      <button class="main-card-icon second">
+                        <i class="ri-file-text-line"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 main-card">
+                  <div class="card-body mt-3">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-2 main-card-text">Total Invoices Paid</h6>
+                        <div class="d-flex gap-3 align-items-center">
+                          <h4 class="mb-1 main-card-figure" id="totalPaidInvoice">₦0</h4>
+                          <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                        </div>
+
+                        <small class="main-card-text">Current Month</small>
+                      </div>
+                      <button class="main-card-icon first">
+                        <i class="ri-profile-line"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 main-card">
+                  <div class="card-body mt-3">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="mb-2 main-card-text">Total Invoices Unpaid</h6>
+                        <div class="d-flex gap-3 align-items-center">
+                          <h4 class="mb-1 main-card-figure" id="totalUnpaidInvoice">₦0</h4>
+                          <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                        </div>
+
+                        <small class="main-card-text">Current Month</small>
+                      </div>
+                      <button class="main-card-icon first">
+                        <i class="ri-profile-line"></i>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row g-3 mb-4">
+              <div class="col-lg-8">
+                <div class="card h-100" id="trend-card">
+                  <div class="card-loader">
+                    <div class="spinner-custom"></div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <div>
+                        <h5 class="card-title mb-1" style="font-weight: 600; font-size: 1.1rem;">Collection Trend</h5>
+                        <small class="text-muted">Revenue collection analysis over time</small>
+                      </div>
+                      <ul class="nav nav-pills" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="btnYear" onclick="changeView('year')" type="button"
+                            role="tab">Year</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="btnQuarter" onclick="changeView('quarter')" type="button"
+                            role="tab">Quarter</button>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="row">
+                      <!-- Left Sidebar with Metrics -->
+                      <div class="col-md-4 col-lg-3 col-12 mb-3 mb-md-0">
+                        <!-- Year Selector -->
+                        <div class="mb-3">
+                          <select class="form-select sm-control annualRevFilter" id="yearSelector"
+                            onchange="handleYearChange()">
+                            <!-- Year options will be populated dynamically -->
+                          </select>
+                        </div>
+
+                        <!-- Metrics -->
+                        <div class="mb-3">
+                          <!-- REVENUE -->
+                          <div class="metric-box mb-2">
+                            <small>Revenue</small>
+                            <div class="d-flex align-items-center gap-1">
+                              <strong class="text-danger" id="metricRevenue" style="font-size: 0.6rem;">₦0</strong>
+                              <i class="ri-arrow-down-line text-danger" style="font-size: 0.75rem;"></i>
+                            </div>
+                          </div>
+
+                          <!-- ACCRUED -->
+                          <div class="metric-box mb-2">
+                            <small>Unpaid Invoices</small>
+                            <div class="d-flex align-items-center gap-1">
+                              <strong class="text-danger" id="metricAccrued" style="font-size: 0.6rem;">₦0</strong>
+                              <i class="ri-arrow-down-line text-danger" style="font-size: 0.75rem;"></i>
+                            </div>
+                          </div>
+
+                          <!-- INVOICE -->
+                          <div class="metric-box mb-2">
+                            <small>Expected Revenue</small>
+                            <div class="d-flex align-items-center gap-1">
+                              <strong class="text-success" id="metricInvoice" style="font-size: 0.6rem;">₦0</strong>
+                              <i class="ri-arrow-up-line text-success" style="font-size: 0.75rem;"></i>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Quarterly Indicators -->
+                        <div id="quarters-container" class="quarters-section p-2 bg-light rounded-3">
+                        </div>
+                      </div>
+
+                      <!-- Chart Area -->
+                      <div class="col-md-8 col-lg-9 col-12">
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                          <canvas id="collectionChart" class="theChart"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="card h-100" id="gauge-card">
+                  <div class="card-loader">
+                    <div class="spinner-custom"></div>
+                  </div>
+                  <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h5 class="card-title mb-0" style="font-weight: 600; font-size: 1rem;">Revenue Gauge</h5>
+                      <!-- Filter removed - now uses global filter -->
+                    </div>
+
+                    <div class="text-center my-3">
+                      <div class="gauge-container position-relative d-inline-block">
+                        <svg width="200" height="130" viewBox="0 5 240 200">
+                          <g transform="rotate(93 120 120)">
+                            <path d="M 120.0 210.0 A 90 90 0 0 1 120.0 30.0" fill="none" stroke="#e8f5e9"
+                              stroke-width="24" stroke-linecap="round" />
+                            <path id="gauge-progress" d="M 120.0 210.0 A 90 90 0 0 1 120.0 30.0" fill="none"
+                              stroke="#52b788" stroke-width="24" stroke-linecap="round" stroke-dasharray="0, 283" />
+                          </g>
+                        </svg>
+                        <div class="position-absolute top-50 start-50 translate-middle text-center"
+                          style="margin-top: 15px;">
+                          <h2 id="achievement-text" class="mb-0 fw-bold" style="font-size: 1rem; color: #064e3b;">0%
+                          </h2>
+                          <small class="text-muted" style="font-size: 0.8rem;">Achievement</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded"
+                        style="background-color: #e3f2fd;">
+                        <div>
+                          <small class="text-muted d-block mb-1" style="font-size: 0.7rem;">Target</small>
+                          <strong id="target-value" style="font-size: 1.1rem;">₦0.00</strong>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                          style="width: 36px; height: 36px; background-color: #bbdefb;">
+                          <svg width="18" height="18" fill="#1976d2" viewBox="0 0 16 16">
+                            <circle cx="8" cy="8" r="6" fill="none" stroke="#1976d2" stroke-width="1.5" />
+                            <circle cx="8" cy="8" r="2" fill="#1976d2" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded"
+                        style="background-color: #e8f5e9;">
+                        <div>
+                          <small class="text-muted d-block mb-1" style="font-size: 0.7rem;">Actual</small>
+                          <strong id="actual-value" style="font-size: 1.1rem;">₦0.00</strong>
+                        </div>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                          style="width: 36px; height: 36px; background-color: #c8e6c9;">
+                          <svg width="18" height="18" fill="#2e7d32" viewBox="0 0 16 16">
+                            <path d="M8 12l-4-4h2.5V4h3v4H12l-4 4z" transform="rotate(45 8 8)" />
+                          </svg>
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-between align-items-center p-2 rounded"
+                        style="background-color: #f5f5f5;">
+                        <div>
+                          <small class="text-muted d-block mb-1" style="font-size: 0.7rem;">Balance</small>
+                          <strong id="balance-value" style="font-size: 1.1rem;">₦0.00</strong>
+                        </div>
+                        <span id="rating-badge" class="px-3 py-1 rounded-pill"
+                          style="background-color: #fbbf24; color: #78350f; font-weight: 700; font-size: 0.7rem;">-</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- E-services Section -->
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h5 class="card-title mb-0 text-xl fontBold">E-services</h5>
+                  <!-- Filter removed - now uses global filter -->
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card green-colored">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">TCC Issued Monthly</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure" id="tccIssued">100</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon first">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">TCC Issued Yearly</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure">0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon second">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">Total Compliance</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure">₦0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon third">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3 mt-1">
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">PAYE remitted by month</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure" id="payeRemitted">₦0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon first">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">PAYE remitted by year</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure">₦0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon second">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">Informal sector collections by Month</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure">0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon third" style="background-color:#8b6f47;">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3 mt-1">
+                  <div class="col-md-4">
+                    <div class="card h-100 main-card">
+                      <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <h6 class="mb-2 main-card-text">Informal sector collections by Year</h6>
+                            <div class="d-flex gap-3 align-items-center">
+                              <h4 class="mb-1 main-card-figure">0</h4>
+                              <span class="main-card-badge"><i class="ri-line-chart-fill"></i> 12.5%</span>
+                            </div>
+                            <small class="main-card-text">Current Month</small>
+                          </div>
+                          <button class="main-card-icon second">
+                            <i class="ri-bank-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          <!-- Floating Action Button -->
+          <button class="btn btn-primary floating-btn" onclick="window.location.href='tax-calculator.html'">
+            <i class="ri-calculator-line me-2"></i> Tax Calculator
+          </button>
+
           <section class="mt-4 bg-[#FFFFFF] pt-4 px-4 pb-2 footer"></section>
           <div class="content-backdrop fade"></div>
         </section>
@@ -467,7 +1027,7 @@
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
   <!-- / Layout wrapper -->
-<div class="modal fade" id="dataMore" tabindex="-1">
+  <div class="modal fade" id="dataMore" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -477,29 +1037,31 @@
           </button>
         </div>
         <div class="modal-body relative">
-             <div class="table-responsive p-2">
-                <table class="table">
-                  <thead>
-                    <tr class="text-center">
-                      <th>S/N</th>
-                      <th>Date</th>
-                      <th>Total Revenue</th>
-                      <th>Expired Revenue</th>
-                      <th>Percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-border-bottom-0" id="showThem">
+          <div class="table-responsive p-2">
+            <table class="table">
+              <thead>
+                <tr class="text-center">
+                  <th>S/N</th>
+                  <th>Date</th>
+                  <th>Total Revenue</th>
+                  <th>Expired Revenue</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0" id="showThem">
 
-                  </tbody>
-                </table>
-              </div>
-              <div class="flex justify-center items-center mt-4" id="loader">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
-              </div>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-center items-center mt-4" id="loader">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-900"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
   <div class="modal fade" id="notiModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
@@ -512,35 +1074,35 @@
         <div class="modal-body relative">
           <div class="flex justify-between">
             <p class="text-[16px]">Your TIN has been verified</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+            <button class="text-[#CDA545] text-[12px] underline underline-offset-1">
               clear
             </button>
           </div>
           <hr class="text-[#D7D7D7] my-3" />
           <div class="flex justify-between">
             <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+            <button class="text-[#CDA545] text-[12px] underline underline-offset-1">
               clear
             </button>
           </div>
           <hr class="text-[#D7D7D7] my-3" />
           <div class="flex justify-between">
             <p class="text-[16px]">Your complaint has been answered</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+            <button class="text-[#CDA545] text-[12px] underline underline-offset-1">
               clear
             </button>
           </div>
           <hr class="text-[#D7D7D7] my-3" />
           <div class="flex justify-between">
             <p class="text-[16px]">Your payment is successful</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+            <button class="text-[#CDA545] text-[12px] underline underline-offset-1">
               clear
             </button>
           </div>
           <hr class="text-[#D7D7D7] my-3" />
           <div class="flex justify-between">
             <p class="text-[16px]">Your payment is due</p>
-            <button class="text-[#005826] text-[12px] underline underline-offset-1">
+            <button class="text-[#CDA545] text-[12px] underline underline-offset-1">
               clear
             </button>
           </div>
@@ -559,9 +1121,9 @@
   <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-  <script src="./assets/js/nav.js?v=1.0"></script>
+  <script src="./assets/js/nav.js?v=3.0"></script>
   <!-- <script src="./assets/js/session.js"></script> -->
-  <script src="assets/js/adminDash.js?v=6.9"></script>
+  <script src="assets/js/adminDash.js"></script>
   <script>
     let theAtivo = document.querySelector(`.dass`);
     theAtivo.parentElement.classList.add("active");
@@ -572,9 +1134,10 @@
   <!-- Vendors JS -->
 
   <!-- Main JS -->
-  <script src="./assets/js/accessLevel.js?v=1.3"></script>
+  <script src="./assets/js/accessLevel.js"></script>
   <script src="./assets/js/main.js"></script>
-  <script src="./assets/js/dashboard.js?v=1.0"></script>
+  <script src="./assets/js/dashboard.js"></script>
+  <script src="./assets/js/dashboard-analytics.js"></script>
   <!-- <script src="../assets/js/invoicess.js"></script> -->
   <!-- <script src="../assets/js/chartjs.min.js" async></script> -->
 
