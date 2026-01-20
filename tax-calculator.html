@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD33L7TK59"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZD33L7TK59');
+  </script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrimeGuage</title>
+
+  <!-- FAVION ICON -->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.css" />
+  <link rel="stylesheet" href="assets/js/aos-master/dist/aos.css" />
+
+  <style>
+    .tax-calculator-wrapper {
+      min-height: calc(100vh - 100px);
+      padding-top: 2rem;
+    }
+
+    .calculator-header {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 20px rgba(52, 108, 39, 0.2);
+    }
+
+    .calculator-card {
+      background: white;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group-tax {
+      margin-bottom: 1.5rem;
+    }
+
+    .tax-input-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .tax-input-hint {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 0.25rem;
+    }
+
+    .tax-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid #e2f5e5;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: #f8fff9;
+    }
+
+    .tax-input:focus {
+      border-color: #008236;
+      box-shadow: 0 0 0 3px rgba(0, 130, 54, 0.1);
+      outline: none;
+    }
+
+    .input-group-prepend {
+      background: #e2f5e5;
+      border: 2px solid #e2f5e5;
+      border-right: none;
+      border-radius: 0.75rem 0 0 0.75rem;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      color: #015826;
+      font-weight: 500;
+    }
+
+    .input-group-prepend+.tax-input {
+      border-left: none;
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+
+    /* Toggle Switch Styles */
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      border: 2px solid #e2f5e5;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+
+    .toggle-group.active {
+      border-color: #008236;
+      background: #e8f5e9;
+    }
+
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toggle-label {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .toggle-rate {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    .toggle-rate.active {
+      color: #008236;
+      font-weight: 500;
+    }
+
+    /* Custom Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 28px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-switch input:checked+.toggle-slider {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+    }
+
+    .toggle-switch input:checked+.toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .btn-tax-calculate {
+      background: linear-gradient(135deg, #015826 0%, #008236 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .btn-tax-calculate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 130, 54, 0.2);
+    }
+
+    .btn-tax-reset {
+      background: #f8fff9;
+      color: #008236;
+      border: 2px solid #008236;
+      border-radius: 0.75rem;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .btn-tax-reset:hover {
+      background: #008236;
+      color: white;
+    }
+
+    .law-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .law-comparison-table th {
+      background: #f8fff9;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      color: #015826;
+      border-bottom: 2px solid #e2f5e5;
+    }
+
+    .law-comparison-table td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .law-column {
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      background: #f8fff9;
+    }
+
+    .law-column.old {
+      border-left: 4px solid #015826;
+    }
+
+    .law-column.new {
+      border-left: 4px solid #008236;
+    }
+
+    .tax-band-item {
+      padding: 0.75rem;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tax-band-item:last-child {
+      border-bottom: none;
+    }
+
+    .band-description {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .band-calculation {
+      text-align: right;
+    }
+
+    .band-amount {
+      font-weight: 600;
+      color: #015826;
+    }
+
+    .total-tax-box {
+      background: linear-gradient(135deg, #a9e19c 0%, #18b659 100%);
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .result-value {
+      font-weight: 600;
+      color: #015826;
+      font-size: 1.1rem;
+    }
+
+    .btn-download {
+      background: #f8fff9;
+      color: #008236;
+      border: 2px solid #008236;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin: 0.25rem;
+    }
+
+    .btn-download:hover {
+      background: #008236;
+      color: white;
+    }
+
+    .btn-print {
+      background: #e2f5e5;
+      color: #015826;
+      border: 2px solid #e2f5e5;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin: 0.25rem;
+    }
+
+    .btn-print:hover {
+      background: #015826;
+      color: white;
+      border-color: #015826;
+    }
+
+    .explanation-box {
+      background: #f8fff9;
+      border-left: 4px solid #008236;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .law-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      padding: 0.25rem;
+    }
+
+    .law-toggle-btn {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: none;
+      background: transparent;
+      color: #6c757d;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .law-toggle-btn.active {
+      background: white;
+      color: #008236;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .calculator-card {
+        padding: 1rem;
+      }
+
+      .law-comparison-table {
+        font-size: 0.9rem;
+      }
+
+      .law-comparison-table th,
+      .law-comparison-table td {
+        padding: 0.75rem 0.5rem;
+      }
+
+      .btn-download,
+      .btn-print {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    .result-box {
+      color: white;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+    }
+
+    .result-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-hint {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    /* Section Headers */
+    .section-header {
+      font-weight: 600;
+      color: #015826;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2f5e5;
+    }
+
+    /* Deduction Summary */
+    .deduction-summary {
+      background: #f8fff9;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .deduction-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px dashed #e2f5e5;
+    }
+
+    .deduction-item:last-child {
+      border-bottom: none;
+    }
+
+    .deduction-item.total {
+      font-weight: 600;
+      color: #015826;
+      border-top: 2px solid #015826;
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <header class="flex justify-between px-10 bg-white py-3" id="theHeader">
+
+
+  </header>
+
+  <section class="h-[20vh] bg-[url('./assets/img/eservices.png')] relative headerBeginner">
+    <div class="absolute w-full h-full" style="background: #00000060;"></div>
+
+    <div class="flex justify-center items-center h-full">
+      <h1 class="fontBold text-center text-white text-3xl z-10 relative">Tax Calculator</h1>
+    </div>
+
+  </section>
+
+  <section class="breadcrumb border-b border-gray-200 px-10 py-3 bg-white">
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="text-[#555555]">Home</a>
+      <iconify-icon icon="ic:sharp-arrow-right-alt" class="text-xl text-[#555555]"></iconify-icon>
+      <p class="textPrimary">Tax Calculator</p>
+    </div>
+  </section>
+
+
+  <section class="mt-3 px-10">
+
+
+    <div class="row g-4">
+      <!-- Left Column: Input Form -->
+      <div class="col-lg-6">
+        <div class="calculator-card">
+          <h4 class="card-title mb-4" style="color: #015826;">Tax Calculation Inputs</h4>
+
+          <!-- Annual Gross Income -->
+          <div class="input-group-tax">
+            <label class="tax-input-label">Annual Gross Income (₦)</label>
+            <div class="input-group">
+              <input type="text" class="tax-input" id="annualIncome" placeholder="e.g., 5,000,000">
+            </div>
+          </div>
+
+          <!-- Statutory Deductions Section -->
+          <div class="section-header mt-4">
+            <i class="ri-shield-check-line me-2"></i>Statutory Deductions
+          </div>
+
+          <!-- Pension Toggle -->
+          <div class="toggle-group" id="pensionGroup">
+            <div class="toggle-info">
+              <span class="toggle-label">Pension Contribution</span>
+              <span class="toggle-rate" id="pensionRateText">8% of gross income</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="pensionToggle" checked onchange="updateToggleGroup('pension')">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- NHIS Toggle -->
+          <div class="toggle-group" id="nhisGroup">
+            <div class="toggle-info">
+              <span class="toggle-label">NHIS Contribution</span>
+              <span class="toggle-rate" id="nhisRateText">5% of gross income</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="nhisToggle" checked onchange="updateToggleGroup('nhis')">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- NHF Toggle -->
+          <div class="toggle-group" id="nhfGroup">
+            <div class="toggle-info">
+              <span class="toggle-label">NHF Contribution</span>
+              <span class="toggle-rate" id="nhfRateText">2.5% of gross income</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="nhfToggle" checked onchange="updateToggleGroup('nhf')">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Other Deductions Section -->
+          <div class="section-header mt-4">
+            <i class="ri-home-line me-2"></i>Other Deductions (Optional)
+          </div>
+
+          <!-- Rent Paid Annually -->
+          <div class="input-group-tax">
+            <label class="tax-input-label">Rent Paid Annually (₦)</label>
+            <div class="input-group">
+              <input type="text" class="tax-input" id="rentPaid" placeholder="e.g., 600,000">
+            </div>
+            <div class="tax-input-hint">Annual rent paid for accommodation (for rent relief under
+              New Law)</div>
+          </div>
+
+          <!-- Life Insurance -->
+          <div class="input-group-tax">
+            <label class="tax-input-label">Life Insurance Premium (₦)</label>
+            <div class="input-group">
+              <input type="text" class="tax-input" id="lifeInsurance" placeholder="e.g., 50,000">
+            </div>
+            <div class="tax-input-hint">Annual life insurance premium paid</div>
+          </div>
+
+          <!-- Other Deductions -->
+          <div class="input-group-tax">
+            <label class="tax-input-label">Other Deductions (₦)</label>
+            <div class="input-group">
+              <input type="text" class="tax-input" id="otherDeductions" placeholder="e.g., 100,000">
+            </div>
+            <div class="tax-input-hint">Any other allowable deductions not listed above</div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="row g-2 mt-4">
+            <div class="col-md-6">
+              <button class="btn-tax-calculate" onclick="calculateTax()">
+                <i class="ri-calculator-line me-2"></i> Calculate Tax
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn-tax-reset" onclick="resetForm()">
+                <i class="ri-refresh-line me-2"></i> Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Results -->
+      <div class="col-lg-6">
+        <div class="calculator-card">
+          <!-- Law Toggle -->
+          <div class="law-toggle">
+            <button class="law-toggle-btn active" onclick="showLaw('old')">Old Tax Law</button>
+            <button class="law-toggle-btn" onclick="showLaw('new')">New Tax Law</button>
+          </div>
+
+          <!-- Results Placeholder -->
+          <div id="resultsPlaceholder" class="text-center py-5">
+            <i class="ri-calculator-line display-4 text-muted mb-3"></i>
+            <h5 class="text-muted">No Calculation Yet</h5>
+            <p class="text-muted">
+              Enter your income details and click "Calculate Tax" to see your PAYE breakdown.
+            </p>
+          </div>
+
+          <!-- Results Display -->
+          <div id="resultsDisplay" style="display: none;">
+            <!-- Comparison Table -->
+            <table class="law-comparison-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th style="background: white;" id="oldLawHeader"></th>
+                  <th style="background: white;" id="newLawHeader"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #EFF6FF;">
+                  <td>Annual Gross Income</td>
+                  <td id="oldGrossIncome">₦0.00</td>
+                  <td id="newGrossIncome">₦0.00</td>
+                </tr>
+                <tr style="background-color: #FEF3C7;">
+                  <td>Total Deductions</td>
+                  <td id="oldDeductions">₦0.00</td>
+                  <td id="newDeductions">₦0.00</td>
+                </tr>
+                <tr style="background-color: #F0FDF4;">
+                  <td id="reliefLabel">CRA / Rent Relief</td>
+                  <td id="oldCRA">₦0.00</td>
+                  <td id="newCRA">₦0.00</td>
+                </tr>
+                <tr style="background: #FAF5FF;">
+                  <td><strong>Taxable Income</strong></td>
+                  <td id="oldTaxableIncome"><strong>₦0.00</strong></td>
+                  <td id="newTaxableIncome"><strong>₦0.00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Tax Bands Breakdown -->
+            <div class="row g-3 mt-4">
+              <!-- Old Law Breakdown -->
+              <div class="col-md-12" id="oldLawBreakdown">
+                <h6 class="mb-3" style="color: #015826;">Tax Bands Applied (Old Law)</h6>
+                <div id="oldTaxBands">
+                  <!-- Will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- New Law Breakdown -->
+              <div class="col-md-12" id="newLawBreakdown">
+                <h6 class="mb-3" style="color: #015826;">Tax Bands Applied (New Law)</h6>
+                <div id="newTaxBands">
+                  <!-- Will be populated by JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Final Results -->
+            <div class="row g-3 mt-4">
+              <!-- Total Annual Tax -->
+              <div class="col-md-4">
+                <div class="result-box" style="background:#FFF7ED">
+                  <div class="result-content">
+                    <div class="result-label">Total Annual Tax</div>
+                    <div class="result-value" id="totalAnnualTax">₦0.00</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Monthly Equivalent -->
+              <div class="col-md-4">
+                <div class="result-box" style="background: #EFF6FF">
+                  <div class="result-content">
+                    <div class="result-label">Monthly Equivalent</div>
+                    <div class="result-value" id="monthlyEquivalent">₦0.00</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Effective Tax Rate -->
+              <div class="col-md-4">
+                <div class="result-box" style="background: #F0FDF4">
+                  <div class="result-content">
+                    <div class="result-label">Effective Tax Rate</div>
+                    <div class="result-value" id="effectiveTaxRate">0%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deduction Summary -->
+            <div class="deduction-summary mt-4" id="deductionSummary">
+              <h6 class="mb-3" style="color: #015826;"><i class="ri-file-list-3-line me-2"></i>Deduction Breakdown
+              </h6>
+              <div id="deductionBreakdown">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-center mt-4 flex-wrap">
+              <button class="btn-download" onclick="downloadPDF()">
+                <i class="ri-download-line me-2"></i> Download PDF
+              </button>
+              <button class="btn-print" onclick="printResults()">
+                <i class="ri-printer-line me-2"></i> Print
+              </button>
+              <button class="btn-download" onclick="copyBreakdown()">
+                <i class="ri-file-copy-line me-2"></i> Copy Breakdown
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </section>
+
+  <div class="modal fade" id="newsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">News</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <iconify-icon icon="fluent-mdl2:cancel"></iconify-icon>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div id="thenewsCont">
+
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <section class="w-full mt-20" id="footer">
+
+  </section>
+
+
+
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="assets/js/aos-master/dist/aos.js"></script>
+  <script src="assets/js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/tax-calculator.js"></script>
+</body>
+
+</html>

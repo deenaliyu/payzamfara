@@ -891,7 +891,7 @@
         if (taxableAmount > 0) {
           breakdown.push({
             description: bracket.label,
-            calculation: `₦${formatNumber(taxableAmount)} × ${(bracket.rate * 100)}%`,
+            calculation: `₦${formatNumber(taxableAmount)} × ${(Math.round(bracket.rate * 100))}%`,
             amount: bracketTax
           });
         }

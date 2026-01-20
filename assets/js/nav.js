@@ -47,6 +47,7 @@ if (THE_SESSION) {
       </div>
 
       <div class="flex items-center gap-3">
+        <a class="button" style="background: #015826 !important; color: #FFFFFF !important" href="tax-calculator.html">Tax Calculator</a>
         <a class="outline-btn" href="signin.html">Sign In</a>
         <a class="button" href="regcategory.html">Register</a>
       </div>
@@ -133,6 +134,7 @@ if (THE_SESSION) {
     </div>
 
   <div class="flex items-center gap-3 mt-5">
+    <a class="button" style="background: #015826 !important; color: #FFFFFF !important" href="tax-calculator.html">Tax Calculator</a>
     <a class="outline-btn" href="signin.html">Sign In</a>
     <a class="button" href="regcategory.html">Register</a>
   </div>

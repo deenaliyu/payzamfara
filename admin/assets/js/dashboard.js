@@ -241,6 +241,7 @@ function fetchInvoiceStatistics(monthYear) {
   showSpinner("totalInvoiced");
   showSpinner("totalPaidInvoice");
   showSpinner("totalUnpaidInvoice");
+  showSpinner("expectedAccruedRevenue")
 
   const [year, month] = monthYear.split("-");
 
@@ -266,6 +267,8 @@ function fetchInvoiceStatistics(monthYear) {
 
         // Total amount unpaid
         $("#totalUnpaidInvoice").text(formatMoney(stats.total_amount_unpaid || 0));
+
+        $("#expectedAccruedRevenue").text(formatMoney(stats.total_amount_unpaid || 0));
       } else {
         console.error("Failed to fetch invoice statistics");
         resetInvoiceCards();
@@ -497,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Revenue Cards
   fetchTotalRevenue(currentMonthYear);
   fetchExpectedMonthlyRevenue(currentMonthYear);
-  fetchExpectedAccruedRevenue(currentMonthYear);
+  // fetchExpectedAccruedRevenue(currentMonthYear);
 
   // Statistics Cards
   fetchInvoiceStatistics(currentMonthYear);
