@@ -69,7 +69,8 @@ let collectionChart = null;
 let currentView = 'quarterly'; // matches API param: 'quarterly' or 'yearly'
 
 // Custom colors for the bar chart
-const CHART_COLORS = ['#D08317', '#E99F37', '#37E946', '#3781E9', '#E937DA'];
+// const CHART_COLORS = ['#D08317', '#E99F37', '#37E946', '#3781E9', '#E937DA'];
+const CHART_COLORS = ['#015826', '#015826', '#015826', '#015826', '#015826'];
 
 document.addEventListener('DOMContentLoaded', function () {
   // Initial data fetch for Collection Trend & Quarterly Performance
